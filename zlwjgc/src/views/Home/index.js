@@ -82,9 +82,9 @@ class HomePage extends React.Component {
             </Title>
           </Body>
           <Right>
-            <Button small transparent light onPress={()=>navigation.navigate("Scan")}>
+            {/* <Button small transparent light onPress={()=>navigation.navigate("Scan")}>
               <IconAntDesign name="scan1" size={26} color="#fff" />
-            </Button>
+            </Button> */}
           </Right>
         </Header>
         <Content 

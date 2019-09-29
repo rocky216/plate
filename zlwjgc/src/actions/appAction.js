@@ -562,10 +562,6 @@ export function getGuranteType(params, next){
         }
       }
       let data = await request(options)
-      dispatch({
-        type: APP_LOADING_DATA,
-        guaranteList: data
-      })
       if(next)next(data)
     }catch(err){
       console.log(err, "getGuranteType")

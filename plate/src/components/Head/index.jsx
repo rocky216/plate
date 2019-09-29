@@ -1,4 +1,7 @@
 import React from "react"
+import {withRouter} from "react-router-dom"
+import {connect } from "react-redux"
+import {bindActionCreators} from "redux"
 import {
   Dropdown,
   Icon,
@@ -6,6 +9,8 @@ import {
   Row,
   Col
 } from "antd"
+import {getSysItemList} from "@/actions/projectAction"
+import {getHouse, getItemByAccount} from "@/actions/appAction"
 
 class Head extends React.Component {
   constructor(props){
@@ -15,33 +20,40 @@ class Head extends React.Component {
     }
   }
 
-  handleMenuClick(){
-    console.log(arguments)
+  componentWillMount(){
+    this.props.actions.getItemByAccount({}, res=>{ 
+      this.props.actions.getHouse(res[0])
+    })
+  }
+
+  handleMenuClick({key}){
+    const {mySysItemList, houseInfo} = this.props
+    if(key == houseInfo.id) return
+    let data = _.filter(mySysItemList, o=>o.id==key)[0]
+    this.props.actions.getHouse(data)
+    this.props.history.push("/")
   }
   render(){
+    const {mySysItemList, houseInfo} = this.props
+
     const menu = (
       <Menu 
         onClick={this.handleMenuClick.bind(this)}
         theme="dark">
-        <Menu.Item key="1">
-          <Icon type="home" />
-          1st menu item
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Icon type="home" />
-          2nd menu item
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Icon type="home" />
-          3rd item
-        </Menu.Item>
+          {mySysItemList && mySysItemList.length?mySysItemList.map(item=>(
+            <Menu.Item key={item.id}>
+              <Icon type="project" />{item.housingEstateName}
+            </Menu.Item>
+          )):null}
       </Menu>
     );
 
     return (
       <div style={{display: "flex", justifyContent: "flex-end", paddingRight:24}}>
         <div style={{display: "flex", marginRight: 30}}>
-          <Dropdown.Button trigger={["click"]} overlay={menu} icon={<Icon type="home" />}>选择房屋</Dropdown.Button>
+          {mySysItemList && mySysItemList.length?
+            <Dropdown.Button trigger={["click"]} overlay={menu} icon={<Icon type="project" />}>
+            {houseInfo?houseInfo.housingEstateName:''}</Dropdown.Button>:null}
         </div>
         <div>
           <Icon type="logout" style={{fontSize: 20}} />
@@ -52,6 +64,18 @@ class Head extends React.Component {
   }
 }
 
+function mapDispatchProps(dispatch){
+  return {
+    actions: bindActionCreators({getSysItemList, getHouse, getItemByAccount}, dispatch)
+  }
+}
 
-export default Head
+function mapStateProps(state){
+  return {
+    mySysItemList: state.app.mySysItemList,
+    houseInfo: state.app.houseInfo
+  }
+}
+
+export default withRouter(connect(mapStateProps, mapDispatchProps)(Head))
 

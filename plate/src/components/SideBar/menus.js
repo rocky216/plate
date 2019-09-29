@@ -34,13 +34,44 @@ export default [
         title: "通行记录",
         key: 205,
         link: "/"
-      }
+      },
+      {
+        title: "租赁规则",
+        key: 206,
+        link: "/park/rule"
+      },
+      {
+        title: "车牌识别配置",
+        key: 207,
+        link: "/park/plateconfig"
+      },
     ]
   },
   {
     title: "项目管理",
     key: 3,
     icon: "icon iconfont icon-xiangmu",
-    link: "/"
+    children: [
+      {
+        title: "项目列表",
+        key: 301,
+        link: "/project/list",
+      },
+      {
+        title: "账户管理",
+        key: 302,
+        link: "/project/account",
+      },
+      {
+        title: "角色管理",
+        key: 303,
+        link: "/project/role",
+      },
+      {
+        title: "权限管理",
+        key: 304,
+        link: "/project/auth/0",
+      },
+    ]
   }
 ]

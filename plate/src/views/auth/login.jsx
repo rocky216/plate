@@ -1,5 +1,8 @@
 import React from "react"
+import {connect } from "react-redux"
+import {bindActionCreators} from "redux"
 import {Row, Col, Card, Form, Input, Button, Icon, Checkbox, InputNumber} from "antd"
+import {login} from "@/actions/appAction"
 
 
 class Login extends React.Component {
@@ -14,6 +17,9 @@ class Login extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values)=>{
       console.log(err, values)
+      this.props.actions.login(values, res=>{
+        this.props.history.push('/')
+      })
     })
   }
 
@@ -21,10 +27,14 @@ class Login extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Row>
-        <Col span={13}>
-          <div style={{background: "#ddd", height:"100vh"}}></div>
+        <Col span={16}>
+          <div style={{background: "#ddd", height:"100vh"}}>
+            <img 
+            style={{width: "100%", height: "100%"}}
+              src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569759068084&di=0a892399601977b99848e7018ec38f06&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F4b77aa67bdab8b9f59040a406b7458293548741238307-WaTMGu_fw658" />
+          </div>
         </Col>
-        <Col span={11}>
+        <Col span={8}>
           <div style={{paddingTop:200, width: 500, margin: "auto"}}>
           <Card type="inner" title="用户登录"  extra={<span>
             {this.state.isPhone?<a href="#" onClick={()=>this.setState({isPhone: false})}>密码登录</a>
@@ -32,7 +42,7 @@ class Login extends React.Component {
           </span>} >
             <Form style={{padding: '50px 20px'}} onSubmit={this.handlenSubmit.bind(this)} > 
               <Form.Item>
-                {getFieldDecorator('username', {
+                {getFieldDecorator('account', {
                   rules: [{ required: true, message: '请输入用户名!' }],
                 })(
                   <Input
@@ -82,4 +92,16 @@ class Login extends React.Component {
   }
 }
 
-export default Form.create()(Login)
+function mapDispatchProps(dispatch){
+  return {
+    actions: bindActionCreators({login}, dispatch)
+  }
+}
+
+function mapStateProps(state){
+  return {
+
+  }
+}
+
+export default connect(mapStateProps, mapDispatchProps)(Form.create()(Login) ) 

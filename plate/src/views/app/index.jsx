@@ -22,9 +22,9 @@ class App extends React.Component {
             </Header>
             <Content
               style={{
-                margin: '24px 16px',
-                padding: 24,
-                background: '#fff',
+                margin: '10px 10px',
+                // padding: 24,
+                // background: '#fff',
               }}
             >
               <Routers/>
