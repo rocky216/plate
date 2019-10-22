@@ -9,7 +9,8 @@ import {
   Input,
   Card,
   Icon,
-  Select
+  Select,
+  Popconfirm
 } from "antd"
 import JCard from "@/components/JCard"
 import {addMeun, getSysMeunList, delMeun, setRoleMeun, getRoleMeunList} from "@/actions/projectAction"
@@ -75,7 +76,9 @@ class Auth extends React.Component {
         <span style={{float: "right"}}>
           <Icon type="plus" className="mgr10 mgl10" onClick={_this.handlenAdd.bind(_this, item)} />
           <Icon type="edit" className="mgr10 mgl10" onClick={_this.handlenEdit.bind(_this, item)} />
-          <Icon type="delete" className="mgl10" onClick={_this.handlenDelete.bind(_this, item)} />
+          <Popconfirm title="是否删除？" onConfirm={_this.handlenDelete.bind(_this, item)} >
+            <Icon type="delete" className="mgl10" />
+          </Popconfirm>
         </span>:null}
       </div>
     )

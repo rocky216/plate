@@ -3,7 +3,7 @@ import {Link, Switch, Route} from "react-router-dom"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {
-  Card, Button, Icon, Table
+  Card, Button, Icon, Table, Popconfirm
 } from "antd"
 import JCard from "@/components/JCard"
 import {getRoleList, delRoleItem} from "@/actions/projectAction"
@@ -48,7 +48,9 @@ class Role extends React.Component {
         return(
           <div>
             <Button size="small" type="link" onClick={_this.handlenEdit.bind(_this, item)} >变更</Button>
-            <Button size="small" type="link" onClick={_this.handlenDelete.bind(_this,item)}>删除</Button>
+            <Popconfirm title="是否删除？" onConfirm={_this.handlenDelete.bind(_this,item)}>
+              <Button size="small" type="link" >删除</Button>
+            </Popconfirm>
             {item.dataScope!=1?
               <Button size="small" type="link" ><Link to={`/project/auth/${item.roleId}`}>菜单</Link></Button>
             :null}

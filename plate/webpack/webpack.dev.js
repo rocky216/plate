@@ -9,6 +9,7 @@ function resolve(str){
 }
 
 module.exports = webpackMerge(webpackBase, {
+  mode: "development",
   devtool: "cheap-module-eval-source-map",
   devServer: {
     contentBase: resolve('dist'),

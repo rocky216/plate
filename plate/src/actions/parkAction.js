@@ -1,6 +1,123 @@
 import {fetch, getHouseInfo} from "@/utils"
 import {LOADING_PARK_START, LOADING_PARK_END} from "@/types"
 
+export function passList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: LOADING_PARK_START
+    })
+    try {
+      const options = {
+        url: "/plateRecord/plateRecordList",
+        method: "get",
+        data: {
+          ...params,
+          itemId: getHouseInfo()
+        }
+      }
+      let data = await fetch(options) 
+      dispatch({
+        type: LOADING_PARK_END,
+        passList: data
+      })
+      if(next)next(data)
+    }catch(err){
+      console.log(err)
+      dispatch({
+        type: LOADING_PARK_END,
+      })
+    }
+  }
+}
+
+export function deviceList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: LOADING_PARK_START
+    })
+    try {
+      const options = {
+        url: "/device/list",
+        method: "get",
+        data: {
+          ...params,
+          itemId: getHouseInfo()
+        }
+      }
+      let data = await fetch(options) 
+      dispatch({
+        type: LOADING_PARK_END,
+        deviceList: data
+      })
+      if(next)next(data)
+    }catch(err){
+      console.log(err)
+      dispatch({
+        type: LOADING_PARK_END,
+      })
+    }
+  }
+}
+
+export function leaseList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: LOADING_PARK_START
+    })
+    try {
+      const options = {
+        url: "/lease/list",
+        method: "get",
+        data: {
+          ...params,
+          itemId: getHouseInfo()
+        }
+      }
+      let data = await fetch(options) 
+      dispatch({
+        type: LOADING_PARK_END,
+        leaseList: data
+      })
+      if(next)next(data)
+    }catch(err){
+      console.log(err)
+      dispatch({
+        type: LOADING_PARK_END,
+      })
+    }
+  }
+}
+
+
+export function parkOrderList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: LOADING_PARK_START
+    })
+    try {
+      const options = {
+        url: "/order/list",
+        method: "get",
+        data: {
+          ...params,
+          itemId: getHouseInfo()
+        }
+      }
+      let data = await fetch(options) 
+      dispatch({
+        type: LOADING_PARK_END,
+        parkOrderList: data
+      })
+      if(next)next(data)
+    }catch(err){
+      console.log(err)
+      dispatch({
+        type: LOADING_PARK_END,
+      })
+    }
+  }
+}
+
 export function delPlateConfig(params, next){
   return async function(dispatch, getState){
     dispatch({

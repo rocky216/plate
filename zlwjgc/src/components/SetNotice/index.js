@@ -37,7 +37,7 @@ class SetNotice extends React.Component {
     JPushModule.hasPermission(res=>{
       if(!res && !this.state.isUpdate){
         this.setState({isVisible: true})
-      }
+      } 
     })
 
     this.handlenClickListener()

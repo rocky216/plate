@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS `simboss_iccid`;
+CREATE TABLE `simboss_iccid` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '物联网卡id',
+  `item_id` int(11) NOT NULL COMMENT '项目ID',
+  `iccid` varchar(50) NOT NULL DEFAULT '' COMMENT '物联网卡iccid',
+  `type` varchar(10) NOT NULL DEFAULT '' COMMENT '卡类型 SINGLE：单卡，POOL：流量池卡',
+  `status` varchar(25) NOT NULL DEFAULT '' COMMENT '状态，测试中：testing、库存：inventory、待激活：pending-activation、已激活：activation、已停卡：deactivation、已销卡：retired',
+  `msisdn` varchar(50) NOT NULL DEFAULT '' COMMENT '对应的手机号码',
+  `startDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '激活时间',
+  `expireDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '过期时间',
+  `memo` varchar(500) NOT NULL DEFAULT '' COMMENT '卡备注',
+  `speedLimit` decimal(20,2) NOT NULL DEFAULT 0.00 COMMENT '网络限速值，单位：Kbps，4G上限为150Mbps(153600Kbps)',
+  `iratePlanName` varchar(150) NOT NULL DEFAULT '' COMMENT '卡当前套餐名称',
+
+  `dataUsage` decimal(20,5) NOT NULL DEFAULT 0.00 COMMENT '卡本月用量, 单位M',
+  `totalDataVolume` decimal(20,2) NOT NULL DEFAULT 0.00 COMMENT '卡套餐大小, 单位M',
+  `usedDataVolume` decimal(20,2) NOT NULL DEFAULT 0.00 COMMENT '卡套餐用量，如果未激活无此字段，如果激活则为当前套餐用量，如果已经过期停卡则为最后一个套餐的用量',
+  `carrier` varchar(50) NOT NULL DEFAULT '' COMMENT '运营商，unicom：中国联通，cmcc：中国移动，chinanet：中国电信',
+  `deviceStatus` varchar(50) NOT NULL DEFAULT '' COMMENT '卡在运营商的状态, 可测试: TEST_READY_NAME, 库存：INVENTORY_NAME，可激活：ACTIVATION_READY_NAME， 已激活：ACTIVATED_NAME， 已停卡：DEACTIVATED_NAME，已销卡：RETIRED_NAME, 已清除：PURGED_NAME',
+  `openDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '出库时间',
+  `activeDuration` int(11) NOT NULL DEFAULT 0 COMMENT '激活宽限期（天）',
+  `cardPoolId` int(11) NOT NULL DEFAULT 0 COMMENT '流量池id，type为POOL的才有此字段',
+  `testingExpireDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '测试期结束时间, 无测试期的卡此字段无效',
+  `ratePlanEffetiveDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '卡套餐生效时间，如果未激活无此字段，如果激活则为当前套餐，如果已经过期停卡则为最后一个套餐',
+  `ratePlanExpirationDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '套餐过期时间，如果未激活无此字段，如果激活则为当前套餐，如果已经过期停

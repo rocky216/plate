@@ -1,5 +1,6 @@
 import {fetch} from "@/utils"
 import {LOADING_PROJECT_START, LOADING_PROJECT_END} from "@/types"
+import {getHouseInfo} from "@/utils"
 
 export function roleAccountLink(params, next){
   return async function(dispatch, getState){
@@ -472,6 +473,64 @@ export function getRoleMeunList(params, next){
       
       dispatch({
         type: LOADING_PROJECT_END,
+      })
+      if(next)next(data)
+    }catch(err){
+      console.log(err)
+      dispatch({
+        type: LOADING_PROJECT_END,
+      })
+    }
+  }
+}
+
+export function getDeviceList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: LOADING_PROJECT_START
+    })
+    try {
+      const options = {
+        url: "/device/list",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options) 
+      
+      dispatch({
+        type: LOADING_PROJECT_END,
+        device: data
+      })
+      if(next)next(data)
+    }catch(err){
+      console.log(err)
+      dispatch({
+        type: LOADING_PROJECT_END,
+      })
+    }
+  }
+}
+
+export function editDeviceInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: LOADING_PROJECT_START
+    })
+    try {
+      const options = {
+        url: "/device/updatePlateDevice",
+        method: "post",
+        data: {
+          ...params,
+          itemId: getHouseInfo()
+        }
+      }
+      let data = await fetch(options) 
+      
+      dispatch({
+        type: LOADING_PROJECT_END
       })
       if(next)next(data)
     }catch(err){

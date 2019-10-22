@@ -10,7 +10,8 @@ import {
   Icon,
   Row,
   Col,
-  Input
+  Input,
+  InputNumber
 } from "antd"
 import {getParkingList, addParking} from "@/actions/parkAction"
 import {OpenNotification} from "@/utils"
@@ -42,6 +43,7 @@ class addPlate extends React.Component {
         let hosueInfo = localStorage.getItem("houseInfo")
         formData.append('file', fileList[0]);
         formData.append("parkingLot", values.parkingLot)
+        formData.append("mobile", values.mobile)
         formData.append('itemId',  JSON.parse(hosueInfo)["id"] );
         this.props.actions.addParking(formData, res=>{
           OpenNotification("success")
@@ -85,6 +87,18 @@ class addPlate extends React.Component {
                   ]
                 })(
                   <Input  />
+                )}
+              </Form.Item>
+              <Form.Item label="联系人">
+                {getFieldDecorator('mobile', {
+                  rules: [
+                    {
+                      required: true,
+                      message: '请填写联系人！',
+                    }
+                  ]
+                })(
+                  <InputNumber style={{width:"100%"}} />
                 )}
               </Form.Item>
               <Form.Item label="行驶证图片">

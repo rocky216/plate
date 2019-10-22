@@ -33,7 +33,7 @@ class Login extends React.Component {
     JPushModule.notifyJSDidLoad((resultCode)=>{
       console.log(resultCode)
       if(resultCode === 0){
-        JPushModule.setAlias("gaochao_"+id, success => {})
+        JPushModule.setAlias("gaochao_"+id, success => {}) 
       } 
     })
   }

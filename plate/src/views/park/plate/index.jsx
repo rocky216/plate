@@ -11,6 +11,7 @@ import {getParkingList, delParking, updateParking} from "@/actions/parkAction"
 import {plateColumns} from "../columns"
 import {addIndex} from "@/utils"
 import {OpenNotification} from "@/utils"
+import AuthButton from "@/components/AuthButton"
 
 const formItemLayout = {
   labelCol: {
@@ -103,6 +104,7 @@ class Plate extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {spinning, palteList } = this.props
     const {pagination, visible, detail} = this.state
+    console.log(detail, 888)
     if(palteList){
       pagination.total = palteList.pages.sumRow
     }
@@ -110,6 +112,7 @@ class Plate extends React.Component {
       <JCard spinning={spinning}>
         <div>
           <Modal 
+            destroyOnClose
             title="修改车位编号"
             visible={visible}
             onCancel={()=>this.setState({visible: false})}
@@ -138,6 +141,14 @@ class Plate extends React.Component {
                   <InputNumber/>,
                 )}
                 </Form.Item>
+                <Form.Item label="联系人">
+                {getFieldDecorator('mobile', {
+                  initialValue: detail?detail.mobile:'',
+                  rules: [{ required: true, message: '车位编号不能为空!' }],
+                })(
+                  <InputNumber style={{width: "100%"}} />,
+                )}
+                </Form.Item>
               </Form>
           </Modal>
           <div className="mgb10">
@@ -147,7 +158,7 @@ class Plate extends React.Component {
           </div>
           <Card 
             size="small"
-            title={<Button type="primary"><Link to="/park/plate/add"><Icon type="plus" />添加车牌</Link></Button>}
+            title={<AuthButton type="primary" auth="20201"><Link to="/park/plate/add"><Icon type="plus" />添加车牌</Link></AuthButton>}
           >
             <Table 
               columns={this.getCol()} 

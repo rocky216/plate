@@ -4,22 +4,46 @@ import {bindActionCreators } from "redux"
 import {Link} from "react-router-dom"
 import {
   Button,
-  Carousel 
+  Carousel,
+  Card,
+  Row,
+  Col,
+  Typography
 } from "antd"
 import "./index.less"
 import JCard from "@/components/JCard"
 
+const { Title } = Typography;
+
 class Home extends React.Component {
+  constructor(props){
+    super(props)
+    this.state= {
+      option: {
+        title: {
+          text: "通行记录统计"
+        },
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+        }]
+      }
+    
+    }
+  }
   render(){
     return (
         <JCard >
-          <div className="homePage">
-            <Carousel autoplay>
-              <div >1</div>
-              <div >2</div> 
-              <div >3</div>
-            </Carousel>
-          </div>
+          <Card className="homePage">
+            
+          </Card>
         </JCard>
       
     )

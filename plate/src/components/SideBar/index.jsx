@@ -54,7 +54,9 @@ class SideBar extends React.Component {
     const {menus} = this.state
     return (
       <Sider trigger={null} collapsible >
-        <div className="logo" style={{height: 80}} />
+        <div className="logo" style={{height: 80}} >
+          <img style={{width: "70px", display:"block", margin: "auto"}} src="/images/logo.png" />
+        </div>
         {meunList && meunList.length?
         <Menu theme="dark" mode="inline" >
           {menus.map(item=>(

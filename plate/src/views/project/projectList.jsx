@@ -2,7 +2,7 @@ import React from "react"
 import {connect } from "react-redux"
 import {bindActionCreators} from "redux"
 import {Link, Route, Switch} from "react-router-dom"
-import {Card, Button, Icon, Table} from "antd"
+import {Card, Button, Icon, Table, Popconfirm } from "antd"
 import JCard from "@/components/JCard"
 import AddProject from "@/views/project/addProject"
 import EditProject from "@/views/project/editProject"
@@ -37,7 +37,10 @@ class ProjectList extends React.Component {
         return (
           <div>
             <Button size="small" type="primary" onClick={_this.handlenEdit.bind(_this, item)} >编辑</Button>
-            <Button className="mgl10" size="small" onClick={_this.handlenDelete.bind(_this, row)} >删除</Button>
+            <Popconfirm title="是否删除？" onConfirm={_this.handlenDelete.bind(_this, row)} >
+              <Button className="mgl10" size="small"  >删除</Button>
+            </Popconfirm>
+            
           </div>
         )
       }

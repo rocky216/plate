@@ -7,10 +7,12 @@ import {
   Icon,
   Menu,
   Row,
-  Col
+  Col,
+  Modal
 } from "antd"
 import {getSysItemList} from "@/actions/projectAction"
 import {getHouse, getItemByAccount} from "@/actions/appAction"
+import {outLogin} from "@/utils"
 
 class Head extends React.Component {
   constructor(props){
@@ -33,6 +35,21 @@ class Head extends React.Component {
     this.props.actions.getHouse(data)
     this.props.history.push("/")
   }
+
+  handlenOutLogin(){
+    
+    Modal.confirm({
+      title: '是否退出登录？',
+      okText: '确认',
+      cancelText: '取消',
+      onOk:()=>{
+        outLogin()
+        this.props.history.push("/login")
+      }
+    });
+    
+  }
+
   render(){
     const {mySysItemList, houseInfo} = this.props
 
@@ -55,7 +72,7 @@ class Head extends React.Component {
             <Dropdown.Button trigger={["click"]} overlay={menu} icon={<Icon type="project" />}>
             {houseInfo?houseInfo.housingEstateName:''}</Dropdown.Button>:null}
         </div>
-        <div>
+        <div onClick={this.handlenOutLogin.bind(this)} style={{cursor:"pointer"}}>
           <Icon type="logout" style={{fontSize: 20}} />
           <span>退出</span>
         </div>

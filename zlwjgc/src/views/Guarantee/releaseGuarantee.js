@@ -20,7 +20,7 @@ import {
 } from "native-base"
 import IconAntDesign from "react-native-vector-icons/AntDesign"
 import ImagePicker from 'react-native-image-crop-picker';
-import {releaseGurante, getGuranteList, getGuranteType} from "@/actions/appAction"
+import {releaseGurante, getGuranteList, getGuranteType} from "@/actions/appAction" 
 import {ToastTip} from "@/utils"
 
 class ReleaseGuarantee extends React.Component {

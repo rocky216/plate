@@ -2,10 +2,18 @@ import { notification } from 'antd';
 import qs from "qs"
 import instance from "./http"
 
+export function outLogin(){
+  localStorage.removeItem("userInfo");
+  localStorage.removeItem("token");
+}
 
 export function getUserInfo(attr){
   const key = attr?attr:"id"
   let userInfo = localStorage.getItem("userInfo")
+  if(!userInfo){
+    _navigation.push("/login")
+    return ''
+  }
   return userInfo!='undefined' && userInfo!=''?JSON.parse(userInfo)[key]:''
 }
 
@@ -56,7 +64,7 @@ export function fetch(opt){
         resolve(response.data)
       }else if(response.code == -1){
         _navigation.push("/login")
-        OpenNotification("error", response.msg)
+        // OpenNotification("error", response.msg)
         reject()
       }else{
         OpenNotification("error", response.msg)

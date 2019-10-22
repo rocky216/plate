@@ -14,6 +14,7 @@ import AddParkRule from "@/views/park/rule/add"
 import {getLeaseConfigList, delLeaseConfig} from "@/actions/parkAction"
 import {parkColumns} from "../columns"
 import {addIndex, OpenNotification} from "@/utils"
+import AuthButton from "@/components/AuthButton"
 
 class Rule extends React.Component {
 
@@ -60,7 +61,7 @@ class Rule extends React.Component {
           </div>
           <Card
             size="small"
-            title={<Button type="primary"><Link to="/park/rule/add"><Icon type="plus" />添加租赁规则</Link></Button>}
+            title={<AuthButton type="primary" auth="20601"><Link to="/park/rule/add"><Icon type="plus" />添加租赁规则</Link></AuthButton>}
           >
             <Table columns={this.getCol()} dataSource={addIndex(parkRuleList)} />
           </Card>

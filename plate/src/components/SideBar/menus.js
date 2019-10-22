@@ -23,17 +23,17 @@ export default [
       {
         title: "订单列表",
         key: 203,
-        link: "/"
+        link: "/park/orderlist"
       },
       {
-        title: "租赁权限",
+        title: "设备列表",
         key: 204,
-        link: "/"
+        link: "/park/device"
       },
       {
         title: "通行记录",
         key: 205,
-        link: "/"
+        link: "/park/pass"
       },
       {
         title: "租赁规则",
@@ -71,6 +71,28 @@ export default [
         title: "权限管理",
         key: 304,
         link: "/project/auth/0",
+      },
+      {
+        title: "设备管理",
+        key: 305,
+        link: "/project/device",
+      },
+    ]
+  },
+  {
+    title: "物联网卡",
+    key: 4,
+    icon: "icon iconfont icon-tongji",
+    children: [
+      {
+        title: "物联网卡列表",
+        key: 401,
+        link: "/internet/list",
+      },
+      {
+        title: "流量统计",
+        key: 402,
+        link: "/internet/statis",
       },
     ]
   }

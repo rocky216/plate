@@ -15,7 +15,7 @@ module.exports = {
     path: resolve('dist'),
     filename: '[name]-[hash:5].bundle.js',
     chunkFilename: "[name]-[hash:5].chunk.js",
-    publicPath: "",
+    publicPath: "/",
   },
   plugins: [
     new HtmlWebpackPlugin({
