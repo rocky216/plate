@@ -1,18 +1,16 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators } from "redux"
-import {View, StyleSheet, Linking } from "react-native"
-import {Container, Card, Form,Text, Input, Label, Item, Button} from "native-base"
+import {View, StyleSheet, Linking, Text } from "react-native"
+import {Container, Card, Form, Input, Label, Item, Button, Content, Footer, FooterTab} from "native-base"
 import {handlenLogin } from "@/actions/appAction"
 import {ToastTip, setStorage, getStorage} from "@/utils"
 import JPushModule from 'jpush-react-native';
+import IconAntDesign from "react-native-vector-icons/AntDesign"
 
 class Login extends React.Component {
   static navigationOptions = ({navigation})=>({
-    title: "登录",
-    headerRight: <Button transparent light onPress={()=>navigation.navigate("Register")}>
-                  <Text style={{fontSize:16}}>注册</Text>
-                </Button>
+    header:null,
   })
 
   constructor(props){
@@ -68,6 +66,7 @@ class Login extends React.Component {
         phone, password
       }
     }, async (res, version)=>{
+      console.log(res, "login_res")
       this.handlenSetJpush(res.id)
       await setStorage("phone", phone)
       await setStorage("password", password)
@@ -76,23 +75,39 @@ class Login extends React.Component {
   }
 
   render(){
+    const {navigation} = this.props
     return (
       <Container>
-        <Card style={styles.mb}>
-        <Form>
-          <Item >
-            <Label style={styles.labelStyle}>用户名</Label>
-            <Input value={this.state.phone} onChangeText={(val)=>this.setState({phone: val})} />
-          </Item>
-          <Item  last>
-            <Label  >密码</Label>
-            <Input secureTextEntry value={this.state.password} onChangeText={(val)=>this.setState({password: val})} />
-          </Item>
-        </Form>
-        <Button full  onPress={this.clickLogin.bind(this)}   style={{ margin: 15, marginTop: 50}} >
-          <Text style={{color: '#fff', fontSize: 16, textAlign:"center"}}>登录</Text>
-        </Button>
-      </Card>
+        <Content>
+          <Card style={styles.mb} transparent >
+              <Text style={styles.welcome}>欢迎登录智联万家！</Text>
+              <Form>
+                <Item >
+                  <Label style={styles.labelStyle}><IconAntDesign name="user" size={22} color="#999" /></Label>
+                  <Input value={this.state.phone} placeholder="请输入用户名/手机号" onChangeText={(val)=>this.setState({phone: val})} />
+                </Item>
+                <Item >
+                  <Label  ><IconAntDesign name="lock1" size={22} color="#999" /></Label>
+                  <Input secureTextEntry value={this.state.password} placeholder="请输入密码" onChangeText={(val)=>this.setState({password: val})} />
+                </Item>
+              </Form>
+              <Button full  onPress={this.clickLogin.bind(this)}   style={{ margin: 15, marginTop: 50}} >
+                <Text style={{color: '#fff', fontSize: 16, textAlign:"center"}}>登录</Text>
+              </Button>
+              <Button transparent full onPress={()=>navigation.navigate("Register")} >
+                <Text style={styles.resigter}>用户注册<IconAntDesign name="arrowright" /></Text>
+              </Button>
+          </Card>
+        </Content>
+        <Footer >
+          <FooterTab>
+          <Button transparent  full style={{backgroundColor: "#fff", borderTopWidth: 0}} onPress={()=>navigation.navigate("Agreement")}  >
+            <View style={{display: "flex", flexDirection:"row"}}>
+              <Text>登录即代表您已同意我们的</Text><Text style={{color: "#8392e8"}}>《用户协议及隐私声明》</Text>
+            </View>
+            </Button>
+          </FooterTab>
+        </Footer>
       </Container>
     )
   }
@@ -107,6 +122,16 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     paddingBottom: 5
+  },
+  welcome: {
+    marginBottom: 50,
+    color: "#999",
+    marginLeft:12,
+    fontSize:26
+  },
+  resigter: {
+    textAlign: "center",
+    color: "#8392e8"
   }
 })
 

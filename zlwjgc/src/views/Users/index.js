@@ -16,6 +16,7 @@ import {
   ListItem,
   Icon,
   Card,
+  ActionSheet
 } from "native-base"
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import IconAntDesign from 'react-native-vector-icons/AntDesign'
@@ -26,7 +27,22 @@ class Users extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      isModalVisible: true
     }
+  }
+
+  handlenLoginOut(){
+    ActionSheet.show({
+      options: [
+        {text:"退出"},
+        {text:"取消"}
+      ],
+      title: "是否退出登录？"
+    }, buttonIndex=>{
+      if(buttonIndex==0){
+        this.props.navigation.navigate("Login")
+      }
+    })
   }
 
 
@@ -110,9 +126,19 @@ class Users extends React.Component {
                   <Icon active name="arrow-forward" />
                 </Right>
               </ListItem>
+              <ListItem icon onPress={this.handlenLoginOut.bind(this)} >
+                <Left>
+                  <IconAntDesign name="logout" size={26} />
+                </Left>
+                <Body>
+                  <Text>退出登录</Text>
+                </Body>
+                <Right>
+                  <Icon active name="arrow-forward" />
+                </Right>
+              </ListItem>
             </List>
           </Card>
-          
         </Content>
       </Container>
     )
