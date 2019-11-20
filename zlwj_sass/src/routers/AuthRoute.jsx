@@ -5,7 +5,6 @@ import {
   Route,
   withRouter
 } from "react-router-dom"
-import {getKeepTabs } from "@/actions/appAction"
 
 
 class AuthRoute extends React.Component{
@@ -19,7 +18,7 @@ class AuthRoute extends React.Component{
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getKeepTabs}, dispatch)
+    actions: bindActionCreators({}, dispatch)
   }
 }
 

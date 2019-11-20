@@ -65,5 +65,17 @@ export default [
         key: 601
       }
     ]
+  },
+  {
+    title: "管理员设置",
+    key: 9,
+    icon: "icon iconfont icon-zhengwugongkai2",
+    children: [
+      {
+        title: "权限结构",
+        link: "/system/treemenu",
+        key: 901
+      }
+    ]
   }
 ]

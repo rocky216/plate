@@ -3,13 +3,17 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {withRouter} from "react-router-dom"
 import {Layout, Icon, Button, Dropdown, Menu, Modal} from "antd"
-import {setCollapsedTrue, setCollapsedFalse} from "@/actions/appAction"
+import {setCollapsedTrue, setCollapsedFalse, goLoginOut, getBaseInfo} from "@/actions/appAction"
 import "./style.less"
 
 const {Header} = Layout
 const { confirm } = Modal;
 
 class Head extends React.Component {
+
+  componentDidMount(){
+    this.props.actions.getBaseInfo({})
+  }
 
   handlenToggle(collapsed){
     collapsed?this.props.actions.setCollapsedFalse():this.props.actions.setCollapsedTrue()
@@ -27,7 +31,11 @@ class Head extends React.Component {
       okType: 'danger',
       cancelText: '取消',
       onOk() {
-        _this.props.history.push("/login")
+        _this.props.actions.goLoginOut({}, res=>{
+          _this.props.history.push("/login")
+          _this.props.utils.removeCookie("token")
+        })
+        
       }
     });
   }
@@ -75,13 +83,14 @@ class Head extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({setCollapsedTrue, setCollapsedFalse}, dispatch)
+    actions: bindActionCreators({setCollapsedTrue, setCollapsedFalse, goLoginOut, getBaseInfo}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-    collapsed: state.app.collapsed
+    collapsed: state.app.collapsed,
+    utils: state.app.utils
   }
 }
 

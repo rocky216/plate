@@ -2,6 +2,7 @@ var path = require("path");
 var webpack = require("webpack")
 var webpackMerge = require("webpack-merge");
 var webpackBase = require("./webpack.base")
+var config = require("../config")
 
 
 function resolve(str){ 
@@ -14,19 +15,19 @@ module.exports = webpackMerge(webpackBase, {
   devServer: {
     contentBase: resolve('dist'),
     port: 3000,
-    host:"192.168.1.107",
+    host:"localhost",
     hot: true,
     hotOnly:true, //禁用自动刷新
     noInfo: true,
     open: true,
     progress:false,
-    // proxy: {
-    //   "/system": {
-    //     target: config.baseUrl,
-    //     pathRewrite: {'^/system' : '/system'},
-    //     changeOrigin: true,
-    //   }
-    // },
+    proxy: {
+      "/api": {
+        target: config.baseUrl,
+        pathRewrite: {'^/api' : '/api'},
+        changeOrigin: true,
+      }
+    },
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

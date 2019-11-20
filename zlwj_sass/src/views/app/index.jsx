@@ -4,7 +4,6 @@ import { Layout, Menu, Icon } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 import SiderBar from "@/components/SiderBar"
 import Head from "@/components/Head"
-import KeepTab from "@/components/KeepTab"
 import Routers from "@/routers"
 
 
@@ -17,8 +16,8 @@ class App extends React.Component {
       <SiderBar/>
       <Layout style={{ marginLeft: collapsed?80:200 }}>
         <Head/>
-        <Content style={{ margin: '24px 16px 0', overflow: 'initial', minHeight:810 }}>
-          <div style={{ padding: 24 }}>
+        <Content style={{ margin: '10px 10px 0', overflow: 'initial', minHeight:810 }}>
+          <div >
             <Routers/>
           </div>
         </Content>
