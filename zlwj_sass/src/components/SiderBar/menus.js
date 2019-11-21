@@ -67,6 +67,35 @@ export default [
     ]
   },
   {
+    title: "项目数据管理",
+    key: 7,
+    icon: "icon iconfont icon-zhengwugongkai2",
+    children: [
+      {
+        title: "项目管理",
+        link: "/project/item",
+        key: 701
+      },
+    ]
+  },
+  {
+    title: "基础数据管理",
+    key: 8,
+    icon: "icon iconfont icon-zhengwugongkai2",
+    children: [
+      {
+        title: "部门数据列表",
+        link: "/base/department",
+        key: 801
+      },
+      {
+        title: "岗位管理",
+        link: "/base/station",
+        key: 802
+      },
+    ]
+  },
+  {
     title: "管理员设置",
     key: 9,
     icon: "icon iconfont icon-zhengwugongkai2",

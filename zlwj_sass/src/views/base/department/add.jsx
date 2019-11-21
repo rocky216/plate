@@ -2,7 +2,7 @@ import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Modal, Form, Input, InputNumber} from "antd";
-import {addTreeMenu, getTreeMenuList} from "@/actions/systemAction"
+import {addTreeDept, getTreeDeptList} from "@/actions/baseAction"
 
 const formItemLayout = {
   labelCol: {
@@ -15,18 +15,18 @@ const formItemLayout = {
   },
 };
 
-class AddMenu extends React.Component {
+class AddDept extends React.Component {
   handlenSubmit(){
     const {detail} = this.props
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        this.props.actions.addTreeMenu({
+        this.props.actions.addTreeDept({
           ...values,
-          parentId: detail?detail.id:0
+          parentId: detail.id
         }, res=>{
-          this.props.utils.OpenNotification("success")
+          this.props.actions.getTreeDeptList({})
           this.props.onCancel()
-          this.props.actions.getTreeMenuList({})
+          this.props.utils.OpenNotification("success")
         })
       }
     })
@@ -45,25 +45,15 @@ class AddMenu extends React.Component {
         confirmLoading={spinning}
         onOk={this.handlenSubmit.bind(this)}>
         <Form {...formItemLayout}>
-          <Form.Item label="菜单名称" hasFeedback>
-            {getFieldDecorator('name', {
+          <Form.Item label="部门名称" hasFeedback>
+            {getFieldDecorator('deptName', {
               rules: [
                 {
                   required: true,
-                  message: '填写菜单名称!',
+                  message: '填写部门名称!',
                 }
               ],
             })(<Input />)}
-          </Form.Item>
-          <Form.Item label="菜单Key值" hasFeedback>
-            {getFieldDecorator('key', {
-              rules: [
-                {
-                  required: true,
-                  message: '填写菜菜单Key值!',
-                }
-              ],
-            })(<InputNumber style={{width: "100%"}} />)}
           </Form.Item>
         </Form>
       </Modal>
@@ -73,15 +63,15 @@ class AddMenu extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addTreeMenu, getTreeMenuList}, dispatch)
+    actions: bindActionCreators({addTreeDept, getTreeDeptList}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
     utils: state.app.utils,
-    spinning: state.system.spinning
+    spinning: state.base.spinning
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddMenu) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddDept) )

@@ -1,13 +1,13 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {} from "antd";
+import {Modal, Form, Button, Input} from "antd";
 
 
-class Test extends React.Component {
+class AddItem extends React.Component {
   render(){
     return (
-      <div>Test</div>
+      <Modal>Test</Modal>
     )
   }
 }
@@ -24,4 +24,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(Test)
+export default connect(mapStateProps, mapDispatchProps)(Form.create()(AddItem))

@@ -1,9 +1,34 @@
-import cookies from "react-cookies"
+import cookies, { __esModule } from "react-cookies"
 import qs from "qs"
 import instance from "./http"
 import { notification } from 'antd';
 import store from "@/store"
 
+
+export function Pagination(pageInfo, next){
+  if(!pageInfo) return {}
+  if(!_.hasIn(pageInfo, "current") || !_.hasIn(pageInfo, "pageSize") || !_.hasIn(pageInfo, "total")){
+    OpenNotification("error", "分页少了应有字段！")
+    return {}
+  }
+  const {current, pageSize, total} = pageInfo
+  return {
+    current,
+    pageSize,
+    total,
+    onChange: function(){
+      if(next)next(...arguments)
+    }
+  }
+}
+
+export function addIndex(arr){
+  if(!_.isArray(arr)) return []
+  _.each(arr, (item, index)=>{
+    item.key = index+1
+  })
+  return arr
+}
 
 export function getToken(){
   if(store.getState().app.token){

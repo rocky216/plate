@@ -18,7 +18,7 @@ instance.interceptors.request.use(function(config){
   if(getToken("token") && getToken("token").length>10){
     return config
   }else{
-    OpenNotification("error", "token格式不正确！")
+    // OpenNotification("error", "token格式不正确！")
     _navigation.push("/login")
     return false
   }

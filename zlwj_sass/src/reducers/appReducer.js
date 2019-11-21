@@ -1,5 +1,5 @@
 import {START_LOADING_APP, END_LOADING_APP} from "@/types"
-import {OpenNotification, setCookie, getCookie, removeCookie} from "@/utils"
+import {OpenNotification, setCookie, getCookie, removeCookie, addIndex, Pagination} from "@/utils"
 
 let initialState = {
   spinning: false,
@@ -8,7 +8,9 @@ let initialState = {
     OpenNotification,
     setCookie, 
     getCookie, 
-    removeCookie
+    removeCookie,
+    addIndex,
+    Pagination
   },
   keeptabs: [{name: "首页", path: "/"}]
 }
