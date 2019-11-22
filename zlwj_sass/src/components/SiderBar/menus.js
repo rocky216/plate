@@ -76,6 +76,11 @@ export default [
         link: "/project/item",
         key: 701
       },
+      {
+        title: "项目信息管理",
+        link: "/project/prodata",
+        key: 702
+      },
     ]
   },
   {
@@ -92,6 +97,11 @@ export default [
         title: "岗位管理",
         link: "/base/station",
         key: 802
+      },
+      {
+        title: "角色管理",
+        link: "/base/role",
+        key: 803
       },
     ]
   },

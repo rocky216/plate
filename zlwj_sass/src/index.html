@@ -30,7 +30,7 @@
   .cube-folding span::before {
     content: '';
    /* background-color: #40b377;*/
-    background: #21a8df;
+    background: #1DA57A;
     position: absolute;
     left: 0;
     top: 0;
@@ -56,7 +56,7 @@
     -webkit-animation-delay: 0.3s;
     animation-delay: 0.3s;
     /*background-color: #56e89c;*/
-     background-color: #21a8df;
+     background-color: #1DA57A;
   }
   .cube-folding .leaf3 {
     -moz-transform: rotateZ(270deg) scale(1.1);
@@ -69,7 +69,7 @@
     -webkit-animation-delay: 0.9s;
     animation-delay: 0.9s;
   /*  background-color: #4fda92;*/
-    background:  #21a8df;
+    background:  #1DA57A;
   }
   .cube-folding .leaf4 {
     -moz-transform: rotateZ(180deg) scale(1.1);
@@ -82,7 +82,7 @@
     -webkit-animation-delay: 0.6s;
     animation-delay: 0.6s;
    /* background-color: #25bb6d;*/
-    background: #21a8df;
+    background: #1DA57A;
   }
 
   @-moz-keyframes folding {
@@ -176,7 +176,7 @@
     font-size: 12px;
     letter-spacing: 0.1em;
     display: block;
-    color: #21a8df;
+    color: #1DA57A;
     position: relative;
     top: 25px;
     z-index: 2;
@@ -223,15 +223,14 @@
   
   <div id="root">
       <div class="cube-wrapper">
-          <div class="cube-folding">
-            <span class="leaf1"></span>
-            <span class="leaf2"></span>
-            <span class="leaf3"></span>
-            <span class="leaf4"></span>
-          </div>
-          <span class="loading" data-name="Loading">加载中，请稍候</span>
-          </div>
-
+        <div class="cube-folding">
+          <span class="leaf1"></span>
+          <span class="leaf2"></span>
+          <span class="leaf3"></span>
+          <span class="leaf4"></span>
+        </div>
+        <span class="loading" data-name="Loading">加载中，请稍候</span>
+      </div>
   </div>
 </body>
 </html>

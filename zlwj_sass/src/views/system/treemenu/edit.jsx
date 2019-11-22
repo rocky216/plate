@@ -68,7 +68,7 @@ class EditMenu extends React.Component {
                   message: '填写菜菜单Key值!',
                 }
               ],
-            })(<InputNumber style={{width: "100%"}} />)}
+            })(<Input style={{width: "100%"}} />)}
           </Form.Item>
           <Form.Item label="是否启用" >
             {getFieldDecorator('status', {

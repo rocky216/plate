@@ -119,9 +119,9 @@ class Station extends React.Component {
                   initialValue: " "
                 })(
                   <Select style={{width: 100}}>
-                    <Option value=" ">请选择</Option>
+                    <Option value=" ">全部</Option>
                     <Option value="0">启用</Option>
-                    <Option value="1">警用</Option>
+                    <Option value="1">禁用</Option>
                   </Select>
                 )}
               </Form.Item>

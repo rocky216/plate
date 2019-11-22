@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {
+  Switch,
   Route,
   withRouter
 } from "react-router-dom"

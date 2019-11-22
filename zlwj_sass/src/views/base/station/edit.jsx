@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Input} from "antd";
+import {Modal, Form, Input, Switch} from "antd";
 import {editStation, getStationList} from "@/actions/baseAction"
 
 const { TextArea } = Input;
@@ -24,7 +24,8 @@ class EditStation extends React.Component {
         console.log(values)
         this.props.actions.editStation({
           ...values,
-          id: this.props.detail.id
+          id: this.props.detail.id,
+          status: values.status?"0":"1"
         }, res=>{
           this.props.actions.getStationList({})
           this.props.utils.OpenNotification("success")
@@ -71,6 +72,12 @@ class EditStation extends React.Component {
                 }
               ],
             })(<Input  />)}
+          </Form.Item>
+          <Form.Item label="是否启用" >
+            {getFieldDecorator('status', {
+              initialValue: detail.status=="0"?true:false,
+              valuePropName: "checked"
+            })(<Switch  />)}
           </Form.Item>
           <Form.Item label="岗位描述" hasFeedback>
             {getFieldDecorator('jobDesc',{

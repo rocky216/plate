@@ -1,8 +1,8 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Input, InputNumber} from "antd";
-import {addTreeMenu, getTreeMenuList} from "@/actions/systemAction"
+import {Modal, Form, Input} from "antd";
+import { addRoleDetail, getRoleList} from "@/actions/baseAction";
 
 const formItemLayout = {
   labelCol: {
@@ -15,18 +15,17 @@ const formItemLayout = {
   },
 };
 
-class AddMenu extends React.Component {
+class AddRole extends React.Component {
+
   handlenSubmit(){
-    const {detail} = this.props
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        this.props.actions.addTreeMenu({
-          ...values,
-          parentId: detail?detail.id:0
+        this.props.actions.addRoleDetail({
+          ...values
         }, res=>{
+          this.props.actions.getRoleList({})
           this.props.utils.OpenNotification("success")
           this.props.onCancel()
-          this.props.actions.getTreeMenuList({})
         })
       }
     })
@@ -34,7 +33,8 @@ class AddMenu extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, visible, onCancel, detail} = this.props
+    const {spinning, visible, onCancel} = this.props
+
     return (
       <Modal 
         destroyOnClose
@@ -45,25 +45,15 @@ class AddMenu extends React.Component {
         confirmLoading={spinning}
         onOk={this.handlenSubmit.bind(this)}>
         <Form {...formItemLayout}>
-          <Form.Item label="菜单名称" hasFeedback>
-            {getFieldDecorator('name', {
+          <Form.Item label="角色名称" hasFeedback>
+            {getFieldDecorator('roleName', {
               rules: [
                 {
                   required: true,
-                  message: '填写菜单名称!',
+                  message: '填写角色名称!',
                 }
               ],
             })(<Input />)}
-          </Form.Item>
-          <Form.Item label="菜单Key值" hasFeedback>
-            {getFieldDecorator('key', {
-              rules: [
-                {
-                  required: true,
-                  message: '填写菜菜单Key值!',
-                }
-              ],
-            })(<Input style={{width: "100%"}} />)}
           </Form.Item>
         </Form>
       </Modal>
@@ -73,15 +63,15 @@ class AddMenu extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addTreeMenu, getTreeMenuList}, dispatch)
+    actions: bindActionCreators({addRoleDetail, getRoleList}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
     utils: state.app.utils,
-    spinning: state.system.spinning
+    spinning: state.base.spinning
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddMenu) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddRole) )

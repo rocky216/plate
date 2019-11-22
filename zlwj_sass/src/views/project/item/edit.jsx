@@ -1,8 +1,8 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Input, InputNumber} from "antd";
-import {addTreeMenu, getTreeMenuList} from "@/actions/systemAction"
+import {Modal, Form, Button, Input} from "antd";
+import {editHeHousingEstate, getHeHousingEstate} from "@/actions/projectAction"
 
 const formItemLayout = {
   labelCol: {
@@ -15,18 +15,18 @@ const formItemLayout = {
   },
 };
 
-class AddMenu extends React.Component {
+class EditItem extends React.Component {
+
   handlenSubmit(){
-    const {detail} = this.props
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        this.props.actions.addTreeMenu({
+        this.props.actions.editHeHousingEstate({
           ...values,
-          parentId: detail?detail.id:0
+          id: this.props.detail.id
         }, res=>{
-          this.props.utils.OpenNotification("success")
+          this.props.actions.getHeHousingEstate({})
           this.props.onCancel()
-          this.props.actions.getTreeMenuList({})
+          this.props.utils.OpenNotification("success")
         })
       }
     })
@@ -35,35 +35,39 @@ class AddMenu extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {spinning, visible, onCancel, detail} = this.props
+    
     return (
-      <Modal 
+      <Modal
         destroyOnClose
         okText="确定"
         cancelText="取消"
+        confirmLoading={spinning}
         visible={visible}
         onCancel={onCancel}
-        confirmLoading={spinning}
-        onOk={this.handlenSubmit.bind(this)}>
-        <Form {...formItemLayout}>
-          <Form.Item label="菜单名称" hasFeedback>
-            {getFieldDecorator('name', {
+        onOk={this.handlenSubmit.bind(this)}
+      >
+        <Form {...formItemLayout} >
+          <Form.Item label="项目名称" hasFeedback>
+            {getFieldDecorator("name", {
+              initialValue: detail.name,
               rules: [
                 {
                   required: true,
-                  message: '填写菜单名称!',
+                  message: '填写项目名称!',
                 }
               ],
             })(<Input />)}
           </Form.Item>
-          <Form.Item label="菜单Key值" hasFeedback>
-            {getFieldDecorator('key', {
+          <Form.Item label="项目编号" hasFeedback>
+            {getFieldDecorator("code", {
+              initialValue: detail.code,
               rules: [
                 {
                   required: true,
-                  message: '填写菜菜单Key值!',
+                  message: '填写项目编号!',
                 }
               ],
-            })(<Input style={{width: "100%"}} />)}
+            })(<Input />)}
           </Form.Item>
         </Form>
       </Modal>
@@ -73,15 +77,15 @@ class AddMenu extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addTreeMenu, getTreeMenuList}, dispatch)
+    actions: bindActionCreators({editHeHousingEstate, getHeHousingEstate}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
     utils: state.app.utils,
-    spinning: state.system.spinning
+    spinning: state.project.spinning
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddMenu) )
+export default connect(mapStateProps, mapDispatchProps)(Form.create()(EditItem))

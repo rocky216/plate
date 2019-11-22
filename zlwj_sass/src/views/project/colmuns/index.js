@@ -7,7 +7,7 @@ export const itemColmuns = [
     dataIndex: "key"
   },
   {
-    title: "小区名称",
+    title: "项目名称",
     dataIndex: "name",
   },
   {
