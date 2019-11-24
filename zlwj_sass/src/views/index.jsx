@@ -26,7 +26,7 @@ class Index extends React.Component {
 
 
 function mapStateProps(state){
-  console.log(state)
+  
   return {
     utils: state.app.utils
   }

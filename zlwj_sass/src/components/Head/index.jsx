@@ -10,16 +10,27 @@ const {Header} = Layout
 const { confirm } = Modal;
 
 class Head extends React.Component {
-
-  componentDidMount(){
-    this.props.actions.getBaseInfo({})
+  constructor(props){
+    super(props)
+    this.state = {
+      proName: '选择小区'
+    }
   }
+  componentDidMount(){
+    this.props.actions.getBaseInfo({}, res=>{
+      this.setState({proName: res.heList[0]["name"]})
+    })
+  }
+
+  
 
   handlenToggle(collapsed){
     collapsed?this.props.actions.setCollapsedFalse():this.props.actions.setCollapsedTrue()
   }
   handleMenuClick({key}){
-    console.log(key)
+    let obj = _.filter(this.props.baseInfo.heList, o=>o.id==key)[0]
+    if(obj.key == key) return;
+    this.setState({proName: obj.name})
   }
 
   loginOut(){
@@ -41,22 +52,14 @@ class Head extends React.Component {
   }
 
   render(){
-    const {collapsed} = this.props
+    const {collapsed, baseInfo} = this.props
+    const {proName} = this.state
 
     const menu = (
       <Menu theme="dark" onClick={this.handleMenuClick.bind(this)}>
-        <Menu.Item key="1">
-          <Icon type="project" />
-          1st menu item
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Icon type="project" />
-          2nd menu item
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Icon type="project" />
-          3rd item
-        </Menu.Item>
+        {baseInfo && baseInfo.heList? baseInfo.heList.map(item=>(
+          <Menu.Item key={item.id}> <Icon type="project" />{item.name}</Menu.Item>
+        )):null}
       </Menu>
     );
 
@@ -69,7 +72,7 @@ class Head extends React.Component {
         />
         <div className="header_right">
           <Dropdown.Button overlay={menu} icon={<Icon type="project" />}>
-            选择小区
+            {proName}
           </Dropdown.Button>
           <Button type="link" onClick={this.loginOut.bind(this)} style={{margin: "15px 10px 0 0"}}>
             <Icon type="logout" />
@@ -89,6 +92,7 @@ function mapDispatchProps(dispatch){
 
 function mapStateProps(state){
   return {
+    baseInfo: state.app.baseInfo,
     collapsed: state.app.collapsed,
     utils: state.app.utils
   }

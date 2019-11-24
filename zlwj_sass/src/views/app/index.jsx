@@ -1,10 +1,13 @@
 import React from "react"
 import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
 import { Layout, Menu, Icon } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 import SiderBar from "@/components/SiderBar"
 import Head from "@/components/Head"
 import Routers from "@/routers"
+import {getBaseInfo} from "@/actions/appAction"
+
 
 
 class App extends React.Component {
@@ -28,6 +31,12 @@ class App extends React.Component {
   }
 }
 
+function mapDispatchProps(dispatch){
+  return {
+    actions: bindActionCreators({getBaseInfo}, dispatch)
+  }
+}
+
 function mapStateProps(state){
   console.log(state)
   return {
@@ -35,4 +44,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps)(App)
+export default connect(mapStateProps, mapDispatchProps)(App)

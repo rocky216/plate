@@ -25,3 +25,35 @@ export const itemColmuns = [
     }
   }
 ]
+
+export const buildColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "楼栋",
+    dataIndex: "buildingName",
+    render(item){
+    return <span>{item}栋</span>
+    }
+  },
+  {
+    title: "楼栋编码",
+    dataIndex: "showCode"
+  },
+  {
+    title: "是否电梯房",
+    dataIndex: "elevatorBuilding",
+    render(item){
+      return <span>{item=="0"?"楼梯房":"电梯房"}</span>
+    }
+  },
+  {
+    title: "电梯数量(个)",
+    dataIndex: "elevatorCount",
+    render(item, row){
+      return <span>{row.elevatorBuilding=="0"?"无":item}</span>
+    }
+  },
+]

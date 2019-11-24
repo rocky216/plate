@@ -13,6 +13,7 @@ import ProjectItem from "@/views/project/item"
 import RoleList from "@/views/base/role"
 import EditRole from "@/views/base/role/edit"
 import ProData from "@/views/project/prodata"
+import Unit from "@/views/project/prodata/unit"
 
 class Routers extends React.Component{
   
@@ -30,7 +31,8 @@ class Routers extends React.Component{
         <AuthRoute  path="/base/role/:id/edit" Component={EditRole} name="编辑/权限角色" />
 
         <AuthRoute  path="/project/item" Component={ProjectItem} name="项目管理" />
-        <AuthRoute  path="/project/prodata" Component={ProData} name="项目信息管理" />
+        <AuthRoute exact  path="/project/prodata" Component={ProData} name="项目信息管理" />
+        <AuthRoute  path="/project/prodata/:heId/util/:id" Component={Unit} name="单元" />
       </Switch>
       
     )

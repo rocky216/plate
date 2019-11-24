@@ -4,12 +4,40 @@ import {log_color} from "@/utils/config"
 import { setCookie, getCookie, getToken} from "../utils"
 
 
+export function getSelectHeList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadSelectHeList",
+        method: "get",
+        data: {}
+      }
 
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        allHeList: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
 
 export function getBaseInfo(params, next){
   return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
     try{
-      
       const options = {
         url: "/api/pc/loadBaseInfo",
         method: "get",
@@ -18,9 +46,15 @@ export function getBaseInfo(params, next){
 
       let data = await fetch(options)
       if(next)next(data)
-
+      dispatch({
+        type: END_LOADING_APP,
+        baseInfo: data
+      })
     }catch(err){
       console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
     }
 
   }
