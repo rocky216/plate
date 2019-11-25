@@ -2,6 +2,125 @@ import {START_LOADING_PROJECT, END_LOADING_PROJECT} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function deleteFloor(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/heFloor/delete",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function deleteUnit(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/heUnit/delete",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function getBaseNameAndCode(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadBaseNameAndCode",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function addUtil(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/heUnit/add",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
 
 export function getUtilList(params, next){
   return async function(dispatch, getState){

@@ -1,8 +1,9 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
+import {withRouter} from "react-router-dom"
 import {Modal, Form, Input, InputNumber, Select} from "antd";
-import {addBuild, getBuildList} from "@/actions/projectAction"
+import {addUtil, getUtilList} from "@/actions/projectAction"
 
 const {Option} = Select
 
@@ -17,7 +18,7 @@ const formItemLayout = {
   },
 };
 
-class AddProdata extends React.Component {
+class AddUtil extends React.Component {
   constructor(props){
     super(props)
     this.state={
@@ -28,11 +29,18 @@ class AddProdata extends React.Component {
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        this.props.actions.addBuild({
-          ...values
+        this.props.actions.addUtil({
+          ...values,
+          heId: this.props.match.params.heId,
+          buildingId: this.props.match.params.id,
+          unitName: values.unitName+'单元'
         }, res=>{
           this.props.utils.OpenNotification("success")
-          this.props.actions.getBuildList({current:1})
+          this.props.actions.getUtilList({
+            current:1,
+            heId: this.props.match.params.heId,
+            buildingId: this.props.match.params.id,
+          })
           this.props.onCancel()
         })
       }
@@ -42,7 +50,7 @@ class AddProdata extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {spinning, visible, onCancel} = this.props
-    const {isEve } = this.state
+    
 
     return (
       <Modal
@@ -55,84 +63,68 @@ class AddProdata extends React.Component {
         onOk={this.handlenSubmit.bind(this)}
       >
         <Form {...formItemLayout} >
-          <Form.Item label="楼宇名称" hasFeedback>
-            {getFieldDecorator('buildingName', {
+          <Form.Item label="单元名称" hasFeedback>
+            {getFieldDecorator('unitName', {
               rules: [
                 {
                   required: true,
-                  message: '楼宇名称!',
+                  message: '填写单元名称!',
                 }
               ],
             })(
               <div>
-                <InputNumber min={1}/><span>栋</span>
+                <InputNumber min={1} style={{width:"70%"}} /><span>单元</span>
               </div>
             )}
           </Form.Item>
-          <Form.Item label="楼宇展示编号" hasFeedback>
-            {getFieldDecorator('showCode', {
-              rules: [
-                {
-                  required: true,
-                  message: '填写楼宇展示编号!',
-                }
-              ],
-            })(<Input/>)}
-          </Form.Item>
-          <Form.Item label="楼宇编号" hasFeedback>
+          <Form.Item label="单元编号" hasFeedback>
             {getFieldDecorator('code', {
               rules: [
                 {
                   required: true,
-                  message: '填写楼宇编号!',
+                  message: '填写单元编号!',
                 }
               ],
-            })(<Input/>)}
+            })(<Input min={1} style={{width:"70%"}} />)}
           </Form.Item>
-          <Form.Item label="楼层数" hasFeedback>
-            {getFieldDecorator('buildingLevel', {
+          <Form.Item label="展示编号" hasFeedback>
+            {getFieldDecorator('showCode', {
               rules: [
                 {
                   required: true,
-                  message: '填写楼层数!',
+                  message: '填写展示编号!',
+                }
+              ],
+            })(<Input min={1} style={{width:"70%"}} />)}
+          </Form.Item>
+          <Form.Item label="层数" hasFeedback>
+            {getFieldDecorator('unitLevel', {
+              rules: [
+                {
+                  required: true,
+                  message: '填写单元名称!',
                 }
               ],
             })(
               <div>
-                <InputNumber min={1} /><span>层</span>
+                <InputNumber min={1} style={{width:"70%"}} /><span>层</span>
               </div>
             )}
           </Form.Item>
-          <Form.Item label="是否有电梯" hasFeedback>
-            {getFieldDecorator('elevatorBuilding', {
+          <Form.Item label="每层房间数" hasFeedback>
+            {getFieldDecorator('heHouseCount', {
               rules: [
                 {
                   required: true,
-                  message: '选择是否有电梯!',
-                }
-              ],
-            })(
-              <Select onChange={(value)=>this.setState({isEve: value})} >
-                <Option value="0">楼梯房</Option>
-                <Option value="1">电梯房</Option>
-              </Select>
-            )}
-          </Form.Item>
-          {isEve=="1"?<Form.Item label="电梯个数" hasFeedback>
-            {getFieldDecorator('elevatorCount', {
-              rules: [
-                {
-                  required: true,
-                  message: '填写电梯个数!',
+                  message: '填写每层房间数!',
                 }
               ],
             })(
               <div>
-                <InputNumber min={1} /><span>个</span>
+                <InputNumber min={1} style={{width:"70%"}} /><span>层</span>
               </div>
             )}
-          </Form.Item>:null}
-          
+          </Form.Item>
         </Form>
       </Modal>
     )
@@ -141,7 +133,7 @@ class AddProdata extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addBuild, getBuildList}, dispatch)
+    actions: bindActionCreators({addUtil, getUtilList}, dispatch)
   }
 }
 
@@ -152,4 +144,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddProdata) )
+export default withRouter( connect(mapStateProps, mapDispatchProps)( Form.create()(AddUtil) ) )
