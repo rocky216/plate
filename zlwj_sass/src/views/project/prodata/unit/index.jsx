@@ -7,6 +7,7 @@ import JCard from "@/components/JCard"
 import {getUtilList, getBaseNameAndCode, deleteUnit, deleteFloor, deleteRoom, linkageAll} from "@/actions/projectAction"
 import AddUtil from "./add"
 import EditFloor from "./floorEdit"
+import EditRoom from "./roomEdit"
 
 
 const { TabPane } = Tabs;
@@ -18,6 +19,8 @@ class UnitList extends React.Component {
     this.state = {
       addVisible: false,
       editFloorVisible: false,
+      eidtRoomVisible: false,
+      roomDetail: '',
       floorDetail: '',
       title:""
     }
@@ -125,7 +128,7 @@ class UnitList extends React.Component {
         {elem.heHouses && elem.heHouses.length?elem.heHouses.map(e=>(
           <Col key={e.id} span={6} className="mgb10">
             <Card size="small" title={<Text>{e.houseCode}号房间</Text>} 
-                  extra={<div><Button size="small" type="link" ><Icon type="edit" /></Button>
+                  extra={<div><Button onClick={()=>this.setState({eidtRoomVisible: true, roomDetail: e})} size="small" type="link" ><Icon type="edit" /></Button>
                   <Popconfirm
                     placement="topRight" 
                     title="是否删除？"
@@ -141,9 +144,9 @@ class UnitList extends React.Component {
                 <Icon onClick={this.handlenCascade.bind(this, e, "houseArea")} className="mgl10" type="retweet" 
                   style={{color:"#f5222d", fontSize: 14, cursor: "pointer"}} /></Text>
               <Text code className="mgr10 inlineBlock">室内面积：{e.indoorArea}m<sup>2</sup>
-              <Icon className="mgl10" type="retweet" style={{color:"#f5222d", fontSize: 14, cursor: "pointer"}} /></Text>
+              <Icon onClick={this.handlenCascade.bind(this, e, "indoorArea")} className="mgl10" type="retweet" style={{color:"#f5222d", fontSize: 14, cursor: "pointer"}} /></Text>
                 <Text code className="mgr10 inlineBlock">公摊面积：{e.poolArea}m<sup>2</sup>
-                <Icon className="mgl10" type="retweet" style={{color:"#f5222d", fontSize: 14, cursor: "pointer"}} /></Text>
+                <Icon onClick={this.handlenCascade.bind(this, e, "poolArea")} className="mgl10" type="retweet" style={{color:"#f5222d", fontSize: 14, cursor: "pointer"}} /></Text>
               <Text code className="mgr10 inlineBlock">交房时间：{e.deliversTime?e.deliversTime:"无"}</Text>
               <Divider dashed orientation="left" 
                       style={{margin: "10px 0", fontSize: 12}} >
@@ -174,7 +177,7 @@ class UnitList extends React.Component {
 
   render(){
     const {spinning, utilList} = this.props
-    const {addVisible, title, editFloorVisible, floorDetail} = this.state
+    const {addVisible, title, editFloorVisible, floorDetail, eidtRoomVisible, roomDetail} = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -182,7 +185,7 @@ class UnitList extends React.Component {
               onClick={()=>this.props.history.goBack()}><Icon type="rollback" />返回</Button>} >
         <AddUtil visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
         <EditFloor visible={editFloorVisible} detail={floorDetail} onCancel={()=>this.setState({editFloorVisible: false, floorDetail:''})} />
-
+        <EditRoom visible={eidtRoomVisible} detail={roomDetail} onCancel={()=>this.setState({eidtRoomVisible: false, roomDetail:''})} />
 
         <div className="mgb10">
           <Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" /> 新增单元</Button>
@@ -194,7 +197,7 @@ class UnitList extends React.Component {
             onEdit={this.handlenDelete.bind(this)}
           >
             {utilList.map(item=>(
-              <TabPane key={item.id} tab={item.unitName} >
+              <TabPane key={item.id} tab={item.unitName} style={{background: "#ddd"}} >
                 {item.heFloors && item.heFloors.length?item.heFloors.map(elem=>(
                   <Card 
                     title={this.floorInfo(elem)} 

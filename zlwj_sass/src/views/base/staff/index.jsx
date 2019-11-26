@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Card, Form, Input, Select, Button, Table, Icon, TreeSelect } from "antd";
 import JCard from "@/components/JCard"
-import {getStaffList, getHeList, getDeptList} from "@/actions/baseAction"
+import {getStaffList, getHeList, getDeptList, getSelectJobList, getSelectRoleList} from "@/actions/baseAction"
 import {staffColmuns} from "../colmuns"
 import AddStaff from "./add"
 
@@ -18,6 +18,7 @@ class Staff extends React.Component {
       addVisible: false,
       params: {
         current: 1,
+        pageSize: 10,
         status:0,
         name: "",
         account: "",
@@ -32,6 +33,8 @@ class Staff extends React.Component {
     this.props.actions.getStaffList(this.state.params)
     this.props.actions.getHeList({})
     this.props.actions.getDeptList({})
+    this.props.actions.getSelectJobList({})
+    this.props.actions.getSelectRoleList({})
   }
 
   createNode(arr){
@@ -68,8 +71,7 @@ class Staff extends React.Component {
       render(){
         return (
           <div>
-            <Button size="small" type="link">编辑</Button>
-            <Button size="small" type="link">权限</Button>
+            <Button size="small" type="link">编辑/权限</Button>
             <Button size="small" type="link">删除</Button>
           </div>
         )
@@ -80,7 +82,7 @@ class Staff extends React.Component {
   render(){
     const {getFieldDecorator } = this.props.form
     const {spinning, staff, utils, deptList, heList} = this.props
-    const {addVisible } = this.state
+    const {addVisible, params} = this.state
 
     return (
       <JCard spinning={spinning}>
@@ -134,6 +136,11 @@ class Staff extends React.Component {
           </Form>
           <Table size="small" columns={this.getCol()} 
             dataSource={staff?utils.addIndex(staff.list):[]}
+            pagination={utils.Pagination(staff, page=>{
+              params.current = page
+              this.setState({params})
+              this.props.actions.getStaffList(params)
+            })}
           />
         </Card>
       </JCard>
@@ -143,7 +150,7 @@ class Staff extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getStaffList, getHeList, getDeptList}, dispatch)
+    actions: bindActionCreators({getStaffList, getHeList, getDeptList, getSelectJobList, getSelectRoleList}, dispatch)
   }
 }
 

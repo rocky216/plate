@@ -17,7 +17,7 @@ const formItemLayout = {
   },
 };
 
-class AddProdata extends React.Component {
+class FloorEdit extends React.Component {
   constructor(props){
     super(props)
     this.state={
@@ -103,4 +103,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddProdata) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(FloorEdit) )

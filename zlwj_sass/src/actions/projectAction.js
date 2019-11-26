@@ -2,6 +2,45 @@ import {START_LOADING_PROJECT, END_LOADING_PROJECT} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function editRoom(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/heHousing/update",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+      const options1 = {
+        url: "/api/pc/heHouseInfo/update",
+        method: "post",
+        data: {
+          ...params,
+          id: params.heHouseInfoId
+        }
+      }
+
+      let data = await fetch(options)
+      let data1 = await fetch(options1)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
 export function editFloor(params, next){
   return async function(dispatch, getState){
     dispatch({

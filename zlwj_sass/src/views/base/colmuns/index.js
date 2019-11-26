@@ -77,7 +77,7 @@ export const staffColmuns = [
     dataIndex: "heList",
     render(item){
       return (
-        <span>{handlenJob(item, "name")}</span>
+        <Tag color="orange">{handlenJob(item, "name")}</Tag>
       )
     }
   },
@@ -86,16 +86,16 @@ export const staffColmuns = [
     dataIndex: "jobList",
     render(item){
       return (
-        <span>{handlenJob(item, "jobName")}</span>
+        <Tag color="blue">{handlenJob(item, "jobName")}</Tag>
       )
     }
   },
   {
-    title: "角色",
+    title: "权限模板",
     dataIndex: "role",
     render(item){
       return (
-        <span>{item.roleName}</span>
+        <span>{item?item.roleName:"暂无"}</span>
       )
     }
   },

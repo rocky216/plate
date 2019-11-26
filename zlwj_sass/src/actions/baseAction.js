@@ -2,6 +2,64 @@ import {START_LOADING_BASE, END_LOADING_BASE} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function getSelectRoleList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadSelectRoleList",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        roleListAll: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function getSelectJobList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadSelectJobList",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        jobList: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
 export function getHeList(params, next){
   return async function(dispatch, getState){
     dispatch({
