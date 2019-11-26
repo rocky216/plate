@@ -41,3 +41,63 @@ export const roleColmuns = [
   }
 ]
 
+function handlenJob(arr, key){
+  if(!_.isArray(arr)) return ""
+  let str = []
+  _.each(arr, item=>{
+    str.push(item[key])
+  })
+  return str.join()
+}
+
+export const staffColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "员工名称",
+    dataIndex: "name"
+  },
+  {
+    title: "员工账号",
+    dataIndex: "account"
+  },
+  {
+    title: "部门",
+    dataIndex: "dept",
+    render(item){
+      return (
+        <span>{item.deptName}</span>
+      )
+    }
+  },
+  {
+    title: "项目",
+    dataIndex: "heList",
+    render(item){
+      return (
+        <span>{handlenJob(item, "name")}</span>
+      )
+    }
+  },
+  {
+    title: "岗位",
+    dataIndex: "jobList",
+    render(item){
+      return (
+        <span>{handlenJob(item, "jobName")}</span>
+      )
+    }
+  },
+  {
+    title: "角色",
+    dataIndex: "role",
+    render(item){
+      return (
+        <span>{item.roleName}</span>
+      )
+    }
+  },
+]
+

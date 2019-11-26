@@ -2,6 +2,96 @@ import {START_LOADING_PROJECT, END_LOADING_PROJECT} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function editFloor(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/heFloor/update",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function linkageAll(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/heHousing/linkage",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function deleteRoom(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/heHousing/delete",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
 export function deleteFloor(params, next){
   return async function(dispatch, getState){
     dispatch({

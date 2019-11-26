@@ -103,6 +103,11 @@ export default [
         link: "/base/role",
         key: 803
       },
+      {
+        title: "员工管理",
+        link: "/base/staff",
+        key: 804
+      },
     ]
   },
   {

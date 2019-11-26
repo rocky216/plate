@@ -2,6 +2,121 @@ import {START_LOADING_BASE, END_LOADING_BASE} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function getHeList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadSelectHeList",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        heList: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function getDeptList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadSelectTreeDeptList",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        deptList: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function addStaff(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/user/add",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function getStaffList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/user/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        staff: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
 export function addRoleDetail(params, next){
   return async function(dispatch, getState){
     dispatch({
