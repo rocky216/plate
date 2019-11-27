@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "268404",
+      "name": "员工",
+      "font_class": "yuangong",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "478792",
       "name": "我的",
       "font_class": "wode",
@@ -32,6 +39,13 @@
       "font_class": "tingchewei",
       "unicode": "e664",
       "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "2146703",
+      "name": "基础数据管理",
+      "font_class": "icon_jichushujuguanl",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
     },
     {
       "icon_id": "2570763",
@@ -69,6 +83,20 @@
       "unicode_decimal": 59446
     },
     {
+      "icon_id": "7332415",
+      "name": "管理员",
+      "font_class": "guanliyuan",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "7366420",
+      "name": "老板",
+      "font_class": "laoban",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
       "icon_id": "8198429",
       "name": "议事厅",
       "font_class": "yishiting",
@@ -88,6 +116,13 @@
       "font_class": "gongzuozhongxin",
       "unicode": "e619",
       "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "9789028",
+      "name": "库卡项目数据处理",
+      "font_class": "kukaxiangmushujuchuli",
+      "unicode": "e6d6",
+      "unicode_decimal": 59094
     },
     {
       "icon_id": "10277519",

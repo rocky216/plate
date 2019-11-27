@@ -59,9 +59,11 @@ class ProData extends React.Component {
          return (
            <div>
              <Button type="link" onClick={()=>_this.setState({editVisible: true, detail: item})} >编辑</Button>
+             <Link to={`/project/prodata/${item.heId}/util/${item.id}`}>
              <Button type="link">
-               <Link to={`/project/prodata/${item.heId}/util/${item.id}`}>单元</Link>
+               单元
              </Button>
+             </Link>
              <Popconfirm
                 placement="topRight" 
                 title="是否删除？"

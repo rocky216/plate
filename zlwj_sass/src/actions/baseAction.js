@@ -2,6 +2,164 @@ import {START_LOADING_BASE, END_LOADING_BASE} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+
+export function editStaffTreeMenu(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/user/updateUserMenu",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function editStaff(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/user/update",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function clearUserTreeMenuList(){
+  return async function(dispatch, getState){
+    try{
+      dispatch({
+        type: END_LOADING_BASE,
+        myRoles: ''
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+  }
+}
+
+export function getUserTreeMenuList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/user/loadTreeMenuList",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        myRoles: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+  }
+}
+
+export function getStaffDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/user/get",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function deleteStaff(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/user/delete",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
 export function getSelectRoleList(params, next){
   return async function(dispatch, getState){
     dispatch({
@@ -42,7 +200,7 @@ export function getSelectJobList(params, next){
         method: "get",
         data: {...params}
       }
-
+      if(getState().base.jobList) return
       let data = await fetch(options)
       if(next)next(data)
       dispatch({
@@ -71,7 +229,7 @@ export function getHeList(params, next){
         method: "get",
         data: {...params}
       }
-
+      if(getState().base.heList) return
       let data = await fetch(options)
       if(next)next(data)
       dispatch({
@@ -100,7 +258,7 @@ export function getDeptList(params, next){
         method: "get",
         data: {...params}
       }
-
+      if(getState().base.deptList) return
       let data = await fetch(options)
       if(next)next(data)
       dispatch({

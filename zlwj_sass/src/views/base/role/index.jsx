@@ -44,14 +44,14 @@ class RoleList extends React.Component {
       render(item){
         return (
           <div>
-            <Button type="link"><Link to={`/base/role/${item.id}/edit`}>编辑/权限</Link></Button>
+            <Button size="small" type="link"><Link to={`/base/role/${item.id}/edit`}>编辑/权限</Link></Button>
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-              <Button type="link">删除</Button>
+              <Button size="small" type="link">删除</Button>
             </Popconfirm>
             
           </div>

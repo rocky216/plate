@@ -1,9 +1,10 @@
 import React from "react"
 import {connect} from "react-redux"
+import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Form, Input, Select, Button, Table, Icon, TreeSelect } from "antd";
+import {Card, Form, Input, Select, Button, Table, Icon, TreeSelect, Popconfirm} from "antd";
 import JCard from "@/components/JCard"
-import {getStaffList, getHeList, getDeptList, getSelectJobList, getSelectRoleList} from "@/actions/baseAction"
+import {getStaffList, clearUserTreeMenuList, getHeList, getDeptList, getSelectJobList, getSelectRoleList, deleteStaff} from "@/actions/baseAction"
 import {staffColmuns} from "../colmuns"
 import AddStaff from "./add"
 
@@ -30,6 +31,7 @@ class Staff extends React.Component {
   }
 
   componentDidMount(){
+    this.props.actions.clearUserTreeMenuList()
     this.props.actions.getStaffList(this.state.params)
     this.props.actions.getHeList({})
     this.props.actions.getDeptList({})
@@ -65,14 +67,31 @@ class Staff extends React.Component {
     })
   }
 
+  handlenDelete(item){
+    this.props.actions.deleteStaff({
+      id: item.id
+    }, res=>{
+      this.props.actions.getStaffList(this.state.params)
+      this.props.utils.OpenNotification("success")
+    })
+  }
+
   getCol(){
+    let _this = this
     return staffColmuns.concat([{
       title: "操作",
-      render(){
+      render(item){
         return (
           <div>
-            <Button size="small" type="link">编辑/权限</Button>
-            <Button size="small" type="link">删除</Button>
+            <Button size="small" type="link"><Link to={`/base/staff/${item.id}/edit`}>编辑/权限</Link></Button>
+            <Popconfirm
+              placement="topRight" 
+              title="是否删除？"
+              okText="是"
+              cancelText="否"
+              onConfirm={_this.handlenDelete.bind(_this, item)}>
+              <Button size="small" type="link">删除</Button>
+            </Popconfirm>
           </div>
         )
       }
@@ -150,7 +169,7 @@ class Staff extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getStaffList, getHeList, getDeptList, getSelectJobList, getSelectRoleList}, dispatch)
+    actions: bindActionCreators({clearUserTreeMenuList, getStaffList, getHeList, getDeptList, getSelectJobList, getSelectRoleList, deleteStaff}, dispatch)
   }
 }
 

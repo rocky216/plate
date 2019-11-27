@@ -64,6 +64,10 @@ export const staffColmuns = [
     dataIndex: "account"
   },
   {
+    title: "手机号",
+    dataIndex: "phone"
+  },
+  {
     title: "部门",
     dataIndex: "dept",
     render(item){

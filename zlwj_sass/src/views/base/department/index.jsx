@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Tree, Popconfirm, Icon, Card} from "antd";
+import {Tree, Popconfirm, Icon, Card, Button} from "antd";
 import {getTreeDeptList, deleteTreeDept} from "@/actions/baseAction"
 import JCard from "@/components/JCard"
 import AddDept from "./add"
@@ -56,11 +56,11 @@ class BaseDepartment extends React.Component {
   }
 
   createNode(arr){
-    return arr.map(item=>(
-      <TreeNode key={item.id} title={this.handlenTitle(item)} disabled={item.status=="0"? false: true}>
+    return arr.map(item=>{
+      return <TreeNode key={item.id} switcherIcon={<i className="icon iconfont icon-laoban" style={{fontSize:22, color: "#1DA57A"}} />} title={this.handlenTitle(item)} disabled={item.status=="0"? false: true}>
         {item.nextDeptList && item.nextDeptList.length? this.createNode(item.nextDeptList):null}
       </TreeNode>
-    ))
+    })
   }
 
   render(){
@@ -72,10 +72,11 @@ class BaseDepartment extends React.Component {
           <AddDept visible={addVisible} detail={detail} onCancel={()=>this.setState({addVisible: false, detail:''})} />
           <EditDept visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:''})} />
           <div>
-            {departmentList && departmentList.length?<Tree
-            showLine 
-            defaultExpandAll
-            blockNode
+            {departmentList && departmentList.length?
+            <Tree
+              showLine 
+              defaultExpandAll
+              blockNode
           >
             {this.createNode(departmentList)}
           </Tree>:null}

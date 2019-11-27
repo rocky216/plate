@@ -69,7 +69,7 @@ export default [
   {
     title: "项目数据管理",
     key: 7,
-    icon: "icon iconfont icon-zhengwugongkai2",
+    icon: "icon iconfont icon-kukaxiangmushujuchuli",
     children: [
       {
         title: "项目管理",
@@ -81,12 +81,17 @@ export default [
         link: "/project/prodata",
         key: 702
       },
+      {
+        title: "业主管理",
+        link: "/project/owner",
+        key: 703
+      },
     ]
   },
   {
     title: "基础数据管理",
     key: 8,
-    icon: "icon iconfont icon-zhengwugongkai2",
+    icon: "icon iconfont icon-icon_jichushujuguanl",
     children: [
       {
         title: "部门数据列表",
@@ -113,7 +118,7 @@ export default [
   {
     title: "管理员设置",
     key: 9,
-    icon: "icon iconfont icon-zhengwugongkai2",
+    icon: "icon iconfont icon-guanliyuan",
     children: [
       {
         title: "权限结构",

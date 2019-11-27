@@ -35,7 +35,7 @@ class UnitList extends React.Component {
       heId: this.props.match.params.heId,
       buildId: this.props.match.params.id,
     },res=>{
-      let title = `${res.heName}-${res.buildName}栋`
+      let title = `${res.heName}-${res.buildCode}（栋）`
       this.setState({title})
     })
   }
@@ -197,7 +197,7 @@ class UnitList extends React.Component {
             onEdit={this.handlenDelete.bind(this)}
           >
             {utilList.map(item=>(
-              <TabPane key={item.id} tab={item.unitName} style={{background: "#ddd"}} >
+              <TabPane key={item.id} tab={item.showCode+"（单元）"} style={{background: "#ddd"}} >
                 {item.heFloors && item.heFloors.length?item.heFloors.map(elem=>(
                   <Card 
                     title={this.floorInfo(elem)} 

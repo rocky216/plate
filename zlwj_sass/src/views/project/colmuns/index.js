@@ -57,3 +57,48 @@ export const buildColmuns = [
     }
   },
 ]
+
+export const errInfoColmun = [
+  {
+    title: "序号",
+    dataIndex: "id"
+  },
+  {
+    title: "姓名",
+    dataIndex: "name"
+  },
+  {
+    title: "手机号",
+    dataIndex: "phone"
+  },
+  {
+    title: "错误反馈信息",
+    dataIndex: "remark"
+  },
+]
+
+export const ownerColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "姓名",
+    dataIndex: "name"
+  },
+  {
+    title: "手机号",
+    dataIndex: "phone"
+  },
+  {
+    title: "邮箱",
+    dataIndex: "email"
+  },
+  {
+    title: "性别",
+    dataIndex: "sex",
+    render(item){
+      return item=="1"?"男":item=="2"?"女":"不知"
+    }
+  },
+]
