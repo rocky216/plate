@@ -1,19 +1,24 @@
 import React from "react"
 import {connect} from "react-redux"
+import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Table, Button, Icon, Upload, Modal} from "antd";
+import {Card, Table, Button, Icon, Upload, Modal, Select, Form} from "antd";
 import JCard from "@/components/JCard"
 import {getOwnerList, insertExcelUsers} from "@/actions/projectAction"
+import {getHeList} from "@/actions/baseAction"
 import {errInfoColmun, ownerColmuns} from "../colmuns"
 import UploadBar from "@/components/UploadBar"
 
+const {Option} = Select
 
 class Owner extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       tipVisible: false,
+      exportVisible: false,
       errInfo: [],
+      exportHeId: '',
       params: {
         current: 1
       }
@@ -22,26 +27,30 @@ class Owner extends React.Component {
 
   componentDidMount(){
     this.props.actions.getOwnerList(this.state.params)
+    this.props.actions.getHeList({})
   }
 
   handlenUpload(info){
     const {file} = info
-    if(file.status === "done"){
+    if(file.status === "done" && file.response.data){
       console.log(info, "asas")
       const {check, result, excelKey} = file.response.data
+      
       if(!check){
         this.setState({tipVisible: true, errInfo: result})
       }else{
+        this.setState({exportVisible: false})
         Modal.confirm({
           title: '数据监测成功，是否导入？',
           okText: '确认',
           cancelText: '取消',
           onOk: ()=>{
-            console.log(excelKey, "Asas")
             this.props.actions.insertExcelUsers({
               token: this.props.utils.getCookie("token"),
+              heId: this.state.exportHeId,
               excelKey
             }, res=>{
+              this.setState({exportHeId: ''})
               this.props.utils.OpenNotification("success")
               this.props.actions.getOwnerList(this.state.params)
             })
@@ -55,11 +64,12 @@ class Owner extends React.Component {
   getCol(){
     return ownerColmuns.concat([{
       title: "操作",
-      render(){
+      render(item){
         return (
           <div>
-            <Button size="small" type="link" >编辑</Button>
-            <Button size="small" type="link" >删除</Button>
+            <Link to={`/project/owner/${item.id}/edit`} >
+              <Button size="small" type="link" >编辑</Button>
+            </Link>
           </div>
         )
       }
@@ -67,33 +77,59 @@ class Owner extends React.Component {
   }
 
   render(){
-    const {spinning, utils, owner} = this.props
-    const {tipVisible, errInfo} = this.state
-
+    const {spinning, utils, owner, heList, commonFiles} = this.props
+    const {tipVisible, errInfo, exportVisible, exportHeId} = this.state
+    
     return (
       <JCard spinning={spinning}>
        <Card size="small" title={<div style={{display: "flex"}}>
-         <Modal
+          <Button type="primary" ghost className="mgr10" onClick={()=>this.setState({exportVisible: true})}  ><Icon type="import" />批量导入</Button>
+          <Link to="/project/owner/add">
+            <Button type="primary" ><Icon type="plus" />新增</Button>
+          </Link>
+          
+       </div>}>
+         
+        <Modal
           title="异常反馈"
           width="80%"
           footer={false}
           visible={tipVisible}
           onCancel={()=>this.setState({tipVisible: false})}
-         >
-           <Table size="small" columns={errInfoColmun} dataSource={errInfo} pagination={false} />
-         </Modal>
-         <UploadBar
-          name="file" 
-          showUploadList={false} 
-          action='/api/pc/heOwners/excelImport'
-          onChange={this.handlenUpload.bind(this)}
-          className="mgr10"
-         >
-            <Button type="primary" ghost  ><Icon type="import" />批量导入</Button>
-          </UploadBar>
-          <Button type="primary" ><Icon type="plus" />新增</Button>
+        >
+          <Table size="small" columns={errInfoColmun} dataSource={utils.addIndex(errInfo)} pagination={false} />
+        </Modal>
+        <Modal
+            title="批量导入"
+            footer={false}
+            visible={exportVisible}
+            onCancel={()=>this.setState({exportVisible: false, exportHeId: ''})}
+          >
+            <Select value={exportHeId} style={{width: 150}} 
+              onChange={(val)=>this.setState({exportHeId: val})} placeholder="选择小区" >
+              <Option value="">选择小区</Option>
+              {heList && heList.length? heList.map(item=>(
+                <Option key={item.id} value={item.id}>{item.name}</Option>
+              )):null}
+            </Select>
+            <UploadBar
+              name="file" 
+              data={{heId:exportHeId}}
+              showUploadList={false} 
+              action='/api/pc/heOwners/excelImport'
+              onChange={this.handlenUpload.bind(this)}
+              className="mgl10"
+            >
+                <Button  disabled={exportHeId?false:true} type="primary" ><Icon type="import" />批量导入</Button>
+            </UploadBar>
+            <a href={commonFiles?commonFiles.ownersImportMode.url:''} 
+                download={commonFiles?commonFiles.ownersImportMode.fileName:''} ><Button type="link">下载模板</Button></a>
+          </Modal>
           
-       </div>}>
+        <div className="mgb10">
+          
+        </div>
+        
          <Table size="small" columns={this.getCol()} dataSource={owner?utils.addIndex(owner.list):[]} />
        </Card>
       </JCard>
@@ -103,16 +139,18 @@ class Owner extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOwnerList, insertExcelUsers}, dispatch)
+    actions: bindActionCreators({getOwnerList, insertExcelUsers, getHeList}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
+    commonFiles: state.app.commonFiles,
+    heList: state.base.heList,
     owner: state.project.owner,
     utils: state.app.utils,
     spinning: state.project.spinning
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(Owner)
+export default connect(mapStateProps, mapDispatchProps)(Form.create()(Owner))

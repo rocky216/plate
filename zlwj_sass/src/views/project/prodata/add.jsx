@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Modal, Form, Input, InputNumber, Select} from "antd";
 import {addBuild, getBuildList} from "@/actions/projectAction"
+import {getHeList} from "@/actions/baseAction"
 
 const {Option} = Select
 
@@ -25,6 +26,10 @@ class AddProdata extends React.Component {
     }
   }
 
+  componentDidMount(){
+    this.props.actions.getHeList({})
+  }
+
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
@@ -41,7 +46,7 @@ class AddProdata extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, visible, onCancel} = this.props
+    const {spinning, visible, onCancel, heList} = this.props
     const {isEve } = this.state
 
     return (
@@ -67,6 +72,22 @@ class AddProdata extends React.Component {
               <div>
                 <InputNumber min={1}/><span>栋</span>
               </div>
+            )}
+          </Form.Item>
+          <Form.Item label="所属项目" hasFeedback>
+            {getFieldDecorator('heId', {
+              rules: [
+                {
+                  required: true,
+                  message: '选择所属项目!',
+                }
+              ],
+            })(
+              <Select >
+                {heList && heList.length?heList.map(item=>(
+                  <Option key={item.id} value={item.id}>{item.name}</Option>
+                )):null}
+              </Select>
             )}
           </Form.Item>
           <Form.Item label="楼宇展示编号" hasFeedback>
@@ -141,12 +162,13 @@ class AddProdata extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addBuild, getBuildList}, dispatch)
+    actions: bindActionCreators({addBuild, getBuildList, getHeList}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
+    heList: state.base.heList,
     utils: state.app.utils,
     spinning: state.project.spinning
   }

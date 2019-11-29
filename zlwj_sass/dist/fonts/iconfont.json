@@ -104,6 +104,13 @@
       "unicode_decimal": 58965
     },
     {
+      "icon_id": "9305810",
+      "name": "房间",
+      "font_class": "fangjian",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
+    },
+    {
       "icon_id": "9576980",
       "name": "政务公开",
       "font_class": "zhengwugongkai2",

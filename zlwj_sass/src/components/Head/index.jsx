@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {withRouter} from "react-router-dom"
 import {Layout, Icon, Button, Dropdown, Menu, Modal} from "antd"
-import {setCollapsedTrue, setCollapsedFalse, goLoginOut, getBaseInfo} from "@/actions/appAction"
+import {setCollapsedTrue, setCollapsedFalse, goLoginOut, getBaseInfo, updateNowHe, getCommonFile} from "@/actions/appAction"
 import "./style.less"
 
 const {Header} = Layout
@@ -17,6 +17,7 @@ class Head extends React.Component {
     }
   }
   componentDidMount(){
+    this.props.actions.getCommonFile({})
     this.props.actions.getBaseInfo({}, res=>{
       this.setState({proName: res.heList[0]["name"]})
     })
@@ -31,6 +32,12 @@ class Head extends React.Component {
     let obj = _.filter(this.props.baseInfo.heList, o=>o.id==key)[0]
     if(obj.key == key) return;
     this.setState({proName: obj.name})
+    this.props.actions.updateNowHe({
+      heId: key
+    },res=>{
+      this.props.utils.OpenNotification("success")
+      this.props.history.push("/")
+    })
   }
 
   loginOut(){
@@ -86,7 +93,7 @@ class Head extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({setCollapsedTrue, setCollapsedFalse, goLoginOut, getBaseInfo}, dispatch)
+    actions: bindActionCreators({setCollapsedTrue, setCollapsedFalse, goLoginOut, getBaseInfo, updateNowHe, getCommonFile}, dispatch)
   }
 }
 

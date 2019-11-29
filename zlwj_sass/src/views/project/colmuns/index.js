@@ -43,6 +43,10 @@ export const buildColmuns = [
     dataIndex: "showCode"
   },
   {
+    title: "所属项目",
+    dataIndex: "heNameStr"
+  },
+  {
     title: "是否电梯房",
     dataIndex: "elevatorBuilding",
     render(item){
@@ -61,6 +65,10 @@ export const buildColmuns = [
 export const errInfoColmun = [
   {
     title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "行数",
     dataIndex: "id"
   },
   {
@@ -73,9 +81,21 @@ export const errInfoColmun = [
   },
   {
     title: "错误反馈信息",
-    dataIndex: "remark"
+    dataIndex: "remark",
+    width: 500
   },
 ]
+
+function getRooms(obj){
+  let newArr = []
+  _.each(obj, (item, key)=>{
+    newArr.push({
+      name: item,
+      room: key
+    })
+  })
+  return newArr
+}
 
 export const ownerColmuns = [
   {
@@ -88,7 +108,19 @@ export const ownerColmuns = [
   },
   {
     title: "手机号",
-    dataIndex: "phone"
+    dataIndex: "phone",
+  },
+  {
+    title: "房间号",
+    dataIndex: "houseShowCode",
+    width: 430, 
+    render(item){
+      return (
+        <div>
+          {getRooms(item).map((elem, i)=><Tag key={i} color="red">{elem.room+':'+elem.name}</Tag>)}
+        </div>
+      )
+    }
   },
   {
     title: "邮箱",

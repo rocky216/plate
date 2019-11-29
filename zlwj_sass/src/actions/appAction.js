@@ -4,6 +4,61 @@ import {log_color} from "@/utils/config"
 import { setCookie, getCookie, getToken} from "../utils"
 
 
+export function getCommonFile(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadCommonFile",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        commonFiles: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function updateNowHe(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/updateNowHe",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
 export function getSelectHeList(params, next){
   return async function(dispatch, getState){
     dispatch({

@@ -11,7 +11,7 @@ class UploadBar extends React.Component {
     const {name,action, data, showUploadList, utils, onChange, className} = this.props
     let newData = {token: utils.getCookie("token")}
     if(data){
-      _.assgin(newData, data)
+      _.assign(newData, data)
     }
     return (
       <Upload

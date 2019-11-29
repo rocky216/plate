@@ -3,22 +3,16 @@ import {connect} from "react-redux"
 import {withRouter} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Tree } from "antd";
+import SelectRoom from "@/components/SelectRoom"
 
 const { TreeNode } = Tree;
 
 class PropertyFee extends React.Component {
   render(){
     return (
-      <Tree
-        checkable
-      >
-        <TreeNode title="parent 1" key="0-0" >
-          <TreeNode title="parent 1-1" key="0-0-1">
-            <TreeNode title={<span >111</span>} key="0-0-1-0" />
-          </TreeNode>
-          <TreeNode disabled title={<span >222</span>} key="0-0-2" />
-        </TreeNode>
-      </Tree>
+      <div>
+        <SelectRoom/>
+      </div>
     )
   }
 }

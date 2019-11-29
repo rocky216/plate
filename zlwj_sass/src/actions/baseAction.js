@@ -3,6 +3,35 @@ import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
 
+export function getMeunLevel(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadMeunLevel",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        meunLevel: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
 export function editStaffTreeMenu(params, next){
   return async function(dispatch, getState){
     dispatch({
@@ -215,7 +244,7 @@ export function getSelectJobList(params, next){
       })
     }
 
-  }
+  } 
 }
 
 export function getHeList(params, next){
