@@ -104,6 +104,13 @@
       "unicode_decimal": 58965
     },
     {
+      "icon_id": "8762813",
+      "name": "头像",
+      "font_class": "touxiang",
+      "unicode": "e67f",
+      "unicode_decimal": 59007
+    },
+    {
       "icon_id": "9305810",
       "name": "房间",
       "font_class": "fangjian",

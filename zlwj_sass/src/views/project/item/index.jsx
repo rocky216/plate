@@ -8,6 +8,8 @@ import {itemColmuns } from "../colmuns"
 import AddItem from "./add"
 import EditItem from "./edit"
 
+
+
 class ProjectItem extends React.Component {
   constructor(props){
     super(props)
@@ -69,6 +71,7 @@ class ProjectItem extends React.Component {
           <AddItem visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditItem visible={editVisible} detail={detail} 
                     onCancel={()=>this.setState({editVisible: false, detail: ""})} />
+          
           <Table 
             size="small" 
             columns={this.getCol()}

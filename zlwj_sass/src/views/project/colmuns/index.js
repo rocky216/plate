@@ -123,6 +123,18 @@ export const ownerColmuns = [
     }
   },
   {
+    title: "店铺号",
+    dataIndex: "shopShowCode",
+    width: 430, 
+    render(item){
+      return (
+        <div>
+          {getRooms(item).map((elem, i)=><Tag key={i} color="red">{elem.room+':'+elem.name}</Tag>)}
+        </div>
+      )
+    }
+  },
+  {
     title: "邮箱",
     dataIndex: "email"
   },
@@ -131,6 +143,43 @@ export const ownerColmuns = [
     dataIndex: "sex",
     render(item){
       return item=="1"?"男":item=="2"?"女":"不知"
+    }
+  },
+]
+
+export const shopColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "商铺名称",
+    dataIndex: "shopsName"
+  },
+  {
+    title: "商铺编号",
+    dataIndex: "shopsCode"
+  },
+  {
+    title: "项目",
+    dataIndex: "heNameStr"
+  },
+  {
+    title: "建筑面积（平方）",
+    dataIndex: "houseArea",
+    render(item){
+      return <span>{item}<span className="mgl5">m<sup>2</sup></span></span>
+    }
+  },
+  {
+    title: "楼层数（层）",
+    dataIndex: "floorNum"
+  },
+  {
+    title: "是否有电梯",
+    dataIndex: "elevatorHouse",
+    render(item){
+      return <span>{item=="0"?"无电梯":"有电梯"}</span>
     }
   },
 ]

@@ -19,6 +19,8 @@ import EditStaff from "@/views/base/staff/edit"
 import Owner from "@/views/project/owner"
 import AddOwner from "@/views/project/owner/add"
 import EditOwner from "@/views/project/owner/edit"
+import Shop from "@/views/project/shop"
+import UserPerson from "@/views/user/person"
 
 class Routers extends React.Component{
   
@@ -43,6 +45,9 @@ class Routers extends React.Component{
         <AuthRoute exact path="/project/owner" Component={Owner} name="业主管理" />
         <AuthRoute  path="/project/owner/add" Component={AddOwner} name="新增业主" />
         <AuthRoute  path="/project/owner/:id/edit" Component={EditOwner} name="编辑业主" />
+        <AuthRoute  path="/project/shop" Component={Shop} name="商铺信息管理" />
+
+        <AuthRoute  path="/user/person" Component={UserPerson} name="用户资料" />
         
       </Switch>
       

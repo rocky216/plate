@@ -2,7 +2,7 @@ import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {TreeSelect, Tree, Icon, Select} from "antd";
-import {getHeHousing} from "@/actions/projectAction"
+import {getShopList} from "@/actions/projectAction"
 import {getMeunLevel } from "@/actions/baseAction"
 
 const { TreeNode } = Tree;
@@ -20,7 +20,6 @@ class SelectRoom extends React.Component {
 
   componentDidMount(){
     this.props.actions.getMeunLevel({pageSize: 100}, res=>{
-      
       let data = this.handlenData(res)
       this.setState({treeData: data})
     })
@@ -30,41 +29,28 @@ class SelectRoom extends React.Component {
     if(!_.isArray(arr)) return []
     _.each(arr, (item, attr)=>{
       if(item.buildList){
-        item.children = item["buildList"]
-        item.selectable=false
-        this.handlenData(item.buildList)
-      }
-      if(item.heUnits && item.showCode){
-        item.children = item["heUnits"]
-        item.name = item.showCode+"栋"
-        item.selectable=false
-        this.handlenData(item.heUnits)
-      }
-      if(item.heFloors && item.showCode){
-        item.name = item.showCode+"单元"
         item.selectable=false
       }
-      if(item.showBouseCode){
-        item.name = item.showBouseCode+"号"
+      if(item.shopsName){
         item.isLeaf = true
+        item.name = item.shopsCode
       }
+      
     })
     return arr
   }
 
   onLoadData(data){
-    console.log(data.props)
     return new Promise((resolve, reject)=>{
       if (data.props.children) {
         resolve();
         return;
       }
-      this.props.actions.getHeHousing({
-        heId: data.props.dataRef.heId,
-        buildingId: data.props.dataRef.buildingId,
-        unitId: data.props.dataRef.id,
+      this.props.actions.getShopList({
+        heId: data.props.dataRef.id,
+        pageSize: 1000
       }, res=>{
-        let newData = this.handlenData(res)
+        let newData = this.handlenData(res.list)
         
         data.props.dataRef.children = newData
         this.setState({
@@ -80,12 +66,13 @@ class SelectRoom extends React.Component {
     
     let obj = _.assign({},node.node["props"]["dataRef"], {
         ownerType: this.state.ownerType, 
-        houseId: node.node["props"]["dataRef"]["id"]
+        shopsId: node.node["props"]["dataRef"]["id"]
       })
     if(this.props.onSelect)this.props.onSelect(obj)
   }
 
   createNode(arr){
+    console.log(arr,"arr1")
     return arr.map(item=>(
       <TreeNode key={item.id} selectable={item.selectable} title={item.name} isLeaf={item.isLeaf} dataRef={item} >
         {item.children && item.children.length? this.createNode(item.children):null}
@@ -102,9 +89,8 @@ class SelectRoom extends React.Component {
         <div>
           <label>选择业主类型：</label>
         <Select value={ownerType} style={{width: 200}} onChange={val=>this.setState({ownerType:val})} >
-          <Option value="0">业主</Option>
-          <Option value="1">家庭成员</Option>
-          <Option value="2">租客</Option>
+          <Option value="0">店主</Option>
+          <Option value="1">租客</Option>
          
         </Select>
         </div>
@@ -123,7 +109,7 @@ class SelectRoom extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getMeunLevel,getHeHousing,}, dispatch)
+    actions: bindActionCreators({getMeunLevel,getShopList,}, dispatch)
   }
 }
 

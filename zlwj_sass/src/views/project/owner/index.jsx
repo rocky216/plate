@@ -2,9 +2,9 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Table, Button, Icon, Upload, Modal, Select, Form} from "antd";
+import {Card, Table, Button, Icon, Upload, Modal, Select, Form, Popconfirm } from "antd";
 import JCard from "@/components/JCard"
-import {getOwnerList, insertExcelUsers} from "@/actions/projectAction"
+import {getOwnerList, insertExcelUsers, deleteOwner} from "@/actions/projectAction"
 import {getHeList} from "@/actions/baseAction"
 import {errInfoColmun, ownerColmuns} from "../colmuns"
 import UploadBar from "@/components/UploadBar"
@@ -61,7 +61,17 @@ class Owner extends React.Component {
     }
   }
 
+  handlenDelete(item){
+    this.props.actions.deleteOwner({
+      id: item.id
+    }, res=>{
+      this.props.utils.OpenNotification("success")
+      this.props.actions.getOwnerList(this.state.params)
+    })
+  }
+
   getCol(){
+    let _this = this
     return ownerColmuns.concat([{
       title: "操作",
       render(item){
@@ -70,6 +80,14 @@ class Owner extends React.Component {
             <Link to={`/project/owner/${item.id}/edit`} >
               <Button size="small" type="link" >编辑</Button>
             </Link>
+            <Popconfirm 
+              placement="topRight" 
+              title="是否删除？"
+              okText="是"
+              cancelText="否"
+              onConfirm={_this.handlenDelete.bind(_this, item)}>
+              <Button size="small" type="link">删除</Button>
+            </Popconfirm>
           </div>
         )
       }
@@ -122,7 +140,7 @@ class Owner extends React.Component {
             >
                 <Button  disabled={exportHeId?false:true} type="primary" ><Icon type="import" />批量导入</Button>
             </UploadBar>
-            <a href={commonFiles?commonFiles.ownersImportMode.url:''} 
+            <a href={commonFiles?commonFiles.ownersImportMode.url+'?fileName='+commonFiles.ownersImportMode.fileName:''} 
                 download={commonFiles?commonFiles.ownersImportMode.fileName:''} ><Button type="link">下载模板</Button></a>
           </Modal>
           
@@ -139,7 +157,7 @@ class Owner extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOwnerList, insertExcelUsers, getHeList}, dispatch)
+    actions: bindActionCreators({getOwnerList, insertExcelUsers, getHeList, deleteOwner}, dispatch)
   }
 }
 

@@ -86,6 +86,11 @@ export default [
         link: "/project/owner",
         key: 703
       },
+      {
+        title: "商铺信息管理",
+        link: "/project/shop",
+        key: 704
+      },
     ]
   },
   {

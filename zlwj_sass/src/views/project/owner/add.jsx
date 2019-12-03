@@ -5,6 +5,7 @@ import {bindActionCreators} from "redux"
 import {Card, Form, Input, InputNumber, Button, Icon, Modal, Tag, Select} from "antd";
 import {addOwner} from "@/actions/projectAction"
 import SelectRoom from "@/components/SelectRoom"
+import SelectShop from "@/components/SelectShop"
 import "./index.less"
 
 const {Option} = Select
@@ -37,7 +38,9 @@ class AddOwner extends React.Component {
     super(props)
     this.state={
       addVisible: false,
-      selectRoom: []
+      addShopVisible: false,
+      selectRoom: [],
+      selectShop: []
     }
   }
 
@@ -68,18 +71,48 @@ class AddOwner extends React.Component {
     return newArr
   }
 
+  handlenShopClose(item){
+    const {selectShop} = this.state
+    console.log(item)
+    let arr = _.filter(selectShop, o=>o.id!=item.id)
+    this.setState({selectShop: arr})
+  }
+
+  handlenOnSelectShop(item){
+    const {selectShop} = this.state
+    
+    let index = _.findIndex(selectShop, o=>item.id == o.id)
+    if(index>-1) {
+      this.props.utils.OpenNotification("error", "该房间已存在！")
+      return
+    }
+    selectShop.push(item)
+    this.setState({selectShop: selectShop, addShopVisible: false})
+  }
+  handlenShopInfo(arr){
+    let newArr = []
+    _.each(arr, item=>{
+      console.log(item, "As")
+      newArr.push( `${item.heId}-${item.id}-${item.ownerType}` )
+    })
+    return newArr
+  }
+
   handlenSubmit(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         let houseInfo = this.handlenHouseInfo(this.state.selectRoom)
-        if(houseInfo.length==0){
-          this.props.utils.OpenNotification("error", "房间不能为空")
+        let shopsInfo = this.handlenShopInfo(this.state.selectShop)
+        
+        if(houseInfo.length==0 &&  shopsInfo.length == 0 ){
+          this.props.utils.OpenNotification("error", "房间或者店铺不能为空")
           return
         }
         this.props.actions.addOwner({
           ...values,
-          houseInfo: houseInfo.join()
+          houseInfo: houseInfo.join(),
+          shopsInfo: shopsInfo.join()
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/project/owner")
@@ -90,7 +123,7 @@ class AddOwner extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {addVisible, selectRoom} = this.state
+    const {addVisible, selectRoom, addShopVisible, selectShop} = this.state
     
     return (
       <Card size="small" title="新增业主" extra={<Button><Link to="/project/owner"><Icon type="rollback" />返回</Link></Button>} >
@@ -101,6 +134,14 @@ class AddOwner extends React.Component {
           footer={null}
           visible={addVisible}>
           <SelectRoom onSelect={this.handlenOnSelect.bind(this)} />
+        </Modal>
+        <Modal 
+          onText="确定"
+          cancelText="取消"
+          onCancel={()=>this.setState({addShopVisible: false})}
+          footer={null}
+          visible={addShopVisible}>
+          <SelectShop onSelect={this.handlenOnSelectShop.bind(this)} />
         </Modal>
         
         <Form {...formItemLayout} onSubmit={this.handlenSubmit.bind(this)} >
@@ -124,6 +165,7 @@ class AddOwner extends React.Component {
               ],
             })(<Input/>)}
           </Form.Item>
+          
           <Form.Item label="房间号" hasFeedback>
             {getFieldDecorator('houseShowCode')(
               <div style={{display: "flex"}}>
@@ -135,6 +177,20 @@ class AddOwner extends React.Component {
                   ))}
                 </div>
                 <i onClick={()=>this.setState({addVisible: true})} className="icon iconfont icon-fangjian"/>
+              </div>
+            )}
+          </Form.Item>
+          <Form.Item label="店铺号" hasFeedback>
+            {getFieldDecorator('houseShowCode')(
+              <div style={{display: "flex"}}>
+                <div className="selectRoom">
+                  {selectShop.map(item=>(
+                    <Tag closable  key={item.id} onClose={this.handlenShopClose.bind(this, item)}>{item.showCodeAll}：
+                      <span style={{color: "#f74c4c"}}>{item.ownerType=="0"?"业主":"租客"}</span>
+                    </Tag>
+                  ))}
+                </div>
+                <i onClick={()=>this.setState({addShopVisible: true})} className="icon iconfont icon-fangjian"/>
               </div>
             )}
           </Form.Item>

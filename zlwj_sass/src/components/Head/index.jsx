@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {withRouter} from "react-router-dom"
+import {withRouter, Link} from "react-router-dom"
 import {Layout, Icon, Button, Dropdown, Menu, Modal} from "antd"
 import {setCollapsedTrue, setCollapsedFalse, goLoginOut, getBaseInfo, updateNowHe, getCommonFile} from "@/actions/appAction"
 import "./style.less"
@@ -81,6 +81,15 @@ class Head extends React.Component {
           <Dropdown.Button overlay={menu} icon={<Icon type="project" />}>
             {proName}
           </Dropdown.Button>
+
+          <Button style={{margin: "10px 0 0 30px"}} type="link">
+            <Link to="/user/person" style={{display: "flex"}}>
+              {baseInfo && baseInfo.userInfo.headUrl?<img src={baseInfo.userInfo.headUrl} style={{width: 36, height: 36, borderRadius: "50%"}} />:
+              <i className="icon iconfont icon-touxiang" style={{fontSize: 30}} />}
+                <span style={{margin: "10px 0 0 5px"}}>{baseInfo?baseInfo.userInfo.nickname:''}</span>
+            </Link>
+          </Button>
+
           <Button type="link" onClick={this.loginOut.bind(this)} style={{margin: "15px 10px 0 0"}}>
             <Icon type="logout" />
             <span>退出</span>

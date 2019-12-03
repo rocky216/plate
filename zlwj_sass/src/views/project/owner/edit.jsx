@@ -7,6 +7,7 @@ import { getOwnerDetail, addOwner} from "@/actions/projectAction"
 import SelectRoom from "@/components/SelectRoom"
 import "./index.less"
 import JCard from "@/components/JCard"
+import SelectShop from "@/components/SelectShop"
 
 const {Option} = Select
 
@@ -38,7 +39,9 @@ class EditOwner extends React.Component {
     super(props)
     this.state={
       addVisible: false,
+      addShopVisible: false,
       selectRoom: [],
+      selectShop: [],
       detail: ''
     }
   }
@@ -47,7 +50,7 @@ class EditOwner extends React.Component {
     this.props.actions.getOwnerDetail({
       ownerId: this.props.match.params.id
     }, res=>{
-      this.setState({detail: res, selectRoom: res.houses})
+      this.setState({detail: res, selectRoom: res.houses, selectShop: res.shops})
     })
   }
 
@@ -71,9 +74,35 @@ class EditOwner extends React.Component {
 
   handlenHouseInfo(arr){
     let newArr = []
-    console.log(arr)
     _.each(arr, item=>{
       newArr.push( `${item.heId}-${item.buildingId}-${item.unitId}-${item.houseId}-${item.ownerType}` )
+    })
+    return newArr
+  }
+
+  handlenShopClose(item){
+    const {selectShop} = this.state
+    console.log(item)
+    let arr = _.filter(selectShop, o=>o.id!=item.id)
+    this.setState({selectShop: arr})
+  }
+
+  handlenOnSelectShop(item){
+    const {selectShop} = this.state
+    
+    let index = _.findIndex(selectShop, o=>item.showCodeAll == o.showCodeAll)
+    if(index>-1) {
+      this.props.utils.OpenNotification("error", "该房间已存在！")
+      return
+    }
+    selectShop.push(item)
+    this.setState({selectShop: selectShop, addShopVisible: false})
+  }
+
+  handlenShopInfo(arr){
+    let newArr = []
+    _.each(arr, item=>{
+      newArr.push( `${item.heId}-${item.shopsId}-${item.ownerType}` )
     })
     return newArr
   }
@@ -83,13 +112,15 @@ class EditOwner extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         let houseInfo = this.handlenHouseInfo(this.state.selectRoom)
-        if(houseInfo.length==0){
-          this.props.utils.OpenNotification("error", "房间不能为空")
+        let shopsInfo = this.handlenShopInfo(this.state.selectShop)
+        if(houseInfo.length==0 &&  shopsInfo.length == 0 ){
+          this.props.utils.OpenNotification("error", "房间或者店铺不能为空")
           return
         }
         this.props.actions.addOwner({
           ...values,
-          houseInfo: houseInfo.join()
+          houseInfo: houseInfo.join(),
+          shopsInfo: shopsInfo.join()
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/project/owner")
@@ -101,7 +132,7 @@ class EditOwner extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {spinning} = this.props
-    const {addVisible, selectRoom, detail} = this.state
+    const {addVisible, selectRoom, detail, addShopVisible, selectShop} = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -113,6 +144,14 @@ class EditOwner extends React.Component {
             footer={null}
             visible={addVisible}>
             <SelectRoom onSelect={this.handlenOnSelect.bind(this)} />
+          </Modal>
+          <Modal 
+            onText="确定"
+            cancelText="取消"
+            onCancel={()=>this.setState({addShopVisible: false})}
+            footer={null}
+            visible={addShopVisible}>
+            <SelectShop onSelect={this.handlenOnSelectShop.bind(this)} />
           </Modal>
           
           <Form {...formItemLayout} onSubmit={this.handlenSubmit.bind(this)} >
@@ -149,6 +188,20 @@ class EditOwner extends React.Component {
                     ))}
                   </div>
                   <i onClick={()=>this.setState({addVisible: true})} className="icon iconfont icon-fangjian"/>
+                </div>
+              )}
+            </Form.Item>
+            <Form.Item label="店铺号" hasFeedback>
+              {getFieldDecorator('houseShowCode')(
+                <div style={{display: "flex"}}>
+                  <div className="selectRoom">
+                    {selectShop.map(item=>(
+                      <Tag closable  key={item.id} onClose={this.handlenShopClose.bind(this, item)}>{item.showCodeAll}：
+                        <span style={{color: "#f74c4c"}}>{item.ownerType=="0"?"业主":"租客"}</span>
+                      </Tag>
+                    ))}
+                  </div>
+                  <i onClick={()=>this.setState({addShopVisible: true})} className="icon iconfont icon-fangjian"/>
                 </div>
               )}
             </Form.Item>
