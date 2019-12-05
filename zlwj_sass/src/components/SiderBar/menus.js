@@ -48,8 +48,8 @@ export default [
     icon: "icon iconfont icon-yishiting",
     children: [
       {
-        title: "投票列表",
-        link: "/",
+        title: "投票主题列表",
+        link: "/other/discussion",
         key: 501
       }
     ]
@@ -63,6 +63,18 @@ export default [
         title: "公开列表",
         link: "/",
         key: 601
+      }
+    ]
+  },
+  {
+    title: "财务管理",
+    key: 10,
+    icon: "icon iconfont icon-zhengwugongkai2",
+    children: [
+      {
+        title: "资金账户",
+        link: "/finance/account",
+        key: 1001
       }
     ]
   },
@@ -117,6 +129,11 @@ export default [
         title: "员工管理",
         link: "/base/staff",
         key: 804
+      },
+      {
+        title: "数据字典",
+        link: "/base/library",
+        key: 805
       },
     ]
   },

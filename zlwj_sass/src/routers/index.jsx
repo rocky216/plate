@@ -21,6 +21,10 @@ import AddOwner from "@/views/project/owner/add"
 import EditOwner from "@/views/project/owner/edit"
 import Shop from "@/views/project/shop"
 import UserPerson from "@/views/user/person"
+import FinanceAccount from "@/views/finance/account"
+import AccountLog from "@/views/finance/account/log"
+import Discussion from "@/views/other/discussion"
+import BaseLibrary from "@/views/base/library"
 
 class Routers extends React.Component{
   
@@ -38,6 +42,7 @@ class Routers extends React.Component{
         <AuthRoute  path="/base/role/:id/edit" Component={EditRole} name="编辑/权限角色" />
         <AuthRoute exact path="/base/staff" Component={StaffList} name="员工管理" />
         <AuthRoute path="/base/staff/:id/edit" Component={EditStaff} name="员工编辑" />
+        <AuthRoute path="/base/library" Component={BaseLibrary} name="基础数据字典" />
 
         <AuthRoute  path="/project/item" Component={ProjectItem} name="项目管理" />
         <AuthRoute exact  path="/project/prodata" Component={ProData} name="项目信息管理" />
@@ -48,6 +53,11 @@ class Routers extends React.Component{
         <AuthRoute  path="/project/shop" Component={Shop} name="商铺信息管理" />
 
         <AuthRoute  path="/user/person" Component={UserPerson} name="用户资料" />
+
+        <AuthRoute exact path="/finance/account" Component={FinanceAccount} name="资金账户" />
+        <AuthRoute  path="/finance/account/:id/log" Component={AccountLog} name="资金账户日志" />
+
+        <AuthRoute  path="/other/discussion" Component={Discussion} name="议事主题" />
         
       </Switch>
       

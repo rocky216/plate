@@ -2,6 +2,90 @@ import {START_LOADING_BASE, END_LOADING_BASE} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function deleteLibrary(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/dict/delDictData",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function addLibrary(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/dict/addDictData",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function getLibraryList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/dict/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+        library: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
 
 export function getMeunLevel(params, next){
   return async function(dispatch, getState){

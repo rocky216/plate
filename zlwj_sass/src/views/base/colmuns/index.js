@@ -105,3 +105,20 @@ export const staffColmuns = [
   },
 ]
 
+function handlenTag(arr){
+  _.each(arr, item=>{
+
+  })
+}
+
+export const libraryColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key",
+  },
+  {
+    title: "标识名称",
+    dataIndex: "dictName",
+  },
+]
+

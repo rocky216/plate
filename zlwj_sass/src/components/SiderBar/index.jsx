@@ -17,10 +17,18 @@ class SideBar extends React.Component {
     }
   }
 
-  render(){
-    const {collapsed} = this.props
-    const {menus} = this.state
+  check(arr, item){
+    
+    let index = _.findIndex(arr, o=>{
+      return o.key.replace(/-/g,'')==item.key
+    })
+    return index>-1?true:false
+  }
 
+  render(){
+    const {collapsed, baseInfo} = this.props
+    const {menus} = this.state
+    
     return (
       <Sider
       className="sidebar"
@@ -38,9 +46,10 @@ class SideBar extends React.Component {
         {/* <div className="logo" >
           <img src={require("@/assets/images/logo.png")}  />
         </div> */}
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+        {baseInfo && baseInfo.userMenuList.length?<Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
           {menus.map(item=>
             item.children && item.children.length?
+            this.check(baseInfo.userMenuList, item)?
             <SubMenu
               key={item.key}
               title={
@@ -50,20 +59,19 @@ class SideBar extends React.Component {
                 </span>
               }
             >
-            {item.children.map(elem=><Menu.Item key={elem.key}>
+            {item.children.map(elem=> this.check(baseInfo.userMenuList, elem)? <Menu.Item key={elem.key}>
               <Link to={elem.link}>{elem.title}</Link>
-            </Menu.Item>)}
-            </SubMenu>
-            :<Menu.Item key={item.key}>
+            </Menu.Item>:null)}
+            </SubMenu>:null
+            : this.check(baseInfo.userMenuList, item)?<Menu.Item key={item.key}>
               <Link to={item.link}>
                 <i className={item.icon} ></i>
                 <span className="nav-text">{item.title}</span>
               </Link>
-             
-            </Menu.Item>
+            </Menu.Item>:null
           )}
-          
-        </Menu>
+        </Menu>:null}
+        
       </Sider>
     )
   }
@@ -71,6 +79,7 @@ class SideBar extends React.Component {
 
 function mapStateProps(state){
   return {
+    baseInfo: state.app.baseInfo,
     collapsed: state.app.collapsed
   }
 }
