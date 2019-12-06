@@ -26,18 +26,17 @@ class Library extends React.Component {
   }
 
   handlenClose(item, elem){
-    
+    let _this = this
     Modal.confirm({
       title: '是否删除标签？',
       okText: '确认',
       cancelText: '取消',
       onOk(){
-        this.props.actions.deleteLibrary({
+        _this.props.actions.deleteLibrary({
           id: elem.id
         }, res=>{
-          this.props.actions.getLibraryList(this.state.params)
-          this.props.onCancel()
-          this.props.utils.OpenNotification("success")
+          _this.props.actions.getLibraryList(_this.state.params)
+          _this.props.utils.OpenNotification("success")
         })
       }
     });

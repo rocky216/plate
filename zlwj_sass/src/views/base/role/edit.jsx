@@ -119,10 +119,10 @@ class EditRole extends React.Component {
       <JCard spinning={spinning}>
         <Row gutter={10}>
           <Col span={12}>
-            <Card size="small" title="基础信息" extra={
+            <Card title="基础信息" extra={
               <div>
-                  <Button size="small" className="mgr10"><Link to="/base/role"><Icon type="rollback" />返回</Link></Button>
-                  <Button onClick={this.handlenSaveInfo.bind(this)} size="small" type="primary">
+                  <Button className="mgr10"><Link to="/base/role"><Icon type="rollback" />返回</Link></Button>
+                  <Button onClick={this.handlenSaveInfo.bind(this)}  type="primary">
                   <Icon type="save"/>保存信息</Button>
               </div>} >
               <Form {...formItemLayout}>
@@ -163,8 +163,8 @@ class EditRole extends React.Component {
             </Card>
           </Col>
           <Col span={12}>
-            <Card size="small" title="配置权限" 
-                  extra={<Button onClick={this.handlenSaveRole.bind(this)} size="small" type="primary">
+            <Card  title="配置权限" 
+                  extra={<Button onClick={this.handlenSaveRole.bind(this)} type="primary">
                   <Icon type="save"/>保存权限</Button>}>
               <RoleMenu data={editRole?editRole:[]} keys={keys} onCheck={this.onCheck.bind(this)} />
             </Card>

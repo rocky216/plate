@@ -68,7 +68,7 @@ class BaseDepartment extends React.Component {
     const {addVisible,editVisible, detail} = this.state
     return (
       <JCard spinning={spinning}>
-        <Card size="small">
+        <Card >
           <AddDept visible={addVisible} detail={detail} onCancel={()=>this.setState({addVisible: false, detail:''})} />
           <EditDept visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:''})} />
           <div>

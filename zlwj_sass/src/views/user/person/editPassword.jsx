@@ -45,8 +45,8 @@ class UserPerson extends React.Component {
     const {} = this.props
     
     return (
-      <Card size="small"  title="修改密码" 
-        extra={<Button onClick={this.handlenSubmit.bind(this)} size="small" type="primary"><Icon type="save" />保存</Button>} >
+      <Card  title="修改密码" 
+        extra={<Button onClick={this.handlenSubmit.bind(this)} type="primary"><Icon type="save" />保存</Button>} >
         <Form {...formItemLayout}>
           <Form.Item label="原始密码" hasFeedback>
             {getFieldDecorator('password', {

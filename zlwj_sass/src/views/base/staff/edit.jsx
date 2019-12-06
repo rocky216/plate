@@ -148,9 +148,9 @@ class EditStaff extends React.Component {
       <JCard spinning={spinning}>
         <Row gutter={10}>
           <Col span={12}>
-            <Card title="基本信息" size="small" extra={<div>
-              <Button size="small" className="mgr10"><Link to="/base/staff"><Icon type="rollback" />返回</Link></Button>
-              <Button size="small" type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</Button></div>} >
+            <Card title="基本信息" extra={<div>
+              <Button className="mgr10"><Link to="/base/staff"><Icon type="rollback" />返回</Link></Button>
+              <Button type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</Button></div>} >
             <Form {...formItemLayout}>
               <Form.Item label="员工名称" hasFeedback>
                 {getFieldDecorator('name', {
@@ -235,7 +235,7 @@ class EditStaff extends React.Component {
             </Card>
           </Col>
           <Col span={12}>
-            <Card title="权限信息" size="small" extra={<Button onClick={this.submitLimit.bind(this)} size="small" type="primary"><Icon type="save" />保存</Button>} > 
+            <Card title="权限信息"  extra={<Button onClick={this.submitLimit.bind(this)} type="primary"><Icon type="save" />保存</Button>} > 
               <RoleMenu data={myRoles?myRoles:[]} keys={keys} onCheck={this.onCheck.bind(this)} />
             </Card>
           </Col>

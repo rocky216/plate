@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {withRouter} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Tree } from "antd";
-import SelectRoom from "@/components/SelectRoom"
+import SelectHouse from "@/components/SelectHouse"
 
 const { TreeNode } = Tree;
 
@@ -11,7 +11,7 @@ class PropertyFee extends React.Component {
   render(){
     return (
       <div>
-        <SelectRoom/>
+        <SelectHouse/>
       </div>
     )
   }

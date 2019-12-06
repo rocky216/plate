@@ -67,13 +67,12 @@ class ProjectItem extends React.Component {
     
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增项目</Button>}>
+        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增项目</Button>}>
           <AddItem visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditItem visible={editVisible} detail={detail} 
                     onCancel={()=>this.setState({editVisible: false, detail: ""})} />
           
           <Table 
-            size="small" 
             columns={this.getCol()}
             dataSource={projectitem?utils.addIndex(projectitem.list):[]}
             pagination={utils.Pagination(projectitem, page=>{

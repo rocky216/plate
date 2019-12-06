@@ -96,7 +96,7 @@ class ProData extends React.Component {
 
     return (
       <JCard spinning={spinning}  >
-        <Card size="small" title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}>新增楼宇</Button>} >
+        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}>新增楼宇</Button>} >
           <AddProdata visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditProdata visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:''})} />
           
@@ -122,7 +122,7 @@ class ProData extends React.Component {
           
 
 
-          <Table size="small" columns={this.getCol()}  
+          <Table columns={this.getCol()}  
             dataSource={build?utils.addIndex(build.list):[]}
             pagination={utils.Pagination(build, page=>{
               params.current = page

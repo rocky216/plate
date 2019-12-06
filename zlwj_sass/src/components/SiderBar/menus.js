@@ -146,6 +146,11 @@ export default [
         title: "权限结构",
         link: "/system/treemenu",
         key: 901
+      },
+      {
+        title: "数据字典",
+        link: "/system/library",
+        key: 902
       }
     ]
   }

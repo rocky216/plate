@@ -36,9 +36,9 @@ class FinanceAccount extends React.Component {
       render(item){
         return (
           <div>
-            <Button size="small" type="link" onClick={()=>_this.setState({editVisible: true, detail:item})} >编辑</Button>
+            <Button  type="link" onClick={()=>_this.setState({editVisible: true, detail:item})} >编辑</Button>
             <Link to={`/finance/account/${item.id}/log`}>
-              <Button size="small" type="link" >资金日志</Button>
+              <Button  type="link" >资金日志</Button>
             </Link>
           </div>
         )
@@ -52,11 +52,10 @@ class FinanceAccount extends React.Component {
     
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus"/>新增资金账户</Button>}>
+        <Card  title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus"/>新增资金账户</Button>}>
           <AddAccount visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditAccount visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail: ''})} />
           <Table
-            size="small"
             columns={this.getCol()}
             dataSource={account?utils.addIndex(account.list):[]}
             pagination={utils.Pagination(account, page=>{

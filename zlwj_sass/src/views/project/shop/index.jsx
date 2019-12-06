@@ -41,14 +41,14 @@ class Shop extends React.Component {
       render(item){
         return (
           <div>
-            <Button size="small" type="link" onClick={()=>_this.setState({editVisible: true, detail: item})} >编辑</Button>
+            <Button type="link" onClick={()=>_this.setState({editVisible: true, detail: item})} >编辑</Button>
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <Button size="small" type="link" >删除</Button>
+                <Button type="link" >删除</Button>
             </Popconfirm>
           </div>
         )
@@ -61,11 +61,10 @@ class Shop extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}><Icon type="plus" />新增商铺</Button>} >
+        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}><Icon type="plus" />新增商铺</Button>} >
           <AddShop visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditShop visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:''})} />
           <Table 
-            size="small"
             columns={this.getCol()} dataSource={shop?utils.addIndex(shop.list):[]} 
             pagination={utils.Pagination(shop, page=>{
               params.current = page

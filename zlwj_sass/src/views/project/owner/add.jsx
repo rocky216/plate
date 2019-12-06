@@ -126,7 +126,7 @@ class AddOwner extends React.Component {
     const {addVisible, selectRoom, addShopVisible, selectShop} = this.state
     
     return (
-      <Card size="small" title="新增业主" extra={<Button><Link to="/project/owner"><Icon type="rollback" />返回</Link></Button>} >
+      <Card title="新增业主" extra={<Button><Link to="/project/owner"><Icon type="rollback" />返回</Link></Button>} >
         <Modal 
           onText="确定"
           cancelText="取消"

@@ -44,14 +44,14 @@ class RoleList extends React.Component {
       render(item){
         return (
           <div>
-            <Button size="small" type="link"><Link to={`/base/role/${item.id}/edit`}>编辑/权限</Link></Button>
+            <Button  type="link"><Link to={`/base/role/${item.id}/edit`}>编辑/权限</Link></Button>
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-              <Button size="small" type="link">删除</Button>
+              <Button  type="link">删除</Button>
             </Popconfirm>
             
           </div>
@@ -66,9 +66,9 @@ class RoleList extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增角色</Button>}>
+        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增角色</Button>}>
           <AddRole visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
-          <Table size="small" 
+          <Table 
             columns={this.getCol()} 
             pagination={utils.Pagination(roleList, page=>{
               params.current = page

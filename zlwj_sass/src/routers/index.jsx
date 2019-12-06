@@ -24,7 +24,10 @@ import UserPerson from "@/views/user/person"
 import FinanceAccount from "@/views/finance/account"
 import AccountLog from "@/views/finance/account/log"
 import Discussion from "@/views/other/discussion"
+import DiscussionThemeOpt from "@/views/other/discussion/voteopt"
+import AddDiscussion from "@/views/other/discussion/add"
 import BaseLibrary from "@/views/base/library"
+import SystemLibrary from "@/views/system/library"
 
 class Routers extends React.Component{
   
@@ -35,6 +38,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/" Component={Home} name="首页" />
         <AuthRoute  path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" />
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" />
+        <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" />
         
         <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" />
         <AuthRoute  path="/base/station" Component={Station} name="岗位管理" />
@@ -57,7 +61,9 @@ class Routers extends React.Component{
         <AuthRoute exact path="/finance/account" Component={FinanceAccount} name="资金账户" />
         <AuthRoute  path="/finance/account/:id/log" Component={AccountLog} name="资金账户日志" />
 
-        <AuthRoute  path="/other/discussion" Component={Discussion} name="议事主题" />
+        <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" />
+        <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />
+        <AuthRoute  path="/other/discussion/:id/voteopt" Component={DiscussionThemeOpt} name="议事主题投票选项" />
         
       </Switch>
       

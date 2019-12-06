@@ -26,8 +26,13 @@ class UserPerson extends React.Component {
       file:''
     }
   }
-
+  componentDidMount(){
+    if(this.props.baseInfo && !this.state.file){
+      this.setState({file: {url: this.props.baseInfo.userInfo.headUrl, attaId: ''} })
+    }
+  }
   componentWillReceiveProps(nextProps){
+    
     if(nextProps.baseInfo && !this.state.file){
       this.setState({file: {url: nextProps.baseInfo.userInfo.headUrl, attaId: ''} })
     }
@@ -74,8 +79,8 @@ class UserPerson extends React.Component {
       <JCard spinning={spinning} >
         <Row gutter={10}>
           <Col span={12}>
-            <Card size="small" title="个人资料" 
-                  extra={<Button onClick={this.handlenSubmit.bind(this)} size="small" type="primary"><Icon type="save" />保存</Button>} >
+            <Card title="个人资料" 
+                  extra={<Button onClick={this.handlenSubmit.bind(this)} type="primary"><Icon type="save" />保存</Button>} >
               <Form {...formItemLayout}>
                 <Form.Item label="我的头像">
                   {getFieldDecorator('files', {

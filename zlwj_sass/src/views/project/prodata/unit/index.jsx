@@ -127,15 +127,15 @@ class UnitList extends React.Component {
       <Row gutter={10}>
         {elem.heHouses && elem.heHouses.length?elem.heHouses.map(e=>(
           <Col key={e.id} span={6} className="mgb10">
-            <Card size="small" title={<Text>{e.houseCode}号房间</Text>} 
-                  extra={<div><Button onClick={()=>this.setState({eidtRoomVisible: true, roomDetail: e})} size="small" type="link" ><Icon type="edit" /></Button>
+            <Card title={<Text>{e.houseCode}号房间</Text>} 
+                  extra={<div><Button onClick={()=>this.setState({eidtRoomVisible: true, roomDetail: e})} type="link" ><Icon type="edit" /></Button>
                   <Popconfirm
                     placement="topRight" 
                     title="是否删除？"
                     okText="是"
                     cancelText="否"
                     onConfirm={this.handlenDeleteRoom.bind(this, e)}>
-                      <Button size="small" type="link"><Icon type="delete" /></Button>
+                      <Button type="link"><Icon type="delete" /></Button>
                     </Popconfirm>
                   </div>} >
               <Text code className="mgr10 inlineBlock">展示编号：{e.showBouseCode}</Text>
@@ -181,7 +181,7 @@ class UnitList extends React.Component {
     
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={<Text type="danger">{title}</Text>} extra={<Button type="primary" ghost 
+        <Card title={<Text type="danger">{title}</Text>} extra={<Button type="primary" ghost 
               onClick={()=>this.props.history.goBack()}><Icon type="rollback" />返回</Button>} >
         <AddUtil visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
         <EditFloor visible={editFloorVisible} detail={floorDetail} onCancel={()=>this.setState({editFloorVisible: false, floorDetail:''})} />
@@ -202,16 +202,15 @@ class UnitList extends React.Component {
                   <Card 
                     title={this.floorInfo(elem)} 
                     className="mgb10" key={elem.id} 
-                    size="small"
                     extra={<div>
-                            <Button size="small" type="link" onClick={()=>this.setState({editFloorVisible: true, floorDetail: elem})} >编辑</Button>
+                            <Button type="link" onClick={()=>this.setState({editFloorVisible: true, floorDetail: elem})} >编辑</Button>
                             <Popconfirm
                               placement="topRight" 
                               title="是否删除？"
                               okText="是"
                               cancelText="否"
                               onConfirm={this.handlenDeleteFloor.bind(this, elem)}>
-                                <Button size="small" type="link">删除</Button>
+                                <Button type="link">删除</Button>
                               </Popconfirm>
                             </div>}>
                     {this.rooms(elem)}

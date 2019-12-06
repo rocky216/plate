@@ -83,14 +83,14 @@ class Staff extends React.Component {
       render(item){
         return (
           <div>
-            <Button size="small" type="link"><Link to={`/base/staff/${item.id}/edit`}>编辑/权限</Link></Button>
+            <Button  type="link"><Link to={`/base/staff/${item.id}/edit`}>编辑/权限</Link></Button>
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-              <Button size="small" type="link">删除</Button>
+              <Button type="link">删除</Button>
             </Popconfirm>
           </div>
         )
@@ -105,7 +105,7 @@ class Staff extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus"/>新增员工</Button>} >
+        <Card  title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus"/>新增员工</Button>} >
           <AddStaff visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <Form className="mgb10" layout="inline" onSubmit={this.handleSearch.bind(this)}>
             <Form.Item label="员工名称" >
@@ -153,7 +153,7 @@ class Staff extends React.Component {
               <Button type="primary" htmlType="submit" >搜索</Button>
             </Form.Item>
           </Form>
-          <Table size="small" columns={this.getCol()} 
+          <Table  columns={this.getCol()} 
             dataSource={staff?utils.addIndex(staff.list):[]}
             pagination={utils.Pagination(staff, page=>{
               params.current = page

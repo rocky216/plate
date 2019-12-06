@@ -102,7 +102,7 @@ class Station extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增岗位</Button>} size="small">
+        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增岗位</Button>} >
           <AddStation visible={addVisible} onCancel={()=>this.setState({addVisible: false, detail: ""})} />
           <EditStation visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail: ""})} />
           <div className="flexend">
@@ -131,7 +131,6 @@ class Station extends React.Component {
             </Form>
           </div>
           <Table 
-            size="small"
             columns={this.getCol()} 
             pagination={utils.Pagination(station, page=>{
               params.current = page

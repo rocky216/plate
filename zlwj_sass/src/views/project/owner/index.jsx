@@ -78,7 +78,7 @@ class Owner extends React.Component {
         return (
           <div>
             <Link to={`/project/owner/${item.id}/edit`} >
-              <Button size="small" type="link" >编辑</Button>
+              <Button type="link" >编辑</Button>
             </Link>
             <Popconfirm 
               placement="topRight" 
@@ -86,7 +86,7 @@ class Owner extends React.Component {
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-              <Button size="small" type="link">删除</Button>
+              <Button type="link">删除</Button>
             </Popconfirm>
           </div>
         )
@@ -100,7 +100,7 @@ class Owner extends React.Component {
     
     return (
       <JCard spinning={spinning}>
-       <Card size="small" title={<div style={{display: "flex"}}>
+       <Card title={<div style={{display: "flex"}}>
           <Button type="primary" ghost className="mgr10" onClick={()=>this.setState({exportVisible: true})}  ><Icon type="import" />批量导入</Button>
           <Link to="/project/owner/add">
             <Button type="primary" ><Icon type="plus" />新增</Button>
@@ -115,7 +115,7 @@ class Owner extends React.Component {
           visible={tipVisible}
           onCancel={()=>this.setState({tipVisible: false})}
         >
-          <Table size="small" columns={errInfoColmun} dataSource={utils.addIndex(errInfo)} pagination={false} />
+          <Table columns={errInfoColmun} dataSource={utils.addIndex(errInfo)} pagination={false} />
         </Modal>
         <Modal
             title="批量导入"
@@ -148,7 +148,7 @@ class Owner extends React.Component {
           
         </div>
         
-         <Table size="small" columns={this.getCol()} dataSource={owner?utils.addIndex(owner.list):[]} />
+         <Table columns={this.getCol()} dataSource={owner?utils.addIndex(owner.list):[]} />
        </Card>
       </JCard>
     )

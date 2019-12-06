@@ -136,7 +136,7 @@ class EditOwner extends React.Component {
     
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title="编辑业主" extra={<Button><Link to="/project/owner"><Icon type="rollback" />返回</Link></Button>} >
+        <Card title="编辑业主" extra={<Button><Link to="/project/owner"><Icon type="rollback" />返回</Link></Button>} >
           <Modal 
             onText="确定"
             cancelText="取消"

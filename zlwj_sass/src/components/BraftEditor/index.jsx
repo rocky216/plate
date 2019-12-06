@@ -29,16 +29,18 @@ class Discussion extends React.Component {
   }
 
   render(){
-    const {value, onChange} = this.props
+    const {value, onChange, defaultValue} = this.props
 
     const editorProps={
       contentFormat: "html",
-      value: BraftEditor.createEditorState(value),
+      // initialContent: "<p>asas</p>",
+      defaultValue: BraftEditor.createEditorState(defaultValue),
       onChange(content){
         if(onChange)onChange(content.toHTML())
       },
       onRawChange(){
         console.log(arguments, "handleRawChange")
+        // if(onChange)onChange(content.toHTML())
       },
       media: {
         allowPasteImage: true,
@@ -56,7 +58,7 @@ class Discussion extends React.Component {
     
 
     return (
-      <div>
+      <div style={{border: "1px solid #ddd"}}>
         <BraftEditor  {...editorProps}/>
       </div>
     )

@@ -29,9 +29,8 @@ class AccountLog extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title="日志记录" extra={<Link to="/finance/account"><Button><Icon type="rollback" />返回</Button></Link>} >
+        <Card  title="日志记录" extra={<Link to="/finance/account"><Button><Icon type="rollback" />返回</Button></Link>} >
           <Table
-            size="small"
             columns={accountLogColmuns}
             dataSource={accountLog?utils.addIndex(accountLog.list):[]}
             pagination={utils.Pagination(accountLog, page=>{
