@@ -26,8 +26,10 @@ import AccountLog from "@/views/finance/account/log"
 import Discussion from "@/views/other/discussion"
 import DiscussionThemeOpt from "@/views/other/discussion/voteopt"
 import AddDiscussion from "@/views/other/discussion/add"
+import EditDiscussion from "@/views/other/discussion/edit"
 import BaseLibrary from "@/views/base/library"
 import SystemLibrary from "@/views/system/library"
+import Propertytem from "@/views/finance/propertytem"
 
 class Routers extends React.Component{
   
@@ -60,9 +62,11 @@ class Routers extends React.Component{
 
         <AuthRoute exact path="/finance/account" Component={FinanceAccount} name="资金账户" />
         <AuthRoute  path="/finance/account/:id/log" Component={AccountLog} name="资金账户日志" />
+        <AuthRoute  path="/finance/propertytem" Component={Propertytem} name="物业费收费模板" />
 
         <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />
+        <AuthRoute  path="/other/discussion/:id/edit" Component={EditDiscussion} name="编辑议事主题" />
         <AuthRoute  path="/other/discussion/:id/voteopt" Component={DiscussionThemeOpt} name="议事主题投票选项" />
         
       </Switch>

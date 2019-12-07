@@ -87,7 +87,7 @@ class EditItem extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {spinning, visible, onCancel, detail, commonFiles} = this.props
     const {file} = this.state
-    console.log(`${commonFiles?commonFiles.resourceServerAddress:''}common/${this.props.utils.getCookie("token")}`)
+    
 
     return (
       <Modal

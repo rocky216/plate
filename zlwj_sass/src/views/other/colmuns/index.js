@@ -54,7 +54,7 @@ export const voteOptionsColmuns = [
     title: "头像",
     dataIndex: "optionsImgUrl",
     render(item){
-      return item?<img src={voteopt} style={{width: 50, height:50, borderRadius: "50%"}}/>:"无"
+      return item?<img src={item} style={{width: 50, height:50, borderRadius: "50%"}}/>:"无"
     }
   },
   {

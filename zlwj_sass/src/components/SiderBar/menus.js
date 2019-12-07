@@ -75,7 +75,12 @@ export default [
         title: "资金账户",
         link: "/finance/account",
         key: 1001
-      }
+      },
+      {
+        title: "物业费收费模板",
+        link: "/finance/propertytem",
+        key: 1002
+      },
     ]
   },
   {
