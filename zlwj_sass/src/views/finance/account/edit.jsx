@@ -28,7 +28,7 @@ class AddItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(nextProps.detail)
+    
     if(nextProps.detail && !this.state.type){
       this.setState({type: nextProps.detail.accountType})
     }
@@ -76,7 +76,7 @@ class AddItem extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {spinning, visible, onCancel, projectitem, detail} = this.props
     const {type, linkType} = this.state
-    console.log(linkType)
+    
     return (
       <Modal
         destroyOnClose

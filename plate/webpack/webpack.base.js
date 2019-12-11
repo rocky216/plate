@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniExtract = require('mini-css-extract-plugin');
 
+
 function resolve(str){
   return path.resolve(__dirname,'..', str)
 }
@@ -37,7 +38,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: /node_modules/, 
         use: [
           // 'react-scoped-styles/script-loader',
           {loader: "babel-loader"}

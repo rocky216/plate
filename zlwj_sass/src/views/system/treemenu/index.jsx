@@ -69,7 +69,7 @@ class TreeMenu extends React.Component {
           <AddMenu visible={addVisible} detail={detail} onCancel={()=>this.setState({addVisible: false, detail: ''})} />
           <EditMenu visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail: ''})} />
           <Card
-            title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增菜单</Button>}
+            title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />新增菜单</Button>}
           >
             {treemenu && treemenu.length?<Tree
               // checkable

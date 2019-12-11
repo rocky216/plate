@@ -60,11 +60,11 @@ class SideBar extends React.Component {
               }
             >
             {item.children.map(elem=> this.check(baseInfo.userMenuList, elem)? <Menu.Item key={elem.key}>
-              <Link to={elem.link}>{elem.title}</Link>
+              <Link to={`${elem.link}`}>{elem.title}</Link>
             </Menu.Item>:null)}
             </SubMenu>:null
             : this.check(baseInfo.userMenuList, item)?<Menu.Item key={item.key}>
-              <Link to={item.link}>
+              <Link to={`${item.link}`}>
                 <i className={item.icon} ></i>
                 <span className="nav-text">{item.title}</span>
               </Link>

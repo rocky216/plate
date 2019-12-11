@@ -2,6 +2,7 @@ var path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const themeColor = require("../src/assets/theme/index")
 
+
 function resolve(str){
   return path.resolve(__dirname,"../",str)
 }
@@ -26,7 +27,8 @@ module.exports = {
       filename: "index.html",
       template: "./src/index.html",
       chunks: ["app"]
-    })
+    }),
+    
   ],
   module: {
     rules: [
@@ -36,14 +38,10 @@ module.exports = {
         use: [
           // 'react-scoped-styles/script-loader',
           {loader: "babel-loader"}
-        ]
+        ],
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.less$/,
+        test: /\.(less|css)$/,
         use: [{
           loader: 'style-loader',
         }, {

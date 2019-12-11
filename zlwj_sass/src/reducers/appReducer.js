@@ -12,7 +12,7 @@ let initialState = {
     addIndex,
     Pagination
   },
-  keeptabs: [{name: "首页", path: "/"}]
+  keeptabs: []
 }
 
 

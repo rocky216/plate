@@ -7,18 +7,23 @@ import SiderBar from "@/components/SiderBar"
 import Head from "@/components/Head"
 import Routers from "@/routers"
 import {getBaseInfo} from "@/actions/appAction"
+import KeepTab from "@/components/KeepTab"
+// import BreadCrumb from "@/components/BreadCrumb"
 
 
 
 class App extends React.Component {
-
+  
   render (){
     const {collapsed} = this.props
+    
     return (
     <Layout>
       <SiderBar/>
       <Layout style={{ marginLeft: collapsed?80:200 }}>
         <Head/>
+        <KeepTab/>
+        {/* <BreadCrumb/> */}
         <Content style={{ margin: '10px 10px 0', overflow: 'initial', minHeight:810 }}>
           <div >
             <Routers/>

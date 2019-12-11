@@ -113,8 +113,8 @@ class UserPerson extends React.Component {
                     initialValue: baseInfo?String(baseInfo.userInfo.sex):'',
                   })(
                     <Select>
-                      <Option value="0">男</Option>
-                      <Option value="1">女</Option>
+                      <Option value="1">男</Option>
+                      <Option value="2">女</Option>
                     </Select>
                   )}
                 </Form.Item>

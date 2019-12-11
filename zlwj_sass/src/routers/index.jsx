@@ -30,14 +30,19 @@ import EditDiscussion from "@/views/other/discussion/edit"
 import BaseLibrary from "@/views/base/library"
 import SystemLibrary from "@/views/system/library"
 import Propertytem from "@/views/finance/propertytem"
+import AddPropertytem from "@/views/finance/propertytem/add"
+
+
+
 
 class Routers extends React.Component{
-  
-
   render(){
+    
     return (
       <Switch>
+
         <AuthRoute exact path="/" Component={Home} name="首页" />
+
         <AuthRoute  path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" />
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" />
@@ -62,7 +67,8 @@ class Routers extends React.Component{
 
         <AuthRoute exact path="/finance/account" Component={FinanceAccount} name="资金账户" />
         <AuthRoute  path="/finance/account/:id/log" Component={AccountLog} name="资金账户日志" />
-        <AuthRoute  path="/finance/propertytem" Component={Propertytem} name="物业费收费模板" />
+        <AuthRoute exact path="/finance/propertytem" Component={Propertytem} name="物业费收费模板" /> 
+        <AuthRoute  path="/finance/propertytem/add" Component={AddPropertytem} name="新增物业费收费模板" />
 
         <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />

@@ -2,6 +2,7 @@ import {START_LOADING_APP, END_LOADING_APP} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 import { setCookie, getCookie, getToken} from "../utils"
+import routermenus from "@/routers/routermenus"
 
 
 export function updatePassword(params, next){
@@ -249,6 +250,68 @@ export function getVerifyCodeImg(params, next){
 
       let data = await fetch(options)
       if(next)next(data)
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+    }
+
+  }
+}
+
+function querySrirng(obj, key){
+  let r = ''
+  let str = obj.location.search.substring(1)
+  let arr = str.split("&")
+  _.each(arr, item=>{
+    let a = item.split("=")
+    if(a[0]==key){
+      r = a[1]
+    }
+  })
+  return r
+}
+
+
+export function AddTab(params, next){
+  return async function(dispatch, getState){
+    try{
+      let arr = _.cloneDeep(getState().app.keeptabs)
+      let index = _.findIndex(arr, o=>o.link==params.location.pathname)
+      if(index>-1) return
+      
+      arr.push({
+        title: params.name,
+        link: params.location.pathname,
+        query: {
+          t: "tab"
+        }
+      })
+      dispatch({
+        type: END_LOADING_APP,
+        keeptabs: arr
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+    }
+
+  }
+}
+
+export function removeTab(params, link, next){
+  return async function(dispatch, getState){
+    try{
+      let arr = getState().app.keeptabs
+      if(arr.length===1) return
+      if(params.location.pathname===link){
+        params.history.goBack(-1)
+      }
+      let newArr = _.filter(arr, o=>o.link!==link)
+
+      dispatch({
+        type: END_LOADING_APP,
+        keeptabs: newArr
+      })
+
     }catch(err){
       console.log(err, `color: ${log_color}`)
     }

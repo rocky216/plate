@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --config ./webpack/webpack.dev.js"
+    "dev": "webpack-dev-server --config ./webpack/webpack.dev.js",
+    "dll": "webpack --config ./webpack/webpack.dll.js",
+    "pro": "webpack --config ./webpack/webpack.pro.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,11 +20,16 @@
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
     "html-loader": "^0.5.5",
+    "html-webpack-include-assets-plugin": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "less": "^3.9.0",
+    "less": "^2.7.3",
     "less-loader": "^3.0.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "style-loader": "^1.0.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.2",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
     "webpack-merge": "^4.2.2"
@@ -32,6 +39,9 @@
     "antd": "^3.24.3",
     "axios": "^0.19.0",
     "braft-editor": "^2.3.8",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.20.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "qs": "^6.9.1",

@@ -102,3 +102,119 @@ export const accountLogColmuns = [
     dataIndex: "endAmount"
   },
 ]
+
+
+export const propertyTemColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "模板名称",
+    dataIndex: "templateName"
+  },
+  {
+    title: "所属项目",
+    dataIndex: "heNameStr"
+  },
+  {
+    title: "模板类型",
+    dataIndex: "templateType",
+    render(item){
+      return item=="0"?"住宅":"商铺"
+    }
+  },
+  {
+    title: "运用数量",
+    dataIndex: "companyNameStr"
+  },
+]
+
+export const chargeColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "模板名称",
+    dataIndex: "detailsName"
+  },
+  {
+    title: "房屋类型",
+    dataIndex: "houseType",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "电梯和楼梯房"
+        case 1:
+          return "电梯房"
+        case 2:
+          return "楼梯房"
+      }
+    }
+  },
+  {
+    title: "房屋面积条件",
+    dataIndex: "areaConditionType",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "无条件"
+        case 1:
+          return "建筑面积"
+        case 2:
+          return "室内面积"
+        case 3:
+          return "公摊面积"
+      }
+    }
+  },
+  {
+    title: "房屋楼层",
+    render(rows){
+      if(!rows.floorStart || !rows.floorEnd){
+        return "无"
+      }else{
+        return rows.floorStart+'-'+rows.floorEnd+"层"
+      }
+    }
+  },
+  {
+    title: "收费类型",
+    dataIndex: "feeType",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "固定金额"
+        case 1:
+          return "建筑面积*金额"
+        case 2:
+          return "室内面积*金额"
+        case 3:
+          return "公摊面积*金额"
+      }
+    }
+  },
+  {
+    title: "收费金额(元)",
+    dataIndex: "fee",
+  },
+  {
+    title: "时间单位",
+    dataIndex: "feeTime",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "一月"
+        case 1:
+          return "一季度"
+        case 2:
+          return "一年"
+      }
+    }
+  },
+  {
+    title: "未装修减免",
+    dataIndex: "notFixPercentage",
+  },
+]
