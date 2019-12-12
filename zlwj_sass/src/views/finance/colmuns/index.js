@@ -170,6 +170,16 @@ export const chargeColmuns = [
     }
   },
   {
+    title: "适用面积",
+    render(rows){
+      if(!rows.areaStart || !rows.areaEnd){
+        return "无"
+      }else{
+        return <span>{rows.areaStart+'-'+rows.areaEnd+"m"}<sup>2</sup></span>
+      } 
+    }
+  },
+  {
     title: "房屋楼层",
     render(rows){
       if(!rows.floorStart || !rows.floorEnd){

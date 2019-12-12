@@ -22,31 +22,47 @@ class AddItem extends React.Component {
     super(props)
     this.state = {
       floorStart: '',
-      floorEnd:""
+      floorEnd:"",
+      areaStart: "",
+      areaEnd: ""
     }
   }
 
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
-      console.log(values)
+      
       if(!err){
-        const {floorStart, floorEnd} = this.state
-        if(values.areaConditionType!=="0" && (!floorStart || !floorEnd) ){
-          this.props.utils.OpenNotification("error", "房屋楼层不能为空或为0！")
-          return
-        }else{
-          if(floorStart>floorEnd){
+        const {floorStart, floorEnd, areaStart, areaEnd} = this.state
+        if(values.areaConditionType!=="0" ){
+          if(!areaStart || !areaEnd){
+            this.props.utils.OpenNotification("error", "面积不能为空或为0！")
+            return
+          }
+          if(areaStart>areaEnd){
             this.props.utils.OpenNotification("error", "开始楼层不能大于结束楼层！")
             return
           }
         }
+        console.log(floorStart, floorEnd)
+        if(!floorStart || !floorEnd){
+          this.props.utils.OpenNotification("error", "房屋楼层不能为空或为0！")
+          return
+        }
+        if(floorStart>floorEnd){
+            this.props.utils.OpenNotification("error", "开始楼层不能大于结束楼层！")
+            return
+        }
         
         if(values.areaConditionType!=="0"){
-          values = _.assign(values, {
-            floorStart,
-            floorEnd
+          _.assign(values, {
+            areaStart,
+            areaEnd
           })
         }
+        _.assign(values, {
+          floorStart,
+          floorEnd
+        })
         this.props.onSubmit(values)
       }
     })
@@ -61,7 +77,7 @@ class AddItem extends React.Component {
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {spinning, visible, onCancel} = this.props
-    const {floorStart, floorEnd} = this.state
+    const {floorStart, floorEnd, areaStart, areaEnd} = this.state
     
     return (
       <Modal
@@ -84,7 +100,7 @@ class AddItem extends React.Component {
               ],
             })(<Input />)}
           </Form.Item>
-          <Form.Item label="房屋类型" hasFeedback>
+          <Form.Item label="房屋类型条件" hasFeedback>
             {getFieldDecorator('houseType', {
               rules: [
                 {
@@ -119,13 +135,18 @@ class AddItem extends React.Component {
             )}
           </Form.Item>
           {getFieldValue("areaConditionType") !="0"?
-            <Form.Item label="房屋楼层" hasFeedback>
+            <Form.Item label="适用面积" hasFeedback>
               <div>
-                <InputNumber value={floorStart} onChange={val=>this.setState({floorStart: val})} />
-                到<InputNumber value={floorEnd} onChange={val=>this.setState({floorEnd: val})}  />
+                <InputNumber value={areaStart} onChange={val=>this.setState({areaStart: val})} />
+                到<InputNumber value={areaEnd} onChange={val=>this.setState({areaEnd: val})}  />
               </div>
             </Form.Item>:null}
-          
+          <Form.Item label="房屋楼层条件" hasFeedback>
+            <div>
+              <InputNumber value={floorStart} onChange={val=>this.setState({floorStart: val})} />
+              到<InputNumber value={floorEnd} onChange={val=>this.setState({floorEnd: val})}  />
+            </div>
+          </Form.Item>
           <Form.Item label="收费类型" hasFeedback>
             {getFieldDecorator('feeType', {
               rules: [

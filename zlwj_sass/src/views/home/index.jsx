@@ -1,28 +1,64 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Button} from "antd";
-import {setCookie, getCookie, removeCookie} from "@/utils"
+import {Button, Card, Row, Col} from "antd";
+import JCard from "@/components/JCard"
+import Chart from "./chart"
+import "./index.less"
+
 
 
 class Home extends React.Component {
 
-  handlenAdd(){
-    setCookie("token","12")
-  }
+ componentDidMount(){
+ }
 
-  handlenGet(){
-    let token = getCookie("token")
-    console.log(token)
-  }
 
 
   render(){
+    const {spinning} = this.props
+
     return (
-      <div>Home <i className="icon iconfont icon-wode"></i>
-        <Button onClick={this.handlenAdd.bind(this)}>add</Button>
-        <Button onClick={this.handlenGet.bind(this)}>get</Button>
-        <Button >remove</Button>
+      <div className="homePage">
+        <JCard spinning={spinning}>
+          <Row gutter={10}>
+            <Col span={6}>
+              <div className="listStitac" style={{background: "rgb(109, 186, 240)"}}>
+                <p>200</p>
+                <p>员工总数</p>
+              </div>
+            </Col>
+            <Col span={6}>
+              <div className="listStitac" style={{background: "rgb(93, 235, 221)"}}>
+                <p>1200</p>
+                <p>业主总数</p></div>
+            </Col>
+            <Col span={6}>
+              <div className="listStitac" style={{background: "rgb(250, 183, 224)"}}>
+                <p>1100</p>
+                <p>本月已缴纳物业费人数</p>
+              </div>
+            </Col>
+            <Col span={6}>
+              <div className="listStitac" style={{background: "rgb(109, 186, 240)"}} >
+                <p>100</p>
+                <p>本月未缴纳物业费人数</p>
+              </div>
+            </Col>
+          </Row>
+          <Row gutter={10} className="mgt10">
+            <Col span={12}>
+              <Card>
+                <Chart/>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card>
+                <Chart/>
+              </Card>
+            </Col>
+          </Row>
+        </JCard>
       </div>
     )
   }
@@ -36,7 +72,7 @@ function mapDispatchProps(dispatch){
 
 function mapStateProps(state){
   return {
-
+    spinning: state.app.spinning
   }
 }
 

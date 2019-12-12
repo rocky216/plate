@@ -1,5 +1,6 @@
 var path = require("path")
 var webpack = require("webpack")
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 
 var vendors= [
@@ -36,5 +37,6 @@ module.exports = {
         // 定义打包的公共vendor文件对外暴露的函数名
         name: '[name]_[hash]'
     }),
+    new BundleAnalyzerPlugin()
   ]
 }

@@ -7,7 +7,7 @@ import JCard from "@/components/JCard"
 import {chargeColmuns} from "../colmuns"
 import AddDetail from "./addDetial"
 import {getHeHousingEstate} from "@/actions/projectAction"
-import {addPropertyTemplate} from "@/actions/financeAction"
+import {editPropertyTemplate, getPropertyTemplateDetail} from "@/actions/financeAction"
 
 const {Option} = Select
 const {TextArea} = Input
@@ -29,11 +29,16 @@ class AddPropertyTem extends React.Component {
     super(props)
     this.state = {
       addVisible: false,
+      detail: '',
       detailArr: []
     }
   }
 
   componentDidMount(){
+    this.props.actions.getPropertyTemplateDetail({id: this.props.match.params.id}, res=>{
+      console.log(res, "res")
+      this.setState({detail: res, detailArr: res.detailsList})
+    })
     this.props.actions.getHeHousingEstate({pageSize: 1000})
   }
 
@@ -43,10 +48,13 @@ class AddPropertyTem extends React.Component {
         this.props.utils.OpenNotification("error", "添加收费详情！")
         return
       }
-      _.assign(values, 
-        {detailsJson: JSON.stringify(this.state.detailArr), 
-         status: values.status?"0":"1"})
-      this.props.actions.addPropertyTemplate(values, res=>{
+      _.assign(values, {
+          detailsJson: JSON.stringify(this.state.detailArr), 
+          status: values.status?"0":"1",
+          id: this.props.match.params.id
+        })
+         console.log(values, "values")
+      this.props.actions.editPropertyTemplate(values, res=>{
         this.props.utils.OpenNotification("success")
         this.props.history.push("/finance/propertytem")
       })
@@ -57,7 +65,7 @@ class AddPropertyTem extends React.Component {
     this.state.detailArr.push(values)
     this.setState({detailArr: this.state.detailArr, addVisible: false})
   }
-  handlenDelete(item){
+  handlenDelete(){
     let newArr = _.filter(this.state.detailArr, o=>o.id !=item.id)
     this.setState({detailArr: newArr})
   }
@@ -82,8 +90,8 @@ class AddPropertyTem extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {spinning, utils, projectitem} = this.props
-    const {addVisible, detailArr} = this.state
-    console.log(detailArr, "detailArr")
+    const {addVisible, detailArr, detail} = this.state
+    
     return (
       <JCard spinning={spinning}>
         <Card title="添加物业费模板" extra={
@@ -96,6 +104,7 @@ class AddPropertyTem extends React.Component {
           <Form {...formItemLayout}  >
             <Form.Item label="模板名称" hasFeedback>
               {getFieldDecorator('templateName', {
+                initialValue: detail.templateName,
                 rules: [
                   {
                     required: true,
@@ -106,6 +115,7 @@ class AddPropertyTem extends React.Component {
             </Form.Item>
             <Form.Item label="所属项目" hasFeedback>
               {getFieldDecorator('heId', {
+                initialValue: detail.heId?detail.heId:"",
                 rules: [
                   {
                     required: true,
@@ -122,6 +132,7 @@ class AddPropertyTem extends React.Component {
             </Form.Item>
             <Form.Item label="房屋类型" hasFeedback>
               {getFieldDecorator('templateType', {
+                initialValue: detail?String(detail.templateType):"",
                 rules: [
                   {
                     required: true,
@@ -137,6 +148,7 @@ class AddPropertyTem extends React.Component {
             </Form.Item>
             <Form.Item label="状态" >
               {getFieldDecorator('status', {
+                initialValue: detail.status=="0"?true:false,
                 initialValue: true,
                 valuePropName: 'checked'
               })(
@@ -151,6 +163,7 @@ class AddPropertyTem extends React.Component {
             </Form.Item>
             <Form.Item label="备注" >
               {getFieldDecorator('remark', {
+                initialValue: detail.remark,
               })(
                 <TextArea  autoSize={{minRows: 3}}/>
               )}
@@ -164,7 +177,7 @@ class AddPropertyTem extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getHeHousingEstate, addPropertyTemplate}, dispatch)
+    actions: bindActionCreators({getHeHousingEstate, editPropertyTemplate, getPropertyTemplateDetail}, dispatch)
   }
 }
 

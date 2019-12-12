@@ -85,13 +85,13 @@ class SelectHouse extends React.Component {
   }
 
   render(){
-    const {allhouse, NoInput, checkedKeys, checkable, onCheck} = this.props
+    const {allhouse, NoInput, checkedKeys, checkable, onCheck, showLine} = this.props
     const {treeData, expandedKeys} = this.state
     
 
     return (
       <div>
-        {!NoInput?<Input onKeyDown={this.handlenSearch.bind(this)} placeholder="输入如: 1-1-101回车" style={{width: 200}} />:null}
+        {!NoInput?<Input onKeyDown={this.handlenSearch.bind(this)} placeholder="输入如: 1-1-101回车"  />:null}
         
           {treeData && treeData.length?<Tree
             showLine 
@@ -104,7 +104,7 @@ class SelectHouse extends React.Component {
             checkable={checkable}
             checkedKeys={checkedKeys?checkedKeys:[]}
             onCheck={onCheck}
-            // showLine 
+            showLine={showLine}
             onSelect={this.handlenSelect.bind(this)}
           >
             {this.createNode(allhouse?this.handlenData(allhouse):[])}

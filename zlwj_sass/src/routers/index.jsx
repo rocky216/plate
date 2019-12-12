@@ -31,6 +31,7 @@ import BaseLibrary from "@/views/base/library"
 import SystemLibrary from "@/views/system/library"
 import Propertytem from "@/views/finance/propertytem"
 import AddPropertytem from "@/views/finance/propertytem/add"
+import EditPropertytem from "@/views/finance/propertytem/edit"
 
 
 
@@ -69,6 +70,7 @@ class Routers extends React.Component{
         <AuthRoute  path="/finance/account/:id/log" Component={AccountLog} name="资金账户日志" />
         <AuthRoute exact path="/finance/propertytem" Component={Propertytem} name="物业费收费模板" /> 
         <AuthRoute  path="/finance/propertytem/add" Component={AddPropertytem} name="新增物业费收费模板" />
+        <AuthRoute  path="/finance/propertytem/:id/edit" Component={EditPropertytem} name="编辑物业费收费模板" />
 
         <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />

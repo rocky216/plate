@@ -21,7 +21,10 @@ class Properytem extends React.Component {
         render(item){
           return (
             <div>
-              <Button type="link">编辑</Button>
+              <Link to={`/finance/propertytem/${item.id}/edit`}>
+                <Button type="link">编辑</Button>
+              </Link>
+              
             </div>
           )
         }

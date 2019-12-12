@@ -28,6 +28,7 @@ class App extends React.Component {
           <div >
             <Routers/>
           </div>
+          
         </Content>
         <Footer style={{ textAlign: 'center' }}>智联物业管理系统 @2019 由高超网络荣誉出品</Footer>
       </Layout>
