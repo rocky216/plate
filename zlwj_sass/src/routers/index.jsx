@@ -6,6 +6,7 @@ import {
 import AuthRoute from "@/routers/AuthRoute"
 import Home from "@/views/home"
 import PropertyFee from "@/views/workcenter/propertyfee"
+import AddPropertyFee from "@/views/workcenter/propertyfee/add"
 import TreeMenu from "@/views/system/treemenu"
 import BaseDepartment from "@/views/base/department"
 import Station from "@/views/base/station"
@@ -32,6 +33,14 @@ import SystemLibrary from "@/views/system/library"
 import Propertytem from "@/views/finance/propertytem"
 import AddPropertytem from "@/views/finance/propertytem/add"
 import EditPropertytem from "@/views/finance/propertytem/edit"
+import Notice from "@/views/other/notice"
+import AddNotice from "@/views/other/notice/add"
+import EditNotice from "@/views/other/notice/edit"
+import Govern from "@/views/other/govern"
+import AddGovern from "@/views/other/govern/add"
+import EditGovern from "@/views/other/govern/edit"
+import Company from "@/views/system/company"
+import CompanyHe from "@/views/system/company/he"
 
 
 
@@ -44,9 +53,13 @@ class Routers extends React.Component{
 
         <AuthRoute exact path="/" Component={Home} name="首页" />
 
-        <AuthRoute  path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" />
+        <AuthRoute exact path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" /> 
+        <AuthRoute  path="/workcenter/propertyfee/:type/add/:id" Component={AddPropertyFee} name="新增物业费订单" />
+
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" />
+        <AuthRoute exact path="/system/company" Component={Company} name="公司列表" /> 
+        <AuthRoute  path="/system/company/:id/he" Component={CompanyHe} name="公司小区" />
         
         <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" />
         <AuthRoute  path="/base/station" Component={Station} name="岗位管理" />
@@ -75,8 +88,14 @@ class Routers extends React.Component{
         <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />
         <AuthRoute  path="/other/discussion/:id/edit" Component={EditDiscussion} name="编辑议事主题" />
-        <AuthRoute  path="/other/discussion/:id/voteopt" Component={DiscussionThemeOpt} name="议事主题投票选项" />
-        
+        <AuthRoute  path="/other/discussion/:id/voteopt" Component={DiscussionThemeOpt} name="议事主题投票选项" /> 
+        <AuthRoute exact path="/other/notice" Component={Notice} name="公告" />  
+        <AuthRoute  path="/other/notice/add" Component={AddNotice} name="新增公告" />
+        <AuthRoute  path="/other/notice/:id/edit" Component={EditNotice} name="编辑公告" />
+        <AuthRoute exact path="/other/govern" Component={Govern} name="政务公开" /> 
+        <AuthRoute  path="/other/govern/add" Component={AddGovern} name="新增政务" />
+        <AuthRoute  path="/other/govern/:id/edit" Component={EditGovern} name="编辑政务" />
+         
       </Switch>
       
     )

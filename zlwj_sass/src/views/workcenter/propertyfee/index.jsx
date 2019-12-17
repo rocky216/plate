@@ -1,20 +1,26 @@
 import React from "react"
 import {connect} from "react-redux"
-import {withRouter} from "react-router-dom"
+import {withRouter, Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Table, Tabs, Badge} from "antd";
+import {Card, Table, Tabs, Badge, Button, Icon, Select} from "antd";
 import SelectHouse from "@/components/SelectHouse"
 import JCard from "@/components/JCard"
 import "./index.less"
 import {propertyfeeColmuns} from "../colmuns"
 import {getPropertyfee} from "@/actions/otherAction"
+import AddPropertyfee from "./add"
 
 const {TabPane} = Tabs
+const {Option} = Select
 
 class PropertyFee extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      houseType: "0",
+      houseId: "",
+      addVisible: false,
+      houseItem: ""
     }
   }
 
@@ -24,17 +30,29 @@ class PropertyFee extends React.Component {
 
   render(){
     const {spinning, utils, propertyfee} = this.props
-
+    const {houseType, houseId, addVisible, houseItem} = this.state
+    
     return (
       <JCard spinning={spinning}>
         <div className="propertyfee">
           <div className="select_house">
-            <Card title="业主列表" size="small">
-              <SelectHouse showLine/>
+            <Card title="选择房间" size="small">
+              <Select className="mgb10" value={houseType} onChange={val=>this.setState({houseType: val})} style={{width: "100%"}} >
+                <Option value="0">住宅</Option>
+                <Option value="1">商铺</Option>
+              </Select>
+              {houseType=="0"?<SelectHouse showLine onSelect={data=>this.setState({houseId: data.id, houseItem: data})} />:null}
+              
             </Card>
           </div>
           <div style={{width: "100%"}}>
-            <Card>
+            <Card title={houseItem?`${houseItem.showCodeAll}`:null} extra={houseId?<Button type="primary" onClick={()=>this.setState({addVisible:true})}>
+                <Icon type="plus" />新增物业费订单</Button>:null} >
+                  {houseId && addVisible?<AddPropertyfee visible={addVisible} 
+                              showName={houseItem?`${houseItem.showCodeAll}`:null}
+                              houseType={houseType} houseId={houseId} onCancel={()=>this.setState({addVisible: false})} />:null}
+              
+
               <Tabs>
                 <TabPane tab={<Badge count={0} offset={[10,0]} showZero>全部订单</Badge>} key="allCount" /> 
                 <TabPane tab={<Badge count={0} offset={[10,0]} showZero>待审核订单</Badge>} key="waitCount" />

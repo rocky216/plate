@@ -55,14 +55,19 @@ export default [
     ]
   },
   {
-    title: "政务公开",
+    title: "公司动态",
     key: 6,
     icon: "icon iconfont icon-zhengwugongkai2",
     children: [
       {
-        title: "公开列表",
-        link: "/",
+        title: "公告",
+        link: "/other/notice",
         key: 601
+      },
+      {
+        title: "政务公开",
+        link: "/other/govern",
+        key: 602
       }
     ]
   },
@@ -156,7 +161,12 @@ export default [
         title: "数据字典",
         link: "/system/library",
         key: 902
-      }
+      },
+      {
+        title: "公司列表",
+        link: "/system/company",
+        key: 903
+      },
     ]
   }
 ]

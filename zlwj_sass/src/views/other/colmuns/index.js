@@ -62,3 +62,44 @@ export const voteOptionsColmuns = [
     dataIndex: "optionsName",
   },
 ]
+
+export const noticeColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "标题",
+    dataIndex: "title"
+  },
+  {
+    title: "创建时间",
+    dataIndex: "buildTime"
+  }
+]
+
+export const governColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "图片",
+    dataIndex: "cover",
+    render(item){
+      return item?<img src={item} style={{width: 100}} />:"无"
+    }
+  },
+  {
+    title: "标题",
+    dataIndex: "title"
+  },
+  {
+    title: "描述",
+    dataIndex: "desc"
+  },
+  {
+    title: "创建时间",
+    dataIndex: "buildTime"
+  },
+]

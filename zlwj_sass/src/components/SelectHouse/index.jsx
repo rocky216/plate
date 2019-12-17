@@ -3,6 +3,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Tree, Input} from "antd";
 import {getHouseInfo} from "@/actions/otherAction"
+import "./index.less"
 
 const {TreeNode } = Tree
 
@@ -90,7 +91,7 @@ class SelectHouse extends React.Component {
     
 
     return (
-      <div>
+      <div className="selectHouse">
         {!NoInput?<Input onKeyDown={this.handlenSearch.bind(this)} placeholder="输入如: 1-1-101回车"  />:null}
         
           {treeData && treeData.length?<Tree

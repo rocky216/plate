@@ -65,7 +65,7 @@ class AddPropertyTem extends React.Component {
     this.state.detailArr.push(values)
     this.setState({detailArr: this.state.detailArr, addVisible: false})
   }
-  handlenDelete(){
+  handlenDelete(item){
     let newArr = _.filter(this.state.detailArr, o=>o.id !=item.id)
     this.setState({detailArr: newArr})
   }
