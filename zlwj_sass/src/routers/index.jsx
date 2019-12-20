@@ -6,6 +6,7 @@ import {
 import AuthRoute from "@/routers/AuthRoute"
 import Home from "@/views/home"
 import PropertyFee from "@/views/workcenter/propertyfee"
+import ShopFee from "@/views/workcenter/shopfee"
 import AddPropertyFee from "@/views/workcenter/propertyfee/add"
 import TreeMenu from "@/views/system/treemenu"
 import BaseDepartment from "@/views/base/department"
@@ -41,6 +42,8 @@ import AddGovern from "@/views/other/govern/add"
 import EditGovern from "@/views/other/govern/edit"
 import Company from "@/views/system/company"
 import CompanyHe from "@/views/system/company/he"
+import Message from "@/views/system/message"
+import SendMessage from "@/views/other/message"
 
 
 
@@ -55,11 +58,13 @@ class Routers extends React.Component{
 
         <AuthRoute exact path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" /> 
         <AuthRoute  path="/workcenter/propertyfee/:type/add/:id" Component={AddPropertyFee} name="新增物业费订单" />
+        <AuthRoute exact path="/workcenter/shopfee" Component={ShopFee} name="商铺缴费订单" /> 
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" />
         <AuthRoute exact path="/system/company" Component={Company} name="公司列表" /> 
         <AuthRoute  path="/system/company/:id/he" Component={CompanyHe} name="公司小区" />
+        <AuthRoute  path="/system/message" Component={Message} name="短信平台" />
         
         <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" />
         <AuthRoute  path="/base/station" Component={Station} name="岗位管理" />
@@ -95,6 +100,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/other/govern" Component={Govern} name="政务公开" /> 
         <AuthRoute  path="/other/govern/add" Component={AddGovern} name="新增政务" />
         <AuthRoute  path="/other/govern/:id/edit" Component={EditGovern} name="编辑政务" />
+        <AuthRoute  path="/other/message" Component={SendMessage} name="短信发送" />
          
       </Switch>
       

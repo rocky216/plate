@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon} from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 import "./index.less"
 import  menus from "./menus"

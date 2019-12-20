@@ -1,8 +1,9 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Button, Input, InputNumber, Select} from "antd";
+import {Modal, Form, Button, Input, InputNumber, Select, DatePicker} from "antd";
 import {addShop, getShopList} from "@/actions/projectAction"
+import moment from "moment"
 
 const {Option} = Select
 
@@ -24,6 +25,7 @@ class AddShop extends React.Component {
       if(!err){
         this.props.actions.addShop({
           ...values,
+          deliversTime: moment(values.deliversTime).format("YYYY-MM-DD")
         }, res=>{
           this.props.actions.getShopList({current: 1})
           this.props.onCancel()
@@ -94,6 +96,14 @@ class AddShop extends React.Component {
               ],
             })(<InputNumber min={0} style={{width: "100%"}} />)}
           </Form.Item>
+          <Form.Item label="室内面积" hasFeedback>
+            {getFieldDecorator('indoorArea', {
+            })(<InputNumber min={0} style={{width: "100%"}} />)}
+          </Form.Item>
+          <Form.Item label="公摊面积" hasFeedback>
+            {getFieldDecorator('poolArea', {
+            })(<InputNumber min={0} style={{width: "100%"}} />)}
+          </Form.Item>
           <Form.Item label="楼层数" hasFeedback>
             {getFieldDecorator('floorNum', {
             })(<InputNumber style={{width: "100%"}} />)}
@@ -106,6 +116,16 @@ class AddShop extends React.Component {
                 <Option value="0">无</Option>
               </Select>
             )}
+          </Form.Item>
+          <Form.Item label="交房时间" hasFeedback>
+            {getFieldDecorator('deliversTime', {
+              rules: [
+                {
+                  required: true,
+                  message: '选择交房时间!',
+                }
+              ],
+            })(<DatePicker/>)}
           </Form.Item>
         </Form>
       </Modal>

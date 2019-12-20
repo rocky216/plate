@@ -52,7 +52,7 @@ export function setCookie(key, val){
   cookies.save(key,val, {
     path: "/",
     maxAge: 60*60*2,
-    expires
+    // expires
   })
 }
 

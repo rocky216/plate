@@ -1,16 +1,14 @@
 import React from "react"
 import {connect} from "react-redux"
-import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Button, Icon, Form, Input, Divider, Row, Col, Modal, DatePicker, Select, Table, Switch} from "antd";
-import JCard from "@/components/JCard"
-import {addInitPropertyfee, countPropertyOrder, addPropertyOrder, getPropertyfee} from "@/actions/otherAction"
+import {Modal, Card, Form, Input, Divider, Row, Col, DatePicker, Select, Button, Icon, Table, Switch } from "antd";
+import {getShopAddInit, loadShopOrderMoney, addShopsPropertyOrder, getShopOrder} from "@/actions/otherAction"
 import {ownersInfo, houseInfo} from "./data"
 import moment from "moment"
 import {propertyDetailColmuns} from "../colmuns"
 
-const { RangePicker } = DatePicker;
-const {Option } = Select
+const {Option} = Select 
+const {TextArea} = Input
 
 const formItemLayout = {
   labelCol: {
@@ -23,24 +21,25 @@ const formItemLayout = {
   },
 };
 
-class AddPropertyfee extends React.Component {
+class AddShopfee extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      owners: "",
-      templateList: "",
-      accountList: "",
-      house: "",
+      params: {
+        shopId: props.shopItem.id
+      },
+      shop: "",
       startTime: "",
+      accountList: "",
+      templateList: "",
       temDetail: []
     }
   }
+
   componentDidMount(){
-    this.props.actions.addInitPropertyfee({
-      houseId: this.props.houseId
-    }, res=>{
-      const {owners, templateList, accountList, house, startTime} = res
-      this.setState({owners, templateList, accountList, house, startTime})
+    this.props.actions.getShopAddInit(this.state.params, res=>{
+      const {shop, startTime, accountList, templateList} = res
+      this.setState({shop, startTime,accountList,templateList})
     })
   }
 
@@ -57,65 +56,55 @@ class AddPropertyfee extends React.Component {
 
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
-      console.log(values)
+      const {shopItem} = this.props
+      const {templeId, accountId, endTime, remark} = values
       
-      const {houseType, houseId} = this.props
-      const {templeId, accountId, endTime} = values
-      
-      this.props.actions.addPropertyOrder({
+      this.props.actions.addShopsPropertyOrder({
         templateId:templeId, 
         accountId, 
         feeEndTime: moment(endTime).format("YYYY-MM-DD"),
-        orderType: houseType,
-        houseId: houseId,
-        freeDetailsIds: this.getFreeDetailsIds()
+        shopsId: shopItem.id,
+        freeDetailsIds: this.getFreeDetailsIds(),
+        remark
       }, res=>{
         this.props.utils.OpenNotification("success")
         this.props.onCancel()
-        this.props.actions.getPropertyfee()
+        this.props.actions.getShopOrder()
       })
     })
+    
   }
 
-  handlenData(key, str){
-    if(key=="sex"){
-      return str==1?"男":"女"
-    }else {
-      return str
-    }
-  }
-  handlenHouseData(key, obj){
+  handlenData(key, obj){
     let arrKey = key.split(".")
     let val = obj
     _.each(arrKey, item=>{
       val = val[item]
     })
-    if(key=="elevatorHouse"){
-      return val=="1"?"电梯房":"楼梯房"
+    if(key=="owners.sex"){
+      return val=="1"?"男":"女"
     }
-    if(key=="heHouseInfo.packingStatus"){
+    if(key=="elevatorHouse"){
+      return val=="0"?"楼梯房":"电梯房"
+    }
+    if(key=="heShopsInfo.packingStatus"){
       return val=="0"?"未装修":val=="1"?"装修中":"已装修"
     }
-    if(key=="heHouseInfo.payFristTime"){
-      let start = obj["heHouseInfo"]["payFristTime"] , end=obj["heHouseInfo"]["payLastTime"]
-      if(start && end){
-        return start.substring(0,11)+'至'+end.substring(0,11)
-      }
-      return "无缴费记录"
+    if(key=="heShopsInfo.payLastTime"){
+      return obj["heShopsInfo"]["payLastTime"]?obj["heShopsInfo"]["payFristTime"]+"至"+obj["heShopsInfo"]["payLastTime"]:"无缴费记录"
     }
     return val
   }
 
   handlenCountMomey(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
-      console.log(values)
       if(!err){
-        const {houseType, houseId} = this.props
-        const {templeId, accountId, endTime} = values
-        this.props.actions.countPropertyOrder({
+        const {shopItem} = this.props
+        const {templeId, accountId, endTime, } = values
+        this.props.actions.loadShopOrderMoney({
           templeId, 
           endTime: moment(endTime).format("YYYY-MM-DD"),
-          houseId: houseId
+          shopId: shopItem.id,
         }, res=>{
           _.each(res.detailsList, item=>{
             item.oldtotalFee = item.totalFee
@@ -123,7 +112,6 @@ class AddPropertyfee extends React.Component {
           this.setState({temDetail: res})
         })
       }
-      
     })
   }
 
@@ -139,7 +127,6 @@ class AddPropertyfee extends React.Component {
       temDetail.detailsList[index]["totalFee"] = temDetail.detailsList[index]["oldtotalFee"]
     }
     _.each(temDetail.detailsList, item=>{
-      console.log(parseFloat(item.totalFee))
       str+= parseFloat(item.totalFee) 
     })
     temDetail.orderTotalFee = Math.round(str)
@@ -151,7 +138,6 @@ class AddPropertyfee extends React.Component {
     return propertyDetailColmuns.concat([{
       title: "操作",
       render(item){
-        console.log(item)
         return (
           <div>
             {item.notFixPercentage>0?<Switch size="small" 
@@ -165,12 +151,12 @@ class AddPropertyfee extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, utils, visible, onCancel, showName} = this.props
-    const {owners, templateList, accountList, house, startTime, temDetail} = this.state
-
+    const {shopItem, spinning, visible, onCancel, utils } = this.props
+    const {shop, startTime, accountList, templateList, temDetail } = this.state
+    
     return (
       <Modal
-      title={showName}
+        title={shopItem.shopsName}
         destroyOnClose
         okText="确定"
         cancelText="取消"
@@ -180,37 +166,33 @@ class AddPropertyfee extends React.Component {
         onCancel={onCancel}
         onOk={this.handlenSubmit.bind(this)}
       >
-        
         <Form {...formItemLayout} >
-          {owners?<div>
+          {shop.owners?<div>
             <Divider orientation="left" >业主信息</Divider>
             <Row>
               {ownersInfo.map((item, index)=>(
                 <Col key={index} span={6}>
                   <Form.Item  label={item.title}>
                     {getFieldDecorator(item.key, {
-                      initialValue: owners?this.handlenData(item.key,owners[item.key]):""
+                      initialValue: shop?this.handlenData(item.key,shop):""
                     })(<Input disabled />)}
                   </Form.Item>
                 </Col>
               ))}
             </Row>
           </div>:null}
-          
-          
-          <Divider orientation="left" >房屋信息</Divider>
+          <Divider orientation="left" >商铺信息</Divider>
           <Row>
             {houseInfo.map((item, index)=>(
               <Col key={index} span={item.span?item.span:6}>
                 <Form.Item  label={item.title}>
                   {getFieldDecorator(item.key, {
-                    initialValue: house?this.handlenHouseData(item.key,house):""
+                    initialValue: shop?this.handlenData(item.key,shop):""
                   })(<Input disabled />)}
                 </Form.Item>
               </Col>
             ))}
           </Row>
-          <Divider orientation="left" >缴纳物业费设置</Divider>
           <Row>
             <Col span={7} >
               <Form.Item  label="开始时间">
@@ -249,8 +231,8 @@ class AddPropertyfee extends React.Component {
                   </Select>
                 )}
               </Form.Item>
-            </Col>
-            <Col span={7} >
+              </Col>
+              <Col span={7} >
               <Form.Item  label="选择收费模板">
                 {getFieldDecorator("templeId", {
                   initialValue: templateList.length?templateList[0]["id"]:"",
@@ -261,7 +243,7 @@ class AddPropertyfee extends React.Component {
                     }
                   ],
                 })(
-                  <Select>
+                  <Select style={{width: "100%"}}>
                     {templateList?templateList.map(item=>(
                       <Option key={item.id} value={item.id} >{item.templateName}</Option>
                     )):null}
@@ -279,8 +261,15 @@ class AddPropertyfee extends React.Component {
                 dataSource={temDetail?utils.addIndex(temDetail.detailsList):[]}
                 pagination={false}/>
           <div className="flexend">
-            <span>总金额: {temDetail.orderTotalFee}</span>
+            <span>总金额: {temDetail.orderTotalFee?Math.round(temDetail.orderTotalFee):0}</span>
           </div>
+          <Row>
+            <Col>
+              <Form.Item labelCol={{sm: { span: 1 }}} wrapperCol={{sm: { span: 20 }}} label="备注">
+                {getFieldDecorator("remark")(<TextArea autoSize={{minRows: 3}} />)}
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     )
@@ -289,7 +278,7 @@ class AddPropertyfee extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addInitPropertyfee, countPropertyOrder, addPropertyOrder, getPropertyfee}, dispatch)
+    actions: bindActionCreators({getShopAddInit, loadShopOrderMoney, getShopOrder, addShopsPropertyOrder}, dispatch)
   }
 }
 
@@ -300,4 +289,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddPropertyfee) )
+export default connect(mapStateProps, mapDispatchProps)(Form.create()(AddShopfee))

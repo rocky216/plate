@@ -3,13 +3,21 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Table, Button, Modal} from "antd";
-import {getHeList} from "@/actions/systemAction"
+import {getHeList, deleteLinkHeSign, deleteLinkHeTem} from "@/actions/systemAction"
 import JCard from "@/components/JCard"
 import {heColmuns} from "../../colmuns"
 import AddSign from "./addSign"
 
 
 class HeList extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      addSignVisible: false,
+      detail: ""
+    }
+  }
+
   componentDidMount(){
     this.props.actions.getHeList({
       companyId: this.props.match.params.id
@@ -17,8 +25,38 @@ class HeList extends React.Component {
   }
   
   
-  handlenClose(elem){
-    console.log(elem)
+  handlenClose(rows, elem, type){
+    console.log(rows, elem, type)
+    let _this = this
+    console.log(_this, "_this")
+    Modal.confirm({
+      title: '是否删除',
+      okText: '确认',
+      cancelText: '取消',
+      onOk(){
+        if(type == "signName"){
+          _this.props.actions.deleteLinkHeSign({
+            signId: elem.id,
+            heId: rows.id
+          }, res=>{
+            _this.props.actions.getHeList({
+              companyId: _this.props.match.params.id
+            })
+            _this.props.utils.OpenNotification("success")
+          })
+        }else if(type == "templateName"){
+          _this.props.actions.deleteLinkHeTem({
+            templateId: elem.id,
+            heId: rows.id
+          }, res=>{
+            _this.props.actions.getHeList({
+              companyId: _this.props.match.params.id
+            })
+            _this.props.utils.OpenNotification("success")
+          })
+        }
+      }
+    });
   } 
 
   getCol(){
@@ -28,10 +66,7 @@ class HeList extends React.Component {
       render(item){
         return (
           <div>
-            <Link to={`/system/company/${item.id}/he`}>
-              <Button type="link">飞鸽短信</Button>
-            </Link>
-            
+            <Button type="link" onClick={()=>_this.setState({addSignVisible: true, detail: item})} >短信关联</Button>
           </div>
         )
       }
@@ -40,11 +75,12 @@ class HeList extends React.Component {
 
   render(){
     const {spinning, utils, he} = this.props
+    const {addSignVisible, detail} = this.state
 
     return (
       <JCard spinning={spinning}>
         <Card >
-
+          <AddSign visible={addSignVisible} detail={detail} onCancel={()=>this.setState({addSignVisible: false})} />
 
           <Table columns={this.getCol()} 
             dataSource={he?utils.addIndex(he):[]}/>
@@ -56,7 +92,7 @@ class HeList extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getHeList}, dispatch)
+    actions: bindActionCreators({getHeList, deleteLinkHeSign, deleteLinkHeTem}, dispatch)
   }
 }
 

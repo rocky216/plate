@@ -22,7 +22,7 @@ class Discussion extends React.Component {
       params: {
         current: 1,
       }
-    }
+    } 
   }
 
   componentDidMount(){

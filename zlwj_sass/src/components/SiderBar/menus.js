@@ -15,7 +15,13 @@ export default [
         link: "/",
         link: '/workcenter/propertyfee',
         key: 201
-      }
+      },
+      {
+        title: "商铺缴费订单",
+        link: "/",
+        link: '/workcenter/shopfee',
+        key: 202
+      },
     ]
   },
   {
@@ -69,6 +75,18 @@ export default [
         link: "/other/govern",
         key: 602
       }
+    ]
+  },
+  {
+    title: "社信通",
+    key: 11,
+    icon: "icon iconfont icon-zhengwugongkai2",
+    children: [
+      {
+        title: "短信发送",
+        link: "/other/message",
+        key: 1101
+      },
     ]
   },
   {
@@ -166,6 +184,11 @@ export default [
         title: "公司列表",
         link: "/system/company",
         key: 903
+      },
+      {
+        title: "短信平台",
+        link: "/system/message",
+        key: 904
       },
     ]
   }

@@ -49,12 +49,12 @@ export const heColmuns = function(_this){
     {
       title: "短息签名",
       dataIndex: "smsFeigeSigns",
-      render(item){
+      render(item, rows){
         return (
           <div>
             {item.map(elem=>(
               <Tag key={elem.id} visible={!elem.visible} 
-              closable onClose={_this.handlenClose.bind(_this, elem, "signName")}  >{elem.signName}</Tag>
+              closable onClose={_this.handlenClose.bind(_this, rows, elem, "signName")}  >{elem.signName}</Tag>
             ))}
           </div>
         )
@@ -63,12 +63,12 @@ export const heColmuns = function(_this){
     {
       title: "短息模板",
       dataIndex: "smsFeigeTemplates",
-      render(item){
+      render(item, rows){
         return (
           <div>
             {item.map(elem=>(
               <Tag key={elem.id} visible={!elem.visible} closable 
-              onClose={_this.handlenClose.bind(_this, elem, "templateName")}  >{elem.templateName}</Tag>
+              onClose={_this.handlenClose.bind(_this, rows, elem, "templateName")}  >{elem.templateName}</Tag>
             ))}
           </div>
         )
@@ -76,3 +76,40 @@ export const heColmuns = function(_this){
     },
   ]
 }
+
+export const signColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "签名ID",
+    dataIndex: "signId"
+  },
+  {
+    title: "签名名称",
+    dataIndex: "signName"
+  },
+]
+
+export const mesTempColmuns = [
+  {
+    title: "序号",
+    width:100,
+    dataIndex: "key"
+  },
+  {
+    title: "签名名称",
+    width:200,
+    dataIndex: "templateName"
+  },
+  {
+    title: "内容",
+    dataIndex: "templateContent"
+  },
+  {
+    title: "变量数",
+    width:80,
+    dataIndex: "templateVarNum"
+  },
+]

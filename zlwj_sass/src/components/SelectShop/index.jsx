@@ -8,7 +8,7 @@ import {getMeunLevel } from "@/actions/baseAction"
 const { TreeNode } = Tree;
 const {Option} = Select
 
-class SelectRoom extends React.Component {
+class SelectShop extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -91,7 +91,6 @@ class SelectRoom extends React.Component {
         <Select value={ownerType} style={{width: 200}} onChange={val=>this.setState({ownerType:val})} >
           <Option value="0">店主</Option>
           <Option value="1">租客</Option>
-         
         </Select>
         </div>
         <Tree
@@ -120,4 +119,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(SelectRoom)
+export default connect(mapStateProps, mapDispatchProps)(SelectShop)
