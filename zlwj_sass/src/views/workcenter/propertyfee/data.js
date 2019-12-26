@@ -72,3 +72,15 @@ export const houseInfo = [
     span: 8
   },
 ]
+
+
+export const detailInfo = [
+  {
+    title: "所属小区",
+    key: "heName"
+  },
+  {
+    title: "所属小区",
+    key: "heName"
+  },
+]

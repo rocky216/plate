@@ -7,7 +7,6 @@ import AuthRoute from "@/routers/AuthRoute"
 import Home from "@/views/home"
 import PropertyFee from "@/views/workcenter/propertyfee"
 import ShopFee from "@/views/workcenter/shopfee"
-import AddPropertyFee from "@/views/workcenter/propertyfee/add"
 import TreeMenu from "@/views/system/treemenu"
 import BaseDepartment from "@/views/base/department"
 import Station from "@/views/base/station"
@@ -44,6 +43,7 @@ import Company from "@/views/system/company"
 import CompanyHe from "@/views/system/company/he"
 import Message from "@/views/system/message"
 import SendMessage from "@/views/other/message"
+import PropertyFeeDetail from "@/views/workcenter/propertyfee/detail"
 
 
 
@@ -57,7 +57,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/" Component={Home} name="首页" />
 
         <AuthRoute exact path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" /> 
-        <AuthRoute  path="/workcenter/propertyfee/:type/add/:id" Component={AddPropertyFee} name="新增物业费订单" />
+        <AuthRoute exact path="/workcenter/propertyfee/:id/detail/:type" Component={PropertyFeeDetail} name="查看物业费订单" /> 
         <AuthRoute exact path="/workcenter/shopfee" Component={ShopFee} name="商铺缴费订单" /> 
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" />

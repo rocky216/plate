@@ -7,6 +7,7 @@ import JCard from "@/components/JCard"
 import {shopColmuns} from "../colmuns"
 import AddShop from "./add"
 import EditShop from "./edit"
+import EditShopInfo from "./editshop"
 
 
 class Shop extends React.Component {
@@ -15,7 +16,9 @@ class Shop extends React.Component {
     this.state = {
       addVisible: false,
       editVisible: false,
+      editInfoVisible: false,
       detail: '',
+      detailInfo: "",
       params:{
         current: 1
       }
@@ -42,6 +45,7 @@ class Shop extends React.Component {
         return (
           <div>
             <Button type="link" onClick={()=>_this.setState({editVisible: true, detail: item})} >编辑</Button>
+            <Button type="link" onClick={()=>_this.setState({editInfoVisible: true, detailInfo: item})} >商铺信息</Button>
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
@@ -57,13 +61,15 @@ class Shop extends React.Component {
   }
   render(){
     const {spinning,utils, shop} = this.props
-    const {params, addVisible, editVisible, detail} = this.state
+    const {params, addVisible, editVisible, detail, editInfoVisible, detailInfo} = this.state
 
     return (
       <JCard spinning={spinning}>
         <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}><Icon type="plus" />新增商铺</Button>} >
           <AddShop visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditShop visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:''})} />
+          <EditShopInfo visible={editInfoVisible} detail={detailInfo} onCancel={()=>this.setState({editInfoVisible: false, detailInfo:''})} />
+          
           <Table 
             columns={this.getCol()} dataSource={shop?utils.addIndex(shop.list):[]} 
             pagination={utils.Pagination(shop, page=>{

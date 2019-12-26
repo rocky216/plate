@@ -17,10 +17,10 @@ export function Pagination(pageInfo, next){
     pageSize,
     total,
     onChange: function(){
-      if(next)next(...arguments)
+      if(next)next(...arguments) 
     }
   }
-}
+} 
 
 export function addIndex(arr){
   if(!_.isArray(arr)) return []

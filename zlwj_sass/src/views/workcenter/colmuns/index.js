@@ -124,3 +124,63 @@ export const propertyDetailColmuns = [
     dataIndex: "totalFee"
   },
 ]
+
+export const shopPropertyfeeColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "姓名",
+    dataIndex: "owners",
+    render(item){
+      return item?item.name:"无"
+    }
+  },
+  {
+    title: "手机号",
+    dataIndex: "phone",
+    render(e,rows){
+      return rows?rows.owners.phone:"无"
+    }
+  },
+  {
+    title: "订单号",
+    dataIndex: "orderNo"
+  },
+  {
+    title: "商铺号",
+    dataIndex: "houseUrlStr"
+  },
+  {
+    title: "缴费时间",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "优惠金额",
+    dataIndex: "orderDiscountFee"
+  },
+  {
+    title: "缴费金额",
+    dataIndex: "orderTrueFee"
+  }
+]
+
+export const exceptionColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "审批人",
+    dataIndex: "checkUserName"
+  },
+  {
+    title: "异常说明",
+    dataIndex: "exceptionInfo"
+  },
+  {
+    title: "创建时间",
+    dataIndex: "buildTime"
+  },
+]

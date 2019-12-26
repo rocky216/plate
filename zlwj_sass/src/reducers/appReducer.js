@@ -6,7 +6,7 @@ let initialState = {
   collapsed: false,
   utils: {
     OpenNotification,
-    setCookie, 
+    setCookie,  
     getCookie, 
     removeCookie,
     addIndex,

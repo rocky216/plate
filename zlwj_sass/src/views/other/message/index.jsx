@@ -118,7 +118,7 @@ class SendMes extends React.Component {
                 </Radio.Group>
                 {type=="1"?<TextArea value={phones} onChange={({target})=>this.setState({phones:target.value})} autoSize={{minRows: 3}} placeholder="请输入手机号，多个手机号用“,”隔开" />:null}
                 {type=="2"?<SelectHouse NoInput checkedKeys={checkedKeys} checkable 
-                  onCheck={()=>this.setState({checkedKeys: keys})} />:null}
+                  onCheck={(keys)=>this.setState({checkedKeys: keys})} />:null}
                 
               </Form.Item>
               </Form>

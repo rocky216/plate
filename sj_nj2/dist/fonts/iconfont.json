@@ -1,0 +1,44 @@
+{
+  "id": "1579395",
+  "name": "sj",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2252336",
+      "name": "位置",
+      "font_class": "weizhi",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "3891030",
+      "name": "工作台",
+      "font_class": "gongzuotai",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "6405627",
+      "name": "系统管理",
+      "font_class": "dianpu",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "9521000",
+      "name": "员工",
+      "font_class": "yuangong",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "11228979",
+      "name": "login-out",
+      "font_class": "tuichudenglu",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    }
+  ]
+}
