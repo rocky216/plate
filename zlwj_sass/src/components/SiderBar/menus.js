@@ -11,16 +11,19 @@ export default [
     icon: "icon iconfont icon-gongzuozhongxin",
     children: [
       {
-        title: "物业费订单",
-        link: "/",
+        title: "住宅物业费订单",
         link: '/workcenter/propertyfee',
         key: 201
       },
       {
-        title: "商铺缴费订单",
-        link: "/",
+        title: "商铺物业费订单",
         link: '/workcenter/shopfee',
         key: 202
+      },
+      {
+        title: "其他缴费订单",
+        link: '/workcenter/otherfee',
+        key: 203
       },
     ]
   },
@@ -37,15 +40,25 @@ export default [
     ]
   },
   {
-    title: "报修管理",
+    title: "管理中心",
     key: 4,
     icon: "icon iconfont icon-ranqibaoxiuguanli",
     children: [
       {
-        title: "报修记录",
-        link: "/",
+        title: "全部物业费订单",
+        link: "/manage/allorder",
+        key: 402
+      },
+      {
+        title: "全部其他缴费订单",
+        link: "/manage/otherorder",
+        key: 403
+      },
+      {
+        title: "合作商",
+        link: "/manage/operative",
         key: 401
-      }
+      },
     ]
   },
   {
@@ -63,7 +76,7 @@ export default [
   {
     title: "公司动态",
     key: 6,
-    icon: "icon iconfont icon-zhengwugongkai2",
+    icon: "icon iconfont icon-gongsidongtai",
     children: [
       {
         title: "公告",
@@ -80,7 +93,7 @@ export default [
   {
     title: "社信通",
     key: 11,
-    icon: "icon iconfont icon-zhengwugongkai2",
+    icon: "icon iconfont icon-tuisong-",
     children: [
       {
         title: "短信发送",
@@ -92,7 +105,7 @@ export default [
   {
     title: "财务管理",
     key: 10,
-    icon: "icon iconfont icon-zhengwugongkai2",
+    icon: "icon iconfont icon-caiwu",
     children: [
       {
         title: "资金账户",

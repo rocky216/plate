@@ -169,30 +169,31 @@ class AddShopfee extends React.Component {
         <Form {...formItemLayout} >
           {shop.owners?<div>
             <Divider orientation="left" >业主信息</Divider>
-            <Row>
+            <Row className="specialForm" >
               {ownersInfo.map((item, index)=>(
                 <Col key={index} span={6}>
                   <Form.Item  label={item.title}>
                     {getFieldDecorator(item.key, {
                       initialValue: shop?this.handlenData(item.key,shop):""
-                    })(<Input disabled />)}
+                    })(<Input disabled style={{ color: "#333"}} />)}
                   </Form.Item>
                 </Col>
               ))}
             </Row>
           </div>:null}
           <Divider orientation="left" >商铺信息</Divider>
-          <Row>
+          <Row className="specialForm">
             {houseInfo.map((item, index)=>(
               <Col key={index} span={item.span?item.span:6}>
                 <Form.Item  label={item.title}>
                   {getFieldDecorator(item.key, {
                     initialValue: shop?this.handlenData(item.key,shop):""
-                  })(<Input disabled />)}
+                  })(<Input disabled style={{ color: "#333"}} />)}
                 </Form.Item>
               </Col>
             ))}
           </Row>
+          <Divider orientation="left" >缴纳物业费设置</Divider>
           <Row>
             <Col span={7} >
               <Form.Item  label="开始时间">

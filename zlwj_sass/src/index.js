@@ -10,6 +10,7 @@ import store from "@/store"
 import Login from "@/views/auth/login"
 import _ from "lodash"
 
+
 window._ = _;
 
 if (module.hot) {

@@ -66,7 +66,7 @@ class AddPropertyfee extends React.Component {
         templateId:templeId, 
         accountId, 
         feeEndTime: moment(endTime).format("YYYY-MM-DD"),
-        orderType: houseType,
+        // orderType: houseType,
         houseId: houseId,
         freeDetailsIds: this.getFreeDetailsIds()
       }, res=>{
@@ -181,8 +181,8 @@ class AddPropertyfee extends React.Component {
         onOk={this.handlenSubmit.bind(this)}
       >
         
-        <Form {...formItemLayout} >
-          {owners?<div>
+        <Form {...formItemLayout}  >
+          {owners?<div className="specialForm">
             <Divider orientation="left" >业主信息</Divider>
             <Row>
               {ownersInfo.map((item, index)=>(
@@ -190,7 +190,7 @@ class AddPropertyfee extends React.Component {
                   <Form.Item  label={item.title}>
                     {getFieldDecorator(item.key, {
                       initialValue: owners?this.handlenData(item.key,owners[item.key]):""
-                    })(<Input disabled />)}
+                    })(<Input disabled style={{ color: "#333"}} />)}
                   </Form.Item>
                 </Col>
               ))}
@@ -199,13 +199,13 @@ class AddPropertyfee extends React.Component {
           
           
           <Divider orientation="left" >房屋信息</Divider>
-          <Row>
+          <Row className="specialForm">
             {houseInfo.map((item, index)=>(
               <Col key={index} span={item.span?item.span:6}>
                 <Form.Item  label={item.title}>
                   {getFieldDecorator(item.key, {
                     initialValue: house?this.handlenHouseData(item.key,house):""
-                  })(<Input disabled />)}
+                  })(<Input disabled style={{ color: "#333"}} />)}
                 </Form.Item>
               </Col>
             ))}

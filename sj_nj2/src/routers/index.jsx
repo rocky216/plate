@@ -11,6 +11,7 @@ import Diction from "@/views/system/diction"
 import TypeKey from "@/views/system/diction/typekey"
 import Process from "@/views/system/process"
 import AddProcess from "@/views/system/process/add"
+import Organ from "@/views/system/organ"
 
 
 class Routers extends React.Component{
@@ -28,6 +29,7 @@ class Routers extends React.Component{
         <AuthRoute path="/system/diction/:id/typekey" Component={TypeKey} name="数据列表" />
         <AuthRoute exact exact path="/system/process" Component={Process} name="流程设置" />
         <AuthRoute exact path="/system/process/add" Component={AddProcess} name="新建流程设置" />
+        <AuthRoute path="/system/organ" Component={Organ} name="组织机构" />
 
       </Switch>
       

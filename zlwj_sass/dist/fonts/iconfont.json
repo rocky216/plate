@@ -55,6 +55,27 @@
       "unicode_decimal": 59097
     },
     {
+      "icon_id": "2925461",
+      "name": "正常",
+      "font_class": "zhengchang",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "4599708",
+      "name": "公司动态",
+      "font_class": "gongsidongtai",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "5467969",
+      "name": "异常",
+      "font_class": "yichang",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
+    },
+    {
       "icon_id": "5578937",
       "name": "流程中心",
       "font_class": "liuchengzhongxin",
@@ -69,6 +90,13 @@
       "unicode_decimal": 58927
     },
     {
+      "icon_id": "5765276",
+      "name": "圈圈",
+      "font_class": "quanquan",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
       "icon_id": "5838820",
       "name": "统计",
       "font_class": "tongji",
@@ -81,6 +109,13 @@
       "font_class": "xiangmu",
       "unicode": "e836",
       "unicode_decimal": 59446
+    },
+    {
+      "icon_id": "7180053",
+      "name": "财务",
+      "font_class": "caiwu",
+      "unicode": "e601",
+      "unicode_decimal": 58881
     },
     {
       "icon_id": "7332415",
@@ -132,11 +167,32 @@
       "unicode_decimal": 58905
     },
     {
+      "icon_id": "9770453",
+      "name": "关  闭",
+      "font_class": "close",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "9789028",
       "name": "库卡项目数据处理",
       "font_class": "kukaxiangmushujuchuli",
       "unicode": "e6d6",
       "unicode_decimal": 59094
+    },
+    {
+      "icon_id": "9834603",
+      "name": "待审核",
+      "font_class": "xingzhuang",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "10037203",
+      "name": "推送line",
+      "font_class": "tuisong-",
+      "unicode": "e72c",
+      "unicode_decimal": 59180
     },
     {
       "icon_id": "10277519",

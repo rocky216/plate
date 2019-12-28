@@ -1,6 +1,6 @@
 import React from "react"
 import {connect} from "react-redux"
-
+import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Row, Col, Card, Button, Icon, Tabs, Badge, Table, Form, DatePicker, Input } from "antd";
 import JCard from "@/components/JCard"
@@ -17,6 +17,33 @@ class Shopfee extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      tabs: [
+        {
+          title: "全部订单",
+          value: "allCount",
+          key: "all"
+        },
+        {
+          title: "待审核订单",
+          value: "waitCount",
+          key: "wait"
+        },
+        {
+          title: "正常订单",
+          value: "rightCount",
+          key: "right"
+        },
+        {
+          title: "异常订单",
+          value: "abnormalCount",
+          key: "abnormal"
+        },
+        {
+          title: "关闭订单",
+          value: "closeCount",
+          key: "close"
+        },
+      ],
       shopId: "",
       shopItem: "",
       params: {
@@ -37,10 +64,15 @@ class Shopfee extends React.Component {
   getCol(){
     return shopPropertyfeeColmuns.concat([{
       title: "操作",
-      render(){
+      render(item){
         return (
           <div>
-            <Button type="link" >打印</Button>
+            <Link to={`/workcenter/shopfee/${item.id}/detail/2`}>
+              <Button type="link" >打印</Button>
+            </Link>
+            <Link to={`/workcenter/shopfee/${item.id}/detail/1`}>
+              <Button type="link" >查看</Button>
+            </Link>
           </div>
         )
       }
@@ -70,11 +102,18 @@ class Shopfee extends React.Component {
       this.props.actions.getShopOrder(params)
     })
   }
+  handlenTab(key){
+    const {params} = this.state
+    params.current = 1
+    params.orderStatusStr = key
+    this.setState({params})
+    this.props.actions.getShopOrder(params)
+  }
 
   render(){
     const {getFieldDecorator } = this.props.form
     const {spinning, utils, shoporder} = this.props
-    const {shopItem, addVisible} = this.state
+    const {shopItem, addVisible, tabs, params} = this.state
     
     return (
       <JCard spinning={spinning} >
@@ -102,7 +141,7 @@ class Shopfee extends React.Component {
                       rules: [{type: 'array'}]
                     })(
                       <RangePicker />,
-                    )}
+                    )} 
                   </Form.Item>
                   <Form.Item>
                     <Button type="primary" htmlType="submit" ><Icon type="search" />搜索</Button>
@@ -111,14 +150,21 @@ class Shopfee extends React.Component {
               </div>
 
               
-              <Tabs>
-                <TabPane tab={<Badge count={0} offset={[10,0]} showZero>全部订单</Badge>} key="allCount" /> 
-                <TabPane tab={<Badge count={0} offset={[10,0]} showZero>待审核订单</Badge>} key="waitCount" />
-                <TabPane tab={<Badge count={0} offset={[10,0]} showZero>正常订单</Badge>} key="rightCount" />
-                <TabPane tab={<Badge count={0} offset={[10,0]} showZero>异常订单</Badge>} key="abnormalCount" />
-                <TabPane tab={<Badge count={0} offset={[10,0]} showZero>关闭订单</Badge>} key="closeCount" />
+              <Tabs
+                onChange={this.handlenTab.bind(this)}
+              >
+                {tabs.map(item=>(
+                  <TabPane key={item.key} tab={
+                    <Badge count={shoporder?shoporder[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                  } />
+                ))}
               </Tabs>
-              <Table columns={this.getCol()} dataSource={shoporder?utils.addIndex(shoporder.page.list):[]} />
+              <Table columns={this.getCol()} dataSource={shoporder?utils.addIndex(shoporder.page.list):[]} 
+                pagination={shoporder?utils.Pagination(shoporder.page, page=>{
+                  params.current = page
+                  this.setState({params})
+                  this.props.actions.getShopOrder(params)
+                }):false}/>
             </Card>
           </div>
         </div>

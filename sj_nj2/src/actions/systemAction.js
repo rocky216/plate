@@ -2,6 +2,120 @@ import {START_LOADING_SYSTEM, END_LOADING_SYSTEM} from "@/types"
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
+
+export function editOrgan(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/dept/"+params.id,
+        method: "put",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getSupDeptDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/dept/supDept/"+params.id,
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getDeptDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/dept/"+params.id,
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getTreeDept(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/dept/treeDept/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        organ: data
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function deleteDictData(params, next){
   return async function(dispatch, getState){
     dispatch({

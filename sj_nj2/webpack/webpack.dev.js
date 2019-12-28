@@ -14,7 +14,7 @@ module.exports = webpackMerge(webpackBase, {
   devtool: "cheap-module-eval-source-map",
   devServer: {
     contentBase: resolve('dist'),
-    port: 3000,
+    port: 3001,
     host:"localhost",
     hot: true,
     hotOnly:true, //禁用自动刷新

@@ -64,7 +64,7 @@ export default [
     children: [
       {
         title: "组织机构",
-        link: "/",
+        link: "/system/organ",
         key: 301
       },
       {

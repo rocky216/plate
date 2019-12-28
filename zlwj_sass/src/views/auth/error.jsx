@@ -4,12 +4,12 @@ import {bindActionCreators} from "redux"
 import {} from "antd";
 
 
-class Test extends React.Component {
+class Error extends React.Component {
   render(){
     const { } = this.props
 
     return (
-      <div>Test</div>
+      <div>Error</div>
     )
   }
 }
@@ -26,4 +26,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(Test)
+export default connect(mapStateProps, mapDispatchProps)(Error)

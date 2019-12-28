@@ -5,6 +5,7 @@ import baseReducer from "./baseReducer"
 import projectReducer from "./projectReducer"
 import financeReducer from "./financeReducer"
 import otherReducer from "./otherReducer"
+import manageReducer from "./manageReducer"
 
 
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
   base: baseReducer,
   project: projectReducer,
   finance: financeReducer,
-  other: otherReducer
+  other: otherReducer,
+  manage: manageReducer
 })

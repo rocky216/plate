@@ -2,12 +2,11 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table} from "antd";
-import {getPropertyfee, getHousePropertyOrder, subOrderException, recallPropertyOrder} from "@/actions/otherAction"
+import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table, Modal, Alert} from "antd";
 import JCard from "@/components/JCard"
-import {detailInfo} from "./data"
-import ReactToPrint from 'react-to-print';
-import {exceptionColumns} from "../colmuns"
+import {getHousePropertyOrder, getShopsPropertyOrder, checkOrderException} from "@/actions/manageAction"
+import "./index.less"
+import {exceptionColumns} from "../columns"
 
 
 const {TextArea} = Input
@@ -23,33 +22,24 @@ const formItemLayout = {
   },
 };
 
-class PropertyFeeDetail extends React.Component {
+class AllOrderDetail extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      detail: "",
-      isRemark: true,
+      detail: ""
     }
   }
 
   componentDidMount(){
-    this.props.actions.getHousePropertyOrder({
-      id: this.props.match.params.id
-    }, res=>{
-      console.log(res)
-      this.setState({detail: res})
-    })
-  }
-
-  handlenHouseData(key, obj){
-    let arrKey = key.split(".")
-    let val = obj
-    console.log(obj, "asasasas")
-    _.each(arrKey, item=>{
-      val = val[item]
-    })
-    
-    return val
+    if(this.props.match.params.order=="0"){
+      this.props.actions.getHousePropertyOrder({id: this.props.match.params.id}, res=>{
+        this.setState({detail: res})
+      })
+    }else if(this.props.match.params.order=="1"){
+      this.props.actions.getShopsPropertyOrder({id: this.props.match.params.id}, res=>{
+        this.setState({detail: res})
+      })
+    }
   }
 
   checkedDate(item){
@@ -75,17 +65,35 @@ class PropertyFeeDetail extends React.Component {
     }
   }
 
-  handlenSubmit(){
+  handlenSubmit(val){
+    let _this = this
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        this.props.actions.subOrderException({
-          ...values,
-          id: this.props.match.params.id
-        }, res=>{
-          this.props.utils.OpenNotification("success")
-          this.props.history.push("/workcenter/propertyfee")
-        })
+        function submit(){
+          _this.props.actions.checkOrderException({
+            ...values,
+            checkStatus: val,
+            id: _this.props.match.params.id
+          }, res=>{
+            _this.props.utils.OpenNotification("success")
+            _this.props.history.push("/workcenter/propertyfee")
+          })
+        }
+        if(val=="4"){
+          Modal.confirm({
+            title: '确认关闭？',
+            content: "每个房间最后一个物业费订单才允许关闭, 警告1:关闭订单将会还原账户金额/缴费区间 警告2:关闭订单/修改订单金额 可能导致资金账户出现负数",
+            okText: '确认',
+            cancelText: '取消',
+            onOk(){
+              submit()
+            }
+          });
+        }else{
+          submit()
+        }
+        
       }
     });
   }
@@ -99,37 +107,27 @@ class PropertyFeeDetail extends React.Component {
           id: this.props.match.params.id
         }, res=>{
           this.props.utils.OpenNotification("success")
-          this.props.history.push("/workcenter/propertyfee")
+          this.props.history.push("/manage/allorder")
         })
       }
     });
   }
 
   render(){
-    const {getFieldDecorator, getFieldValue} = this.props.form
-    const {spinning,utils, match} = this.props
-    const {detail, isRemark} = this.state
-    
+    const {getFieldDecorator, getFieldValue } = this.props.form
+    const {spinning, utils, match } = this.props
+    const {detail} = this.state
+    console.log(detail, "detail")
     return (
       <JCard spinning={spinning}>
-        <Card title={match.params.type==2?
-          <div>
-            <ReactToPrint
-              trigger={() => <Button type="primary"><Icon type="printer" />打印</Button>}
-              content={() => this.componentRef}
-            />
-            <Button type="primary" ghost className="mgl10" onClick={()=>this.setState({isRemark:!this.state.isRemark})} >
-              {this.state.isRemark?"隐藏备注":"显示备注"}
-            </Button>
-          </div>:null}  extra={<Link to="/workcenter/propertyfee"><Button><Icon type="rollback" />返回</Button></Link>} >
-          
-          <div className="PropertyFeeDetail" ref={el=>this.componentRef = el} >
+        <Card extra={<Link to="/manage/allorder"><Button><Icon type="rollback" />返回</Button></Link>}>
+          <div className="PropertyFeeDetail"  >
             {detail?<Card >
               <div className="table_title" >
                 <img src={detail.companyLogo} />
                 <div className="mgt10">
                   <h2>{detail.order.heNameStr}服务部</h2>
-                  <span >房间名称:{detail.order.houseUrlStr}</span>
+                  <span >房间名称:{match.params.order=="0"?detail.order.houseUrlStr:detail.order.shopsCode}</span>
                 </div>
                 <div style={{marginTop: 40}}>
                   <h3>{detail.order.orderNo}</h3>
@@ -165,56 +163,24 @@ class PropertyFeeDetail extends React.Component {
                   <td colspan="3">合计金额(大写): {detail.order.orderTrueFeeChinese}</td>
                   <td>合计: {detail.order.orderTrueFee} ¥</td>
                 </tr>
-                {isRemark?<tr>
+                <tr>
                   <td colspan="4">备注: {detail.order.remark} </td>
-                </tr>:null}
+                </tr>
               </table>
               <div className="footer mgt10">
-                {match.params.type=="2"?<div>打印时间:{detail.nowTime}</div>:<div>创建信息:{detail.order.buildInfo}</div>}
-                <div>【智联万家物业云】技术支持:江西高超网络</div>
+                <div>创建信息:{detail.order.buildInfo}</div>
               </div>
             </Card>:null}
           </div>
-        
         </Card>
+
         {match.params.type==1?<div>
 
-          {detail && detail.order.orderStatus=="0"?<Card className="mgt10" title="异常操作" extra={<Button type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save"/>提交</Button>}> 
+          {detail && detail.order.orderStatus=="1"?<Card className="mgt10" title="审核异常操作" > 
             {detail?<Form {...formItemLayout}>
               <Form.Item label="异常说明">
                 {getFieldDecorator("exceptionInfo", {
-                  rules: [{ required: true, message:"填写异常说明！"}]
-                })(
-                  <TextArea autoSize={{minRows: 3}} />
-                )}
-              </Form.Item>
-              <Form.Item label="更新订单金额">
-                {getFieldDecorator("updateFeeStatus", {
-                  initialValue: "0",
-                  rules: [{ required: true, message:"选择更新订单！"}]
-                })(
-                  <Radio.Group >
-                    <Radio value="0">不做修改</Radio>
-                    <Radio value="1">增加金额</Radio>
-                    <Radio value="2">减少金额</Radio>
-                  </Radio.Group>
-                )}
-              </Form.Item>
-              {getFieldValue("updateFeeStatus")=="0"?null:
-              <Form.Item label="增减金额(元)">
-                {getFieldDecorator("updateFee", {
-                  rules: [{ required: true, message:"填写金额！"}]
-                })(<InputNumber min={0} style={{width: "100%"}} />)}
-              </Form.Item>}
-            </Form>:null}
-          </Card>:null}
-
-          {detail && detail.order.orderStatus=="1"?<Card className="mgt10" title="撤回异常操作" extra={<Button type="danger" onClick={this.handlenSubmitRecall.bind(this)}><Icon type="save"/>撤回</Button>}> 
-            {detail?<Form {...formItemLayout}>
-              <Form.Item label="异常说明">
-                {getFieldDecorator("exceptionInfo", {
-                  initialValue: detail.order.nowException.exceptionInfo,
-                  rules: [{ required: true, message:"填写异常说明！"}]
+                  initialValue: detail.order.nowException.exceptionInfo
                 })(
                   <TextArea disabled autoSize={{minRows: 3}} />
                 )}
@@ -224,7 +190,7 @@ class PropertyFeeDetail extends React.Component {
                   initialValue: String(detail.order.nowException.updateFeeStatus),
                   rules: [{ required: true, message:"选择更新订单！"}]
                 })(
-                  <Radio.Group disabled >
+                  <Radio.Group  >
                     <Radio value="0">不做修改</Radio>
                     <Radio value="1">增加金额</Radio>
                     <Radio value="2">减少金额</Radio>
@@ -236,27 +202,29 @@ class PropertyFeeDetail extends React.Component {
                 {getFieldDecorator("updateFee", {
                   initialValue: detail.order.nowException.updateFee,
                   rules: [{ required: true, message:"填写金额！"}]
-                })(<InputNumber disabled min={0} style={{width: "100%"}} />)}
+                })(<InputNumber min={0} style={{width: "100%"}} />)}
               </Form.Item>}
               
-              <Form.Item label="撤回说明">
-                {getFieldDecorator("revokeInfo", {
-                  rules: [{ required: true, message:"填写撤回说明！"}]
+              <Form.Item label="审核说明">
+                {getFieldDecorator("checkInfo", {
+                  rules: [{ required: true, message:"填写审核说明！"}]
                 })(
                   <TextArea autoSize={{minRows: 3}} />
                 )}
               </Form.Item>
-
+              <Form.Item wrapperCol={{sm: {span:10, offset: 3}}}>
+                <Button onClick={this.handlenSubmit.bind(this,"3")} type="primary" style={{background: "#faad14", borderColor: "#faad14"}} className="mgr10"><Icon type="save"/>驳回申请</Button>
+                <Button onClick={this.handlenSubmit.bind(this,"2")} type="primary" className="mgr10"><Icon type="save"/>通过审核</Button>
+                
+                {detail.order.nowException.checkClossException?
+                <Button onClick={this.handlenSubmit.bind(this,"4")} type="danger"><Icon type="save"/>关闭订单</Button>:null}
+              </Form.Item>
             </Form>:null}
           </Card>:null}
-
+          </div>:null}
           <Card className="mgt10" title="历史异常">
             <Table columns={exceptionColumns} dataSource={detail?utils.addIndex(detail.order.exceptionList):[]} pagination={false} />
           </Card>
-
-        </div>:null}
-
-        
       </JCard>
     )
   }
@@ -264,15 +232,15 @@ class PropertyFeeDetail extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getHousePropertyOrder, subOrderException, recallPropertyOrder}, dispatch)
+    actions: bindActionCreators({getHousePropertyOrder, getShopsPropertyOrder, checkOrderException}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-    spinning: state.other.spinning,
+    spinning: state.manage.spinning,
     utils: state.app.utils
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(PropertyFeeDetail) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(AllOrderDetail) )

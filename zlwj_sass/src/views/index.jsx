@@ -2,7 +2,9 @@ import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Switch, Route, withRouter} from "react-router-dom"
+import {ConfigProvider} from "antd"
 import App from "@/views/app"
+import zh_CN from 'antd/es/locale-provider/zh_CN';
 
 
 class Index extends React.Component {
@@ -20,7 +22,11 @@ class Index extends React.Component {
   }
 
   render (){
-    return <App/>
+    return (
+      <ConfigProvider locale={zh_CN}>
+        <App/>
+      </ConfigProvider>
+    )
   }
 }
 

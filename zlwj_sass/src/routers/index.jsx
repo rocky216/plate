@@ -44,6 +44,16 @@ import CompanyHe from "@/views/system/company/he"
 import Message from "@/views/system/message"
 import SendMessage from "@/views/other/message"
 import PropertyFeeDetail from "@/views/workcenter/propertyfee/detail"
+import OtherFeeDetail from "@/views/workcenter/otherfee/detail"
+import ManageOperative from "@/views/manage/operative"
+import Otherfee from "@/views/workcenter/otherfee"
+import AddOtherfee from "@/views/workcenter/otherfee/add"
+import AllOrder from "@/views/manage/allorder"
+import AllOrderDetail from "@/views/manage/allorder/detail"
+import ShopFeeDetail from "@/views/workcenter/shopfee/detail"
+import Error from "@/views/auth/error"
+import OtherOrder from "@/views/manage/otherorder"
+
 
 
 
@@ -54,53 +64,63 @@ class Routers extends React.Component{
     return (
       <Switch>
 
-        <AuthRoute exact path="/" Component={Home} name="首页" />
+        <AuthRoute exact path="/" Component={Home} name="首页" auth="1" />
+        <Route path="/error" component={Error}/>
 
-        <AuthRoute exact path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" /> 
-        <AuthRoute exact path="/workcenter/propertyfee/:id/detail/:type" Component={PropertyFeeDetail} name="查看物业费订单" /> 
-        <AuthRoute exact path="/workcenter/shopfee" Component={ShopFee} name="商铺缴费订单" /> 
+        <AuthRoute exact path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" auth="2-01" /> 
+        <AuthRoute exact path="/workcenter/propertyfee/:id/detail/:type" Component={PropertyFeeDetail} name="查看物业费订单"  /> 
+        <AuthRoute exact path="/workcenter/shopfee" Component={ShopFee} name="商铺缴费订单" auth="2-02" /> 
+        <AuthRoute  path="/workcenter/shopfee/:id/detail/:type" Component={ShopFeeDetail} name="查看商铺订单" /> 
+        <AuthRoute exact path="/workcenter/otherfee" Component={Otherfee} name="其他缴费订单" auth="2-03" /> 
+        <AuthRoute path="/workcenter/otherfee/add" Component={AddOtherfee} name="新增其他缴费订单" />  
+        <AuthRoute path="/workcenter/otherfee/:id/detail/:type" Component={OtherFeeDetail} name="查看其他缴费订单" />
 
-        <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" />
-        <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" />
-        <AuthRoute exact path="/system/company" Component={Company} name="公司列表" /> 
-        <AuthRoute  path="/system/company/:id/he" Component={CompanyHe} name="公司小区" />
-        <AuthRoute  path="/system/message" Component={Message} name="短信平台" />
+        <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" auth="9-01" />
+        <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" auth="9-02" />
+        <AuthRoute exact path="/system/company" Component={Company} name="公司列表" auth="9-03" /> 
+        <AuthRoute  path="/system/company/:id/he" Component={CompanyHe} name="公司小区"  />
+        <AuthRoute  path="/system/message" Component={Message} name="短信平台" auth="9-04" />
         
-        <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" />
-        <AuthRoute  path="/base/station" Component={Station} name="岗位管理" />
-        <AuthRoute exact path="/base/role" Component={RoleList} name="角色管理" />
+        <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" auth="8-01" />
+        <AuthRoute  path="/base/station" Component={Station} name="岗位管理" auth="8-02" />
+        <AuthRoute exact path="/base/role" Component={RoleList} name="角色管理" auth="8-03" />
         <AuthRoute  path="/base/role/:id/edit" Component={EditRole} name="编辑/权限角色" />
-        <AuthRoute exact path="/base/staff" Component={StaffList} name="员工管理" />
+        <AuthRoute exact path="/base/staff" Component={StaffList} name="员工管理" auth="8-04" />
         <AuthRoute path="/base/staff/:id/edit" Component={EditStaff} name="员工编辑" />
-        <AuthRoute path="/base/library" Component={BaseLibrary} name="基础数据字典" />
+        <AuthRoute path="/base/library" Component={BaseLibrary} name="基础数据字典" auth="8-05" />
 
-        <AuthRoute  path="/project/item" Component={ProjectItem} name="项目管理" />
-        <AuthRoute exact  path="/project/prodata" Component={ProData} name="项目信息管理" />
+        <AuthRoute  path="/project/item" Component={ProjectItem} name="项目管理" auth="7-01" />
+        <AuthRoute exact  path="/project/prodata" Component={ProData} name="项目信息管理" auth="7-02" />
         <AuthRoute  path="/project/prodata/:heId/util/:id" Component={Unit} name="单元" />
-        <AuthRoute exact path="/project/owner" Component={Owner} name="业主管理" />
+        <AuthRoute exact path="/project/owner" Component={Owner} name="业主管理" auth="7-03" />
         <AuthRoute  path="/project/owner/add" Component={AddOwner} name="新增业主" />
         <AuthRoute  path="/project/owner/:id/edit" Component={EditOwner} name="编辑业主" />
-        <AuthRoute  path="/project/shop" Component={Shop} name="商铺信息管理" />
+        <AuthRoute  path="/project/shop" Component={Shop} name="商铺信息管理" auth="7-04" />
 
         <AuthRoute  path="/user/person" Component={UserPerson} name="用户资料" />
 
-        <AuthRoute exact path="/finance/account" Component={FinanceAccount} name="资金账户" />
+        <AuthRoute exact path="/finance/account" Component={FinanceAccount} name="资金账户" auth="10-01" />
         <AuthRoute  path="/finance/account/:id/log" Component={AccountLog} name="资金账户日志" />
-        <AuthRoute exact path="/finance/propertytem" Component={Propertytem} name="物业费收费模板" /> 
+        <AuthRoute exact path="/finance/propertytem" Component={Propertytem} name="物业费收费模板" auth="10-02" /> 
         <AuthRoute  path="/finance/propertytem/add" Component={AddPropertytem} name="新增物业费收费模板" />
         <AuthRoute  path="/finance/propertytem/:id/edit" Component={EditPropertytem} name="编辑物业费收费模板" />
 
-        <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" />
+        <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" auth="5-01" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />
         <AuthRoute  path="/other/discussion/:id/edit" Component={EditDiscussion} name="编辑议事主题" />
         <AuthRoute  path="/other/discussion/:id/voteopt" Component={DiscussionThemeOpt} name="议事主题投票选项" /> 
-        <AuthRoute exact path="/other/notice" Component={Notice} name="公告" />  
+        <AuthRoute exact path="/other/notice" Component={Notice} name="公告" auth="6-01" />  
         <AuthRoute  path="/other/notice/add" Component={AddNotice} name="新增公告" />
         <AuthRoute  path="/other/notice/:id/edit" Component={EditNotice} name="编辑公告" />
-        <AuthRoute exact path="/other/govern" Component={Govern} name="政务公开" /> 
+        <AuthRoute exact path="/other/govern" Component={Govern} name="政务公开" auth="6-02" /> 
         <AuthRoute  path="/other/govern/add" Component={AddGovern} name="新增政务" />
         <AuthRoute  path="/other/govern/:id/edit" Component={EditGovern} name="编辑政务" />
-        <AuthRoute  path="/other/message" Component={SendMessage} name="短信发送" />
+        <AuthRoute  path="/other/message" Component={SendMessage} name="短信发送" auth="11-01" /> 
+
+        <AuthRoute  path="/manage/operative" Component={ManageOperative} name="合作商" auth="4-01" />
+        <AuthRoute exact path="/manage/allorder" Component={AllOrder} name="全部物业费订单" auth="4-02" />
+        <AuthRoute  path="/manage/allorder/:id/detail/:order/:type" Component={AllOrderDetail} name="查看物业费订单" />
+        <AuthRoute exact path="/manage/otherorder" Component={OtherOrder} name="全部其他缴费订单" auth="4-03" />
          
       </Switch>
       

@@ -19,6 +19,33 @@ class PropertyFee extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      tabs: [
+        {
+          title: "全部订单",
+          value: "allCount",
+          key: "all"
+        },
+        {
+          title: "待审核订单",
+          value: "waitCount",
+          key: "wait"
+        },
+        {
+          title: "正常订单",
+          value: "rightCount",
+          key: "right"
+        },
+        {
+          title: "异常订单",
+          value: "abnormalCount",
+          key: "abnormal"
+        },
+        {
+          title: "关闭订单",
+          value: "closeCount",
+          key: "close"
+        },
+      ],
       houseType: "1",
       houseId: "",
       addVisible: false,
@@ -76,11 +103,18 @@ class PropertyFee extends React.Component {
         this.props.actions.getPropertyfee(params)
     })
   }
+  handlenTab(key){
+    const {params} = this.state
+    params.current = 1
+    params.orderStatusStr = key
+    this.setState({params})
+    this.props.actions.getPropertyfee(params)
+  }
 
   render(){
     const {getFieldDecorator } = this.props.form
     const {spinning, utils, propertyfee} = this.props
-    const {houseType, houseId, addVisible, houseItem} = this.state
+    const {houseType, houseId, addVisible, houseItem, tabs, params} = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -116,15 +150,22 @@ class PropertyFee extends React.Component {
                 </Form>
               </div>
 
-              <Tabs>
-                <TabPane tab={<Badge count={propertyfee?propertyfee.allCount:0} offset={[10,0]} showZero>全部订单</Badge>} key="allCount" /> 
-                <TabPane tab={<Badge count={propertyfee?propertyfee.waitCount:0} offset={[10,0]} showZero>待审核订单</Badge>} key="waitCount" />
-                <TabPane tab={<Badge count={propertyfee?propertyfee.rightCount:0} offset={[10,0]} showZero>正常订单</Badge>} key="rightCount" />
-                <TabPane tab={<Badge count={propertyfee?propertyfee.abnormalCount:0} offset={[10,0]} showZero>异常订单</Badge>} key="abnormalCount" />
-                <TabPane tab={<Badge count={propertyfee?propertyfee.closeCount:0} offset={[10,0]} showZero>关闭订单</Badge>} key="closeCount" />
+              <Tabs
+                onChange={this.handlenTab.bind(this)}
+              >
+                {tabs.map(item=>(
+                  <TabPane key={item.key} tab={
+                    <Badge count={propertyfee?propertyfee[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                  } />
+                ))}
               </Tabs>
               <Table columns={this.getCol()} 
                 dataSource={propertyfee?utils.addIndex(propertyfee.page.list):[]}
+                pagination={propertyfee?utils.Pagination(propertyfee.page, page=>{
+                  params.current = page
+                  this.setState({params})
+                  this.props.actions.getPropertyfee(params)
+                }):false}
               />
             </Card>
           </div>

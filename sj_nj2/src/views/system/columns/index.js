@@ -1,5 +1,5 @@
 import React from "react"
-import {Checkbox, Radio } from "antd"
+import {Checkbox, Radio, InputNumber} from "antd"
 
 export const addAuthColumns = function(_this){
   return [
@@ -121,3 +121,27 @@ export const typekeyColumns = [
     dataIndex: "updateTime"
   },
 ]
+
+export const gradeColumns = function(_this){
+  return [
+    {
+      title: "序号",
+      dataIndex: "key"
+    },
+    {
+      title: "岗级",
+      dataIndex: "dictName"
+    },
+    {
+      title: "编制人数",
+      dataIndex: "postCount",
+      render(item, rows){
+        return <InputNumber min={0} defaultValue={item} onChange={_this.handlenCount.bind(_this, rows)} style={{width: 120}} />
+      }
+    },
+    {
+      title: "下级节点汇总",
+      dataIndex: "nextPostCountSum"
+    },
+  ]
+}
