@@ -29,7 +29,7 @@ class EditType extends React.Component {
           id: this.props.detail.id,
           status: values.status?"0":"1"
         }, res=>{
-          this.props.actions.getDictData({id: this.props.match.params.id})
+          this.props.actions.getDictData({dictTypeId: this.props.match.params.id})
           this.props.onCancel()
           this.props.utils.OpenNotification("success")
         })

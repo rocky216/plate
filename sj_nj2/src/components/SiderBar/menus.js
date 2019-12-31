@@ -12,7 +12,7 @@ export default [
     children: [
       {
         title: "员工管理",
-        link: "/",
+        link: "/person/staff",
         key: 201
       },
       {

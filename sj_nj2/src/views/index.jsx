@@ -1,7 +1,8 @@
 import React from "react"
 import {Switch, Route, withRouter} from "react-router-dom"
 import App from "@/views/app"
-
+import {ConfigProvider} from "antd"
+import zh_CN from 'antd/es/locale-provider/zh_CN';
 
 class Index extends React.Component {
   constructor(props){
@@ -9,7 +10,11 @@ class Index extends React.Component {
     window._navigation = props.history
   }
   render (){
-    return <App/>
+    return (
+      <ConfigProvider locale={zh_CN}>
+        <App/>
+      </ConfigProvider>
+    )
   }
 }
 

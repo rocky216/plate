@@ -346,7 +346,87 @@ export const otherfeeColmuns = [
     }
   },
   {
-    title: "类型名称",
+    title: "类型",
+    dataIndex: "orderType",
+    render(e,rows){
+      switch(parseInt(rows.orderStatus)){
+        case 0:
+          return <Tag>住宅</Tag>
+        case 1:
+          return <Tag>商铺</Tag>
+        case 3:
+          return <Tag>合作商</Tag>
+      }
+    }
+  },
+  {
+    title: "名称",
+    render(e,rows){
+      return rows.faOtherCostsOrderR?rows.faOtherCostsOrderR.nickname:"无"
+    }
+  },
+  {
+    title: "订单号",
+    dataIndex: "orderNo"
+  },
+  {
+    title: "缴费时间",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "缴费金额",
+    dataIndex: "orderTrueFee"
+  }
+]
+
+export const expendfeeColmuns = [
+  {
+    title: "状态",
+    width:80,
+    dataIndex: "key",
+    render(item, rows){
+      switch(parseInt(rows.orderStatus)){
+        case 2:
+          return <div style={{color: "#26ba17", textAlign:"center"}}><i className="icon iconfont icon-zhengchang" /><div>正常</div></div>
+        case 1:
+          return <div style={{color: "#60b2ef", textAlign:"center"}}><i className="icon iconfont icon-xingzhuang" /><div>待审核</div></div>
+        case 3:
+          return <div style={{color: "#faaa39", textAlign:"center"}}><i className="icon iconfont icon-yichang" /><div>驳回</div></div>
+        default: 
+          return ""
+      }
+    }
+  },
+  {
+    title: "姓名",
+    dataIndex: "faOtherCostsOrderR",
+    render(item){
+      return item?item.name:"无"
+    }
+  },
+  {
+    title: "手机号",
+    dataIndex: "phone",
+    render(e,rows){
+      return rows.faOtherCostsOrderR?rows.faOtherCostsOrderR.phone:"无"
+    }
+  },
+  {
+    title: "类型",
+    dataIndex: "orderType",
+    render(e,rows){
+      switch(parseInt(rows.orderStatus)){
+        case 0:
+          return <Tag>住宅</Tag>
+        case 1:
+          return <Tag>商铺</Tag>
+        case 3:
+          return <Tag>合作商</Tag>
+      }
+    }
+  },
+  {
+    title: "名称",
     render(e,rows){
       return rows.faOtherCostsOrderR?rows.faOtherCostsOrderR.nickname:"无"
     }

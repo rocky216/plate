@@ -23,7 +23,7 @@ class Index extends React.Component {
 
   render (){
     return (
-      <ConfigProvider locale={zh_CN}>
+      <ConfigProvider locale={zh_CN}> 
         <App/>
       </ConfigProvider>
     )

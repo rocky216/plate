@@ -42,9 +42,16 @@ class Head extends React.Component {
     return (
       <Header style={{ background: '#1e9eff', padding: 0}} >
         <div className="header">
-          <div className="logo">
-            <img src={require("@/assets/images/system-logo.png")} style={{width: "50%"}} />
+          <div className="left">
+            <div className="logo">
+              <img src={require("@/assets/images/system-logo.png")} style={{width: "50%"}} />
+            </div>
+            <div className="mgl10">
+              <img src={require("@/assets/images/system-name.png")} />
+            </div>
           </div>
+          
+          
           <div className="right">
             <ul className="rightUl">
               <li onClick={this.loginOut.bind(this)}>

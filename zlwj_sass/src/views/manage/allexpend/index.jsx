@@ -4,15 +4,15 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Tabs, Table, Badge, Form, Input, Button, Icon, Select, DatePicker } from "antd";
 import JCard from "@/components/JCard"
-import {getOtherCostsOrderListAuth, getAllProject} from "@/actions/manageAction"
-import {allOrderColumns} from "../columns"
+import {getOtherExpendListAuth, getAllProject} from "@/actions/manageAction"
+import {allExpendColumns} from "../columns"
 import moment from "moment"
 
 const {TabPane} = Tabs
 const {Option} = Select
 const {RangePicker } = DatePicker
 
-class OtherOrder extends React.Component {
+class AllExpend extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -28,14 +28,9 @@ class OtherOrder extends React.Component {
           key: "right"
         },
         {
-          title: "异常订单",
+          title: "驳回订单",
           value: "abnormalCount",
           key: "abnormal"
-        },
-        {
-          title: "关闭订单",
-          value: "closeCount",
-          key: "close"
         },
         {
           title: "全部订单",
@@ -56,7 +51,7 @@ class OtherOrder extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getOtherCostsOrderListAuth(this.state.params)
+    this.props.actions.getOtherExpendListAuth(this.state.params)
     this.props.actions.getAllProject({pageSize:1000})
   }
 
@@ -66,7 +61,7 @@ class OtherOrder extends React.Component {
     params.current = 1
     params.orderStatus = key
     this.setState({params})
-    this.props.actions.getOtherCostsOrderListAuth(params)
+    this.props.actions.getOtherExpendListAuth(params)
   }
 
   handleSearch(e){
@@ -80,19 +75,19 @@ class OtherOrder extends React.Component {
       params.startTime = values.time && values.time.length?moment(values.time[0]).format("YYYY-MM-DD"):""
       params.endTime = values.time && values.time.length?moment(values.time[1]).format("YYYY-MM-DD"):""
       this.setState({params})
-      this.props.actions.getOtherCostsOrderListAuth(params)
+      this.props.actions.getOtherExpendListAuth(params)
     });
   }
   
   getCol(){
-    return allOrderColumns.concat([{
+    return allExpendColumns.concat([{
       title: "操作",
       render(item){
         return (
           <div>
             {item.orderStatus=="1"?
-            <Link to={`/manage/otherorder/${item.id}/detail/1`}><Button size="small" type="danger"><Icon type="exception" />审核异常</Button></Link>
-            :<Link to={`/manage/otherorder/${item.id}/detail/2`}><Button size="small" type="primary" className="mgl10"><Icon type="eye" />查看</Button></Link>}
+            <Link to={`/manage/allexpend/${item.id}/detail/1`}><Button size="small" type="danger"><Icon type="exception" />审核异常</Button></Link>
+            :<Link to={`/manage/allexpend/${item.id}/detail/2`}><Button size="small" type="primary" className="mgl10"><Icon type="eye" />查看</Button></Link>}
           </div>
         )
       }
@@ -101,9 +96,9 @@ class OtherOrder extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const { spinning, utils, otherOrder, allproject} = this.props
+    const { spinning, utils, allexpend, allproject} = this.props
     const {tabs, params} = this.state
-    console.log(otherOrder, "otherOrder")
+    
     return (
       <JCard spinning={spinning}>
         <Card>
@@ -149,15 +144,15 @@ class OtherOrder extends React.Component {
           >
             {tabs.map(item=>(
               <TabPane key={item.key} tab={
-                <Badge count={otherOrder?otherOrder[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                <Badge count={allexpend?allexpend[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
               } />
             ))}
           </Tabs>
-          <Table columns={this.getCol()}  dataSource={otherOrder?utils.addIndex(otherOrder.pages.list):[]}
-          pagination={otherOrder?utils.Pagination(otherOrder.page, page=>{
+          <Table columns={this.getCol()}  dataSource={allexpend?utils.addIndex(allexpend.pages.list):[]}
+          pagination={allexpend?utils.Pagination(allexpend.page, page=>{
             params.current = page
             this.setState({params})
-            this.props.actions.getOtherCostsOrderListAuth(params)
+            this.props.actions.getOtherExpendListAuth(params)
           }):false} /> 
         </Card>
       </JCard>
@@ -167,17 +162,17 @@ class OtherOrder extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOtherCostsOrderListAuth, getAllProject}, dispatch)
+    actions: bindActionCreators({getOtherExpendListAuth, getAllProject}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
     allproject: state.manage.allproject,
-    otherOrder: state.manage.otherOrder,
+    allexpend: state.manage.allexpend,
     spinning: state.manage.spinning,
     utils: state.app.utils
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(OtherOrder) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(AllExpend) )

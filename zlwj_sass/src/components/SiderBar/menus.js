@@ -25,20 +25,25 @@ export default [
         link: '/workcenter/otherfee',
         key: 203
       },
-    ]
-  },
-  {
-    title: "流程中心",
-    key: 3,
-    icon: "icon iconfont icon-liuchengzhongxin",
-    children: [
       {
-        title: "我的流程",
-        link: "/",
-        key: 301
-      }
+        title: "其他支出订单",
+        link: '/workcenter/expend',
+        key: 204
+      },
     ]
   },
+  // {
+  //   title: "流程中心",
+  //   key: 3,
+  //   icon: "icon iconfont icon-liuchengzhongxin",
+  //   children: [
+  //     {
+  //       title: "我的流程",
+  //       link: "/",
+  //       key: 301
+  //     }
+  //   ]
+  // },
   {
     title: "管理中心",
     key: 4,
@@ -53,7 +58,12 @@ export default [
         title: "全部其他缴费订单",
         link: "/manage/otherorder",
         key: 403
-      },
+      }, 
+      {
+        title: "全部支出订单",
+        link: "/manage/allexpend",
+        key: 404
+      }, 
       {
         title: "合作商",
         link: "/manage/operative",

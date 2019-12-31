@@ -3,6 +3,233 @@ import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
 
+export function changeProcessStatus(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/flow/template/enable/"+params.id,
+        method: "put",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getProcess(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/flow/template/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        process: data
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function addProcess(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/flow/template/",
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getSelectDict(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/loadSelectDict",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        jobList: data
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getSelectRole(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/loadSelectRole",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        roleList: data
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getSelectDept(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/loadSelectDept",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function addOrgan(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/dept/",
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getJobLevel(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/dept/loadJobLevel/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function editOrgan(params, next){
   return async function(dispatch, getState){
     dispatch({

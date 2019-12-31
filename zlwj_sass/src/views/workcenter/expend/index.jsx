@@ -4,15 +4,15 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Table, Tabs, Badge, Form, Input, DatePicker, Select} from "antd";
 import JCard from "@/components/JCard"
-import {getOtherfee} from "@/actions/otherAction"
-import "./index.less"
-import {otherfeeColmuns} from "../colmuns"
+import {getOtherExpendList} from "@/actions/otherAction"
+import "./index.less" 
+import {expendfeeColmuns} from "../colmuns"
 
 const {TabPane} = Tabs
 const {RangePicker} = DatePicker
 const {Option} = Select
 
-class Otherfee extends React.Component {
+class Expendfee extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -33,14 +33,9 @@ class Otherfee extends React.Component {
           key: "right"
         },
         {
-          title: "异常订单",
+          title: "驳回订单",
           value: "abnormalCount",
           key: "abnormal"
-        },
-        {
-          title: "关闭订单",
-          value: "closeCount",
-          key: "close"
         },
       ],
       params: {
@@ -55,7 +50,7 @@ class Otherfee extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getOtherfee(this.state.params)
+    this.props.actions.getOtherExpendList(this.state.params)
   }
 
   handlenTab(key){
@@ -63,17 +58,16 @@ class Otherfee extends React.Component {
     params.current = 1
     params.orderStatus = key
     this.setState({params})
-    this.props.actions.getOtherfee(params)
+    this.props.actions.getOtherExpendList(params)
   }
 
   getCol(){
-    return otherfeeColmuns.concat([{
+    return expendfeeColmuns.concat([{
       title: "操作",
       render(item){
         return (
           <div>
-            <Link to={`/workcenter/otherfee/${item.id}/detail/2`}><Button type="link">打印</Button></Link>
-            <Link to={`/workcenter/otherfee/${item.id}/detail/1`}><Button type="link">查看</Button></Link>
+            <Link to={`/workcenter/expend/${item.id}/detail`}><Button type="link">查看</Button></Link>
           </div>
         )
       }
@@ -93,18 +87,18 @@ class Otherfee extends React.Component {
         params.orderType = values.orderType
         this.setState({params})
         
-        this.props.actions.getOtherfee(params)
+        this.props.actions.getOtherExpendList(params)
     })
   }
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, utils, otherfee} = this.props
+    const {spinning, utils, otherExpend} = this.props
     const {tabs} = this.state
 
     return (
       <JCard spinning={spinning}>
-        <Card title="其他缴费订单" extra={<Link to="/workcenter/otherfee/add"><Button type="primary"><Icon type="plus" />新增其他订单</Button></Link>}>
+        <Card title="其他缴费订单" extra={<Link to="/workcenter/expend/add"><Button type="primary"><Icon type="plus" />新增其他支出订单</Button></Link>}>
         <div className="flexend mgb10">
           <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
             <Form.Item label="类型" >
@@ -140,12 +134,12 @@ class Otherfee extends React.Component {
           >
             {tabs.map(item=>(
               <TabPane key={item.key} tab={
-                <Badge count={otherfee?otherfee[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                <Badge count={otherExpend?otherExpend[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
               } />
             ))}
           </Tabs>
           
-          <Table columns={this.getCol()} dataSource={otherfee?utils.addIndex(otherfee.pages.list):[]} />
+          <Table columns={this.getCol()} dataSource={otherExpend?utils.addIndex(otherExpend.pages.list):[]} />
         </Card>
       </JCard>
     )
@@ -154,16 +148,16 @@ class Otherfee extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOtherfee}, dispatch)
+    actions: bindActionCreators({getOtherExpendList}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-    otherfee: state.other.otherfee,
+    otherExpend: state.other.otherExpend,
     spinning: state.other.spinning,
     utils: state.app.utils
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(Otherfee) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(Expendfee) )

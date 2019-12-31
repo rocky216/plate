@@ -302,8 +302,9 @@ export function removeTab(params, link, next){
     try{
       let arr = getState().app.keeptabs
       if(arr.length===1) return
+      console.log(params.location)
       if(params.location.pathname===link){
-        params.history.goBack(-1)
+        params.history.push(arr[0]["link"])
       }
       let newArr = _.filter(arr, o=>o.link!==link)
 

@@ -7,6 +7,7 @@ import AuthRoute from "@/routers/AuthRoute"
 import Home from "@/views/home"
 import PropertyFee from "@/views/workcenter/propertyfee"
 import ShopFee from "@/views/workcenter/shopfee"
+import Expend from "@/views/workcenter/expend"
 import TreeMenu from "@/views/system/treemenu"
 import BaseDepartment from "@/views/base/department"
 import Station from "@/views/base/station"
@@ -47,12 +48,17 @@ import PropertyFeeDetail from "@/views/workcenter/propertyfee/detail"
 import OtherFeeDetail from "@/views/workcenter/otherfee/detail"
 import ManageOperative from "@/views/manage/operative"
 import Otherfee from "@/views/workcenter/otherfee"
-import AddOtherfee from "@/views/workcenter/otherfee/add"
+import AddOtherfee from "@/views/workcenter/otherfee/add" 
+import AddOtherExpend from "@/views/workcenter/expend/add" 
+import OtherExpendDetail from "@/views/workcenter/expend/detail" 
 import AllOrder from "@/views/manage/allorder"
 import AllOrderDetail from "@/views/manage/allorder/detail"
 import ShopFeeDetail from "@/views/workcenter/shopfee/detail"
 import Error from "@/views/auth/error"
 import OtherOrder from "@/views/manage/otherorder"
+import OtherOrderDetail from "@/views/manage/otherorder/detail"
+import AllExpend from "@/views/manage/allexpend"
+import AllExpendDetail from "@/views/manage/allexpend/detail"
 
 
 
@@ -72,8 +78,11 @@ class Routers extends React.Component{
         <AuthRoute exact path="/workcenter/shopfee" Component={ShopFee} name="商铺缴费订单" auth="2-02" /> 
         <AuthRoute  path="/workcenter/shopfee/:id/detail/:type" Component={ShopFeeDetail} name="查看商铺订单" /> 
         <AuthRoute exact path="/workcenter/otherfee" Component={Otherfee} name="其他缴费订单" auth="2-03" /> 
-        <AuthRoute path="/workcenter/otherfee/add" Component={AddOtherfee} name="新增其他缴费订单" />  
+        <AuthRoute path="/workcenter/otherfee/add" Component={AddOtherfee} name="新增其他缴费订单" />   
         <AuthRoute path="/workcenter/otherfee/:id/detail/:type" Component={OtherFeeDetail} name="查看其他缴费订单" />
+        <AuthRoute exact path="/workcenter/expend" Component={Expend} name="其他支付订单" auth="2-04" />
+        <AuthRoute path="/workcenter/expend/add" Component={AddOtherExpend} name="新增其他支出订单" /> 
+        <AuthRoute path="/workcenter/expend/:id/detail" Component={OtherExpendDetail} name="查看其他支出订单" /> 
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" auth="9-01" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" auth="9-02" />
@@ -120,8 +129,11 @@ class Routers extends React.Component{
         <AuthRoute  path="/manage/operative" Component={ManageOperative} name="合作商" auth="4-01" />
         <AuthRoute exact path="/manage/allorder" Component={AllOrder} name="全部物业费订单" auth="4-02" />
         <AuthRoute  path="/manage/allorder/:id/detail/:order/:type" Component={AllOrderDetail} name="查看物业费订单" />
-        <AuthRoute exact path="/manage/otherorder" Component={OtherOrder} name="全部其他缴费订单" auth="4-03" />
-         
+        <AuthRoute exact path="/manage/otherorder" Component={OtherOrder} name="全部其他缴费订单" auth="4-03" /> 
+        <AuthRoute exact path="/manage/otherorder/:id/detail/:type" Component={OtherOrderDetail} name="查看其他缴费订单" auth="4-03" />
+        <AuthRoute exact path="/manage/allexpend" Component={AllExpend} name="全部其他支出订单" auth="4-04" />
+        <AuthRoute exact path="/manage/allexpend/:id/detail/:type" Component={AllExpendDetail} name="查看其他支出订单" auth="4-04" />
+        
       </Switch>
       
     )

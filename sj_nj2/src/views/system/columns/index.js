@@ -145,3 +145,31 @@ export const gradeColumns = function(_this){
     },
   ]
 }
+
+export const processColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "流程类型",
+    dataIndex: "flowTypeName"
+  },
+  {
+    title: "流程名称",
+    dataIndex: "flowName"
+  },
+  {
+    title: "适用组织",
+    dataIndex: "flowOrganName"
+  },
+  {
+    title: "版本",
+    dataIndex: "flowVersion"
+  },
+  {
+    title: "更新时间",
+    dataIndex: "updateTime"
+  },
+  
+]

@@ -34,20 +34,25 @@ class EditOrgan extends React.Component {
   componentDidMount(){ 
     this.props.actions.getDeptDetail({id: this.props.detail.id}, res=>{
       this.setState({info: res, staffingList: res.staffingList})
+      this.handlenCount()
     })
     this.props.actions.getSupDeptDetail({id: this.props.detail.parentId}, res=>{
       this.setState({dept: res})
     })
+    
   }
 
   handlenCount(rows, value){
     const {staffingList} = this.state
-    let index = _.findIndex(staffingList, o=>rows.id==o.id)
-    staffingList[index]["postCount"] = value
+    console.log(value, "value")
+    if(rows && value){
+      let index = _.findIndex(staffingList, o=>rows.id==o.id)
+      staffingList[index]["postCount"] = value?value:0
+    }
     
     let postCount = 0, nextPostCountSum = 0
     _.each(staffingList, item=>{
-      postCount += item.postCount
+      postCount += item.postCount?item.postCount:0
       nextPostCountSum += item.nextPostCountSum
     })
     this.setState({staffingList, postCount, nextPostCountSum})
@@ -69,7 +74,7 @@ class EditOrgan extends React.Component {
         this.props.actions.editOrgan({
           ...values,
           id: this.props.detail.id,
-          parentId: this.state.dept.supDept.id,
+          parentId: this.state.dept?this.state.dept.supDept.id:0,
           staffingKeys: this.getJobLevel().join()
         }, res=>{
           this.props.utils.OpenNotification("success")
@@ -82,10 +87,9 @@ class EditOrgan extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {utils, detail} = this.props
+    const {utils, detail, onSwitch} = this.props
     const {info, dept, staffingList, postCount, nextPostCountSum} = this.state
 
-    console.log(info.deptType, "info.deptType")
     return (
       <Row gutter={30}>
         <Col span={12}>
@@ -147,8 +151,18 @@ class EditOrgan extends React.Component {
             <DatePicker/>
           )}
         </Form.Item>
-        <Form.Item wrapperCol={{ sm: {span: 10, offset: 3} }}>
+        {/* <Form.Item label="邮件通知对象">
+          <div>
+            <label>通知对象一</label>
+            <Select>
+              <Option value=""></Option>
+            </Select>
+          </div>
+        </Form.Item> */}
+        <Form.Item wrapperCol={{ sm: {span: 18, offset: 6} }}>
           <Button type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</Button>
+          {info.deptType=="5" || info.deptType=="8"?null
+          :<Button type="primary" ghost className="mgl10" onClick={()=>onSwitch(info)} ><Icon type="plus" />添加子节点</Button>}
         </Form.Item>
       </Form>
         </Col>

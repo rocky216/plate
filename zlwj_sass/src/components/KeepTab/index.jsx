@@ -29,7 +29,6 @@ class KeepTab extends React.Component {
 
   onEdit(link, action){
     if(action==="remove"){
-      
       this.props.actions.removeTab(this.props, link)
     }
   }

@@ -22,7 +22,7 @@ class TypeKeys extends React.Component {
 
   componentDidMount(){
     this.props.actions.getDictData({
-      id: this.props.match.params.id
+      dictTypeId: this.props.match.params.id
     })
   }
 
@@ -30,7 +30,7 @@ class TypeKeys extends React.Component {
     this.props.actions.deleteDictData({id: item.id}, res=>{
       this.props.utils.OpenNotification("success")
       this.props.actions.getDictData({
-        id: this.props.match.params.id
+        dictTypeId: this.props.match.params.id
       })
     })
   }
