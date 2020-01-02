@@ -1,8 +1,5 @@
 export const staffColumns = [
-  {
-    title: "序号",
-    dataIndex: "key"
-  },
+  
   {
     title: "姓名",
     dataIndex: "name"
@@ -13,7 +10,7 @@ export const staffColumns = [
   },
   {
     title: "账号",
-    dataIndex: "key"
+    dataIndex: "account"
   },
   {
     title: "性别",
@@ -28,30 +25,54 @@ export const staffColumns = [
   },
   {
     title: "组织机构",
-    dataIndex: "key"
+    dataIndex: "allDeptNameStr"
   },
   {
     title: "联系电话",
-    dataIndex: "key"
+    dataIndex: "phone"
   },
   {
     title: "所属部门",
-    dataIndex: "key"
+    dataIndex: "bDeptName"
   },
   {
     title: "成本中心",
-    dataIndex: "key"
+    dataIndex: "intoCenterName"
   },
   {
     title: "入职日期",
-    dataIndex: "key"
+    dataIndex: "entryTime",
+    render(item){
+      return item?item.substring(0,11):""
+    }
   },
   {
     title: "状态",
-    dataIndex: "key"
+    dataIndex: "activity",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "待报到"
+        case 1:
+          return "试用期"
+        case 2:
+          return "在职"
+        case 3:
+          return "主动离职"
+        case 4:
+          return "被动离职"
+      }
+    }
   },
   {
     title: "人员类别",
-    dataIndex: "key"
+    dataIndex: "personTypeName"
   },
+]
+
+export const teachColumns = [
+  {
+    title: "姓名",
+    dataIndex: "name"
+  }
 ]

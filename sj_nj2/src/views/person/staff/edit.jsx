@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Row, Col, Select, Form, Input, TreeSelect, DatePicker, Upload} from "antd";
-import {getEmployeeDict, getSelectDeptNotSmall, getSelectDeptList, getSelectRole, addEmployee} from "@/actions/personAction"
+import {getEmployeeDict, getSelectDeptNotSmall, getSelectDeptList, getSelectRole, editEmployee, getStaffDetail} from "@/actions/personAction"
 import JCard from "@/components/JCard"
 import {staffInfoList} from "./data"
 import moment from "moment"
@@ -24,7 +24,7 @@ const formItemLayout = {
   },
 };
 
-class AddStaff extends React.Component {
+class EditStaff extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -37,20 +37,40 @@ class AddStaff extends React.Component {
       workspace: "",
       classSpace: "",
       roles: "",
-      imgUrl: ""
+      imgUrl: "",
+      detail: ""
     }
   }
 
   componentDidMount(){
-    this.props.actions.getEmployeeDict({}, res1=>{
-      this.props.actions.getSelectDeptNotSmall({}, res2=>{
-        this.props.actions.getSelectRole({}, res3=>{
-          this.setState({infoList: 
-            staffInfoList(this, {employeeDict: res1, deptNotsmall: res2, roles: res3}), 
-            employeeDict: res1, deptNotsmall: res2, roles: res3})
+    this.props.actions.getStaffDetail({id: this.props.match.params.id}, detail=>{
+      this.setState({detail, imgUrl:detail.photoaddr, 
+        teach: {id:detail.directorId, name: detail.directorName}})
+      this.props.actions.getEmployeeDict({}, res1=>{
+        this.props.actions.getSelectDeptNotSmall({}, res2=>{
+          this.props.actions.getSelectRole({}, res3=>{
+
+            if(detail.mDeptType=="4"){
+              this.props.actions.getSelectDeptList({
+                loadType:"0",
+                parentId: detail.mDeptId
+              }, res4=>{
+                this.setState({infoList: 
+                  staffInfoList(this, {detail, employeeDict: res1, deptNotsmall: res2, roles: res3, deptList: res4}), 
+                  employeeDict: res1, deptNotsmall: res2, roles: res3, deptList: res4})
+              })
+            }else{
+              this.setState({infoList: 
+                staffInfoList(this, {detail, employeeDict: res1, deptNotsmall: res2, roles: res3, deptList: null}), 
+                employeeDict: res1, deptNotsmall: res2, roles: res3, deptList: null})
+            }
+            
+            
+          })
         })
       })
     })
+    
   }
 
   createNode(arr){
@@ -60,63 +80,49 @@ class AddStaff extends React.Component {
       </TreeNode>
     ))
   }
+  
 
   handlenSelect(index, {props}){
-    console.log(props.dataRef)
-    const {employeeDict, deptNotsmall,roles} = this.state
+    const {detail, employeeDict, deptNotsmall,roles} = this.state
     if(props.dataRef.deptType=="4"){
       this.props.actions.getSelectDeptList({
         deptTypes: "5,6",
         parentId: props.dataRef.id
       }, res=>{
-        this.setState({infoList: staffInfoList(this, {employeeDict, deptNotsmall,roles, deptList: res}), deptList: res})
+        this.setState({infoList: staffInfoList(this, {detail,employeeDict, deptNotsmall,roles, deptList: res}), deptList: res})
       })
     }else {
-      this.setState({infoList: staffInfoList(this, {employeeDict, deptNotsmall,roles, deptList: null}), deptList: null})
+      console.log("asas")
+      this.setState({infoList: staffInfoList(this, {detail,employeeDict, deptNotsmall,roles, deptList: null}), deptList: null})
     }
   }
 
-  handlenUnit(id, {props}){
-    const {employeeDict, deptNotsmall, deptList, roles} = this.state
-    if(props.dataRef.deptType=="6"){
-      this.props.actions.getSelectDeptList({
-        deptTypes: "7",
-        parentId: props.dataRef.id
-      }, res=>{
-        this.setState({infoList: staffInfoList(this, {employeeDict, deptNotsmall,roles, deptList, workspace: res}), workspace: res})
-      })
-    }else{
-      this.setState({infoList: staffInfoList(this, {employeeDict, deptNotsmall,roles, deptList, workspace: null}), workspace: null})
-    }
-    
-  }
+ 
   handlenTeam(id, {props}){
-    const {employeeDict, deptNotsmall, deptList, workspace, roles} = this.state
+    const {detail,employeeDict, deptNotsmall, deptList, workspace, roles} = this.state
     if(props.dataRef.deptType=="7"){
       this.props.actions.getSelectDeptList({
         deptTypes: "8",
         parentId: props.dataRef.id
       }, res=>{
-        this.setState({infoList: staffInfoList(this, {employeeDict, deptNotsmall,roles, deptList, workspace, classSpace: res}), classSpace: res})
+        this.setState({infoList: staffInfoList(this, {detail,employeeDict, deptNotsmall,roles, deptList, workspace, classSpace: res}), classSpace: res})
       })
     }else{
-      this.setState({infoList: staffInfoList(this, {employeeDict, deptNotsmall,roles, deptList, workspace, classSpace: null}), classSpace: null})
+      this.setState({infoList: staffInfoList(this, {detail,employeeDict, deptNotsmall,roles, deptList, workspace, classSpace: null}), classSpace: null})
     }
   }
 
   handlenUpload(info){
     if (info.file.status === 'done') {
-      console.log(info, "info1")
-      // Get this url from response in real world.
       this.setState({imgUrl: info.file.response.data})
     }
   }
 
   selectTeach(item){
-    const {employeeDict, deptNotsmall, deptList, workspace, roles, classSpace} = this.state
+    const {detail,employeeDict, deptNotsmall, deptList, workspace, roles, classSpace} = this.state
     this.setState({teach: item})
     setTimeout(()=>{
-      this.setState({infoList: staffInfoList(this, {employeeDict, deptNotsmall,roles, deptList, workspace, classSpace}) })
+      this.setState({infoList: staffInfoList(this, {detail, employeeDict, deptNotsmall,roles, deptList, workspace, classSpace}) })
     },100)
     
   }
@@ -124,12 +130,14 @@ class AddStaff extends React.Component {
   handlenSubmit(){
     this.props.form.validateFields((err, values) => {
       console.log('Received values of form: ', values);
-      
+      console.log(this.state.teach.id, "asasassa")
+      // return
       if (!err) {
         
         const {entryTime, regularTime, birthday, startSchool,graduateTime, roleKeys, units} = values
-        this.props.actions.addEmployee({
+        this.props.actions.editEmployee({
           ...values,
+          id: this.props.match.params.id,
           entryTime: entryTime?moment(entryTime).format("YYYY-MM-DD"):null,
           regularTime: regularTime?moment(regularTime).format("YYYY-MM-DD"):null,
           birthday: birthday?moment(birthday).format("YYYY-MM-DD"):null,
@@ -137,7 +145,7 @@ class AddStaff extends React.Component {
           graduateTime: graduateTime?moment(graduateTime).format("YYYY-MM-DD"):null,
           photoaddr: this.state.imgUrl,
           roleKeys: roleKeys?roleKeys.join():"",
-          directorId: this.state.teach.id,
+          directorId: this.state.teach?this.state.teach.id:"",
           unitId: units?units[0]:"",
           workScoreId: units?units[1]:"",
           classId: units?units[2]:"",
@@ -155,7 +163,6 @@ class AddStaff extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, employeedict, deptNotsmall} = this.props
     const {infoList, imgUrl, visible, teach} = this.state
-    console.log(teach, "teach")
 
     return (
       <JCard spinning={spinning} >
@@ -175,6 +182,7 @@ class AddStaff extends React.Component {
                     :<Col span={8} key={index}>
                       <Form.Item label={item.title}>
                         {getFieldDecorator(item.value, {
+                          initialValue: item.initialValue?item.initialValue:"",
                           rules: item.rules?item.rules:null
                         })(item.type)}
                       </Form.Item>
@@ -237,7 +245,7 @@ class AddStaff extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getEmployeeDict, getSelectDeptNotSmall, getSelectDeptList, getSelectRole, addEmployee}, dispatch)
+    actions: bindActionCreators({getEmployeeDict, getSelectDeptNotSmall, getSelectDeptList, getSelectRole, editEmployee, getStaffDetail}, dispatch)
   }
 }
 
@@ -250,4 +258,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddStaff) ) 
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(EditStaff) ) 

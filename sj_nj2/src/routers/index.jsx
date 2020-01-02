@@ -14,6 +14,7 @@ import AddProcess from "@/views/system/process/add"
 import Organ from "@/views/system/organ"
 import Staff from "@/views/person/staff"
 import AddStaff from "@/views/person/staff/add"
+import EditStaff from "@/views/person/staff/edit"
 
 
 class Routers extends React.Component{
@@ -35,6 +36,7 @@ class Routers extends React.Component{
 
         <AuthRoute exact path="/person/staff" Component={Staff} name="员工管理" />
         <AuthRoute path="/person/staff/add" Component={AddStaff} name="新增员工" />
+        <AuthRoute path="/person/staff/:id/edit" Component={EditStaff} name="编辑员工" />
 
       </Switch>
       

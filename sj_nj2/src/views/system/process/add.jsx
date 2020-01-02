@@ -1,11 +1,13 @@
 import React from "react"
 import {connect} from "react-redux"
+import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Timeline, Row, Col, Icon, Form, Input, Select, InputNumber, Button, List, TreeSelect} from "antd";
 import JCard from "@/components/JCard"
 import "./index.less"
 import {flowType} from "./data"
 import AddNode from "./addNode"
+import EditNode from "./editNode"
 import {getSelectDict, getSelectRole, addProcess, getSelectDept} from "@/actions/systemAction"
 
 const {Option} = Select
@@ -27,23 +29,11 @@ class AddProcess extends React.Component {
     super(props)
     this.state = {
       addVisible: false,
+      editVisible: false,
+      detail: "",
       selectDept:[],
       index: -1,
-      nodeList: [{
-        nodeTarget: "2",
-        nodeTitle: "流程一",
-        nodeCode: "liucheng1",
-        nodeType: "1",
-        nodeParam: "1",
-        nodeTargetId: 9
-      },{
-        nodeTarget: "2",
-        nodeTitle: "流程一",
-        nodeCode: "liucheng1",
-        nodeType: "1",
-        nodeParam: "1",
-        nodeTargetId: 9
-      }]
+      nodeList: []
     }
   }
 
@@ -68,9 +58,21 @@ class AddProcess extends React.Component {
     ))
   }
 
-  onSubmit(values){
-    this.state.nodeList.push(values)
-    this.setState({nodeList:this.state.nodeList})
+  onSubmit(type, values){
+    
+    const {index, nodeList} = this.state
+    if(type=="add"){
+      if(index>-1){
+        nodeList.splice(index+1, 0, values)
+        this.setState({index: -1})
+      }else{
+        nodeList.push(values)
+      }
+      this.setState({nodeList})
+    }else if(type=="edit"){
+      nodeList[index] = values
+      this.setState({nodeList, index: -1})
+    }
   }
 
   handlenPreview(){
@@ -91,18 +93,19 @@ class AddProcess extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning} = this.props
-    const {addVisible, nodeList, selectDept} = this.state
+    const {addVisible, nodeList, selectDept, editVisible, detail} = this.state
     console.log(nodeList)
 
     return (
       <JCard spinning={spinning}>
-        <AddNode visible={addVisible} onSubmit={this.onSubmit.bind(this)} onCancel={()=>this.setState({addVisible: false})} />
+        <AddNode visible={addVisible} onSubmit={this.onSubmit.bind(this, "add")} onCancel={()=>this.setState({addVisible: false})} />
+        <EditNode visible={editVisible} onSubmit={this.onSubmit.bind(this, "edit")} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:""})} />
+        
         <Row>
           <Col span={12}>
-            <Card extra={(
+            <Card size="small" extra={(
               <div>
                 <Button type="primary" onClick={this.handlenSumbit.bind(this)} ><Icon type="save" />保存</Button>
-                <Button className="mgl10" type="primary" ghost><Icon type="eye" onClick={this.handlenPreview.bind(this)} />预览</Button>
               </div>
             )}>
               <Form {...formItemLayout} >
@@ -166,14 +169,16 @@ class AddProcess extends React.Component {
               bordered
               dataSource={nodeList} 
               renderItem={(item, index)=>{
-                return <List.Item actions={[<Icon type="plus" onClick={()=>this.setState({addVisible: true, index: index})} />,<Icon type="edit"  />, <Icon type="delete" />]} >{item.nodeTitle}</List.Item>
+                return <List.Item actions={[
+                  <Icon type="plus" onClick={()=>this.setState({addVisible: true, index: index})} />,
+                  <Icon type="edit" onClick={()=>this.setState({editVisible:true, detail: item, index: index})} />, <Icon type="delete" />]} >{item.nodeTitle}</List.Item>
               }}/>
             </Form.Item>
           </Form>
             </Card>
           </Col>
           <Col span={12}>
-            <Card> 
+            <Card  size="small" title="预览" extra={<Link to="/system/process"><Button><Icon type="rollback" />返回</Button></Link>}> 
               <div className="processBox" >
               <Timeline mode="alternate">
                 <Timeline.Item dot={<div className="start">开始</div>}>

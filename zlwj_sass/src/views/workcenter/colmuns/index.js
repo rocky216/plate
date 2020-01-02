@@ -233,13 +233,15 @@ export const exceptionColumns = [
   },
   {
     title: "状态说明",
-    render(item){
+    render(item){ 
       if(item.exceptionStatus==2||item.exceptionStatus==3||item.exceptionStatus==4){
         return (
           <div>
             <Tag>{item.checkInfo}</Tag>
             <Tag>{item.checkUserName}</Tag>
             <Tag>{item.checkTime}</Tag>
+            {item.updateFeeStatus=="0"?null:<Tag color="magenta">金额￥{item.updateFeeStatus=="2"?'-'+item.updateFee:item.updateFee}</Tag>}
+            
           </div>
         )
       }else if(item.exceptionStatus==5){

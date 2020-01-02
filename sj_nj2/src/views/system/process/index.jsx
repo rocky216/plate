@@ -43,7 +43,17 @@ class Process extends React.Component {
       render(item, rows){
         return <Switch size="small" onChange={_this.handlenChange.bind(_this,rows)} checked={item=="0"?true:false} />
       }
-    },])
+    },{
+      title: "操作",
+      render(){
+        return (
+          <div>
+            <Button size="small" type="link" >编辑</Button>
+            <Button size="small" type="link" >删除</Button>
+          </div>
+        )
+      }
+    }])
   }
 
   handleSearch(e){
