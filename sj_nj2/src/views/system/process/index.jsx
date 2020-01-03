@@ -2,9 +2,9 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Button, Icon, Table, Switch, Form, Input, Select} from "antd";
+import {Card, Button, Icon, Table, Switch, Form, Input, Select, Popconfirm} from "antd";
 import JCard from "@/components/JCard"
-import {getProcess, changeProcessStatus} from "@/actions/systemAction"
+import {getProcess, changeProcessStatus, deleteProcess} from "@/actions/systemAction"
 import {processColumns} from "../columns"
 import {flowType} from "./data"
 
@@ -16,7 +16,9 @@ class Process extends React.Component {
     super(props)
     this.state = {
       params: {
-        current:1
+        current:1,
+        flowName: "",
+        flowType: ""
       }
     }
   }
@@ -35,6 +37,15 @@ class Process extends React.Component {
     })
   } 
 
+  handlenDelete(item){
+    this.props.actions.deleteProcess({
+      id: item.id
+    }, res=>{
+      this.props.utils.OpenNotification("success")
+      this.props.actions.getProcess(this.state.params)
+    })
+  }
+
   getCol(){
     let _this = this
     return processColumns.concat([{
@@ -45,11 +56,20 @@ class Process extends React.Component {
       }
     },{
       title: "操作",
-      render(){
+      render(item){
         return (
           <div>
-            <Button size="small" type="link" >编辑</Button>
-            <Button size="small" type="link" >删除</Button>
+            <Link to={`/system/process/${item.id}/edit`}>
+              <Button size="small" type="link" >编辑</Button>
+            </Link>
+            <Popconfirm
+              placement="topRight" 
+              title="是否删除？"
+              okText="是"
+              cancelText="否"
+              onConfirm={_this.handlenDelete.bind(_this, item)}>
+                <Button size="small" type="link" >删除</Button>
+            </Popconfirm>
           </div>
         )
       }
@@ -67,7 +87,8 @@ class Process extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {utils, spinning, process} = this.props
+    const {utils, spinning, process, } = this.props
+    const {params} = this.state
 
     return (
       <JCard spinning={spinning}>
@@ -101,7 +122,12 @@ class Process extends React.Component {
               </Form.Item>
             </Form>
           </div>
-          <Table size="small" columns={this.getCol()} dataSource={process?utils.addIndex(process.list):[]} />
+          <Table size="small" columns={this.getCol()} dataSource={process?utils.addIndex(process.list):[]} 
+            pagination={utils.Pagination(process, page=>{
+              params.current=page
+              this.setState({params})
+              this.props.actions.getProcess(params)
+            })}/>
         </Card>
       </JCard>
     )
@@ -110,7 +136,7 @@ class Process extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getProcess, changeProcessStatus}, dispatch)
+    actions: bindActionCreators({getProcess, changeProcessStatus, deleteProcess}, dispatch)
   }
 }
 

@@ -17,7 +17,7 @@ export default [
       },
       {
         title: "人员离职管理",
-        link: "/",
+        link: "/person/staffquit",
         key: 202
       },
       {

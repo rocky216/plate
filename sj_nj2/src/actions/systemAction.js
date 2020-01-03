@@ -3,6 +3,90 @@ import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
 
+export function editProcess(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/flow/template/"+params.id,
+        method: "put",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getProcessDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/flow/template/"+params.id,
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function deleteProcess(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/flow/template/delete/"+params.id,
+        method: "put",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function changeProcessStatus(params, next){
   return async function(dispatch, getState){
     dispatch({

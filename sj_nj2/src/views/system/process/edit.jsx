@@ -8,7 +8,7 @@ import "./index.less"
 import {flowType} from "./data"
 import AddNode from "./addNode"
 import EditNode from "./editNode"
-import {getSelectDict, getSelectRole, addProcess, getSelectDept} from "@/actions/systemAction"
+import {getSelectDict, getSelectRole, editProcess, getSelectDept, getProcessDetail, } from "@/actions/systemAction"
 
 const {Option} = Select
 const { TreeNode } = TreeSelect;
@@ -24,7 +24,7 @@ const formItemLayout = {
   },
 };
 
-class AddProcess extends React.Component {
+class EditProcess extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -33,11 +33,17 @@ class AddProcess extends React.Component {
       detail: "",
       selectDept:[],
       index: -1,
+      info: "",
       nodeList: []
     }
   }
 
   componentDidMount(){
+    this.props.actions.getProcessDetail({id: this.props.match.params.id}, res=>{
+      console.log(res)
+      this.setState({info: res, nodeList: res.flowNodeTemplateList})
+    })
+
     this.props.actions.getSelectDept({loadType: 1}, res=>{
       this.setState({selectDept: res})
     })
@@ -79,9 +85,13 @@ class AddProcess extends React.Component {
   handlenSumbit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        this.props.actions.addProcess({
+        this.props.actions.editProcess({
           ...values,
+          id: this.props.match.params.id,
           flowNodeTemplates: JSON.stringify(this.state.nodeList)
+        }, res=>{
+          this.props.utils.OpenNotification("success")
+          this.props.history.push("/system/process")
         })
       }
     })
@@ -95,8 +105,8 @@ class AddProcess extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning} = this.props
-    const {addVisible, nodeList, selectDept, editVisible, detail} = this.state
-    console.log(nodeList)
+    const {addVisible, nodeList, selectDept, editVisible, detail, info} = this.state
+    console.log(info, "info")
 
     return (
       <JCard spinning={spinning}>
@@ -113,6 +123,7 @@ class AddProcess extends React.Component {
               <Form {...formItemLayout} >
             <Form.Item label="流程名称" hasFeedback>
               {getFieldDecorator('flowName', {
+                initialValue: info.flowName,
                 rules: [
                   {
                     required: true,
@@ -123,6 +134,7 @@ class AddProcess extends React.Component {
             </Form.Item>
             <Form.Item label="流程类型" hasFeedback>
               {getFieldDecorator('flowType', {
+                initialValue: info.flowType,
                 rules: [
                   {
                     required: true,
@@ -139,6 +151,7 @@ class AddProcess extends React.Component {
             </Form.Item>
             <Form.Item label="流程组织" hasFeedback>
               {getFieldDecorator('flowOrgan', {
+                initialValue: info.flowOrgan,
                 rules: [
                   {
                     required: true,
@@ -153,6 +166,7 @@ class AddProcess extends React.Component {
             </Form.Item>
             <Form.Item label="流程版本" hasFeedback>
               {getFieldDecorator('flowVersion', {
+                initialValue: info.flowVersion,
                 rules: [
                   {
                     required: true,
@@ -215,7 +229,7 @@ class AddProcess extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({ getSelectDict, getSelectRole, addProcess, getSelectDept}, dispatch)
+    actions: bindActionCreators({ getSelectDict, getSelectRole, editProcess, getSelectDept, getProcessDetail}, dispatch)
   }
 }
 
@@ -226,4 +240,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddProcess) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(EditProcess) )

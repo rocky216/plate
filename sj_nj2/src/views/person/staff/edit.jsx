@@ -9,6 +9,7 @@ import {staffInfoList} from "./data"
 import moment from "moment"
 import "./index.less"
 import Teach from "./teach"
+import StaffAccount from "./account"
 
 const { Option } = Select;
 const {TreeNode } = TreeSelect
@@ -30,6 +31,7 @@ class EditStaff extends React.Component {
     this.state = {
       teach: "",
       visible: false,
+      accountVisible: false,
       infoList: [],
       employeeDict: "", 
       deptNotsmall: "",
@@ -162,12 +164,18 @@ class EditStaff extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, employeedict, deptNotsmall} = this.props
-    const {infoList, imgUrl, visible, teach} = this.state
+    const {infoList, imgUrl, visible, teach, accountVisible, detail} = this.state
 
     return (
       <JCard spinning={spinning} >
+        {detail && accountVisible?<StaffAccount visible={accountVisible} detail={detail} onCancel={()=>this.setState({accountVisible: false})} />:null}
+        
         <Teach visible={visible} onCancel={()=>this.setState({visible: false})} onSelect={this.selectTeach.bind(this)} />
-        <Card size="small" title="基本信息" extra={(
+        <Card size="small" title={(
+          <div><span>基本信息</span>
+            <Button type="primary" onClick={()=>this.setState({accountVisible: true})} ghost style={{marginLeft: 20}}>平台账号</Button>
+          </div>
+        )} extra={(
           <div>
             <Button type="primary" onClick={this.handlenSubmit.bind(this)} ><Icon type="save" />保存</Button>
             <Link to="/person/staff" className="mgl10"><Button><Icon type="rollback" />返回</Button></Link>
@@ -182,7 +190,7 @@ class EditStaff extends React.Component {
                     :<Col span={8} key={index}>
                       <Form.Item label={item.title}>
                         {getFieldDecorator(item.value, {
-                          initialValue: item.initialValue?item.initialValue:"",
+                          initialValue: item.initialValue?item.initialValue:null,
                           rules: item.rules?item.rules:null
                         })(item.type)}
                       </Form.Item>

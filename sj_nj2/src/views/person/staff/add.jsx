@@ -160,7 +160,7 @@ class AddStaff extends React.Component {
     return (
       <JCard spinning={spinning} >
         <Teach visible={visible} onCancel={()=>this.setState({visible: false})} onSelect={this.selectTeach.bind(this)} />
-        <Card size="small" title="基本信息" extra={(
+        <Card size="small" title={"基本信息"} extra={(
           <div>
             <Button type="primary" onClick={this.handlenSubmit.bind(this)} ><Icon type="save" />保存</Button>
             <Link to="/person/staff" className="mgl10"><Button><Icon type="rollback" />返回</Button></Link>
