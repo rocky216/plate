@@ -12,6 +12,7 @@ import {getSelectDict, getSelectRole, editProcess, getSelectDept, getProcessDeta
 
 const {Option} = Select
 const { TreeNode } = TreeSelect;
+const {TextArea} = Input
 
 const formItemLayout = {
   labelCol: {
@@ -132,6 +133,47 @@ class EditProcess extends React.Component {
                 ],
               })(<Input />)}
             </Form.Item>
+            <Form.Item label="适用部门" hasFeedback>
+              {getFieldDecorator('flowOrgan', {
+                initialValue: info.flowOrgan,
+                rules: [
+                  {
+                    required: true,
+                    message: '填写流程组织!',
+                  }
+                ],
+              })(
+                <TreeSelect>
+                  <TreeNode key="0" value="0" title="通用"></TreeNode>
+                  {this.createNode(selectDept)}
+                </TreeSelect>
+              )}
+            </Form.Item>
+            <Form.Item label="标识" hasFeedback>
+              {getFieldDecorator('flowSign', {
+                initialValue: info.flowSign,
+              })(<Input />)}
+            </Form.Item>
+            <Form.Item label="过滤重复" hasFeedback>
+              {getFieldDecorator('flowFilter', {
+                initialValue: info.flowFilter,
+              })(
+                <Select >
+                  <Option value="0">不过滤</Option>
+                  <Option value="1">过滤</Option>
+                </Select>
+              )}
+            </Form.Item>
+            <Form.Item label="流程描述" hasFeedback>
+              {getFieldDecorator('remark', {
+                initialValue: info.remark,
+              })(<TextArea />)}
+            </Form.Item>
+            <Form.Item label="流程版本" hasFeedback>
+              {getFieldDecorator('flowVersion', {
+                initialValue: info.flowVersion,
+              })(<Input />)}
+            </Form.Item>
             <Form.Item label="流程类型" hasFeedback>
               {getFieldDecorator('flowType', {
                 initialValue: info.flowType,
@@ -148,32 +190,6 @@ class EditProcess extends React.Component {
                   ))}
                 </Select>
               )}
-            </Form.Item>
-            <Form.Item label="流程组织" hasFeedback>
-              {getFieldDecorator('flowOrgan', {
-                initialValue: info.flowOrgan,
-                rules: [
-                  {
-                    required: true,
-                    message: '填写流程组织!',
-                  }
-                ],
-              })(
-                <TreeSelect>
-                  {this.createNode(selectDept)}
-                </TreeSelect>
-              )}
-            </Form.Item>
-            <Form.Item label="流程版本" hasFeedback>
-              {getFieldDecorator('flowVersion', {
-                initialValue: info.flowVersion,
-                rules: [
-                  {
-                    required: true,
-                    message: '填写流程版本!',
-                  }
-                ],
-              })(<Input />)}
             </Form.Item>
             <Form.Item label="添加流程节点" >
               <div className="fixedend">

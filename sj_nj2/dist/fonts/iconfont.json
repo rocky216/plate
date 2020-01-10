@@ -27,6 +27,13 @@
       "unicode_decimal": 58918
     },
     {
+      "icon_id": "8636402",
+      "name": "发送",
+      "font_class": "send",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
       "icon_id": "9521000",
       "name": "员工",
       "font_class": "yuangong",

@@ -21,7 +21,6 @@ function handlenData(arr){
     }
   } 
   arrData(arr)
-console.log(arr, "arrrr")
   return arr
   
 }

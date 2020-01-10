@@ -124,7 +124,7 @@ class AddOrgan extends React.Component {
               <Input/>
             )}
           </Form.Item>
-          <Form.Item label="结构负责人">
+          <Form.Item label="机构负责人">
             {getFieldDecorator('leaderName', {
               
             })(

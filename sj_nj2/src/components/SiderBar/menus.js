@@ -22,17 +22,17 @@ export default [
       },
       {
         title: "人员调岗管理",
-        link: "/",
+        link: "/person/posts",
         key: 203
       },
       {
         title: "排产管理",
-        link: "/",
+        link: "/person/schedu",
         key: 204
       },
       {
         title: "缺勤管理",
-        link: "/",
+        link: "/person/absence",
         key: 205
       },
       {

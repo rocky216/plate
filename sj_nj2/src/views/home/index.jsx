@@ -1,50 +1,130 @@
 import React from "react"
 import {connect} from "react-redux"
+import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Button} from "antd";
-import {setCookie, getCookie, removeCookie} from "@/utils"
+import {Card, Tabs, Badge, Table, Button, Row, Col} from "antd";
+import JCard from "@/components/JCard"
+import {getWorkBenchQuitList} from "@/actions/appAction"
+import {quitStaffColumns, postsColumns} from "../person/columns"
+import QuitAppro from "./quitAppro"
+import PostsAppro from "./postsAppro"
+import SchedcChart from "@/components/SchedcChart"
 
+const {TabPane} = Tabs
 
 class Home extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      key: "quitCount",
+      tabs: [
+        {
+          title: "缺勤审批",
+          value: "absenceCount",
+          key: "absenceCount"
+        },
+        {
+          title: "计划外加班审批",
+          value: "overWorkCount",
+          key: "overWorkCount"
+        },
+        {
+          title: "离职申请审批",
+          value: "quitCount",
+          key: "quitCount"
+        },
+        {
+          title: "人员调岗审批",
+          value: "transferPositionCount",
+          key: "transferPositionCount"
+        },
+      ],
+      quitVisible: false,
+      quitDetail: "",
+      postsVisible: false,
+      postsDetail: ""
+    }
+  }
+
   componentDidMount(){
-    // setCookie("token", {aa: "12"})
-    // let token = getCookie("token")
-    // console.log(token)
+    this.props.actions.getWorkBenchQuitList({}) 
   }
 
-  handlenAdd(){
-    setCookie("token","12")
+  staffColumnsCol(){
+    let _this = this
+    return quitStaffColumns.concat([{
+      title: "操作",
+      render(item){
+        return (
+          <div>
+            <Button onClick={()=>_this.setState({quitVisible: true, quitDetail: item})} size="small" type="link">审批</Button>
+          </div>
+        )
+      }
+    }])
   }
-
-  handlenGet(){
-    let token = getCookie("token")
-    console.log(token)
-  }
-
-  handlenClick(){
-    removeCookie("token")
+  postsColumnsCol(){
+    let _this = this
+    return postsColumns.concat([{
+      title: "操作",
+      render(item){
+        return (
+          <div>
+            <Button onClick={()=>_this.setState({postsVisible: true, postsDetail: item})} size="small" type="link">审批</Button>
+          </div>
+        )
+      }
+    }])
   }
 
   render(){
+    const {utils, spinning, workStaff} = this.props
+    const {tabs, key, quitVisible, quitDetail, postsVisible, postsDetail} = this.state
+
     return (
-      <div>Home <i className="icon iconfont icon-wode"></i>
-        <Button onClick={this.handlenAdd.bind(this)}>add</Button>
-        <Button onClick={this.handlenGet.bind(this)}>get</Button>
-        <Button onClick={this.handlenClick.bind(this)}>remove</Button>
-      </div>
+      <JCard spinning={spinning}>
+        {quitVisible?<QuitAppro visible={quitVisible} detail={quitDetail} onCancel={()=>this.setState({quitVisible: false, quitDetail:""})} />:null}
+        {postsVisible?<PostsAppro visible={postsVisible} detail={postsDetail} onCancel={()=>this.setState({postsVisible: false, postsDetail:""})} />:null}
+        <Row>
+          <Col span={8}></Col>
+          <Col span={16}>
+            <SchedcChart/>
+          </Col>
+        </Row>
+        <Card size="small">
+          <Tabs
+            activeKey={key}
+            onChange={(key)=>this.setState({key:key})}
+          >
+            {tabs.map(item=>(
+              <TabPane key={item.key} tab={
+                <Badge count={workStaff?workStaff[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+              } />
+            ))}
+          </Tabs>
+          {key=="quitCount"?<Table size="small" columns={this.staffColumnsCol()} dataSource={workStaff?utils.addIndex(workStaff.quitList):[]}
+          pagination={false} />:null}
+          
+          {key=="transferPositionCount"?<Table size="small" columns={this.postsColumnsCol()} dataSource={workStaff?utils.addIndex(workStaff.transferPositionList):[]}
+          pagination={false} />:null}
+
+        </Card>
+      </JCard>
     )
   }
 }
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({}, dispatch)
+    actions: bindActionCreators({getWorkBenchQuitList}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-
+    workStaff: state.app.workStaff,
+    spinning: state.app.spinning,
+    utils: state.app.utils
   }
 }
 

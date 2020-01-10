@@ -88,18 +88,16 @@ class AddNode extends React.Component {
             )}
           </Form.Item>
           <Form.Item label="节点参数" hasFeedback>
-            {getFieldDecorator('nodeParam', {
-              rules: [{required: true,message: '填写节点参数!',}]
-            })(<Input />)}
+            {getFieldDecorator('nodeParam', )(<Input />)}
           </Form.Item>
-          <Form.Item label="节点目标类型" >
+          <Form.Item label="用户类型" >
             {getFieldDecorator('nodeTarget', {
               initialValue:"1",
               valuePropName: "checked",
               rules: [
                 {
                   required: true,
-                  message: '状态!',
+                  message: '用户类型!',
                 }
               ],
             })(
@@ -110,9 +108,9 @@ class AddNode extends React.Component {
               </Select>
             )}
           </Form.Item>
-          {getFieldValue("nodeTarget")=="2"?<Form.Item label="节点目标" >
+          {getFieldValue("nodeTarget")=="2"?<Form.Item label="用户" >
             {getFieldDecorator('nodeTargetId', {
-              rules: [{required: true,message: '选择节点目标!',}]
+              rules: [{required: true,message: '选择用户!',}]
             })(
               <Select>
                 {roleList?roleList.map(item=>(
@@ -121,9 +119,9 @@ class AddNode extends React.Component {
               </Select>
             )}
           </Form.Item>:null}
-          {getFieldValue("nodeTarget")=="3"?<Form.Item label="节点目标" >
+          {getFieldValue("nodeTarget")=="3"?<Form.Item label="用户" >
             {getFieldDecorator('nodeTargetId', {
-              rules: [{required: true,message: '选择节点目标!',}]
+              rules: [{required: true,message: '选择用户!',}]
             })(
               <Select>
                 {jobList?jobList.map(item=>(

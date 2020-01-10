@@ -1,12 +1,13 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Row, Col, Form, Input, Select, DatePicker, Icon, Button, Table, Typography} from "antd";
-import {getDeptDetail, getSupDeptDetail, editOrgan, getTreeDept} from "@/actions/systemAction"
+import {Row, Col, Form, Input, Select, DatePicker, Icon, Button, Table, Typography, Modal} from "antd";
+import {getDeptDetail, getSupDeptDetail, editOrgan, getTreeDept, deleteOrgan} from "@/actions/systemAction"
 import {gradeColumns} from "../columns"
 
 const {Option} = Select
 const { Text } = Typography;
+const { confirm } = Modal;
 
 const formItemLayout = {
   labelCol: {
@@ -65,6 +66,23 @@ class EditOrgan extends React.Component {
       arr.push(`${item.id}:${item.postCount}`)
     })
     return arr
+  }
+
+  handlenDeleteOrgan(){
+    let _this = this
+    confirm({
+      title: '是否删除?',
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        _this.props.actions.deleteOrgan({id: _this.props.detail.id}, res=>{
+          _this.props.utils.OpenNotification("success")
+          _this.props.initial()
+        })
+      }
+    });
+    
   }
 
   handlenSubmit(){
@@ -130,7 +148,7 @@ class EditOrgan extends React.Component {
             <Input/>
           )}
         </Form.Item>
-        <Form.Item label="结构负责人">
+        <Form.Item label="机构负责人">
           {getFieldDecorator('leaderName', {
             initialValue: info?info.leaderName:"",
           })(
@@ -161,8 +179,7 @@ class EditOrgan extends React.Component {
         </Form.Item> */}
         <Form.Item wrapperCol={{ sm: {span: 18, offset: 6} }}>
           <Button type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</Button>
-          {info.deptType=="5" || info.deptType=="8"?null
-          :<Button type="primary" ghost className="mgl10" onClick={()=>onSwitch(info)} ><Icon type="plus" />添加子节点</Button>}
+          <Button type="primary" ghost className="mgl10" onClick={this.handlenDeleteOrgan.bind(this)} ><Icon type="delete" />删除节点</Button>
         </Form.Item>
       </Form>
         </Col>
@@ -181,7 +198,7 @@ class EditOrgan extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getDeptDetail, getSupDeptDetail, editOrgan, getTreeDept}, dispatch)
+    actions: bindActionCreators({getDeptDetail, getSupDeptDetail, editOrgan, getTreeDept, deleteOrgan}, dispatch)
   }
 }
 

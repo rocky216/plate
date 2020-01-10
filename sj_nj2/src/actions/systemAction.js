@@ -2,6 +2,33 @@ import {START_LOADING_SYSTEM, END_LOADING_SYSTEM} from "@/types"
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
+export function deleteOrgan(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/dept/delete/"+params.id,
+        method: "put",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
 
 export function editProcess(params, next){
   return async function(dispatch, getState){
