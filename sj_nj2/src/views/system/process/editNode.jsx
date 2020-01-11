@@ -2,8 +2,9 @@ import React from "react"
 import {connect} from "react-redux"
 import {withRouter} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Button, Input, InputNumber, Switch, TreeSelect, Select} from "antd";
+import {Modal, Form, Button, Input, InputNumber, Switch, TreeSelect, Select, Icon} from "antd";
 import {addDictData, getDictData, } from "@/actions/systemAction"
+import Teach from "@/views/person/staff/teach"
 
 const {TextArea} = Input
 const { TreeNode } = TreeSelect;
@@ -25,11 +26,18 @@ class AddNode extends React.Component {
     super(props)
     this.state = {
       roleList: [],
-      jobList: []
+      jobList: [],
+      teachVisible: false,
+      teach: "",
     }
   }
 
   componentDidMount(){
+    const {nodeTarget, nodeTargetId, name} = this.props.detail
+    
+    if(this.props.detail.nodeTarget=="1"){
+      this.setState({teach: {name, nodeTargetId}})
+    }
     
   }
 
@@ -43,19 +51,39 @@ class AddNode extends React.Component {
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        this.props.onSubmit(values)
+        const {teach} = this.state
+        const {nodeTarget} = values
+        if(nodeTarget=="1" && !teach.nodeTargetId){
+          this.props.utils.OpenNotification("error", "用户不能为空！")
+          return
+        }
+        
+        this.props.onSubmit({
+          ...values,
+          name: teach.name,
+          teach,
+          nodeTargetId: nodeTarget=="1"?teach.nodeTargetId:values["nodeTargetId"+nodeTarget]
+        })
         this.props.onCancel()
       }
     })
   }
 
+  onSelect(obj){
+    this.setState({teach: {name: obj.name, id: obj.id}})
+  }
+
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {spinning, visible, onCancel, roleList, jobList, detail} = this.props
-    const { } = this.state
-    
+    const {teachVisible, teach } = this.state
+    console.log(detail, "detail")
     return (
-      <Modal
+      <div>
+        <Teach visible={teachVisible} onCancel={()=>this.setState({teachVisible: false})} 
+          onSelect={this.onSelect.bind(this)} />
+      
+        <Modal
         destroyOnClose
         okText="确定"
         cancelText="取消"
@@ -111,9 +139,15 @@ class AddNode extends React.Component {
               </Select>
             )}
           </Form.Item>
+          {getFieldValue("nodeTarget")=="1"?<Form.Item label="用户" >
+            <div className="teach_wrap">
+              <Input  value={teach?teach.name:""} />
+              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true})} />
+            </div>
+          </Form.Item>:null}
           {getFieldValue("nodeTarget")=="2"?<Form.Item label="用户" >
-            {getFieldDecorator('nodeTargetId', {
-              initialValue: detail.nodeTargetId,
+            {getFieldDecorator('nodeTargetId2', {
+              initialValue: _.findIndex(roleList,o=>o.id==detail.nodeTargetId)==-1?"":detail.nodeTargetId,
               rules: [{required: true,message: '选择用户!',}]
             })(
               <Select>
@@ -124,8 +158,8 @@ class AddNode extends React.Component {
             )}
           </Form.Item>:null}
           {getFieldValue("nodeTarget")=="3"?<Form.Item label="用户" >
-            {getFieldDecorator('nodeTargetId', {
-              initialValue: detail.nodeTargetId,
+            {getFieldDecorator('nodeTargetId3', {
+              initialValue: _.findIndex(jobList,o=>o.id==detail.nodeTargetId)==-1?"":detail.nodeTargetId,
               rules: [{required: true,message: '选择用户!',}]
             })(
               <Select>
@@ -137,6 +171,7 @@ class AddNode extends React.Component {
           </Form.Item>:null}
         </Form>
       </Modal>
+      </div>
     )
   }
 }

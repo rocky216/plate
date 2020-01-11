@@ -91,13 +91,13 @@ export const allExpendColumns = [
   {
     title: "姓名",
     render(item){
-      return item.owners?item.owners.name:"无"
+      return item.faOtherCostsOrderR?item.faOtherCostsOrderR.name:"无"
     }
   },
   {
     title: "手机号",
     render(item){
-      return item.owners?item.owners.phone:"无"
+      return item.faOtherCostsOrderR?item.faOtherCostsOrderR.phone:"无"
     }
   },
   {

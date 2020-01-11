@@ -24,6 +24,12 @@ import Posts from "@/views/person/posts"
 import QuitAppro from "@/views/person/staffquit/appro"
 import Absence from "@/views/person/absence"
 import AddAbsence from "@/views/person/absence/add"
+import EditAbsence from "@/views/person/absence/edit"
+import DetailAbsence from "@/views/person/absence/detail"
+import ApprovalAbsence from "@/views/person/absence/approval"
+
+import Attend from "@/views/person/attend"
+import AddAttend from "@/views/person/attend/add"
 
 
 class Routers extends React.Component{
@@ -57,7 +63,13 @@ class Routers extends React.Component{
         <AuthRoute  path="/person/schedu/add" Component={AddSchedu} name="排产管理" />
 
         <AuthRoute exact path="/person/absence" Component={Absence} name="缺勤管理" />
-        <AuthRoute exact path="/person/absence/add" Component={AddAbsence} name="新增缺勤" />
+        <AuthRoute  path="/person/absence/add" Component={AddAbsence} name="新增缺勤" />
+        <AuthRoute  path="/person/absence/:id/edit" Component={EditAbsence} name="编辑缺勤" />
+        <AuthRoute  path="/person/absence/:id/detail" Component={DetailAbsence} name="查看缺勤" />
+        <AuthRoute  path="/person/absence/:id/approval" Component={ApprovalAbsence} name="缺勤审批" />
+
+        <AuthRoute exact path="/person/attend" Component={Attend} name="考勤管理" />
+        <AuthRoute path="/person/attend/add" Component={AddAttend} name="提交考勤" />
 
       </Switch>
       

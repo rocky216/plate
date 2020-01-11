@@ -113,10 +113,10 @@ class EditOwner extends React.Component {
       if (!err) {
         let houseInfo = this.handlenHouseInfo(this.state.selectRoom)
         let shopsInfo = this.handlenShopInfo(this.state.selectShop)
-        if(houseInfo.length==0 &&  shopsInfo.length == 0 ){
-          this.props.utils.OpenNotification("error", "房间或者店铺不能为空")
-          return
-        }
+        // if(houseInfo.length==0 &&  shopsInfo.length == 0 ){
+        //   this.props.utils.OpenNotification("error", "房间或者店铺不能为空")
+        //   return
+        // }
         this.props.actions.addOwner({
           ...values,
           houseInfo: houseInfo.join(),

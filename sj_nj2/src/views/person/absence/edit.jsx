@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Row, Col,Form, TreeSelect, Input, Select, Button, Icon, Table, Popconfirm } from "antd";
 import JCard from "@/components/JCard"
-import {loadSelectDeptByRole, getProcessList, addAbsenceOperation} from "@/actions/personAction"
+import {loadSelectDeptByRole, getProcessList, addAbsenceOperation, getAbsenceDetail} from "@/actions/personAction"
 import {addabsenceColumns} from "../columns"
 import AddDetail from "./addDetail"
 import EditDetail from "./editDetail"
@@ -24,7 +24,7 @@ const formItemLayout = {
   },
 };
 
-class AddAbsence extends React.Component {
+class EditAbsence extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -33,11 +33,33 @@ class AddAbsence extends React.Component {
       editVisible: "",
       detail: "",
       processList: [],
-      detailList: []
+      detailList: [],
+      info:""
     }
   }
 
   componentDidMount(){
+    this.props.actions.getAbsenceDetail({id: this.props.match.params.id}, res=>{
+      let arr = []
+      if(res.detailSet && res.detailSet.length){
+        _.each(res.detailSet, item=>{
+          arr.push({
+            employeeId: item.employeeId,
+            name: item.name,
+            allDeptNameStr: item.allDeptNameStr,
+            absenceEndTime: item.absenceEndTime,
+            absenceStartTime: item.absenceStartTime,
+            absenceTimeLength: item.absenceTimeLength,
+            leaveType: item.leaveType,
+            absenceTime: item.absenceTime,
+            absenceCause: item.absenceCause,
+          })
+        })
+      }
+      this.setState({info: res, detailList:arr})
+      this.handlenChange(res.deptId)
+    })
+
     this.props.actions.loadSelectDeptByRole({loadType: 1, roleUrl: "/api/pc/absence"}, res=>{
       this.setState({deptList: res})
     })
@@ -64,9 +86,10 @@ class AddAbsence extends React.Component {
   }
 
   editOk(obj){
+    console.log(obj)
     const {detail, detailList} = this.state
     let index = _.findIndex(detailList, o=>o.key==detail.key)
-    console.log(index,"index")
+    
     detailList[index] = obj
     this.setState({detailList})
   }
@@ -75,6 +98,7 @@ class AddAbsence extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
         this.props.actions.addAbsenceOperation({
+          id: this.props.match.params.id,
           ...values,
           type: "draft",
           details: JSON.stringify(this.state.detailList)
@@ -90,6 +114,7 @@ class AddAbsence extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
         this.props.actions.addAbsenceOperation({
+          id: this.props.match.params.id,
           ...values,
           type: "send",
           details: JSON.stringify(this.state.detailList)
@@ -133,7 +158,7 @@ class AddAbsence extends React.Component {
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, spinning} = this.props
-    const {deptList, addVisible, processList, detailList, editVisible, detail} = this.state
+    const {deptList, addVisible, processList, detailList, editVisible, detail, info} = this.state
     console.log(detailList)
     
     return (
@@ -153,6 +178,7 @@ class AddAbsence extends React.Component {
             <Col span={8}>
               <Form.Item label="车间">
                 {getFieldDecorator("deptId",{
+                  initialValue: info.deptId,
                   rules: [{required: true,message: '选择车间!',}],
                 })(
                   deptList && deptList.length?
@@ -165,8 +191,8 @@ class AddAbsence extends React.Component {
             <Col span={8}>
               <Form.Item label="缺勤类型">
                 {getFieldDecorator("absenceType", {
-                  initialValue: "1",
-                  rules: [{required: true,message: '缺勤类型!',}],
+                  initialValue: info.absenceType,
+                  rules: [{required: true,message: '选择车间!',}],
                 })(
                   <Select disabled={detailList.length?true:false}>
                     <Option value="1">请假</Option>
@@ -179,6 +205,7 @@ class AddAbsence extends React.Component {
             <Col span={8}>
               <Form.Item label="审批流程">
                 {getFieldDecorator("flowId", {
+                  initialValue: info.flowTemplateId,
                   rules: [{required: true,message: '审批流程!',}],
                 })(
                   <Select>
@@ -192,6 +219,7 @@ class AddAbsence extends React.Component {
             <Col span={8}>
               <Form.Item label="标题">
                 {getFieldDecorator("absenceTitle", {
+                  initialValue: info.absenceTitle,
                   rules: [{required: true,message: '标题!',}],
                 })(
                   <Input/>
@@ -200,7 +228,9 @@ class AddAbsence extends React.Component {
             </Col>
             <Col span={8}>
               <Form.Item label="备注">
-                {getFieldDecorator("remark")(
+                {getFieldDecorator("remark",{
+                  initialValue: info.remark,
+                })(
                   <TextArea autoSize={{minRows: 3}} />
                 )}
               </Form.Item>
@@ -217,7 +247,7 @@ class AddAbsence extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({loadSelectDeptByRole, getProcessList, addAbsenceOperation}, dispatch)
+    actions: bindActionCreators({loadSelectDeptByRole, getProcessList, addAbsenceOperation, getAbsenceDetail}, dispatch)
   }
 }
 
@@ -228,4 +258,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddAbsence) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(EditAbsence) )

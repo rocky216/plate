@@ -96,7 +96,7 @@ class Owner extends React.Component {
 
   render(){
     const {spinning, utils, owner, heList, commonFiles} = this.props
-    const {tipVisible, errInfo, exportVisible, exportHeId} = this.state
+    const {tipVisible, errInfo, exportVisible, exportHeId, params} = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -148,7 +148,12 @@ class Owner extends React.Component {
           
         </div>
         
-         <Table columns={this.getCol()} dataSource={owner?utils.addIndex(owner.list):[]} />
+         <Table columns={this.getCol()} dataSource={owner?utils.addIndex(owner.list):[]} 
+          pagination={utils.Pagination(owner, page=>{
+            params.current = page
+            this.setState({params})
+            this.props.actions.getOwnerList(params)
+          })} />
        </Card>
       </JCard>
     )

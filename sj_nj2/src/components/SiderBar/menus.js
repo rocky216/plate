@@ -37,7 +37,7 @@ export default [
       },
       {
         title: "考勤管理",
-        link: "/",
+        link: "/person/attend",
         key: 206
       },
       {

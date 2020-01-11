@@ -20,7 +20,7 @@ const formItemLayout = {
     xs: { span: 24 },
     sm: { span: 16 },
   },
-};
+}; 
 
 class EditDetail extends React.Component {
   constructor(props){

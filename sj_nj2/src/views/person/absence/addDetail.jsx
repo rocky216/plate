@@ -125,9 +125,9 @@ class AddDetail extends React.Component {
                     rules: [{required: true,message: '选择缺勤人!',}],
                   })(
                     <div className="teach_wrap">
-                    <Input  value={teach?teach.name:""} />
-                    <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true})} />
-                  </div>
+                      <Input  value={teach?teach.name:""} />
+                      <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true})} />
+                    </div>
                   )}
                 </Form.Item>
               </Col>
@@ -179,6 +179,7 @@ class AddDetail extends React.Component {
                   )}
                 </Form.Item>
               </Col>
+              {absenceType=="1"?
               <Col span={12}>
                 <Form.Item label="请假类型" hasFeedback>
                   {getFieldDecorator('leaveType', {
@@ -196,7 +197,7 @@ class AddDetail extends React.Component {
                     </Select>
                   )}
                 </Form.Item>
-              </Col>
+              </Col>:null}
               <Col span={12}>
                 <Form.Item label="缺勤日期" hasFeedback>
                   {getFieldDecorator('absenceTime', {

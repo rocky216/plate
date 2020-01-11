@@ -351,7 +351,7 @@ export const otherfeeColmuns = [
     title: "类型",
     dataIndex: "orderType",
     render(e,rows){
-      switch(parseInt(rows.orderStatus)){
+      switch(parseInt(e)){
         case 0:
           return <Tag>住宅</Tag>
         case 1:
@@ -417,7 +417,7 @@ export const expendfeeColmuns = [
     title: "类型",
     dataIndex: "orderType",
     render(e,rows){
-      switch(parseInt(rows.orderStatus)){
+      switch(parseInt(e)){
         case 0:
           return <Tag>住宅</Tag>
         case 1:
@@ -438,11 +438,11 @@ export const expendfeeColmuns = [
     dataIndex: "orderNo"
   },
   {
-    title: "缴费时间",
+    title: "支出时间",
     dataIndex: "buildTime"
   },
   {
-    title: "缴费金额",
+    title: "支出金额",
     dataIndex: "orderTrueFee"
   }
 ]

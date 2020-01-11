@@ -87,6 +87,10 @@ export const accountLogColmuns = [
     }
   },
   {
+    title: "操作人",
+    dataIndex: "buildUserName"
+  },
+  {
     title: "起始金额(元)",
     dataIndex: "startAmount"
   },

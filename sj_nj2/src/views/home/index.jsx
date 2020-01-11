@@ -5,7 +5,7 @@ import {bindActionCreators} from "redux"
 import {Card, Tabs, Badge, Table, Button, Row, Col} from "antd";
 import JCard from "@/components/JCard"
 import {getWorkBenchQuitList} from "@/actions/appAction"
-import {quitStaffColumns, postsColumns} from "../person/columns"
+import {quitStaffColumns, postsColumns, absenceColumns} from "../person/columns"
 import QuitAppro from "./quitAppro"
 import PostsAppro from "./postsAppro"
 import SchedcChart from "@/components/SchedcChart"
@@ -16,7 +16,7 @@ class Home extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      key: "quitCount",
+      key: "absenceCount",
       tabs: [
         {
           title: "缺勤审批",
@@ -48,6 +48,22 @@ class Home extends React.Component {
 
   componentDidMount(){
     this.props.actions.getWorkBenchQuitList({}) 
+  }
+
+  absenceColumnsCol(){
+    let _this = this
+    return absenceColumns.concat([{
+      title: "操作",
+      render(item){
+        return (
+          <div>
+            <Link to={`/person/absence/${item.id}/approval`}>
+              <Button  size="small" type="link">审批</Button>
+            </Link>
+          </div>
+        )
+      }
+    }])
   }
 
   staffColumnsCol(){
@@ -102,6 +118,9 @@ class Home extends React.Component {
               } />
             ))}
           </Tabs>
+          {key=="absenceCount"?<Table size="small" columns={this.absenceColumnsCol()} dataSource={workStaff?utils.addIndex(workStaff.absenceList):[]}
+          pagination={false} />:null}
+
           {key=="quitCount"?<Table size="small" columns={this.staffColumnsCol()} dataSource={workStaff?utils.addIndex(workStaff.quitList):[]}
           pagination={false} />:null}
           

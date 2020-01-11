@@ -247,7 +247,7 @@ class Posts extends React.Component {
                       <Option key={item.id} value={item.id}>{item.dictName}</Option>
                     )):null}
                   </Select>
-                )}
+                )} 
               </Form.Item>
             </Col>
             <Col span={8}>

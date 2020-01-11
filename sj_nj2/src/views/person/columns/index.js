@@ -1,3 +1,5 @@
+import React from "react"
+import {Radio, InputNumber} from "antd"
 import {leaveType} from "../absence/data"
 
 export const staffColumns = [
@@ -404,8 +406,12 @@ export const addabsenceColumns = [
     title: "请假类型",
     dataIndex: "leaveType",
     render(item, rows){
-      let obj = _.filter(leaveType,o=>o.value==item)[0]
-      return obj.title
+      if(item!="0"){
+        let obj = _.filter(leaveType,o=>o.value==item)[0]
+        return obj.title
+      }else{
+        return "无"
+      }
     }
   },
   {
@@ -432,3 +438,96 @@ export const addabsenceColumns = [
     dataIndex: "absenceCause"
   },
 ]
+
+export const addAttendColumns = function(_this){
+  return [
+    {
+      title: "序号",
+      dataIndex: "key"
+    },
+    {
+      title: "组织机构",
+      dataIndex: "allDeptNameStr"
+    },
+    {
+      title: "岗级",
+      dataIndex: "level"
+    },
+    {
+      title: "员工编号",
+      dataIndex: "jobNumber"
+    },
+    {
+      title: "姓名",
+      dataIndex: "employeeName"
+    },
+    {
+      title: "班次",
+      render(item, rows, index){
+        return (
+          <Radio.Group value={item.shift?item.shift:""} onChange={_this.shiftChange.bind(_this, index)}>
+            <Radio value="0">白班</Radio>
+            <Radio value="1">夜班</Radio>
+          </Radio.Group>
+        )
+      }
+    },
+    {
+      title: "计划性出勤",
+      render(item, rows, index){
+        let value = item.shift=="0"?item.bbTrueHour:item.shift=="1"?item.wbTrueHour:""
+        let max = item.shift=="0"?item.bbHour:item.shift=="1"?item.wbHour:"0"
+
+        return <InputNumber min={0} max={max} value={value} onChange={_this.planChange.bind(_this,index)} />
+      }
+    },
+    {
+      title: "非计划性出勤",
+      render(item, rows, index){
+        return <InputNumber min={0} onChange={_this.nPlanChange.bind(_this,index)} />
+      }
+    },
+    {
+      title: "申请状态",
+      render(item){
+        return ""
+      }
+    },
+    {
+      title: "审批人",
+      render(item){
+        return ""
+      }
+    },
+    {
+      title: "请假类型",
+      render(item){
+        return ""
+      }
+    },
+    {
+      title: "请假小时数",
+      render(item){
+        return ""
+      }
+    },
+    {
+      title: "申请状态",
+      render(item){
+        return ""
+      }
+    },
+    {
+      title: "审批人",
+      render(item){
+        return ""
+      }
+    },
+    {
+      title: "操作",
+      render(item){
+        return ""
+      }
+    },
+  ]
+}

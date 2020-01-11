@@ -120,6 +120,7 @@ class AddPropertyfee extends React.Component {
           _.each(res.detailsList, item=>{
             item.oldtotalFee = item.totalFee
           })
+          res.orderTotalFee = res.orderTrueFee
           this.setState({temDetail: res})
         })
       }
@@ -127,9 +128,10 @@ class AddPropertyfee extends React.Component {
     })
   }
 
-  handlenDiscount(item){
+  handlenDiscount(item, type){
     const {temDetail} = this.state
     let str = 0
+
     let index = _.findIndex(temDetail.detailsList, o=>o.templateId==item.templateId)
     temDetail.detailsList[index]["checked"] = !temDetail.detailsList[index]["checked"]
 
@@ -139,7 +141,6 @@ class AddPropertyfee extends React.Component {
       temDetail.detailsList[index]["totalFee"] = temDetail.detailsList[index]["oldtotalFee"]
     }
     _.each(temDetail.detailsList, item=>{
-      console.log(parseFloat(item.totalFee))
       str+= parseFloat(item.totalFee) 
     })
     temDetail.orderTotalFee = Math.round(str)

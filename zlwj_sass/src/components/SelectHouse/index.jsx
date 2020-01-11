@@ -33,7 +33,7 @@ class SelectHouse extends React.Component {
         item.children = item.heHouses
         item.name = item.showCode+"单元"
       }else{
-        item.name = item.owners?`${item.showBouseCode}号(${item.owners.name})(${item.owners.phone})`:item.showBouseCode+"号"
+        item.name = item.ownerId?`${item.showBouseCode}号(${item.ownerName})(${item.ownerPhone})`:item.showBouseCode+"号"
       }
 
     })

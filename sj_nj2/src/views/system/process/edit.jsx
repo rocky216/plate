@@ -77,6 +77,7 @@ class EditProcess extends React.Component {
       }
       this.setState({nodeList})
     }else if(type=="edit"){
+      console.log(type, "type")
       nodeList[index] = values
       this.setState({nodeList, index: -1})
     }
@@ -107,12 +108,12 @@ class EditProcess extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {utils, spinning} = this.props
     const {addVisible, nodeList, selectDept, editVisible, detail, info} = this.state
-    console.log(info, "info")
+    console.log(nodeList, "nodeList")
 
     return (
       <JCard spinning={spinning}>
         <AddNode visible={addVisible} onSubmit={this.onSubmit.bind(this, "add")} onCancel={()=>this.setState({addVisible: false})} />
-        <EditNode visible={editVisible} onSubmit={this.onSubmit.bind(this, "edit")} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:""})} />
+        {editVisible?<EditNode visible={editVisible} onSubmit={this.onSubmit.bind(this, "edit")} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:""})} />:null}
         
         <Row>
           <Col span={12}>
