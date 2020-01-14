@@ -30,7 +30,10 @@ import ApprovalAbsence from "@/views/person/absence/approval"
 
 import Attend from "@/views/person/attend"
 import AddAttend from "@/views/person/attend/add"
+import EditAttend from "@/views/person/attend/edit"
 
+import Overwork from "@/views/person/overwork"
+import ApprovalOverwork from "@/views/person/overwork/approval"
 
 class Routers extends React.Component{
   
@@ -70,6 +73,10 @@ class Routers extends React.Component{
 
         <AuthRoute exact path="/person/attend" Component={Attend} name="考勤管理" />
         <AuthRoute path="/person/attend/add" Component={AddAttend} name="提交考勤" />
+        <AuthRoute path="/person/attend/:id/edit" Component={EditAttend} name="编辑考勤" />
+
+        <AuthRoute exact path="/person/overwork" Component={Overwork} name="加班申请" />
+        <AuthRoute  path="/person/overwork/:id/approval" Component={ApprovalOverwork} name="计划外加班审批" />
 
       </Switch>
       

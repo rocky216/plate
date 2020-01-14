@@ -232,7 +232,7 @@ class Posts extends React.Component {
               )}>
                 {getFieldDecorator('sDeptId')(
                   deptList && deptList.length?
-                  <TreeSelect treeDefaultExpandAll>
+                  <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll>
                     {this.createNode(deptList)}
                   </TreeSelect>:<span></span>
                 )}

@@ -46,13 +46,12 @@ class SchedcChart extends React.Component {
   render(){
     const {utils} = this.props
     const {alltime} = this.state
-    console.log(alltime,"alltime")
+    
 
     return (
       <Card size="small" title="车间周排产计划">
         <div className="homeChart">
           {alltime.map((item,index)=>{
-            console.log(item, "item")
             return (
               <div key={index} className="item">
                 <div className="title">
@@ -69,7 +68,7 @@ class SchedcChart extends React.Component {
                     <p>午餐{item.bPlan?`(${item.bPlan.cutOneHour}H)`:""}</p>
                     <p>{item.bPlan?item.bPlan.cutOneStartTime.substring(0,10):""}-{item.bPlan?item.bPlan.cutOneEndTime.substring(0,10):""}</p>
                   </div>
-                </div>:<div className="nbPlan"></div>}
+                </div>:<div className="nbPlan">&nbsp;</div>}
                 {item.wPlan&&item.wPlan.productionHour?
                 <div className="wPlan">
                   <div>
@@ -81,7 +80,7 @@ class SchedcChart extends React.Component {
                     <p>{item.wPlan?item.wPlan.cutTwoStartTime.substring(0,10):""}-{item.wPlan?item.wPlan.cutTwoEndTime.substring(0,10):""}</p>
                   </div>
                 </div>
-                :<div className="nwPlan"></div>}
+                :<div className="nwPlan">&nbsp;</div>}
               </div>
             )
           })}

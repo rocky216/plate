@@ -45,7 +45,7 @@ class PostsAppro extends React.Component {
       <Modal
         destroyOnClose
         width={1000}
-        title="离职申请"
+        title="调岗审批"
         okText="确定"
         cancelText="取消"
         confirmLoading={spinning}
@@ -56,7 +56,7 @@ class PostsAppro extends React.Component {
         <Form {...formItemLayout} >
           <Row>
             <Col span={12}>
-              <Form.Item label="离职人员" hasFeedback>
+              <Form.Item label="调岗人员" hasFeedback>
                 {getFieldDecorator('name', {
                   initialValue: detail.name
                 })(<Input disabled />)}
@@ -83,9 +83,9 @@ class PostsAppro extends React.Component {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="离职时间" hasFeedback>
-                {getFieldDecorator('quitTime',{
-                  initialValue: detail.quitTime
+              <Form.Item label="调岗日期" hasFeedback>
+                {getFieldDecorator('transferPositionTime',{
+                  initialValue: detail.transferPositionTime
                 })(<Input disabled />)}
               </Form.Item>
               <Form.Item label="申请时间" hasFeedback>

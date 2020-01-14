@@ -42,7 +42,7 @@ export default [
       },
       {
         title: "加班申请管理",
-        link: "/",
+        link: "/person/overwork",
         key: 207
       },
       {
@@ -82,11 +82,11 @@ export default [
         link: "/system/process",
         key: 304
       },
-      {
-        title: "功能&菜单",
-        link: "/",
-        key: 305
-      },
+      // {
+      //   title: "功能&菜单",
+      //   link: "/",
+      //   key: 305
+      // },
     ]
   }
 ]

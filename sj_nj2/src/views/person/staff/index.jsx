@@ -100,8 +100,12 @@ class Staff extends React.Component {
             <Link to={`/person/staff/${item.id}/edit`}>
               <Button size="small" type="link" >编辑</Button>
             </Link>
-            <Button size="small" type="link" onClick={()=>_this.setState({quitVisible: true, quitDetail: item})} >离职</Button>
-            <Button size="small" type="link" onClick={()=>_this.setState({postsVisible: true, postsDetail: item})} >调岗</Button>
+            {item.activity=="3"||item.activity=="4"?null:(
+              <span>
+                <Button size="small" type="link" onClick={()=>_this.setState({quitVisible: true, quitDetail: item})} >离职</Button>
+                <Button size="small" type="link" onClick={()=>_this.setState({postsVisible: true, postsDetail: item})} >调岗</Button>
+              </span>
+            )}
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
@@ -294,7 +298,7 @@ class Staff extends React.Component {
                 <Form.Item label="组织机构">
                   {getFieldDecorator('selectDeptId')(
                     deptList && deptList.length?
-                    <TreeSelect treeDefaultExpandAll onChange={this.deptTypeChange.bind(this)}>
+                    <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll onChange={this.deptTypeChange.bind(this)}>
                       {this.createNode(deptList)}
                     </TreeSelect>:<span></span>
                   )}

@@ -4,8 +4,8 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Row, Col,Form, TreeSelect, Input, Select, Button, Icon, Table, Popconfirm, Radio} from "antd";
 import JCard from "@/components/JCard"
-import {loadSelectDeptByRole, getProcessList, approvalAbsenceS, getApprovalLook, updateTemporaryStatus} from "@/actions/personAction"
-import {addabsenceColumns, overworlHistoryColmuns} from "../columns"
+import {loadSelectDeptByRole, getProcessList, approvalOverWork, getApprovalWork, updateOverworkTemporaryStatus} from "@/actions/personAction"
+import {overworkApprovalColmuns, overworlHistoryColmuns} from "../columns"
 
 const {TreeNode} = TreeSelect
 const {Option} = Select
@@ -22,7 +22,7 @@ const formItemLayout = {
   },
 };
 
-class ApprovalAbsence extends React.Component {
+class ApprovalOverwork extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -45,27 +45,9 @@ class ApprovalAbsence extends React.Component {
   }
 
   initial(){
-    this.props.actions.getApprovalLook({id: this.props.match.params.id}, res=>{
+    this.props.actions.getApprovalWork({id: this.props.match.params.id}, res=>{
       let arr = []
-      if(res.detailSet && res.detailSet.length){
-        _.each(res.detailSet, item=>{
-          arr.push({
-            id:item.id,
-            absenceTemporaryStatus: item.absenceTemporaryStatus,
-            absenceFinalStatus: item.absenceFinalStatus,
-            employeeId: item.employeeId,
-            name: item.name,
-            allDeptNameStr: item.allDeptNameStr,
-            absenceEndTime: item.absenceEndTime,
-            absenceStartTime: item.absenceStartTime,
-            absenceTimeLength: item.absenceTimeLength,
-            leaveType: item.leaveType,
-            absenceTime: item.absenceTime,
-            absenceCause: item.absenceCause,
-          })
-        })
-      }
-      this.setState({info: res, detailList:arr})
+      this.setState({info: res, detailList:res.workDetailList})
       this.handlenChange(res.deptId)
     })
   }
@@ -79,7 +61,7 @@ class ApprovalAbsence extends React.Component {
   }
 
   handlenChange(id){
-    this.props.actions.getProcessList({flowOrganId: id,flowType:2},res=>{
+    this.props.actions.getProcessList({flowOrganId: id,flowType:3},res=>{
       this.setState({processList: res})
     })
   }
@@ -89,7 +71,7 @@ class ApprovalAbsence extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
         const {} = values
-        this.props.actions.approvalAbsenceS({
+        this.props.actions.approvalOverWork({
           id: this.props.match.params.id,
           flowNodeId: this.state.info.nodeId,
           approveResult: values.approveResult,
@@ -106,7 +88,7 @@ class ApprovalAbsence extends React.Component {
     const {detailList} = this.state
     let arr = []
     _.each(detailList, item=>{
-      if(item.absenceFinalStatus!="2"){
+      if(item.workFinalStatus!="2"){
         arr.push(item.id)
       }
     })
@@ -114,9 +96,9 @@ class ApprovalAbsence extends React.Component {
       this.props.utils.OpenNotification("error", "没有可执行的数据！")
       return
     }
-    this.props.actions.updateTemporaryStatus({
+    this.props.actions.updateOverworkTemporaryStatus({
       ids: arr.join(),
-      absenceTemporaryStatus: target.value
+      workTemporaryStatus: target.value
     }, res=>{
       this.props.utils.OpenNotification("success")
       this.initial()
@@ -124,9 +106,9 @@ class ApprovalAbsence extends React.Component {
   }
 
   handlenSingAppro(item,{target}){
-    this.props.actions.updateTemporaryStatus({
+    this.props.actions.updateOverworkTemporaryStatus({ 
       ids: item.id,
-      absenceTemporaryStatus: target.value
+      workTemporaryStatus: target.value
     }, res=>{
       this.props.utils.OpenNotification("success")
       this.initial()
@@ -135,12 +117,12 @@ class ApprovalAbsence extends React.Component {
 
   getCol(){
     let _this = this
-    return addabsenceColumns.concat([{
+    return overworkApprovalColmuns.concat([{
       title: "操作",
       render(item){
         return (
           <div>
-            <Radio.Group disabled={item.absenceFinalStatus=="2"?true:false} value={item.absenceTemporaryStatus} onChange={_this.handlenSingAppro.bind(_this, item)} >
+            <Radio.Group disabled={item.workFinalStatus=="2"?true:false} value={item.workTemporaryStatus} onChange={_this.handlenSingAppro.bind(_this, item)} >
               <Radio value="2">批准</Radio>
               <Radio value="1">不批准</Radio>
             </Radio.Group>
@@ -154,11 +136,11 @@ class ApprovalAbsence extends React.Component {
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, spinning} = this.props
     const {deptList, addVisible, processList, detailList, editVisible, detail, info} = this.state
-    console.log(detailList)
+    
     
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title="缺勤单审批" extra={(
+        <Card size="small" title="计划外加班审批" extra={(
           <div>
             <Button type="primary" onClick={this.handlenSave.bind(this)} ><Icon type="save"  />提交</Button>
             <Link to="/" className="mgl10">
@@ -168,44 +150,26 @@ class ApprovalAbsence extends React.Component {
         )}>
           <Form {...formItemLayout}> 
             <Col span={8}>
-              <Form.Item label="缺勤单号">
-                {getFieldDecorator("absenceNo",{
-                  initialValue: info.absenceNo,
+              <Form.Item label="加班申请单号">
+                {getFieldDecorator("workNo",{
+                  initialValue: info.workNo,
                 })(
                   <Input disabled />
                 )}
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="车间">
-                {getFieldDecorator("deptId",{
-                  initialValue: info.deptId,
-                  rules: [{required: true,message: '选择车间!',}],
+              <Form.Item labelCol={{sm:{span:12}}} wrapperCol={{sm:{span:12}}} label="部门/车间累计计划外加班时长">
+                {getFieldDecorator("workTimeAll",{
+                  initialValue: info.workTimeAll,
                 })(
-                  deptList && deptList.length?
-                  <TreeSelect disabled treeDefaultExpandAll onChange={this.handlenChange.bind(this)} >
-                    {this.createNode(deptList)}
-                  </TreeSelect>:<span></span>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item label="缺勤类型">
-                {getFieldDecorator("absenceType", {
-                  initialValue: info.absenceType,
-                  rules: [{required: true,message: '选择车间!',}],
-                })(
-                  <Select disabled>
-                    <Option value="1">请假</Option>
-                    <Option value="2">旷工</Option>
-                    <Option value="3">迟到</Option>
-                  </Select>
+                  <Input disabled />
                 )}
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="审批流程">
-                {getFieldDecorator("flowId", {
+                {getFieldDecorator("flowTemplateId", {
                   initialValue: info.flowTemplateId,
                   rules: [{required: true,message: '审批流程!',}],
                 })(
@@ -218,28 +182,21 @@ class ApprovalAbsence extends React.Component {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="标题">
-                {getFieldDecorator("absenceTitle", {
-                  initialValue: info.absenceTitle,
-                  rules: [{required: true,message: '标题!',}],
+              <Form.Item label="车间">
+                {getFieldDecorator("deptName",{
+                  initialValue: info.deptName,
                 })(
-                  <Input disabled/>
+                  deptList && deptList.length?
+                  <TreeSelect disabled treeDefaultExpandAll onChange={this.handlenChange.bind(this)} >
+                    {this.createNode(deptList)}
+                  </TreeSelect>:<span></span>
                 )}
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="备注">
-                {getFieldDecorator("remark",{
-                  initialValue: info.remark,
-                })(
-                  <TextArea disabled autoSize={{minRows: 1}} />
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item label="创建人">
-                {getFieldDecorator("buildUserName",{
-                  initialValue: info.buildUserName,
+              <Form.Item labelCol={{sm:{span:12}}} wrapperCol={{sm:{span:12}}} label="部门/车间累计计划外加班时长">
+                {getFieldDecorator("workTimeAvg",{
+                  initialValue: info.workTimeAvg,
                 })(
                   <Input disabled />
                 )}
@@ -249,6 +206,24 @@ class ApprovalAbsence extends React.Component {
               <Form.Item label="创建时间">
                 {getFieldDecorator("buildTime",{
                   initialValue: info.buildTime,
+                })(
+                  <Input disabled />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="标题">
+                {getFieldDecorator("workTitle",{
+                  initialValue: info.workTitle,
+                })(
+                  <Input disabled />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item  labelCol={{sm:{span:12}}} wrapperCol={{sm:{span:12}}} label="创建人">
+                {getFieldDecorator("buildUserName",{
+                  initialValue: info.buildUserName,
                 })(
                   <Input disabled />
                 )}
@@ -266,18 +241,17 @@ class ApprovalAbsence extends React.Component {
                 )}
               </Form.Item>
             </Col>
-            <Col span={16}>
-              <Form.Item labelCol={{sm:{span:3}}} label="审批意见">
+            <Col span={12}>
+              <Form.Item labelCol={{sm:{span:4}}} label="审批意见">
                 {getFieldDecorator("approveOpinion",{
-                  rules: [{required: true,message: '审批意见!',}],
                 })(
-                  <TextArea autoSize={{minRows: 3}} />
+                  <TextArea  />
                 )}
               </Form.Item>
             </Col>
           </Form>
         </Card>
-        <Card size="small"  title="缺勤明细记录" extra={(
+        <Card size="small"  title="加班申请明细记录" extra={(
           <Radio.Group onChange={this.handlenSingApproAll.bind(this)} >
             <Radio value="2">全部批准</Radio>
             <Radio value="1">全部不批准</Radio>
@@ -295,7 +269,7 @@ class ApprovalAbsence extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({loadSelectDeptByRole, getProcessList, approvalAbsenceS, getApprovalLook, updateTemporaryStatus}, dispatch)
+    actions: bindActionCreators({loadSelectDeptByRole, getProcessList, approvalOverWork, getApprovalWork, updateOverworkTemporaryStatus}, dispatch)
   }
 }
 
@@ -306,4 +280,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(ApprovalAbsence) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(ApprovalOverwork) )

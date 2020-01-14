@@ -7,6 +7,7 @@ import {absenceColumns} from "../columns"
 import JCard from "@/components/JCard"
 import {getAbsence, loadSelectDeptByRole, deleteAbsence} from "@/actions/personAction"
 import moment from "moment"
+import LookFlow from "@/components/LookFlow"
 
 const {Option} = Select
 const {TreeNode} = TreeSelect
@@ -29,6 +30,8 @@ class Absence extends React.Component {
     super(props)
     this.state = {
       deptList:[],
+      flowVisible: false,
+      flowDetail: "",
       params: {
         current: 1,
         absenceEmployeeName:"",
@@ -61,12 +64,16 @@ class Absence extends React.Component {
     })
   }
 
+  handlenLookFlow(item){
+    this.setState({flowVisible: true, flowDetail: item})
+  }
+
   getCol(){
     let _this = this
-    return absenceColumns.concat([{
+    return absenceColumns(_this).concat([{
       title: "操作",
       render(item){
-        return (
+        return ( 
           <div>
             {item.status!="1"?
             <Link to={`/person/absence/${item.id}/edit`}>
@@ -107,8 +114,8 @@ class Absence extends React.Component {
         params.absenceEmployeeName = absenceEmployeeName
         params.absenceType = absenceType
         params.deptId = deptId
-        params.startTime = time && time.length?moment(tiem[0]).format("YYYY-MM-DD"):""
-        params.endTime = time && time.length?moment(tiem[1]).format("YYYY-MM-DD"):""
+        params.startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD"):""
+        params.endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD"):""
         console.log('Received values of form: ', values);
         this.props.actions.getAbsence(params)
         this.setState({params})
@@ -133,10 +140,11 @@ class Absence extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, absence} = this.props
-    const {deptList, params} = this.state
+    const {deptList, params, flowVisible, flowDetail} = this.state
 
     return (
       <JCard spinning={spinning}>
+        {flowVisible?<LookFlow visible={flowVisible} detail={flowDetail} onCancel={()=>this.setState({flowVisible: false, flowDetail: ""})} />:null}
         <Card size="small" title={<Link to="/person/absence/add"><Button type="primary"><Icon type="plus" />新增缺勤</Button></Link>}>
           <Form {...formItemLayout} onSubmit={this.handleSubmit.bind(this)}>
             <Row>
@@ -162,7 +170,7 @@ class Absence extends React.Component {
                 <Form.Item labelCol={{sm: {span:5}}} label="组织机构">
                   {getFieldDecorator('deptId')(
                     deptList && deptList.length?
-                    <TreeSelect treeDefaultExpandAll>
+                    <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll>
                       {this.createNode(deptList)}
                     </TreeSelect>:<span></span>
                   )}

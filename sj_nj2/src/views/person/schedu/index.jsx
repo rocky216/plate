@@ -122,7 +122,7 @@ class Schedu extends React.Component {
                   <Form.Item label="车间/部门">
                     {getFieldDecorator('deptId')(
                       deptList && deptList.length?
-                      <TreeSelect treeDefaultExpandAll style={{width: 120}}>
+                      <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll style={{width: 120}}>
                         {this.createNode(deptList)}
                       </TreeSelect>:<span></span>
                     )}

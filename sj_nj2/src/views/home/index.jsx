@@ -9,6 +9,9 @@ import {quitStaffColumns, postsColumns, absenceColumns} from "../person/columns"
 import QuitAppro from "./quitAppro"
 import PostsAppro from "./postsAppro"
 import SchedcChart from "@/components/SchedcChart"
+import {overworkColumns} from "./columns"
+import LookFlow from "@/components/LookFlow"
+import WeekCheck from "@/components/WeekCheck"
 
 const {TabPane} = Tabs
 
@@ -42,22 +45,44 @@ class Home extends React.Component {
       quitVisible: false,
       quitDetail: "",
       postsVisible: false,
-      postsDetail: ""
+      postsDetail: "",
+      workflowVisible: false, 
+      workflowDetail:"",
+      absenceflowVisible: false, 
+      absenceflowDetail:""
     }
   }
 
   componentDidMount(){
     this.props.actions.getWorkBenchQuitList({}) 
   }
+  handlenLookFlow(item){
+    this.setState({absenceflowVisible: true, absenceflowDetail:item})
+  }
 
   absenceColumnsCol(){
     let _this = this
-    return absenceColumns.concat([{
+    return absenceColumns(this).concat([{
       title: "操作",
       render(item){
         return (
           <div>
             <Link to={`/person/absence/${item.id}/approval`}>
+              <Button  size="small" type="link">审批</Button>
+            </Link>
+          </div>
+        )
+      }
+    }])
+  }
+  overworkColumnsCol(){
+    let _this = this
+    return overworkColumns(this).concat([{
+      title: "操作",
+      render(item){
+        return (
+          <div>
+            <Link to={`/person/overwork/${item.id}/approval`}>
               <Button  size="small" type="link">审批</Button>
             </Link>
           </div>
@@ -93,16 +118,26 @@ class Home extends React.Component {
     }])
   }
 
+  handlenOverFlow(item){
+    this.setState({workflowVisible: true, workflowDetail:item})
+  }
+
   render(){
     const {utils, spinning, workStaff} = this.props
-    const {tabs, key, quitVisible, quitDetail, postsVisible, postsDetail} = this.state
-
+    const {tabs, key, quitVisible, quitDetail, postsVisible, postsDetail, workflowVisible, workflowDetail, 
+          absenceflowVisible, absenceflowDetail} = this.state
     return (
       <JCard spinning={spinning}>
+        {workflowVisible?<LookFlow visible={workflowVisible} detail={workflowDetail} 
+        onCancel={()=>this.setState({workflowVisible: false, workflowDetail: ""})} />:null}
+        {absenceflowVisible?<LookFlow visible={absenceflowVisible} detail={absenceflowDetail} 
+        onCancel={()=>this.setState({absenceflowVisible: false, absenceflowDetail: ""})} />:null}
         {quitVisible?<QuitAppro visible={quitVisible} detail={quitDetail} onCancel={()=>this.setState({quitVisible: false, quitDetail:""})} />:null}
         {postsVisible?<PostsAppro visible={postsVisible} detail={postsDetail} onCancel={()=>this.setState({postsVisible: false, postsDetail:""})} />:null}
         <Row>
-          <Col span={8}></Col>
+          <Col span={8}>
+            <WeekCheck/>
+          </Col>
           <Col span={16}>
             <SchedcChart/>
           </Col>
@@ -117,8 +152,10 @@ class Home extends React.Component {
                 <Badge count={workStaff?workStaff[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
               } />
             ))}
-          </Tabs>
+          </Tabs> 
           {key=="absenceCount"?<Table size="small" columns={this.absenceColumnsCol()} dataSource={workStaff?utils.addIndex(workStaff.absenceList):[]}
+          pagination={false} />:null}
+          {key=="overWorkCount"?<Table size="small" columns={this.overworkColumnsCol()} dataSource={workStaff?utils.addIndex(workStaff.overWorkList):[]}
           pagination={false} />:null}
 
           {key=="quitCount"?<Table size="small" columns={this.staffColumnsCol()} dataSource={workStaff?utils.addIndex(workStaff.quitList):[]}

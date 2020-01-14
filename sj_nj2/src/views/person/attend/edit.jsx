@@ -23,7 +23,7 @@ const formItemLayout = {
   },
 };
 
-class AddAttend extends React.Component {
+class EditAttend extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -39,7 +39,7 @@ class AddAttend extends React.Component {
     this.props.actions.loadSelectDeptByRole({loadType: 0, roleUrl: "/api/pc/absence"}, res=>{
       this.setState({deptList: res})
     })
-    this.initial({})
+    this.initial({id: this.props.match.params.id})
     this.props.actions.getEmployeeDict({})
   }
   initial(params){
@@ -77,36 +77,11 @@ class AddAttend extends React.Component {
     this.setState({initList})
   }
 
-  handleSubmit(e){
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      this.initial({
-        ...values,
-        deptType: this.state.deptType,
-        attendanceTime: values.attendanceTime?moment(values.attendanceTime).format("YYYY-MM-DD"):""
-      })
-    })
-  }
-  handlenReset(){
-    this.props.form.resetFields()
-    this.setState({deptType: ""})
-    this.initial({})
-  }
 
   handlenDeptType(key,arr, {triggerNode}){
     this.setState({deptType: triggerNode.props.dataRef.deptType})
   }
 
-  check(arrNew, arrOld){
-    let bBtn = false
-    _.each(arrNew, (item, index)=>{
-      if(item.overtimeHour != arrOld[index]["overtimeHour"]){
-        bBtn = true
-        return
-      }
-    })
-    return bBtn
-  }
   handlenData(){
     const {initList, initalData} = this.state
     let info = []
@@ -174,77 +149,6 @@ class AddAttend extends React.Component {
             <Link to="/person/attend" className="mgl10"><Button ><Icon type="rollback" />返回</Button></Link>
           </div>
         )} >
-          <Form {...formItemLayout} onSubmit={this.handleSubmit.bind(this)}>
-              <Row>
-                <Col span={4}>
-                  <Form.Item label="班次">
-                    {getFieldDecorator('productionType')(
-                      <Select>
-                        <Option value="">全部</Option>
-                        <Option value="1">白班</Option>
-                        <Option value="2">夜班</Option>
-                      </Select>
-                    )}
-                  </Form.Item>
-                </Col>
-                <Col span={4}>
-                  <Form.Item label="姓名">
-                    {getFieldDecorator('employeeName')(
-                      <Input/>
-                    )}
-                  </Form.Item>
-                </Col>
-                <Col span={4}>
-                  <Form.Item label="工号">
-                    {getFieldDecorator('jobNumber')(
-                      <Input/>
-                    )}
-                  </Form.Item>
-                </Col>
-                <Col span={4}>
-                  <Form.Item label="岗级">
-                    {getFieldDecorator('levelId')(
-                      <Select>
-                        <Option value="">全部</Option>
-                        {employeedict && employeedict.levelList?employeedict.levelList.map(item=>(
-                          <Option key={item.id} value={item.id}>{item.dictName}</Option>
-                        )):null}
-                      </Select>
-                    )}
-                  </Form.Item>
-                </Col>
-                <Col span={8}>
-                  <Form.Item labelCol={{sm: {span:5}}} label="组织机构">
-                    {getFieldDecorator('deptId', {
-                      initialValue: initalData?initalData.showDeptId:""
-                    })(
-                      deptList && deptList.length?
-                      <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll onChange={this.handlenDeptType.bind(this)} >
-                        {this.createNode(deptList)}
-                      </TreeSelect>:<span></span>
-                    )}
-                  </Form.Item>
-                </Col>
-                
-                <Col span={4}>
-                  <Form.Item label="考勤日期">
-                    {getFieldDecorator('attendanceTime',{
-                      initialValue: initalData?moment(initalData.attendanceTime):""
-                    })(
-                      <DatePicker/>
-                    )}
-                  </Form.Item>
-                </Col>
-                
-                <Col span={8}>
-                  <Form.Item >
-                    <Button type="primary" className="mgl10" htmlType="submit"><Icon type="search" />搜索</Button>
-                    <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
-
             <Table bordered size="small" columns={addAttendColumns(this)} dataSource={initList?utils.addIndex(initList):[]} 
             pagination={false}/>
         </Card>
@@ -267,4 +171,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)( Form.create()(AddAttend) )
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(EditAttend) )

@@ -213,30 +213,35 @@ class EditStaff extends React.Component {
                 </div>
                 <Form.Item label="毕业学校">
                   {getFieldDecorator("finishSchool", {
+                    initialValue: detail.finishSchool,
                   })(
                     <Input/>
                   )}
                 </Form.Item>
                 <Form.Item label="学历">
                   {getFieldDecorator("education", {
+                    initialValue: detail.education,
                   })(
                     <Input/>
                   )}
                 </Form.Item>
                 <Form.Item label="专业">
                   {getFieldDecorator("profession", {
+                    initialValue: detail.profession
                   })(
                     <Input/>
                   )}
                 </Form.Item>
                 <Form.Item label="入学时间"> 
                   {getFieldDecorator("startSchool", {
+                    initialValue: detail.startSchool?moment(detail.startSchool):"",
                   })(
                     <DatePicker/>
                   )}
                 </Form.Item>
                 <Form.Item label="毕业时间">
                   {getFieldDecorator("graduateTime", {
+                    initialValue: detail.graduateTime?moment(detail.graduateTime):"",
                   })(
                     <DatePicker/>
                   )}

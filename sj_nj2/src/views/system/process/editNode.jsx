@@ -70,7 +70,7 @@ class AddNode extends React.Component {
   }
 
   onSelect(obj){
-    this.setState({teach: {name: obj.name, id: obj.id}})
+    this.setState({teach: {name: obj.name, nodeTargetId: obj.id}})
   }
 
   render(){

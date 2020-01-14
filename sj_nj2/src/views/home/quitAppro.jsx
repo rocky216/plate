@@ -46,7 +46,7 @@ class QuitAppro extends React.Component {
       <Modal
         destroyOnClose
         width={800}
-        title="离职申请"
+        title="离职审批"
         okText="确定"
         cancelText="取消"
         confirmLoading={spinning}

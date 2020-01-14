@@ -228,7 +228,7 @@ class StaffQuit extends React.Component {
               <Form.Item label="组织机构">
                 {getFieldDecorator('mDeptId')(
                   deptList && deptList.length?
-                  <TreeSelect treeDefaultExpandAll>
+                  <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll>
                     {this.createNode(deptList)}
                   </TreeSelect>:<span></span>
                 )}

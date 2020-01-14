@@ -73,6 +73,7 @@ class EditProcess extends React.Component {
         nodeList.splice(index+1, 0, values)
         this.setState({index: -1})
       }else{
+        console.log("add")
         nodeList.push(values)
       }
       this.setState({nodeList})

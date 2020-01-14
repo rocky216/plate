@@ -77,14 +77,14 @@ class AddNode extends React.Component {
           onSelect={this.onSelect.bind(this)} />
       
         <Modal
-        destroyOnClose
-        okText="确定"
-        cancelText="取消"
-        confirmLoading={spinning}
-        visible={visible}
-        onCancel={onCancel}
-        onOk={this.handlenSubmit.bind(this)}
-      >
+          destroyOnClose
+          okText="确定"
+          cancelText="取消"
+          confirmLoading={spinning}
+          visible={visible}
+          onCancel={onCancel}
+          onOk={this.handlenSubmit.bind(this)}
+        >
         <Form {...formItemLayout} >
           <Form.Item label="节点名称" hasFeedback>
             {getFieldDecorator('nodeTitle', {

@@ -1,5 +1,5 @@
 import React from "react"
-import {Radio, InputNumber} from "antd"
+import {Radio, InputNumber, Button} from "antd"
 import {leaveType} from "../absence/data"
 
 export const staffColumns = [
@@ -325,73 +325,75 @@ export const postsColumns = [
   },
 ]
 
-export const absenceColumns = [
-  {
-    title: "缺勤单号",
-    dataIndex: "absenceNo"
-  },
-  {
-    title: "缺勤类型",
-    dataIndex: "absenceType",
-    render(item){
-      switch(parseInt(item)){
-        case 1:
-          return "请假"
-        case 2:
-          return "旷工"
-        case 3:
-          return "迟到"
-      }
-    }
-  },
-  {
-    title: "车间",
-    dataIndex: "deptName"
-  },
-  {
-    title: "标题",
-    dataIndex: "absenceTitle"
-  },
-  {
-    title: "创建人",
-    dataIndex: "buildUserName"
-  },
-  {
-    title: "创建时间",
-    dataIndex: "buildTime"
-  },
-  {
-    title: "审批流程",
-    dataIndex: "flowId",
-    render(item){
-      return "查看"
-    }
-  },
-  {
-    title: "状态",
-    render(item){
-      if(item.status=="0"){
-        if(item.flowStatus=="0" || item.flowStatus=="1"){
-          return "审批中"
-        }else if(item.flowStatus=="2"){
-          return "审批完成"
-        }else if(item.flowStatus=="3"){
-          return "审批拒绝"
+export const absenceColumns = function(_this){
+  return [
+    {
+      title: "缺勤单号",
+      dataIndex: "absenceNo"
+    },
+    {
+      title: "缺勤类型",
+      dataIndex: "absenceType",
+      render(item){
+        switch(parseInt(item)){
+          case 1:
+            return "请假"
+          case 2:
+            return "旷工"
+          case 3:
+            return "迟到"
         }
-      }else if(item.status=="1"){
-        return "作废"
-      }else if(item.status=="2"){
-        return "草稿"
-      }else{
-        return ""
       }
-    }
-  },
-  {
-    title: "备注",
-    dataIndex: "remark"
-  },
-]
+    },
+    {
+      title: "车间",
+      dataIndex: "deptName"
+    },
+    {
+      title: "标题",
+      dataIndex: "absenceTitle"
+    },
+    {
+      title: "创建人",
+      dataIndex: "buildUserName"
+    },
+    {
+      title: "创建时间",
+      dataIndex: "buildTime"
+    },
+    {
+      title: "审批流程",
+      dataIndex: "flowId",
+      render(item, rows){
+        return <Button size="small" type="link" onClick={_this.handlenLookFlow.bind(_this, rows)}>查看</Button>
+      }
+    },
+    {
+      title: "状态",
+      render(item){
+        if(item.status=="0"){
+          if(item.flowStatus=="0" || item.flowStatus=="1"){
+            return "审批中"
+          }else if(item.flowStatus=="2"){
+            return "审批完成"
+          }else if(item.flowStatus=="3"){
+            return "审批拒绝"
+          }
+        }else if(item.status=="1"){
+          return "作废"
+        }else if(item.status=="2"){
+          return "草稿"
+        }else{
+          return ""
+        }
+      }
+    },
+    {
+      title: "备注",
+      dataIndex: "remark"
+    },
+  ]
+}
 
 export const addabsenceColumns = [
   {
@@ -465,7 +467,7 @@ export const addAttendColumns = function(_this){
       title: "班次",
       render(item, rows, index){
         return (
-          <Radio.Group value={item.shift?item.shift:""} onChange={_this.shiftChange.bind(_this, index)}>
+          <Radio.Group value={item.attenType?item.attenType:""} onChange={_this.shiftChange.bind(_this, index)}>
             <Radio value="0">白班</Radio>
             <Radio value="1">夜班</Radio>
           </Radio.Group>
@@ -475,52 +477,76 @@ export const addAttendColumns = function(_this){
     {
       title: "计划性出勤",
       render(item, rows, index){
-        let value = item.shift=="0"?item.bbTrueHour:item.shift=="1"?item.wbTrueHour:""
-        let max = item.shift=="0"?item.bbHour:item.shift=="1"?item.wbHour:"0"
+        let value = item.attenType=="0"?item.bbTrueHour:item.attenType=="1"?item.wbTrueHour:""
+        let max = item.attenType=="0"?item.bbHour:item.attenType=="1"?item.wbHour:0
 
-        return <InputNumber min={0} max={max} value={value} onChange={_this.planChange.bind(_this,index)} />
+        return <InputNumber  min={0} max={max-_this.countHour(rows.leaveList)} value={value} 
+        onChange={_this.planChange.bind(_this,index)} />
       }
     },
     {
       title: "非计划性出勤",
       render(item, rows, index){
-        return <InputNumber min={0} onChange={_this.nPlanChange.bind(_this,index)} />
+        return <InputNumber min={0} disabled={rows.overtimeStatus=="批准"||rows.overtimeStatus=="不批准"?true: false}
+         value={item.overtimeHour} onChange={_this.nPlanChange.bind(_this,index)} />
       }
     },
     {
       title: "申请状态",
-      render(item){
-        return ""
-      }
+      dataIndex: "overtimeStatus"
     },
     {
       title: "审批人",
-      render(item){
-        return ""
-      }
+      dataIndex: "overtimeCheckName"
     },
     {
       title: "请假类型",
+      dataIndex: "leaveList",
       render(item){
-        return ""
+        return (
+          <div>
+            {item && item.length?item.map((item, index)=>(
+              <div key={index}>{item.leaveType}</div>
+            )):null}
+          </div>
+        )
       }
     },
     {
       title: "请假小时数",
-      render(item){
-        return ""
+      render(item, rows){
+        console.log(item, "asds")
+        return (
+          <div>
+            {rows.leaveList && rows.leaveList.length?rows.leaveList.map((item, index)=>(
+              <div key={index}>{item.leaveHour}</div>
+            )):null}
+          </div>
+        )
       }
     },
     {
       title: "申请状态",
-      render(item){
-        return ""
+      render(item, rows){
+        return (
+          <div>
+            {rows.leaveList && rows.leaveList.length?rows.leaveList.map((item, index)=>(
+              <div key={index}>{item.leaveStatus}</div>
+            )):null}
+          </div>
+        )
       }
     },
     {
       title: "审批人",
-      render(item){
-        return ""
+      render(item, rows){
+        return (
+          <div>
+            {rows.leaveList && rows.leaveList.length?rows.leaveList.map((item, index)=>(
+              <div key={index}>{item.leaveCheckName}</div>
+            )):null}
+          </div>
+        )
       }
     },
     {
@@ -531,3 +557,224 @@ export const addAttendColumns = function(_this){
     },
   ]
 }
+
+
+export const attendColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "组织机构",
+    dataIndex: "allDeptNameStr"
+  },
+  {
+    title: "岗级",
+    dataIndex: "level"
+  },
+  {
+    title: "员工编号",
+    dataIndex: "jobNumber"
+  },
+  {
+    title: "姓名",
+    dataIndex: "employeeName"
+  },
+  {
+    title: "班次",
+    dataIndex: "productionType",
+    render(item){
+      return item=="0"?"白班":"晚班"
+    }
+  },
+  {
+    title: "计划性出勤",
+    dataIndex: "trueHour"
+  },
+  {
+    title: "非计划性出勤",
+    dataIndex: "overtimeHour"
+  },
+  {
+    title: "申请状态",
+    dataIndex: "overtimeStatus"
+  },
+  {
+    title: "审批人",
+    dataIndex: "overtimeCheckName"
+  },
+  {
+    title: "请假类型",
+    render(item, rows){
+      return (
+        <div>
+          {rows.leaveList && rows.leaveList.length?rows.leaveList.map((item, index)=>(
+            <div key={index}>{item.leaveType}</div>
+          )):null}
+        </div>
+      )
+    }
+  },
+  {
+    title: "请假小时数",
+    render(item, rows){
+      return (
+        <div>
+          {rows.leaveList && rows.leaveList.length?rows.leaveList.map((item, index)=>(
+            <div key={index}>{item.leaveHour}</div>
+          )):null}
+        </div>
+      )
+    }
+  },
+  {
+    title: "申请状态",
+    render(item, rows){
+      return (
+        <div>
+          {rows.leaveList && rows.leaveList.length?rows.leaveList.map((item, index)=>(
+            <div key={index}>{item.leaveStatus}</div>
+          )):null}
+        </div>
+      )
+    }
+  },
+  {
+    title: "审批人",
+    render(item, rows){
+      return (
+        <div>
+          {rows.leaveList && rows.leaveList.length?rows.leaveList.map((item, index)=>(
+            <div key={index}>{item.leaveCheckName}</div>
+          )):null}
+        </div>
+      )
+    }
+  },
+]
+
+export const overworkColumns = function(_this){
+  return [
+    {
+      title: "申请单号",
+      dataIndex: "sysEmployeeWork",
+      render(item){
+        return item.workNo
+      }
+    },
+    {
+      title: "加班人",
+      dataIndex: "employeeName"
+    },
+    {
+      title: "组织结构",
+      dataIndex: "mDeptName"
+    },
+    {
+      title: "加班日期",
+      dataIndex: "workTime",
+      render(item){
+        return item?item.substring(0,10):""
+      }
+    },
+    {
+      title: "加班时长(H)",
+      dataIndex: "workTimeLength",
+      render(item){
+        return item?(item/60).toFixed(2):""
+      }
+    },
+    {
+      title: "创建人",
+      dataIndex: "buildUserName",
+    },
+    {
+      title: "创建时间",
+      dataIndex: "buildTime",
+      render(item){
+        return item?item.substring(0,10):""
+      }
+    },
+    {
+      title: "审批流程",
+      render(item) {
+        return (
+           <Button size="small" type="link" onClick={_this.handlenOverFlow.bind(_this, item.sysEmployeeWork)} >查看</Button>
+        );
+      }
+    },
+    {
+      title: "状态",
+      render(item) {
+        switch(parseInt(item.sysEmployeeWork.flowStatus)){
+          case 0:
+            return "审批中"
+          case 1:
+            return "审批中"
+          case 2:
+            return "审批通过"
+          case 3:
+            return "审批拒绝"
+        }
+      }
+    },
+    {
+      title: "审批人",
+      dataIndex: "approvalName"
+    },
+    {
+      title: "审批日期",
+      dataIndex: "approvalTime"
+    },
+  ]
+}
+
+
+export const overworkApprovalColmuns = [
+  {
+    title: "加班人",
+    dataIndex: "employeeName",
+  },
+  {
+    title: "组织结构",
+    dataIndex: "mDeptName",
+  },
+  {
+    title: "加班日期",
+    dataIndex: "workTime",
+  },
+  {
+    title: "加班时长",
+    dataIndex: "workTimeLength",
+    render(item){
+      return item?(item/60).toFixed(2):""
+    }
+  },
+]
+
+export const overworlHistoryColmuns = [
+  {
+    title: "审批人",
+    dataIndex: "approveName"
+  },
+  {
+    title: "审批节点",
+    dataIndex: "nodeTitle"
+  },
+  {
+    title: "审批结果",
+    dataIndex: "approveResult",
+    render(item){
+      return item=="2"?"通过":"拒绝"
+    }
+  },
+  {
+    title: "审批意见",
+    dataIndex: "approveOpinion"
+  },
+  {
+    title: "审批时间",
+    dataIndex: "approveTime"
+  },
+]
+
