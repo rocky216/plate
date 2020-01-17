@@ -42,7 +42,6 @@ class AddDetail extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
         const {absenceStartTime, absenceEndTime, absenceTimeLength, teach} = this.state
-        console.log(this.state)
         if( moment(absenceStartTime,"HH:mm")> moment(absenceEndTime,"HH:mm")){
           this.props.utils.OpenNotification("error", "缺勤开始时间不能大于结束时间！")
           return
@@ -100,13 +99,13 @@ class AddDetail extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, visible, onCancel, absenceType} = this.props
+    const {spinning, visible, onCancel, absenceType, deptId} = this.props
     const {teach, teachVisible, staffDetail, absenceStartTime, absenceEndTime, absenceTimeLength} = this.state
-    
+    console.log(visible, "visible")
     return (
       <div>
-        <Teach visible={teachVisible} onCancel={()=>this.setState({teachVisible: false})} 
-          onSelect={this.onSelect.bind(this)} />
+        {teachVisible?<Teach visible={teachVisible} deptId={deptId} onCancel={()=>this.setState({teachVisible: false})} 
+          onSelect={this.onSelect.bind(this)} />:null}
         <Modal
           destroyOnClose
           width={800}

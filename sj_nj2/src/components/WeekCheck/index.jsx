@@ -24,7 +24,7 @@ class WeekCheck extends React.Component {
 
   handlenData(str,all){
     if(str && all){
-      return (str/all)*100+'%'
+      return ((str/all)*100).toFixed(2)+'%'
     }else{
       return 0
     }
@@ -48,7 +48,6 @@ class WeekCheck extends React.Component {
         name: `旷工人次${res.absenceCount}`
       },
     ]
-    console.log(12)
     this.setState({options: option})
   }
 

@@ -35,6 +35,11 @@ import EditAttend from "@/views/person/attend/edit"
 import Overwork from "@/views/person/overwork"
 import ApprovalOverwork from "@/views/person/overwork/approval"
 
+import Personanaly from "@/views/person/personanaly"
+import AnalyDetail from "@/views/person/personanaly/detail"
+
+import News from "@/views/other/news"
+
 class Routers extends React.Component{
   
 
@@ -77,6 +82,11 @@ class Routers extends React.Component{
 
         <AuthRoute exact path="/person/overwork" Component={Overwork} name="加班申请" />
         <AuthRoute  path="/person/overwork/:id/approval" Component={ApprovalOverwork} name="计划外加班审批" />
+
+        <AuthRoute exact path="/person/personanaly" Component={Personanaly} name="人力资源分析" />
+        <AuthRoute  path="/person/personanaly/:id/detail" Component={AnalyDetail} name="人力资源分析人员统计" />
+
+        <AuthRoute  path="/other/news" Component={News} name="消息列表" />
 
       </Switch>
       

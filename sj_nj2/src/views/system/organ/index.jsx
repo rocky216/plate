@@ -7,6 +7,7 @@ import {getTreeDept} from "@/actions/systemAction"
 import EditOrgan from "./edit"
 import AddOrgan from "./add"
 
+
 const {TreeNode } = Tree
 
 
@@ -56,7 +57,6 @@ class Organ extends React.Component {
   }
 
   handlenSelect(key, {node}){
-    console.log(1222)
     let dataRef = node.props.dataRef
     this.setState({detail: ""})
     clearTimeout(this.timer)

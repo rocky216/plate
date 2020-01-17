@@ -47,7 +47,7 @@ export default [
       },
       {
         title: "人力资源分析",
-        link: "/",
+        link: "/person/personanaly",
         key: 208
       },
       {

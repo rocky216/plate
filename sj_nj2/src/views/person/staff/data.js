@@ -80,6 +80,7 @@ export  function staffInfoList(_this, {detail, employeeDict, deptNotsmall,roles,
       title: "岗级",
       value: "levelId",
       initialValue: detail.levelId,
+      rules: [{required: true, message: '岗级不能为空！'}],
       type: (
         <Select>
           {levelList && levelList.length?levelList.map(item=>(

@@ -5,9 +5,10 @@ import {bindActionCreators} from "redux"
 import {Card, Table, Button, Icon, BUtton, Form, Select, TreeSelect, DatePicker, Input, Row, Col,Popconfirm} from "antd";
 import {absenceColumns} from "../columns"
 import JCard from "@/components/JCard"
-import {getAbsence, loadSelectDeptByRole, deleteAbsence} from "@/actions/personAction"
+import {getAbsence, loadSelectDeptByRole, deleteAbsence, goCancel} from "@/actions/personAction"
 import moment from "moment"
 import LookFlow from "@/components/LookFlow"
+import AuthButton from "@/components/AuthButton"
 
 const {Option} = Select
 const {TreeNode} = TreeSelect
@@ -63,6 +64,12 @@ class Absence extends React.Component {
       this.props.actions.getAbsence(this.state.params)
     })
   }
+  handlenCancel(item){
+    this.props.actions.goCancel({id: item.id}, res=>{
+      this.props.utils.OpenNotification("success")
+      this.props.actions.getAbsence(this.state.params)
+    })
+  }
 
   handlenLookFlow(item){
     this.setState({flowVisible: true, flowDetail: item})
@@ -70,27 +77,37 @@ class Absence extends React.Component {
 
   getCol(){
     let _this = this
-    return absenceColumns(_this).concat([{
+    return absenceColumns(_this).concat([{ 
       title: "操作",
       render(item){
         return ( 
           <div>
-            {item.status!="1"?
+            {item.status=="2"?
             <Link to={`/person/absence/${item.id}/edit`}>
-              <Button size="small" type="link">修改</Button>
+              <AuthButton auth="2-05-02" size="small" type="link">修改</AuthButton>
             </Link>:null}
-            {item.status=="1"?
+            {item.status=="0" ||item.status=="1" ?
             <Link to={`/person/absence/${item.id}/detail`}>
               <Button size="small" type="link">查看</Button>
             </Link>:null}
+            {item.status=="0" && (item.flowStatus=="2" || item.flowStatus=="3")?
+            <Popconfirm
+            placement="topRight" 
+            title="是否作废？"
+            okText="是"
+            cancelText="否"
+            onConfirm={_this.handlenCancel.bind(_this, item)}>
+              <AuthButton auth="2-05-04" size="small" type="link">作废</AuthButton>
+            </Popconfirm>:null}
+            {item.status=="2"?
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-              <Button size="small" type="link">删除</Button>
-              </Popconfirm>
+              <AuthButton auth="2-05-03" size="small" type="link">删除</AuthButton>
+              </Popconfirm>:null}
           </div>
         )
       }
@@ -145,7 +162,7 @@ class Absence extends React.Component {
     return (
       <JCard spinning={spinning}>
         {flowVisible?<LookFlow visible={flowVisible} detail={flowDetail} onCancel={()=>this.setState({flowVisible: false, flowDetail: ""})} />:null}
-        <Card size="small" title={<Link to="/person/absence/add"><Button type="primary"><Icon type="plus" />新增缺勤</Button></Link>}>
+        <Card size="small" title={<Link to="/person/absence/add"><AuthButton auth="2-05-01" type="primary"><Icon type="plus" />新增缺勤</AuthButton></Link>}>
           <Form {...formItemLayout} onSubmit={this.handleSubmit.bind(this)}>
             <Row>
               <Col span={4}>
@@ -227,7 +244,7 @@ class Absence extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getAbsence, loadSelectDeptByRole, deleteAbsence}, dispatch)
+    actions: bindActionCreators({getAbsence, loadSelectDeptByRole, deleteAbsence, goCancel}, dispatch)
   }
 }
 

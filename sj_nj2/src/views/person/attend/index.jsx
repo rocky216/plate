@@ -2,15 +2,18 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Button, Icon, Table, Select, TreeSelect, Input, Form, Row, Col, DatePicker, Popconfirm} from "antd";
+import {Card, Button, Icon, Table, Select, TreeSelect, Input, Form, Row, Col, DatePicker, Popconfirm, Tabs} from "antd";
 import JCard from "@/components/JCard"
 import {getAttend, getEmployeeDict, loadSelectDeptByRole, deleteAttend} from "@/actions/personAction"
 import {attendColumns} from "../columns"
 import moment from "moment"
+import MonthAttend from "./month"
+import AuthButton from "@/components/AuthButton"
 
 const {Option} = Select
 const {TreeNode} = TreeSelect
 const {TextArea} = Input
+const {TabPane} = Tabs
 
 const formItemLayout = {
   labelCol: {
@@ -27,6 +30,7 @@ class Attend extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      tabKey: "1",
       params: {
         current: 1,
         levelId:"",
@@ -113,7 +117,7 @@ class Attend extends React.Component {
         return (
           <div>
             <Link to={`/person/attend/${item.id}/edit`}>
-              <Button type="link" size="small">编辑</Button>
+              <AuthButton auth="2-06-02" type="link" size="small">编辑</AuthButton>
             </Link>
             
             <Popconfirm
@@ -122,7 +126,7 @@ class Attend extends React.Component {
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <Button type="link" size="small">删除</Button>
+                <AuthButton auth="2-06-03" type="link" size="small">删除</AuthButton>
               </Popconfirm>
           </div>
         )
@@ -133,93 +137,102 @@ class Attend extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, attend, employeedict } = this.props
-    const {deptList} = this.state
+    const {deptList, tabKey} = this.state
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={(
-          <Link to="/person/attend/add">
-            <Button type="primary"><Icon type="plus" />提交考勤</Button>
-          </Link>
-        )}>
-          <Form {...formItemLayout} onSubmit={this.handleSubmit.bind(this)}>
-            <Row>
-              <Col span={4}>
-                <Form.Item label="班次">
-                  {getFieldDecorator('productionType')(
-                    <Select>
-                      <Option value="">全部</Option>
-                      <Option value="1">白班</Option>
-                      <Option value="2">夜班</Option>
-                    </Select>
-                  )}
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="姓名">
-                  {getFieldDecorator('employeeName')(
-                    <Input/>
-                  )}
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="工号">
-                  {getFieldDecorator('jobNumber')(
-                    <Input/>
-                  )}
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="岗级">
-                  {getFieldDecorator('levelId')(
-                    <Select>
-                      <Option value="">全部</Option>
-                      {employeedict && employeedict.levelList?employeedict.levelList.map(item=>(
-                        <Option key={item.id} value={item.id}>{item.dictName}</Option>
-                      )):null}
-                    </Select>
-                  )}
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item labelCol={{sm: {span:5}}} label="组织机构">
-                  {getFieldDecorator('deptId', {
-                    initialValue: ""
-                  })(
-                    deptList && deptList.length?
-                    <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll onChange={this.handlenDeptType.bind(this)}  >
-                      {this.createNode(deptList)}
-                    </TreeSelect>:<span></span>
-                  )}
-                </Form.Item>
-              </Col>
-              
-              <Col span={4}>
-                <Form.Item label="考勤日期">
-                  {getFieldDecorator('attendanceTime',{
-                    // initialValue: moment()
-                  })(
-                    <DatePicker/>
-                  )}
-                </Form.Item>
-              </Col>
-              
-              <Col span={8}>
-                <Form.Item >
-                  <Button type="primary" className="mgl10" htmlType="submit"><Icon type="search" />搜索</Button>
-                  <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
+        <div style={{background: "#fff"}}>
+            <Tabs activeKey={tabKey} onChange={key=>this.setState({tabKey: key})}>
+              <TabPane key="1" tab={`每天出勤数据`} />
+              <TabPane key="2" tab="月度考勤表" />
+            </Tabs>
+          {tabKey=="1"?
+          <Card bordered={false} size="small" title={(
+            <Link to="/person/attend/add">
+              <AuthButton auth="2-06-01" type="primary"><Icon type="plus" />提交考勤</AuthButton>
+            </Link>
+          )}>
+            <Form {...formItemLayout} onSubmit={this.handleSubmit.bind(this)}>
+              <Row>
+                <Col span={4}>
+                  <Form.Item label="班次">
+                    {getFieldDecorator('productionType')(
+                      <Select>
+                        <Option value="">全部</Option>
+                        <Option value="1">白班</Option>
+                        <Option value="2">夜班</Option>
+                      </Select>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={4}>
+                  <Form.Item label="姓名">
+                    {getFieldDecorator('employeeName')(
+                      <Input/>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={4}>
+                  <Form.Item label="工号">
+                    {getFieldDecorator('jobNumber')(
+                      <Input/>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={4}>
+                  <Form.Item label="岗级">
+                    {getFieldDecorator('levelId')(
+                      <Select>
+                        <Option value="">全部</Option>
+                        {employeedict && employeedict.levelList?employeedict.levelList.map(item=>(
+                          <Option key={item.id} value={item.id}>{item.dictName}</Option>
+                        )):null}
+                      </Select>
+                    )}
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item labelCol={{sm: {span:5}}} label="组织机构">
+                    {getFieldDecorator('deptId', {
+                      initialValue: ""
+                    })(
+                      deptList && deptList.length?
+                      <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll onChange={this.handlenDeptType.bind(this)}  >
+                        {this.createNode(deptList)}
+                      </TreeSelect>:<span></span>
+                    )}
+                  </Form.Item>
+                </Col>
+                
+                <Col span={4}>
+                  <Form.Item label="考勤日期">
+                    {getFieldDecorator('attendanceTime',{
+                      // initialValue: moment()
+                    })(
+                      <DatePicker/>
+                    )}
+                  </Form.Item>
+                </Col>
+                
+                <Col span={8}>
+                  <Form.Item >
+                    <Button type="primary" className="mgl10" htmlType="submit"><Icon type="search" />搜索</Button>
+                    <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
 
-          <Table size="small" columns={this.getCol()} dataSource={attend?utils.addIndex(attend.list):[]} 
-            pagination={utils.Pagination(attend, page=>{
-              params.current = page
-              this.setState({params})
-              this.props.actions.getAttend(params)
-            })}/>
-        </Card>
+            <Table size="small" columns={this.getCol()} dataSource={attend?utils.addIndex(attend.list):[]} 
+              pagination={utils.Pagination(attend, page=>{
+                params.current = page
+                this.setState({params})
+                this.props.actions.getAttend(params)
+              })}/>
+          </Card>
+          :null}
+          {tabKey=="2"?<MonthAttend/>:null}
+        </div>
       </JCard>
     )
   }

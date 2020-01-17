@@ -7,6 +7,7 @@ import JCard from "@/components/JCard"
 import {getProcess, changeProcessStatus, deleteProcess} from "@/actions/systemAction"
 import {processColumns} from "../columns"
 import {flowType} from "./data"
+import AuthButton from "@/components/AuthButton"
 
 const {Option} = Select
 
@@ -60,7 +61,7 @@ class Process extends React.Component {
         return (
           <div>
             <Link to={`/system/process/${item.id}/edit`}>
-              <Button size="small" type="link" >编辑</Button>
+              <AuthButton auth="3-04-02" size="small" type="link" >修改</AuthButton>
             </Link>
             <Popconfirm
               placement="topRight" 
@@ -68,7 +69,7 @@ class Process extends React.Component {
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <Button size="small" type="link" >删除</Button>
+                <AuthButton auth="3-04-03" size="small" type="link" >删除</AuthButton>
             </Popconfirm>
           </div>
         )
@@ -92,7 +93,7 @@ class Process extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title={<Link to="/system/process/add"><Button type="primary"><Icon type="plus" />新建流程</Button></Link>}>
+        <Card size="small" title={<Link to="/system/process/add"><AuthButton auth="3-04-01" type="primary"><Icon type="plus" />新建流程</AuthButton></Link>}>
           <div className="fixedend mgb10">
             <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
               <Form.Item label="流程类型">

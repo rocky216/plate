@@ -9,6 +9,8 @@ import {staffColumns} from "../columns"
 import AddQuit from "./quit"
 import AddPosts from "./posts"
 import moment from "moment"
+import AuthButton from "@/components/AuthButton"
+import StaffNotice from "./notice"
 
 const {RangePicker } = DatePicker;
 const {TreeNode} = TreeSelect 
@@ -29,6 +31,7 @@ class Staff extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      noticeVisible: "",
       quitVisible: false,
       quitDetail: "",
       postsVisible: false,
@@ -98,12 +101,12 @@ class Staff extends React.Component {
         return (
           <div>
             <Link to={`/person/staff/${item.id}/edit`}>
-              <Button size="small" type="link" >编辑</Button>
+              <AuthButton size="small" type="link" auth="2-01-02" >修改</AuthButton>
             </Link>
             {item.activity=="3"||item.activity=="4"?null:(
               <span>
-                <Button size="small" type="link" onClick={()=>_this.setState({quitVisible: true, quitDetail: item})} >离职</Button>
-                <Button size="small" type="link" onClick={()=>_this.setState({postsVisible: true, postsDetail: item})} >调岗</Button>
+                <AuthButton auth="2-01-05" size="small" type="link" onClick={()=>_this.setState({quitVisible: true, quitDetail: item})} >离职</AuthButton>
+                <AuthButton auth="2-01-04" size="small" type="link" onClick={()=>_this.setState({postsVisible: true, postsDetail: item})} >调岗</AuthButton>
               </span>
             )}
             <Popconfirm
@@ -112,7 +115,7 @@ class Staff extends React.Component {
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-              <Button size="small" type="link" >删除</Button>
+              <AuthButton size="small" type="link" auth="2-01-03" >删除</AuthButton>
             </Popconfirm>
           </div>
         )
@@ -199,15 +202,16 @@ class Staff extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, staff, employeedict} = this.props
-    const {quitVisible, quitDetail, deptList, params, postsVisible, postsDetail, exportUrl} = this.state
+    const {quitVisible, quitDetail, deptList, params, postsVisible, postsDetail, exportUrl, noticeVisible} = this.state
     
     return (
       <JCard spinning={spinning}>
+        {noticeVisible?<StaffNotice visible={noticeVisible} onCancel={()=>this.setState({noticeVisible: false})} />:null}
         {quitDetail?<AddQuit visible={quitVisible} detail={quitDetail} onCancel={()=>this.setState({quitVisible: false, quitDetail:""})} />:null}
         {postsVisible?<AddPosts  visible={postsVisible} detail={postsDetail} onCancel={()=>this.setState({postsVisible: false, postsDetail:""})}/>:null}
         <Card size="small" title={(
           <div>
-            <Link to="/person/staff/add"><Button type="primary"><Icon type="plus" />新增员工</Button></Link>
+            <Link to="/person/staff/add"><AuthButton type="primary" auth="2-01-01"><Icon type="plus" />新增员工</AuthButton></Link>
           </div>
         )} extra={(
           <div>
@@ -217,15 +221,15 @@ class Staff extends React.Component {
               data={{token: utils.getCookie("token")}}
               onChange={this.handlenImport.bind(this)}
             >
-              <Button type="primary" ghost className="mgr10"><Icon type="import" />导入员工</Button>
+              <AuthButton auth="2-01-06" type="primary" ghost className="mgr10"><Icon type="import" />导入员工</AuthButton>
             </Upload>
             <a href={exportUrl}>
-              <Button type="danger" ghost className="mgr10"><Icon type="export" />导出员工</Button>
+              <AuthButton auth="2-01-07" type="danger" ghost className="mgr10"><Icon type="export" />导出员工</AuthButton>
             </a>
             <a href={`${IMGURL}/file/importEmployeeModel.xlsx`}>
               <Button type="link"  className="mgr10">下载模板</Button>
             </a>
-            <Button type="primary"  className="mgr10"><Icon type="setting" />设置通知参数</Button>
+            <AuthButton onClick={()=>this.setState({noticeVisible:true})} auth="2-01-08" type="primary"  className="mgr10"><Icon type="setting" />设置通知参数</AuthButton>
           </div>
         )}>
           <Form {...formItemLayout} onSubmit={this.handleSubmit.bind(this)}>

@@ -36,10 +36,6 @@ export const staffColumns = [
     dataIndex: "phone"
   },
   {
-    title: "所属部门",
-    dataIndex: "bDeptName"
-  },
-  {
     title: "成本中心",
     dataIndex: "intoCenterName"
   },
@@ -408,7 +404,7 @@ export const addabsenceColumns = [
     title: "请假类型",
     dataIndex: "leaveType",
     render(item, rows){
-      if(item!="0"){
+      if(item && item!="0"){
         let obj = _.filter(leaveType,o=>o.value==item)[0]
         return obj.title
       }else{
@@ -589,7 +585,11 @@ export const attendColumns = [
   },
   {
     title: "计划性出勤",
-    dataIndex: "trueHour"
+    dataIndex: "trueHour",
+    render(item){
+      return item>=0?item:0
+    }
+
   },
   {
     title: "非计划性出勤",
@@ -776,5 +776,64 @@ export const overworlHistoryColmuns = [
     title: "审批时间",
     dataIndex: "approveTime"
   },
+]
+
+export const monthAttend = [
+  {
+    title: "序号",
+    dataIndex: "key",
+    width: 50,
+    fixed: 'left',
+  },
+  {
+    title: "组织机构",
+    dataIndex: "deptName",
+    width: 260,
+    fixed: 'left',
+  },
+  {
+    title: "工号",
+    dataIndex: "jobNumber",
+    width: 100,
+    fixed: 'left',
+  },
+  {
+    title: "姓名",
+    dataIndex: "name",
+    width: 100,
+    fixed: 'left',
+  },
+  // {
+  //   title: "01",
+  //   children: [
+  //     {
+  //       title: "011",
+  //       dataIndex: "a01",
+  //       key: "attenTimeD1",
+  //       render(item){
+  //         console.log(item, "arguments")
+  //         return item.attenTimeD
+  //       }
+  //     },
+  //     {
+  //       title: "011",
+  //       dataIndex: "a01",
+  //       key: "attenTimeD2",
+  //       render(item){
+  //         console.log(item, "arguments")
+  //         return item.attenTimeD
+  //       }
+  //     },
+  //     {
+  //       title: "011",
+  //       dataIndex: "a01",
+  //       key: "attenTimeD3",
+  //       render(item){
+  //         console.log(item, "arguments")
+  //         return item.attenTimeD
+  //       }
+  //     },
+  //   ]
+  // },
 ]
 

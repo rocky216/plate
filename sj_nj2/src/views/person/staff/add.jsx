@@ -155,7 +155,7 @@ class AddStaff extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, employeedict, deptNotsmall} = this.props
     const {infoList, imgUrl, visible, teach} = this.state
-    console.log(teach, "teach")
+    
 
     return (
       <JCard spinning={spinning} >

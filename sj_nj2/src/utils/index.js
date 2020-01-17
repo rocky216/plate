@@ -77,19 +77,20 @@ export async function fetch(opt){
   let token = await getToken("token")
   console.log(token, "token")
   opt.data?opt.data.token = token:opt.data={token: token}
+  let hash = new Date().getTime()
 
   function handlenInstance(){
     switch(opt.method.toLowerCase()){
       case "delete":
-        return instance.delete(opt.url, {params: opt.data})
+        return instance.delete(opt.url, {params: {...opt.data,hash}})
       case "post":
-        return instance.post(opt.url, qs.stringify(opt.data))
+        return instance.post(opt.url, qs.stringify({...opt.data, hash}))
       case "formdata":
-        return instance.post(opt.url, opt.data)
+        return instance.post(opt.url, {...opt.data,hash})
       case "put":
-        return instance.put(opt.url, qs.stringify(opt.data))
+        return instance.put(opt.url, qs.stringify({...opt.data, hash}))
       default:
-        return instance.get(opt.url, {params: opt.data})
+        return instance.get(opt.url, {params: {...opt.data,hash}})
     }
   }
 

@@ -26,11 +26,14 @@ class Teach extends React.Component {
     }
   }
   componentDidMount(){
-    this.props.actions.getTreeDept({},res=>{
-      console.log(res, "resdataRef")
-      this.props.actions.getTeach({selectDeptId: res[0]["id"], activity: "2",selectDeptType:res[0]["deptType"] }, res1=>{
-        this.setState({staff: res1})
-      })
+    this.props.actions.getTreeDept({deptId: this.props.deptId?this.props.deptId:0},res=>{
+      if(res && res.length){
+        this.props.actions.getTeach({
+          selectDeptId: res[0]["id"], activity: "2",selectDeptType:res[0]["deptType"] }, res1=>{
+          this.setState({staff: res1})
+        })
+      }
+      
     })
   }
 

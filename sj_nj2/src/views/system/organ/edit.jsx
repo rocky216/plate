@@ -1,9 +1,12 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Row, Col, Form, Input, Select, DatePicker, Icon, Button, Table, Typography, Modal} from "antd";
+import {Row, Col, Form, Input, Select, DatePicker, Icon, Button, Table, Typography, Modal, Divider} from "antd";
 import {getDeptDetail, getSupDeptDetail, editOrgan, getTreeDept, deleteOrgan} from "@/actions/systemAction"
 import {gradeColumns} from "../columns"
+import AuthButton from "@/components/AuthButton"
+import Teach from "@/views/person/staff/teach"
+import moment from "moment"
 
 const {Option} = Select
 const { Text } = Typography;
@@ -28,12 +31,16 @@ class EditOrgan extends React.Component {
       dept: "",
       staffingList:"",
       nextPostCountSum: 0,
-      postCount: 0
+      postCount: 0,
+      teachVisible: false,
+      index: 0,
+      teach: []
     }
   }
 
   componentDidMount(){ 
     this.props.actions.getDeptDetail({id: this.props.detail.id}, res=>{
+      this.hanlenTeach(res)
       this.setState({info: res, staffingList: res.staffingList})
       this.handlenCount()
     })
@@ -41,6 +48,17 @@ class EditOrgan extends React.Component {
       this.setState({dept: res})
     })
     
+  }
+  hanlenTeach(res){
+    let arr = res.noticeConfigList?res.noticeConfigList:[]
+    let newArr = []
+    _.each(arr, item=>{
+      newArr.push({
+        name: item.objectName,
+        id: item.noticeObjectId
+      })
+    })
+    this.setState({teach:newArr})
   }
 
   handlenCount(rows, value){
@@ -85,6 +103,17 @@ class EditOrgan extends React.Component {
     
   }
 
+  handlenNoticeKeys(){
+    const {teach} = this.state
+    let arr=[]
+    _.each(teach, item=>{
+      if(item.id){
+        arr.push(item.id)
+      }
+    })
+    return arr
+  }
+
   handlenSubmit(){
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -93,7 +122,9 @@ class EditOrgan extends React.Component {
           ...values,
           id: this.props.detail.id,
           parentId: this.state.dept?this.state.dept.supDept.id:0,
-          staffingKeys: this.getJobLevel().join()
+          staffingKeys: this.getJobLevel().join(),
+          noticeKeys: this.handlenNoticeKeys().join(),
+          buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):""
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.actions.getTreeDept({})
@@ -101,97 +132,122 @@ class EditOrgan extends React.Component {
       }
     });
   }
+  onSelect(item){
+    const {index, teach} = this.state
+    teach[index-1]={
+      id: item.id,
+      name: item.name,
+    }
+    this.setState({teach})
+  }
   
 
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, detail, onSwitch} = this.props
-    const {info, dept, staffingList, postCount, nextPostCountSum} = this.state
-
+    const {info, dept, staffingList, postCount, nextPostCountSum, teachVisible, teach} = this.state
+    console.log(teach, "teach")
     return (
-      <Row gutter={30}>
-        <Col span={12}>
-          <Form  {...formItemLayout} >
-        {dept?<Form.Item label="上级机构">
-          {getFieldDecorator('deptNameinfo', {
-            initialValue: dept?dept.supDept.deptName:"",
-            rules: [{ required: true, message: '上级机构!' }],
-          })(
-            <Input disabled/>
-          )}
-        </Form.Item>:null}
-        {dept?<Form.Item label="上级机构类型">
-          {getFieldDecorator('deptTypeName', {
-            initialValue: dept?dept.supDept.deptTypeName:"",
-            rules: [{ required: true, message: '上级机构类型!' }],
-          })(
-            <Input disabled />
-          )}
-        </Form.Item>:null}
-        {dept?<Form.Item label="机构类型">
-          {getFieldDecorator('deptType', {
-            initialValue: info?String(info.deptType):null,
-            rules: [{ required: true, message: '请输入机构类型！' }],
-          })(
-            <Select >
-              {dept?dept.newDeptMap.map(item=>(
-                <Option key={item.deptTypeCode} value={item.deptTypeCode}>{item.deptTypeName}</Option>
-              )):null}
-            </Select>
-          )}
-        </Form.Item>:null}
-        <Form.Item label="机构名称">
-          {getFieldDecorator('deptName', {
-            initialValue: info?info.deptName:"",
-            rules: [{ required: true, message: '请输入机构名称！' }],
-          })(
-            <Input/>
-          )}
-        </Form.Item>
-        <Form.Item label="机构负责人">
-          {getFieldDecorator('leaderName', {
-            initialValue: info?info.leaderName:"",
-          })(
-            <Input/>
-          )}
-        </Form.Item>
-        <Form.Item label="联系电话">
-          {getFieldDecorator('phone', {
-            initialValue: info?info.phone:"",
-          })(
-            <Input/>
-          )}
-        </Form.Item>
-        <Form.Item label="成立日期">
-          {getFieldDecorator('roleName', {
-            initialValue: info && info.buildDate?info.buildDate:null
-          })(
-            <DatePicker/>
-          )}
-        </Form.Item>
-        {/* <Form.Item label="邮件通知对象">
+      <div>
+        {teachVisible?<Teach visible={teachVisible}  onCancel={()=>this.setState({teachVisible: false})} 
+          onSelect={this.onSelect.bind(this)} />:null}
+        <Row gutter={30}>
+          <Col span={12}>
+            <Form  {...formItemLayout} >
+          {dept?<Form.Item label="上级机构">
+            {getFieldDecorator('deptNameinfo', {
+              initialValue: dept?dept.supDept.deptName:"",
+              rules: [{ required: true, message: '上级机构!' }],
+            })(
+              <Input disabled/>
+            )}
+          </Form.Item>:null}
+          {dept?<Form.Item label="上级机构类型">
+            {getFieldDecorator('deptTypeName', {
+              initialValue: dept?dept.supDept.deptTypeName:"",
+              rules: [{ required: true, message: '上级机构类型!' }],
+            })(
+              <Input disabled />
+            )}
+          </Form.Item>:null}
+          {dept?<Form.Item label="机构类型">
+            {getFieldDecorator('deptType', {
+              initialValue: info?String(info.deptType):null,
+              rules: [{ required: true, message: '请输入机构类型！' }],
+            })(
+              <Select >
+                {dept?dept.newDeptMap.map(item=>(
+                  <Option key={item.deptTypeCode} value={item.deptTypeCode}>{item.deptTypeName}</Option>
+                )):null}
+              </Select>
+            )}
+          </Form.Item>:null}
+          <Form.Item label="机构名称">
+            {getFieldDecorator('deptName', {
+              initialValue: info?info.deptName:"",
+              rules: [{ required: true, message: '请输入机构名称！' }],
+            })(
+              <Input/>
+            )}
+          </Form.Item>
+          <Form.Item label="机构负责人">
+            {getFieldDecorator('leaderName', {
+              initialValue: info?info.leaderName:"",
+            })(
+              <Input/>
+            )}
+          </Form.Item>
+          <Form.Item label="联系电话">
+            {getFieldDecorator('phone', {
+              initialValue: info?info.phone:"",
+            })(
+              <Input/>
+            )}
+          </Form.Item>
+          <Form.Item label="成立日期">
+            {getFieldDecorator('buildDate', {
+              initialValue: info && info.buildDate?moment(info.buildDate):null
+            })(
+              <DatePicker/>
+            )}
+          </Form.Item>
           <div>
-            <label>通知对象一</label>
-            <Select>
-              <Option value=""></Option>
-            </Select>
+            <Divider  orientation="left"><span style={{fontSize: 14}}>邮件通知对象</span></Divider>
           </div>
-        </Form.Item> */}
-        <Form.Item wrapperCol={{ sm: {span: 18, offset: 6} }}>
-          <Button type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</Button>
-          <Button type="primary" ghost className="mgl10" onClick={this.handlenDeleteOrgan.bind(this)} ><Icon type="delete" />删除节点</Button>
-        </Form.Item>
-      </Form>
-        </Col>
-        <Col span={12}>
-          <Table bordered size="small" columns={gradeColumns(this)} dataSource={staffingList?utils.addIndex(staffingList):[]} 
-          pagination={false} />
-          <div className="fixedend mgt10">
-          <Text>合计编制人数: {postCount}</Text>
-          <Text className="mgl10">合计下级节点汇总:{nextPostCountSum}</Text>
-          </div>
-        </Col>
-      </Row>
+          <Form.Item label="通知对象一">
+            <div className="teach_wrap">
+              <Input value={teach[0] && teach[0]["id"]?teach[0]["name"]:""} />
+              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:1})} />
+            </div>
+          </Form.Item>
+          <Form.Item label="通知对象二">
+            <div className="teach_wrap">
+              <Input value={teach[1] && teach[1]["id"]?teach[1]["name"]:""} />
+              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:2})} />
+            </div>
+          </Form.Item>
+          <Form.Item label="通知对象三">
+            <div className="teach_wrap">
+              <Input value={teach[2] && teach[2]["id"]?teach[2]["name"]:""} />
+              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:3})} />
+            </div>
+          </Form.Item>
+          <Form.Item wrapperCol={{ sm: {span: 18, offset: 6} }}>
+            <AuthButton auth="3-01-02" type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</AuthButton>
+            <AuthButton auth="3-01-03" type="primary" ghost className="mgl10" onClick={this.handlenDeleteOrgan.bind(this)} ><Icon type="delete" />删除节点</AuthButton>
+          </Form.Item>
+        </Form>
+          </Col>
+          <Col span={12}>
+            <Table bordered size="small" columns={gradeColumns(this)} dataSource={staffingList?utils.addIndex(staffingList):[]} 
+            pagination={false} />
+            <div className="fixedend mgt10">
+            <Text>合计编制人数: {postCount}</Text>
+            <Text className="mgl10">合计下级节点汇总:{nextPostCountSum}</Text>
+            </div>
+          </Col>
+        </Row>
+      </div>
     )
   }
 }

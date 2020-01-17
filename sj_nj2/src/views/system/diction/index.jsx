@@ -6,6 +6,7 @@ import {Card, Table, Button} from "antd";
 import JCard from "@/components/JCard"
 import {getDictType} from "@/actions/systemAction"
 import {dictionColumns} from "../columns"
+import AuthButton from "@/components/AuthButton"
 
 
 class Diction extends React.Component {
@@ -21,7 +22,7 @@ class Diction extends React.Component {
         return (
           <div>
             <Link to={`/system/diction/${item.id}/typekey`}>
-              <Button size="small" type="link">添加字典</Button>
+              <AuthButton auth="3-03-01" size="small" type="link">添加字典</AuthButton>
             </Link>
             {/* <Button size="small" type="link">删除</Button> */}
           </div>

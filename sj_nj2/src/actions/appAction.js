@@ -2,6 +2,85 @@ import {START_LOADING_APP, END_LOADING_APP} from "@/types"
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
+export function readNotice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/notice/readNotice/"+params.id,
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+      
+    }catch(err){
+      dispatch({
+        type: END_LOADING_APP
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getNotice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/notice/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        news: data
+      })
+      
+    }catch(err){
+      dispatch({
+        type: END_LOADING_APP
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getNoticeNum(params, next){
+  return async function(dispatch, getState){
+
+    try{
+      const options = {
+        url: "/api/pc/notice/num/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function getWeekCheck(params, next){
   return async function(dispatch, getState){
     dispatch({

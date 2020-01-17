@@ -6,6 +6,7 @@ import {Card, Button, Icon, Table, Popconfirm, Form, Input } from "antd";
 import JCard from "@/components/JCard"
 import {getRoleList, deleteRole} from "@/actions/systemAction"
 import {roleColumns} from "../columns"
+import AuthButton from "@/components/AuthButton"
 
 
 class SystemAuth extends React.Component {
@@ -40,7 +41,7 @@ class SystemAuth extends React.Component {
         return (
           <div>
             <Link to={`/system/auth/${item.id}/edit`}>
-              <Button size="small" type="link">编辑</Button>
+              <AuthButton auth="3-02-02" size="small" type="link">修改</AuthButton>
             </Link>
             <Popconfirm
               placement="topRight" 
@@ -48,7 +49,7 @@ class SystemAuth extends React.Component {
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <Button size="small" type="link">删除</Button>
+                <AuthButton auth="3-02-03" size="small" type="link">删除</AuthButton>
             </Popconfirm>
           </div>
         )
@@ -78,7 +79,7 @@ class SystemAuth extends React.Component {
     return (
       <JCard spinning={spinning}>
         <Card size="small" 
-          title={<Link to="/system/auth/add"><Button type="primary"><Icon type="plus" />添加角色</Button></Link>}>
+          title={<Link to="/system/auth/add"><AuthButton auth="3-02-01" type="primary"><Icon type="plus" />添加角色</AuthButton></Link>}>
             <div className="fixedend mgb10">
               <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
                 <Form.Item label="角色名称">

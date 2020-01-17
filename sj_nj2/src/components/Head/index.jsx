@@ -1,15 +1,38 @@
 import React from "react"
 import {connect} from "react-redux"
+import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {withRouter} from "react-router-dom"
-import {Layout, Icon, Button, Dropdown, Menu, Modal} from "antd"
-import {goLoginOut } from "@/actions/appAction"
+import {Layout, Icon, Button, Dropdown, Menu, Modal, Badge} from "antd"
+import {goLoginOut, getNoticeNum} from "@/actions/appAction" 
 import "./style.less"
 
 const {Header} = Layout
 const { confirm } = Modal;
-
+let timer = null
 class Head extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      count: 0
+    }
+  }
+
+  componentDidMount(){
+    if(NOTICE=="pro"){
+      timer && clearInterval(timer)
+      timer = setInterval(()=>{
+        this.initial()
+      }, 3000)
+    }
+    this.initial()
+    
+  }
+  initial(){
+    this.props.actions.getNoticeNum({}, res=>{
+      this.setState({count: res})
+    })
+  }
 
   handlenToggle(collapsed){
     collapsed?this.props.actions.setCollapsedFalse():this.props.actions.setCollapsedTrue()
@@ -37,6 +60,7 @@ class Head extends React.Component {
 
   render(){
     const {collapsed} = this.props
+    const {count} = this.state
 
 
     return (
@@ -54,6 +78,13 @@ class Head extends React.Component {
           
           <div className="right">
             <ul className="rightUl">
+              <li style={{paddingTop: 2, marginRight: 10}}>
+                <Link to="/other/news">
+                  <Badge count={count?count:0} offset={[5,0]} showZero={true} >
+                    <Icon type="message" style={{color: "#fff"}}  />
+                  </Badge>
+                </Link>
+              </li>
               <li onClick={this.loginOut.bind(this)}>
                 <i className="icon iconfont icon-tuichudenglu"></i>
               </li>
@@ -67,7 +98,7 @@ class Head extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({goLoginOut }, dispatch)
+    actions: bindActionCreators({goLoginOut, getNoticeNum}, dispatch)
   }
 }
 

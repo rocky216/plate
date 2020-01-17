@@ -16,11 +16,19 @@ class SideBar extends React.Component {
       menus
     }
   }
+  
+  check(item){
+    const {base} = this.props
+    let index = _.findIndex(base.employeeMenuMap, o=>{
+      return o.key.replace(/-/g,'')==item.key
+    })
+    return index>-1?true:false
+  }
 
   render(){
-    const {collapsed} = this.props
+    const {collapsed, base} = this.props
     const {menus} = this.state
-
+    
     return (
       <Sider
       className="sidebar"
@@ -39,9 +47,11 @@ class SideBar extends React.Component {
         {/* <div className="logo" >
           <img src={require("@/assets/images/logo.png")}  />
         </div> */}
+        {base && base.employeeMenuMap && base.employeeMenuMap.length?
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
           {menus.map(item=>
             item.children && item.children.length?
+            this.check(item)?
             <SubMenu
               key={item.key}
               title={
@@ -51,20 +61,19 @@ class SideBar extends React.Component {
                 </span>
               }
             >
-            {item.children.map(elem=><Menu.Item key={elem.key}>
+            {item.children.map(elem=> this.check(elem)?<Menu.Item key={elem.key}>
               <Link to={elem.link}>{elem.title}</Link>
-            </Menu.Item>)}
-            </SubMenu>
-            :<Menu.Item key={item.key}>
+            </Menu.Item>:null )}
+            </SubMenu>:null
+            : this.check(item)? <Menu.Item key={item.key}>
               <Link to={item.link}>
                 <i className={item.icon} ></i>
                 <span className="nav-text">{item.title}</span>
               </Link>
-             
-            </Menu.Item>
+            </Menu.Item>:null
           )}
           
-        </Menu>
+        </Menu>:null}
       </Sider>
     )
   }
@@ -72,6 +81,7 @@ class SideBar extends React.Component {
 
 function mapStateProps(state){
   return {
+    base: state.app.base,
     collapsed: state.app.collapsed
   }
 }

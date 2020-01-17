@@ -7,6 +7,7 @@ import {postsColumns} from "../columns"
 import {getStaffTransferPosition, deletePostsRecord, getEmployeeDict, loadSelectDeptByRole} from "@/actions/personAction"
 import Record from "./record"
 import moment from "moment"
+import AuthButton from "@/components/AuthButton"
 
 const {Option} = Select
 const {TreeNode} = TreeSelect
@@ -85,9 +86,9 @@ class Posts extends React.Component {
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <Button size="small" type="link">删除</Button>
+                <AuthButton auth="2-03-01" size="small" type="link">删除</AuthButton>
               </Popconfirm>
-            <Button onClick={()=>_this.setState({visible: true, detail:item})} size="small" type="link">审批记录</Button>
+            <AuthButton auth="2-03-02" onClick={()=>_this.setState({visible: true, detail:item})} size="small" type="link">审批记录</AuthButton>
           </div>
         )
       }

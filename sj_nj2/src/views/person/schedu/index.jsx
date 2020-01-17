@@ -10,6 +10,7 @@ import EditSchedu from "./edit"
 import Analy from "./analy"
 import "./index.less"
 import moment from "moment"
+import AuthButton from "@/components/AuthButton"
 
 const { TabPane } = Tabs;
 const {TreeNode} = TreeSelect 
@@ -61,14 +62,14 @@ class Schedu extends React.Component {
       render(item){
         return (
           <div>
-            <Button onClick={()=>_this.setState({visible: true, detail: item})} size="small" type="link">编辑</Button>
+            <AuthButton auth="2-04-02" onClick={()=>_this.setState({visible: true, detail: item})} size="small" type="link">修改</AuthButton>
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <Button size="small" type="link">删除</Button>
+                <AuthButton auth="2-04-03" size="small" type="link">删除</AuthButton>
               </Popconfirm>
           </div>
         )
@@ -116,7 +117,7 @@ class Schedu extends React.Component {
             <TabPane key="1" tab="排产计划">
               <div className="mgb10 scheduSearch">
                 <Link to="/person/schedu/add">
-                  <Button type="primary">批量排产</Button>
+                  <AuthButton auth="2-04-01" type="primary"><Icon type="plus" />批量排产</AuthButton>
                 </Link>
                 <Form layout="inline">
                   <Form.Item label="车间/部门">

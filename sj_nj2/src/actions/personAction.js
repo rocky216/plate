@@ -2,6 +2,148 @@ import {START_LOADING_PERSON, END_LOADING_PERSON} from "@/types"
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
+export function updateEmployeeNotice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/employee/employeeNotice/update/",
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function employeeNoticeInit(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/employee/employeeNotice/init/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getHResourceAnalysisDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hResourceAnalysis/hResourceAnalysisDetail",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function getEmployeeCensus(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hResourceAnalysis/employeeCensus",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+        employal: data
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function loadMAttendanceInit(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/attendance/loadMAttendanceInit/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+        monthAttend: data
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function deleteAttend(params, next){
   return async function(dispatch, getState){
     dispatch({
@@ -350,6 +492,34 @@ export function deleteAbsence(params, next){
       const options = {
         url: "/api/pc/absence/delete/"+params.id,
         method: "put",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function goCancel(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/absence/absenceCancel/"+params.id,
+        method: "post",
         data: {
           ...params
         }
@@ -1165,7 +1335,7 @@ export function getTreeDept(params, next){
 
     try{
       const options = {
-        url: "/api/pc/dept/treeDept/",
+        url: "/api/pc/dept/selectEmployyeeTreeDeptList/",
         method: "get",
         data: {
           ...params

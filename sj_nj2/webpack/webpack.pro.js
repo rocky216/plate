@@ -40,7 +40,8 @@ module.exports = webpackMerge(webpackBase, {
     new OptimizeCssAssetsPlugin(),
     // new BundleAnalyzerPlugin(),
     new webpack.DefinePlugin({
-      IMGURL: JSON.stringify("")
+      IMGURL: JSON.stringify(""),
+      NOTICE: JSON.stringify("pro")
     })
   ],
   module: {

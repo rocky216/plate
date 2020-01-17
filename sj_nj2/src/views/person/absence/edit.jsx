@@ -159,12 +159,12 @@ class EditAbsence extends React.Component {
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, spinning} = this.props
     const {deptList, addVisible, processList, detailList, editVisible, detail, info} = this.state
-    console.log(detailList)
+    
     
     return (
       <JCard spinning={spinning}>
-        {addVisible?<AddDetail Ok={this.Ok.bind(this)} visible={addVisible} absenceType={getFieldValue("absenceType")} onCancel={()=>this.setState({addVisible: false})} />:null}
-        {editVisible?<EditDetail Ok={this.editOk.bind(this)} detail={detail} visible={editVisible} absenceType={getFieldValue("absenceType")} onCancel={()=>this.setState({editVisible: false,detail:""})} />:null}
+        {addVisible?<AddDetail Ok={this.Ok.bind(this)} deptId={getFieldValue("deptId")} visible={addVisible} absenceType={getFieldValue("absenceType")} onCancel={()=>this.setState({addVisible: false})} />:null}
+        {editVisible?<EditDetail Ok={this.editOk.bind(this)} deptId={getFieldValue("deptId")} detail={detail} visible={editVisible} absenceType={getFieldValue("absenceType")} onCancel={()=>this.setState({editVisible: false,detail:""})} />:null}
         <Card size="small" title="新增缺勤单" extra={(
           <div>
             <Button type="primary" ghost onClick={this.handlenSave.bind(this)} ><Icon type="save"  />保存</Button>

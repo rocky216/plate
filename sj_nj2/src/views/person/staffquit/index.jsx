@@ -7,6 +7,7 @@ import {getQuitStaff, deleteQuitStaff, loadSelectDeptByRole, getEmployeeDict} fr
 import {quitStaffColumns} from "../columns"
 import ApproRecord from "./approRecord"
 import moment from "moment"
+import AuthButton from "@/components/AuthButton"
 
 const {Option} = Select
 const {TreeNode} = TreeSelect
@@ -83,9 +84,9 @@ class StaffQuit extends React.Component {
               okText="是"
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <Button size="small" type="link">删除</Button>
+                <AuthButton auth="2-02-01" size="small" type="link">删除</AuthButton>
             </Popconfirm>
-            <Button size="small" type="link" onClick={()=>_this.setState({visible: true, detail:item})}>审批记录</Button>
+            <AuthButton auth="2-02-02" size="small" type="link" onClick={()=>_this.setState({visible: true, detail:item})}>审批记录</AuthButton>
           </div>
         )
       }
