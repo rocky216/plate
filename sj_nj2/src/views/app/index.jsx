@@ -22,7 +22,7 @@ class App extends React.Component {
       <Head/>
       <Layout >
         <SiderBar/>
-        <Content style={{ margin: '10px 10px 0', minHeight:810 }}>
+        <Content style={{ margin: '10px 10px 0', minHeight:810, minWidth: 1000}}>
           <div >
             <Routers/>
           </div>

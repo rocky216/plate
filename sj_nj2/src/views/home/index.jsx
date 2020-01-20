@@ -135,10 +135,10 @@ class Home extends React.Component {
         {quitVisible?<QuitAppro visible={quitVisible} detail={quitDetail} onCancel={()=>this.setState({quitVisible: false, quitDetail:""})} />:null}
         {postsVisible?<PostsAppro visible={postsVisible} detail={postsDetail} onCancel={()=>this.setState({postsVisible: false, postsDetail:""})} />:null}
         <Row>
-          <Col span={8}>
+          <Col span={10}>
             <WeekCheck/>
           </Col>
-          <Col span={16}>
+          <Col span={14}>
             <SchedcChart/>
           </Col>
         </Row>

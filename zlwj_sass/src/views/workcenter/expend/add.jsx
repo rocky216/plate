@@ -54,7 +54,7 @@ class AddOtherfee extends React.Component {
     this.setState({dataDetail: this.state.dataDetail})
   }
 
-  changeFeeName(index, attr, value){
+  changeFeeName(index, attr, value){ 
     const {dataDetail} = this.state 
     
     if(attr=="feeName"){

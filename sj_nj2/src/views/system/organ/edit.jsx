@@ -43,6 +43,7 @@ class EditOrgan extends React.Component {
       this.hanlenTeach(res)
       this.setState({info: res, staffingList: res.staffingList})
       this.handlenCount()
+      console.log(res, "res")
     })
     this.props.actions.getSupDeptDetail({id: this.props.detail.parentId}, res=>{
       this.setState({dept: res})
@@ -104,7 +105,10 @@ class EditOrgan extends React.Component {
   }
 
   handlenNoticeKeys(){
-    const {teach} = this.state
+    const {teach, info} = this.state
+    if(!info.deptType || info.deptType=="5"||info.deptType=="6"||info.deptType=="7"||info.deptType=="8"){
+      return []
+    }
     let arr=[]
     _.each(teach, item=>{
       if(item.id){
@@ -146,10 +150,10 @@ class EditOrgan extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {utils, detail, onSwitch} = this.props
     const {info, dept, staffingList, postCount, nextPostCountSum, teachVisible, teach} = this.state
-    console.log(teach, "teach")
+    
     return (
       <div>
-        {teachVisible?<Teach visible={teachVisible}  onCancel={()=>this.setState({teachVisible: false})} 
+        {teachVisible?<Teach visible={teachVisible}  deptId={info.id} onCancel={()=>this.setState({teachVisible: false})} 
           onSelect={this.onSelect.bind(this)} />:null}
         <Row gutter={30}>
           <Col span={12}>
@@ -211,27 +215,30 @@ class EditOrgan extends React.Component {
               <DatePicker/>
             )}
           </Form.Item>
+          {!info.deptType || info.deptType=="5"||info.deptType=="6"||info.deptType=="7"||info.deptType=="8"?null:
           <div>
-            <Divider  orientation="left"><span style={{fontSize: 14}}>邮件通知对象</span></Divider>
-          </div>
-          <Form.Item label="通知对象一">
-            <div className="teach_wrap">
-              <Input value={teach[0] && teach[0]["id"]?teach[0]["name"]:""} />
-              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:1})} />
+            <div>
+              <Divider  orientation="left"><span style={{fontSize: 14}}>邮件通知对象</span></Divider>
             </div>
-          </Form.Item>
-          <Form.Item label="通知对象二">
-            <div className="teach_wrap">
-              <Input value={teach[1] && teach[1]["id"]?teach[1]["name"]:""} />
-              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:2})} />
-            </div>
-          </Form.Item>
-          <Form.Item label="通知对象三">
-            <div className="teach_wrap">
-              <Input value={teach[2] && teach[2]["id"]?teach[2]["name"]:""} />
-              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:3})} />
-            </div>
-          </Form.Item>
+            <Form.Item label="通知对象一">
+              <div className="teach_wrap">
+                <Input value={teach[0] && teach[0]["id"]?teach[0]["name"]:""} />
+                <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:1})} />
+              </div>
+            </Form.Item>
+            <Form.Item label="通知对象二">
+              <div className="teach_wrap">
+                <Input value={teach[1] && teach[1]["id"]?teach[1]["name"]:""} />
+                <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:2})} />
+              </div>
+            </Form.Item>
+            <Form.Item label="通知对象三">
+              <div className="teach_wrap">
+                <Input value={teach[2] && teach[2]["id"]?teach[2]["name"]:""} />
+                <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:3})} />
+              </div>
+            </Form.Item>
+          </div>}
           <Form.Item wrapperCol={{ sm: {span: 18, offset: 6} }}>
             <AuthButton auth="3-01-02" type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</AuthButton>
             <AuthButton auth="3-01-03" type="primary" ghost className="mgl10" onClick={this.handlenDeleteOrgan.bind(this)} ><Icon type="delete" />删除节点</AuthButton>

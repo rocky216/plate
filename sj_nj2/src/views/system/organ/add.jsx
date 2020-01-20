@@ -108,13 +108,13 @@ class AddOrgan extends React.Component {
   
 
   render(){
-    const {getFieldDecorator} = this.props.form
+    const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, detail, parent} = this.props
     const {dept, staffingList, postCount, nextPostCountSum, teach, teachVisible} = this.state
-    console.log(parent, "parent")
+    
     return (
       <div>
-        {teachVisible?<Teach visible={teachVisible}  onCancel={()=>this.setState({teachVisible: false})} 
+        {teachVisible?<Teach visible={teachVisible} deptId={dept.id}  onCancel={()=>this.setState({teachVisible: false})} 
           onSelect={this.onSelect.bind(this)} />:null}
       
         <Row gutter={30}>
@@ -177,27 +177,30 @@ class AddOrgan extends React.Component {
                 <DatePicker/>
               )}
             </Form.Item>
+            {!getFieldValue("deptType") || getFieldValue("deptType")=="5"||getFieldValue("deptType")=="6"||getFieldValue("deptType")=="7"||getFieldValue("deptType")=="8"?null:
             <div>
-              <Divider  orientation="left"><span style={{fontSize: 14}}>邮件通知对象</span></Divider>
-            </div>
-            <Form.Item label="通知对象一">
-              <div className="teach_wrap">
-                <Input value={teach[0] && teach[0]["id"]?teach[0]["name"]:""} />
-                <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:1})} />
+              <div>
+                <Divider  orientation="left"><span style={{fontSize: 14}}>邮件通知对象</span></Divider>
               </div>
-            </Form.Item>
-            <Form.Item label="通知对象二">
-              <div className="teach_wrap">
-                <Input value={teach[1] && teach[1]["id"]?teach[1]["name"]:""} />
-                <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:2})} />
-              </div>
-            </Form.Item>
-            <Form.Item label="通知对象三">
-              <div className="teach_wrap">
-                <Input value={teach[2] && teach[2]["id"]?teach[2]["name"]:""} />
-                <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:3})} />
-              </div>
-            </Form.Item>
+              <Form.Item label="通知对象一">
+                <div className="teach_wrap">
+                  <Input value={teach[0] && teach[0]["id"]?teach[0]["name"]:""} />
+                  <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:1})} />
+                </div>
+              </Form.Item>
+              <Form.Item label="通知对象二">
+                <div className="teach_wrap">
+                  <Input value={teach[1] && teach[1]["id"]?teach[1]["name"]:""} />
+                  <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:2})} />
+                </div>
+              </Form.Item>
+              <Form.Item label="通知对象三">
+                <div className="teach_wrap">
+                  <Input value={teach[2] && teach[2]["id"]?teach[2]["name"]:""} />
+                  <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:3})} />
+                </div>
+              </Form.Item>
+            </div>}
             <Form.Item wrapperCol={{ sm: {span: 100, offset: 3} }}>
               <AuthButton auth="3-01-01" type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save" />保存</AuthButton>
             </Form.Item>

@@ -20,6 +20,7 @@ class Organ extends React.Component {
       parent: ""
     }
     this.timer = null
+    this.timerAdd = null
   }
 
   componentDidMount(){
@@ -53,7 +54,11 @@ class Organ extends React.Component {
   handlenAdd(item, e){
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
-    this.setState({type: true, parent: item})
+    this.setState({type:false})
+    this.timerAdd && clearTimeout(this.timerAdd)
+    this.timerAdd = setTimeout(()=>{
+      this.setState({type: true, parent: item})
+    },300)
   }
 
   handlenSelect(key, {node}){

@@ -199,7 +199,7 @@ class AddShopfee extends React.Component {
               <Form.Item  label="开始时间">
                 {getFieldDecorator("startTime", {
                   initialValue: startTime
-                })(<Input disable />)}
+                })(<Input disabled />)}
               </Form.Item>
             </Col>
             <Col span={7} >

@@ -68,10 +68,10 @@ class Teach extends React.Component {
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, visible, onCancel, treeDept, onSelect} = this.props
     const {staff} = this.state
-    
+    console.log(treeDept)
     return (
       <Modal
-        title="选择带教"
+        title="选择员工"
         destroyOnClose
         width={800}
         okText="确定"

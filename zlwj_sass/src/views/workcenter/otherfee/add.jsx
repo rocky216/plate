@@ -77,8 +77,8 @@ class AddOtherfee extends React.Component {
   }
 
   handlenSelectHouse(item){
-    if(!item.owners){
-      this.props.utils.OpenNotification("error","该房间无业主，不能被选中，请晚上信息！")
+    if(!item.ownerId){
+      this.props.utils.OpenNotification("error","该房间无业主，不能被选中，请完善信息！")
       return
     }
     this.setState({hosue: item, addHouseVisible: false})
@@ -86,7 +86,7 @@ class AddOtherfee extends React.Component {
 
   handlenSelectShop(item){
     if(!item.owners){
-      this.props.utils.OpenNotification("error","该商铺无业主，不能被选中，请晚上信息！")
+      this.props.utils.OpenNotification("error","该商铺无业主，不能被选中，请完善信息！")
       return
     }
     console.log(item)

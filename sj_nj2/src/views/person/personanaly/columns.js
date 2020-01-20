@@ -99,16 +99,16 @@ export const optAgv2 = {
     name: "在岗",
     data: [820, 932, 901, 934, 1290, 1330, 1320],
     type: 'bar',
-    barWidth: "15%"
+    barWidth: "20%"
   },{
     name: "编制",
     data: [820, 932, 901, 934, 1290, 1330, 1320],
     type: 'bar',
-    barWidth: "15%"
+    barWidth: "20%"
   },{
     name: "偏差",
     data: [820, 932, 901, 934, 1290, 1330, 1320],
     type: 'bar',
-    barWidth: "15%"
+    barWidth: "20%"
   },]
 }

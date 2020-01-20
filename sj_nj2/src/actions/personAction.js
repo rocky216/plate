@@ -1,4 +1,4 @@
-import {START_LOADING_PERSON, END_LOADING_PERSON} from "@/types"
+import {START_LOADING_PERSON, END_LOADING_PERSON, START_LOADING_PERSON_ONE, END_LOADING_PERSON_ONE} from "@/types"
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
@@ -89,11 +89,11 @@ export function getHResourceAnalysisDetail(params, next){
 export function getEmployeeCensus(params, next){
   return async function(dispatch, getState){
     dispatch({
-      type: START_LOADING_PERSON
+      type: START_LOADING_PERSON_ONE
     })
 
     try{
-      const options = {
+      const options = { 
         url: "/api/pc/hResourceAnalysis/employeeCensus",
         method: "get",
         data: {
@@ -103,12 +103,12 @@ export function getEmployeeCensus(params, next){
       let data = await fetch(options)
       if(next)next(data)
       dispatch({
-        type: END_LOADING_PERSON,
+        type: END_LOADING_PERSON_ONE,
         employal: data
       })
     }catch(err){
       dispatch({
-        type: END_LOADING_PERSON,
+        type: END_LOADING_PERSON_ONE,
       })
       console.log(err, `color: ${log_color}`)
     }

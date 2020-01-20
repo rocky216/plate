@@ -19,20 +19,24 @@ class Personanaly extends React.Component {
       deptList: [],
       optAgv: "",
       optAgv2:"",
+      visible: true,
       params: {
         type: "avg1",
         isStaff: "1",
-        deptId: "1",
+        deptId: "",
       }
     }
   }
   componentDidMount(){
-    this.props.actions.loadSelectDeptByRole({loadType: 1, roleUrl: "/api/pc/hResourceAnalysis"}, res=>{
-      this.setState({deptList: res})
-    })
     this.props.actions.getEmployeeCensus(this.state.params, res=>{
       this.handlenData(res)
+      this.props.actions.loadSelectDeptByRole({loadType: 1, roleUrl: "/api/pc/hResourceAnalysis"}, res=>{
+        this.setState({deptList: res})
+      })
     })
+  }
+  initail(){
+    
   }
   handlenData(res){
     let xaxis = [], dataLine = [], dataBar1=[],dataBar2=[],dataBar3=[]
@@ -70,8 +74,11 @@ class Personanaly extends React.Component {
       params.type = type
       params.isStaff = isStaff
       params.deptId = deptId
-
-      this.props.actions.getEmployeeCensus(params)
+      this.setState({visible: false, optAgv: "",optAgv2:""})
+      this.props.actions.getEmployeeCensus(params, res=>{
+        this.setState({visible: true})
+        this.handlenData(res)
+      })
     });
   }
   handlenReset(){
@@ -93,8 +100,8 @@ class Personanaly extends React.Component {
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, spinning, employal} = this.props
-    const {deptList, params, optAgv, optAgv2} = this.state
-    
+    const {deptList, params, optAgv, optAgv2, visible} = this.state
+    console.log(optAgv, optAgv2)
     return (
       <JCard spinning={spinning} >
         <Card size="small">
@@ -150,10 +157,10 @@ class Personanaly extends React.Component {
             </Col>
             <Col span={14}>
               <Card title={`到岗率`}>
-                {optAgv?<ReactEcharts option={optAgv} />:null}  
+                {visible && optAgv?<ReactEcharts option={optAgv} lazyUpdate={true} />:null}  
               </Card>
               <Card title={`在岗&编制&偏差`}>
-                {optAgv2?<ReactEcharts option={optAgv2} />:null}
+                {visible && optAgv2?<ReactEcharts option={optAgv2} lazyUpdate={true} />:null}
               </Card>
             </Col>
           </Row>
