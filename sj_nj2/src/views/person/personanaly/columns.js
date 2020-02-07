@@ -112,3 +112,28 @@ export const optAgv2 = {
     barWidth: "20%"
   },]
 }
+
+export const quitAvg1Columns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "车间/部门",
+    dataIndex: "ks"
+  },
+  {
+    title: "在职人数",
+    dataIndex: "worker"
+  },
+  {
+    title: "离职人数",
+    dataIndex: "quit"
+  },
+  {
+    title: "离职率",
+    render(item){
+      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)
+    }
+  },
+]

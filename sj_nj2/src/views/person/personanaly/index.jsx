@@ -7,6 +7,8 @@ import JCard from "@/components/JCard"
 import {loadSelectDeptByRole, getEmployeeCensus} from "@/actions/personAction"
 import ReactEcharts from 'echarts-for-react';
 import {workshopColumns, optAgv1, optAgv2} from "./columns"
+import PersonSource from "./personSource"
+import PersonQuit from "./personQuit"
 
 const { TabPane } = Tabs;
 const {Option} = Select
@@ -20,6 +22,7 @@ class Personanaly extends React.Component {
       optAgv: "",
       optAgv2:"",
       visible: true,
+      tabKey: "2",
       params: {
         type: "avg1",
         isStaff: "1",
@@ -100,16 +103,17 @@ class Personanaly extends React.Component {
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, spinning, employal} = this.props
-    const {deptList, params, optAgv, optAgv2, visible} = this.state
-    console.log(optAgv, optAgv2)
+    const {deptList, params, optAgv, optAgv2, visible, tabKey} = this.state
+    
     return (
       <JCard spinning={spinning} >
         <Card size="small">
-          <Tabs>
+          <Tabs activeKey={tabKey} onChange={key=>this.setState({tabKey:key})}>
             <TabPane key="1" tab={`人员编制&在岗统计`} />
             <TabPane key="2" tab="人员来源分布" />
             <TabPane key="3" tab="离职人员统计表" />
           </Tabs>
+          {tabKey=="1"?
           <div>
             <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
               <Form.Item label="分析维度" >
@@ -136,7 +140,7 @@ class Personanaly extends React.Component {
               </Form.Item>
               {getFieldValue("type") == "avg1"?null:
               <Form.Item  label="组织机构">
-                {getFieldDecorator('deptId')(
+                {getFieldDecorator('deptId')( 
                   deptList && deptList.length?
                   <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll style={{width: 150}}>
                     {this.createNode(deptList)}
@@ -148,8 +152,8 @@ class Personanaly extends React.Component {
                 <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button>
               </Form.Item>
             </Form>
-          </div>
-          <Row className="mgt10" gutter={20}>
+          
+            <Row className="mgt10" gutter={20}>
             <Col span={10} className="mgt10">
               {params.type=="avg1"?<Table size="small" columns={this.getCol()} dataSource={employal?utils.addIndex(employal):[]} pagination={false} />:null}
               {params.type=="avg2"?<Table size="small" columns={workshopColumns("科室")} dataSource={employal?utils.addIndex(employal):[]} pagination={false} />:null}
@@ -164,6 +168,9 @@ class Personanaly extends React.Component {
               </Card>
             </Col>
           </Row>
+          </div>:null}
+          {tabKey=="2"?<PersonSource/>:null}
+          {tabKey=="3"?<PersonQuit/>:null}
         </Card>
       </JCard>
     )

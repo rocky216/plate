@@ -19,12 +19,12 @@ class Head extends React.Component {
   }
 
   componentDidMount(){
-    if(NOTICE=="pro"){
-      timer && clearInterval(timer)
-      timer = setInterval(()=>{
-        this.initial()
-      }, 3000)
-    }
+    // if(NOTICE=="pro"){
+    //   timer && clearInterval(timer)
+    //   timer = setInterval(()=>{
+    //     this.initial()
+    //   }, 3000)
+    // }
     this.initial()
     
   }
