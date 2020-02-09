@@ -85,7 +85,7 @@ class Personanaly extends React.Component {
     });
   }
   handlenReset(){
-    
+    this.props.form.resetFields()
   }
   getCol(){
     return workshopColumns("车间/部门").concat([{

@@ -2,6 +2,27 @@ import React from "react"
 import {Radio, InputNumber, Button} from "antd"
 import {leaveType} from "../absence/data"
 
+export const analyColumns = [
+  {
+    title: "排产日期",
+    dataIndex: "planTime"
+  },
+  {
+    title: "排产工作时长",
+    dataIndex: "planH",
+    render(item){
+      return item?parseFloat(item).toFixed(2):0
+    }
+  },
+  {
+    title: "排产日期",
+    dataIndex: "planJbH",
+    render(item){
+      return item?parseFloat(item).toFixed(2):0
+    }
+  },
+]
+
 export const staffColumns = [
   
   {
