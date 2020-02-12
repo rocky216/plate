@@ -20,7 +20,7 @@ class Schedu extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      type: "2",
+      type: "1",
       visible: false,
       detail: "",
       deptList:[],

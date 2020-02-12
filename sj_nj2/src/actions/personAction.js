@@ -2,6 +2,34 @@ import {START_LOADING_PERSON, END_LOADING_PERSON, START_LOADING_PERSON_ONE, END_
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
+export function getMonthPlanFormW(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/plan/loadPlanFormW/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function getMonthPlanFormM(params, next){
   return async function(dispatch, getState){
     dispatch({

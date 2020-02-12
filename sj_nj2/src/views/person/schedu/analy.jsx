@@ -2,11 +2,12 @@ import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Form, Button, Icon, TreeSelect, Select, Radio, DatePicker, Row, Col, Table} from "antd";
-import {getDayPlanFormDay, loadSelectDeptByRole, getMonthPlanFormM} from "@/actions/personAction"
+import {getDayPlanFormDay, loadSelectDeptByRole, getMonthPlanFormM, getMonthPlanFormW} from "@/actions/personAction"
 import {analyColumns} from "../columns"
 import ReactEcharts from 'echarts-for-react';
 import {option} from "./data"
 import moment from "moment";
+import WeekRangePicker from "./WeekRangePicker"
 
 const {TreeNode} = TreeSelect
 const {Option} = Select
@@ -43,13 +44,19 @@ class Analy extends React.Component {
     ))
   }
   initial(type, params){
+    console.log(type=="week", "asasas")
     if(type=="day"){
       this.props.actions.getDayPlanFormDay(params, res=>{
         this.setState({data: res, chartData:""})
         this.handlenOption(res)
       })
-    }else if(type="month"){
+    }else if(type=="month"){
       this.props.actions.getMonthPlanFormM(params, res=>{
+        this.setState({data: res, chartData:""})
+        this.handlenOption(res)
+      })
+    }else if(type=="week"){
+      this.props.actions.getMonthPlanFormW(params, res=>{
         this.setState({data: res, chartData:""})
         this.handlenOption(res)
       })
@@ -72,14 +79,27 @@ class Analy extends React.Component {
       this.setState({chartData:option})
     }
   }
+  getWeekR(d){
+    let week = d.format("E")
+    ,start=d.subtract(week-1, 'days').format("YYYY-MM-DD")
+    ,end=d.subtract(-6, 'days').format("YYYY-MM-DD")
+    return {start, end}
+  }
   handlenDateType({target}){
     this.setState({dateType: target.value})
     this.props.form.setFieldsValue({type:"week"})
+    this.setState({
+      startWeek: moment(),
+      endWeek: moment(),
+    })
   }
   getCol(){
     return [{
       title: ""
     }]
+  }
+  handlenWeek(startWeek, endWeek){
+    this.setState({startWeek, endWeek})
   }
   handleSearch(e){
     e.preventDefault();
@@ -101,6 +121,17 @@ class Analy extends React.Component {
           deptId,
           startTime: moment(month).format("YYYY"),
         })
+      }else {
+        const {startWeek, endWeek} = this.state
+        if(!startWeek || !endWeek){
+          this.props.utils.OpenNotification("error","请选择开始周和结束周!")
+          return
+        }
+        this.initial(type,{
+          deptId,
+          startTime: startWeek?this.getWeekR(startWeek).start:"",
+          endTime: endWeek?this.getWeekR(endWeek).end:"",
+        })
       }
       
     })
@@ -113,9 +144,9 @@ class Analy extends React.Component {
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils} = this.props
     const {deptList, dateType, data, chartData, startWeek, endWeek} = this.state
-    console.log(getFieldValue("type"), "chartData")
+    
     return (
-      <div>
+      <div >
         <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
           <Form.Item  label="车间/部门">
             {getFieldDecorator('deptId')( 
@@ -151,8 +182,9 @@ class Analy extends React.Component {
           </Form.Item>:null}
           {dateType==="2" &&  getFieldValue("type")=="week"?
           <Form.Item  >
-            <WeekPicker value={moment(null)} /><span>-</span>
-            <WeekPicker value={moment(new Date())} />
+            <WeekRangePicker onChange={this.handlenWeek.bind(this)} />
+            {/* <WeekPicker value={moment(new Date())} /><span>-</span>
+            <WeekPicker value={moment(new Date())} /> */}
           </Form.Item>:null}
           {dateType==="2" && getFieldValue("type")=="month"?
           <Form.Item  >
@@ -165,10 +197,10 @@ class Analy extends React.Component {
           
           <Form.Item >
             <Button type="primary" htmlType="submit"><Icon type="search" />搜索</Button>
-            <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button>
+            {/* <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button> */}
           </Form.Item>
         </Form>
-        <Row>
+        <Row className="mgt10">
           <Col span={8}>
             <Table size="small" columns={analyColumns} 
               dataSource={data?utils.addIndex(data.listData):[]} pagination={false} />
@@ -184,7 +216,7 @@ class Analy extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getDayPlanFormDay, loadSelectDeptByRole, getMonthPlanFormM}, dispatch)
+    actions: bindActionCreators({getDayPlanFormDay, loadSelectDeptByRole, getMonthPlanFormM, getMonthPlanFormW}, dispatch)
   }
 }
 

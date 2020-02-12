@@ -22,7 +22,7 @@ class Personanaly extends React.Component {
       optAgv: "",
       optAgv2:"",
       visible: true,
-      tabKey: "2",
+      tabKey: "1",
       params: {
         type: "avg1",
         isStaff: "1",
@@ -160,10 +160,10 @@ class Personanaly extends React.Component {
               {params.type=="avg3"?<Table size="small" columns={workshopColumns("岗级")} dataSource={employal?utils.addIndex(employal):[]} pagination={false} />:null}
             </Col>
             <Col span={14}>
-              <Card title={`到岗率`}>
+              <Card size="small" title={`到岗率`}>
                 {visible && optAgv?<ReactEcharts option={optAgv} lazyUpdate={true} />:null}  
               </Card>
-              <Card title={`在岗&编制&偏差`}>
+              <Card size="small" title={`在岗&编制&偏差`}>
                 {visible && optAgv2?<ReactEcharts option={optAgv2} lazyUpdate={true} />:null}
               </Card>
             </Col>
