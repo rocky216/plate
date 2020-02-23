@@ -25,6 +25,10 @@ class MonthAttend extends React.Component {
   }
 
   handlenColumns(data){
+    if(!data || !data.length) {
+      this.setState({columnsCol:[], monthData: res})
+      return
+    }
     let res = _.cloneDeep(data)
     let count = res[0]["sumTimeM"]
     let col = []
@@ -84,7 +88,7 @@ class MonthAttend extends React.Component {
       })
     })
     let newCol = monthAttend.concat(col)
-    console.log(newCol)
+    console.log(newCol, "newCol")
     
     this.setState({columnsCol:newCol, monthData: res})
   }
