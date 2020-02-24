@@ -2,6 +2,202 @@ import {START_LOADING_PERSON, END_LOADING_PERSON, START_LOADING_PERSON_ONE, END_
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
+export function AttendanceAnalysiss(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/attendanceAnalysis",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function overtimeTrendAnalysisM(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/overtimeTrendAnalysisM/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function overtimeTrendAnalysisW(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/overtimeTrendAnalysisW/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function overtimeTrendAnalysisDay(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/overtimeTrendAnalysisDay/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function attendanceTrendAnalysisM(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/attendanceTrendAnalysisM/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function attendanceTrendAnalysisW(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/attendanceTrendAnalysisW/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function attendanceTrendAnalysisDay(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/attendanceTrendAnalysisDay/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function getMonthPlanFormW(params, next){
   return async function(dispatch, getState){
     dispatch({
@@ -1159,9 +1355,9 @@ export function deleteStaff(params, next){
 
 export function loadSelectDeptByRole(params, next){
   return async function(dispatch, getState){
-    dispatch({
-      type: START_LOADING_PERSON
-    })
+    // dispatch({
+    //   type: START_LOADING_PERSON
+    // })
 
     try{
       const options = {
@@ -1173,9 +1369,9 @@ export function loadSelectDeptByRole(params, next){
       }
       let data = await fetch(options)
       if(next)next(data)
-      dispatch({
-        type: END_LOADING_PERSON,
-      })
+      // dispatch({
+      //   type: END_LOADING_PERSON,
+      // })
     }catch(err){
       dispatch({
         type: END_LOADING_PERSON

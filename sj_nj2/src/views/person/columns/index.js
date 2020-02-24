@@ -2,6 +2,79 @@ import React from "react"
 import {Radio, InputNumber, Button} from "antd"
 import {leaveType} from "../absence/data"
 
+
+export const overtrendanalyColumns = [
+  {
+    title: "日期",
+    dataIndex: "jbTime"
+  },
+  {
+    title: "出勤人数",
+    dataIndex: "cqCount"
+  },
+  {
+    title: "计划上班时长(H)",
+    dataIndex: "planH"
+  },
+  {
+    title: "计划加班时长(H)",
+    dataIndex: "planJbH"
+  },
+  {
+    title: "实际上班时长(H)",
+    dataIndex: "trueH"
+  },
+  {
+    title: "非计划加班时长(H)",
+    dataIndex: "notPlanJbH"
+  },
+  {
+    title: "总加班时长",
+    dataIndex: "sumJbH"
+  },
+]
+
+export const attendAnanlyColumns = [
+  {
+    title: "日期",
+    dataIndex: "cqTime"
+  },
+  {
+    title: "出勤人数",
+    dataIndex: "cqCount"
+  },
+  {
+    title: "请假人次",
+    dataIndex: "qjCount",
+  },
+  {
+    title: "请假率",
+    render(item){
+      return item.cqCount && parseInt(item.cqCount)?(item.qjCount/item.cqCount*100).toFixed(2):0
+    }
+  },
+  {
+    title: "旷工人次",
+    dataIndex: "kgCount",
+  },
+  {
+    title: "旷工率",
+    render(item){
+      return item.cqCount && parseInt(item.cqCount)?(item.kgCount/item.cqCount*100).toFixed(2):0
+    }
+  },
+  {
+    title: "迟到人次",
+    dataIndex: "cdCount",
+  },
+  {
+    title: "迟到率",
+    render(item){
+      return item.cqCount && parseInt(item.cqCount)?(item.cdCount/item.cqCount*100).toFixed(2):0
+    }
+  },
+]
+
 export const analyColumns = [
   {
     title: "排产日期",

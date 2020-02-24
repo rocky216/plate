@@ -1,7 +1,4 @@
 export const option = {
-  title: {
-      text: '整车二厂 - 车身车间 按日排产统计'
-  },
   tooltip: {
       trigger: 'axis'
   },

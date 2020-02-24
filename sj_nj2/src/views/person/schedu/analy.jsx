@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Form, Button, Icon, TreeSelect, Select, Radio, DatePicker, Row, Col, Table} from "antd";
+import {Form, Button, Icon, TreeSelect, Select, Radio, DatePicker, Row, Col, Table, Card} from "antd";
 import {getDayPlanFormDay, loadSelectDeptByRole, getMonthPlanFormM, getMonthPlanFormW} from "@/actions/personAction"
 import {analyColumns} from "../columns"
 import ReactEcharts from 'echarts-for-react';
@@ -44,7 +44,6 @@ class Analy extends React.Component {
     ))
   }
   initial(type, params){
-    console.log(type=="week", "asasas")
     if(type=="day"){
       this.props.actions.getDayPlanFormDay(params, res=>{
         this.setState({data: res, chartData:""})
@@ -66,13 +65,12 @@ class Analy extends React.Component {
   handlenOption(res){
     if(res){
       let time = [], planHs = [], planJbHs = []
-      option.title.text=res.deptName
       _.each(res.listData, item=>{
         time.push(item.planTime)
         planHs.push(item.planH)
         planJbHs.push(item.planJbH)
       })
-      option.title.text=res.deptName
+      
       option.xAxis.data = time
       option.series[0].data = planHs
       option.series[1].data = planJbHs
@@ -200,13 +198,16 @@ class Analy extends React.Component {
             {/* <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button> */}
           </Form.Item>
         </Form>
-        <Row className="mgt10">
+        <Row className="mgt10" gutter={12}>
           <Col span={8}>
             <Table size="small" columns={analyColumns} 
               dataSource={data?utils.addIndex(data.listData):[]} pagination={false} />
           </Col>
           <Col span={16}>
-            {chartData?<ReactEcharts option={chartData} />:null}
+            {chartData?
+            <Card size="small" title={data.deptName}>
+              <ReactEcharts option={chartData} />
+            </Card>:null}
           </Col>
         </Row>
       </div>

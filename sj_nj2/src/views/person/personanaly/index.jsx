@@ -22,7 +22,7 @@ class Personanaly extends React.Component {
       optAgv: "",
       optAgv2:"",
       visible: true,
-      tabKey: "1",
+      tabKey: "3",
       params: {
         type: "avg1",
         isStaff: "1",

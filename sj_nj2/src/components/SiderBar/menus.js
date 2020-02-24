@@ -52,7 +52,7 @@ export default [
       },
       {
         title: "考勤分析",
-        link: "/",
+        link: "/person/attendstatis",
         key: 209
       },
     ]

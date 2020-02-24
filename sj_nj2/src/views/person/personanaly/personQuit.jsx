@@ -6,18 +6,20 @@ import {quitAnalysis} from "@/actions/personAction"
 import {quitAvg1Columns, optAgv1} from "./columns"
 import ReactEcharts from 'echarts-for-react';
 import {stackOption} from "./data"
+import Searchbox from "../attendStatis/searchbox"
+import moment from "moment"
 
 
 class PersonQuit extends React.Component {
   constructor(props){
-    super(props)
+    super(props) 
     this.state={
       params: {
         type: "quitAvg1",
         isStaff:"1",
         deptId:"",
-        startTime:"2016-01-01",
-        endTime: "2020-01-01"
+        startTime:moment().format("YYYY-MM-DD"),
+        endTime: moment().format("YYYY-MM-DD")
       },
       quitAvg1_data: "",
       source_data: "",
@@ -25,7 +27,10 @@ class PersonQuit extends React.Component {
     }
   }
   componentDidMount(){
-    this.props.actions.quitAnalysis(this.state.params, res=>{
+    this.initial(this.state.params)
+  }
+  initial(params){
+    this.props.actions.quitAnalysis(params, res=>{
       this.setState({source_data: res})
       this.handlenData(res)
     })
@@ -51,22 +56,38 @@ class PersonQuit extends React.Component {
     console.log(cstackOption, "cstackOption")
     this.setState({quitAvg1_data: coptAgv1, quitAvg1Bar_data: cstackOption})
   }
+
+  handleSearch(values){
+    if(values===null){
+      this.initial(this.state.params)
+      return
+    }
+    this.initial({
+      ...values
+    })
+  }
+
   render(){
     const {utils} = this.props
     const {quitAvg1_data, source_data, quitAvg1Bar_data} = this.state
     
     return (
-      <Row>
-        <Col span={10}>
-          <Table size="small" columns={quitAvg1Columns} pagination={false}
-            dataSource={source_data?utils.addIndex(source_data):[]} />
-        </Col>
-        <Col span={14}>
-          {quitAvg1_data?<ReactEcharts option={quitAvg1_data} />:null}
-          {quitAvg1Bar_data?<ReactEcharts option={quitAvg1Bar_data} />:null}
-          
-        </Col>
-      </Row>
+      <div>
+        <div className="mgb10 fixedend">
+          <Searchbox handleSearch={this.handleSearch.bind(this)} quitanaly />
+        </div>
+        <Row>
+          <Col span={10}>
+            <Table size="small" columns={quitAvg1Columns} pagination={false}
+              dataSource={source_data?utils.addIndex(source_data):[]} />
+          </Col>
+          <Col span={14}>
+            {quitAvg1_data?<ReactEcharts option={quitAvg1_data} />:null}
+            {quitAvg1Bar_data?<ReactEcharts option={quitAvg1Bar_data} />:null}
+            
+          </Col>
+        </Row>
+      </div>
     )
   }
 }
