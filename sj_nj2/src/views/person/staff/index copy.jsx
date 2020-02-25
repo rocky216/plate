@@ -27,21 +27,6 @@ const formItemLayout = {
   },
 };
 
-let params = {
-  current: 1,
-  name: "",
-  jobNumber: "",
-  sex: "",
-  activity: "",
-  selectStartEntryTime: "",
-  selectEndEntryTime: "",
-  selectDeptType: "",
-  selectDeptId: "",
-  levelId: "",
-  intoCenterId: "",
-  personTypeId: ""
-}
-
 class Staff extends React.Component {
   constructor(props){
     super(props)
@@ -53,6 +38,20 @@ class Staff extends React.Component {
       postsDetail: "",
       deptList: [],
       exportUrl: "",
+      params: {
+        current: 1,
+        name: "",
+        jobNumber: "",
+        sex: "",
+        activity: "",
+        selectStartEntryTime: "",
+        selectEndEntryTime: "",
+        selectDeptType: "",
+        selectDeptId: "",
+        levelId: "",
+        intoCenterId: "",
+        personTypeId: ""
+      }
     }
   }
 
@@ -61,7 +60,7 @@ class Staff extends React.Component {
     this.props.actions.getEmployeeDict({},res=>{
 
     })
-    this.props.actions.getStaff(params)
+    this.props.actions.getStaff(this.state.params)
     this.props.actions.loadSelectDeptByRole({loadType: 0, roleUrl: "/api/pc/employee"}, res=>{
       this.setState({deptList: res})
     })
@@ -78,13 +77,14 @@ class Staff extends React.Component {
 
   handlenDelete(item){
     this.props.actions.deleteStaff({id: item.id}, res=>{
-      this.props.actions.getStaff(params)
+      this.props.actions.getStaff(this.state.params)
       this.props.utils.OpenNotification("success")
     })
   }
 
   export(){
     const {utils} = this.props
+    const {params} = this.state
     let str = ""
     _.each(params,(item, key)=>{
       str+=`&${key}=${item==undefined?"":item}`
@@ -125,13 +125,16 @@ class Staff extends React.Component {
 
   deptTypeChange(key,name,{triggerNode}){
     let o = triggerNode.props.dataRef.deptType
+    const {params} = this.state
     params.selectDeptType = o
+    this.setState({params})
   }
 
   handleSubmit(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        const {params} = this.state
         const {name, jobNumber, sex, activity, time, levelId, intoCenterId, personTypeId, selectDeptId} = values
         params.name = name
         params.jobNumber = jobNumber
@@ -143,7 +146,7 @@ class Staff extends React.Component {
         params.selectDeptId = selectDeptId
         params.selectStartEntryTime = time && time.length? moment(time[0]).format("YYYY-MM-DD"):""
         params.selectEndEntryTime = time && time.length? moment(time[1]).format("YYYY-MM-DD"):""
-        
+        this.setState({params})
         console.log('Received values of form: ', values);
         this.props.actions.getStaff({
           ...params
@@ -169,13 +172,13 @@ class Staff extends React.Component {
       intoCenterId: "",
       personTypeId: ""
     }
-    params = obj
+    this.setState({params: obj})
     this.props.actions.getStaff({current: 1})
     this.export()
   }
   handlenImport(info){
     const { status, response } = info.file;
-    
+    console.log(info)
     if (status === 'done') {
       if(response.code=="1"){
         this.props.utils.OpenNotification("success")
@@ -198,7 +201,7 @@ class Staff extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, staff, employeedict} = this.props
-    const {quitVisible, quitDetail, deptList, postsVisible, postsDetail, exportUrl, noticeVisible} = this.state
+    const {quitVisible, quitDetail, deptList, params, postsVisible, postsDetail, exportUrl, noticeVisible} = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -232,16 +235,12 @@ class Staff extends React.Component {
             <Row>
               <Col span={4}>
                 <Form.Item label="姓名">
-                  {getFieldDecorator('name', {
-                    initialValue: params.name
-                  })(<Input />)}
+                  {getFieldDecorator('name')(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={4}>
                 <Form.Item label="性别">
-                  {getFieldDecorator('sex', {
-                    initialValue: params.sex
-                  })(
+                  {getFieldDecorator('sex')(
                     <Select style={{width: "100%"}}>
                       <Option value="">全部</Option>
                       <Option value="1">男</Option>
@@ -252,16 +251,12 @@ class Staff extends React.Component {
               </Col>
               <Col span={4}>
                 <Form.Item label="入职日期">
-                  {getFieldDecorator('time', {
-                    initialValue: params.selectStartEntryTime?[moment(params.selectStartEntryTime),moment(params.selectEndEntryTime)]:null
-                  })(<RangePicker />)}
+                  {getFieldDecorator('time')(<RangePicker />)}
                 </Form.Item>
               </Col>
               <Col span={4}>
                 <Form.Item label="成本中心">
-                  {getFieldDecorator('intoCenterId',{
-                    initialValue: params.intoCenterId
-                  })(
+                  {getFieldDecorator('intoCenterId')(
                     <Select>
                       <Option value="">全部</Option>
                       {employeedict && employeedict.intoCenterList?employeedict.intoCenterList.map(item=>(
@@ -273,9 +268,7 @@ class Staff extends React.Component {
               </Col>
               <Col span={4}>
                 <Form.Item label="岗级">
-                  {getFieldDecorator('levelId',{
-                    initialValue: params.levelId
-                  })(
+                  {getFieldDecorator('levelId')(
                     <Select>
                       <Option value="">全部</Option>
                       {employeedict && employeedict.levelList?employeedict.levelList.map(item=>(
@@ -287,16 +280,12 @@ class Staff extends React.Component {
               </Col>
               <Col span={4}>
                 <Form.Item label="工号">
-                  {getFieldDecorator('jobNumber',{
-                    initialValue: params.jobNumber
-                  })(<Input />)}
+                  {getFieldDecorator('jobNumber')(<Input />)}
                 </Form.Item>
               </Col>
               <Col span={4}>
                 <Form.Item label="状态">
-                  {getFieldDecorator('activity',{
-                    initialValue: params.activity
-                  })(
+                  {getFieldDecorator('activity')(
                     <Select>
                       <Option value="">全部</Option>
                       <Option value="0">待报到</Option>
@@ -310,9 +299,7 @@ class Staff extends React.Component {
               </Col>
               <Col span={4}>
                 <Form.Item label="组织机构">
-                  {getFieldDecorator('selectDeptId',{
-                    initialValue: params.selectDeptId
-                  })(
+                  {getFieldDecorator('selectDeptId')(
                     deptList && deptList.length?
                     <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll onChange={this.deptTypeChange.bind(this)}>
                       {this.createNode(deptList)}
@@ -322,9 +309,7 @@ class Staff extends React.Component {
               </Col>
               <Col span={4}>
                 <Form.Item label="人员类别">
-                  {getFieldDecorator('personTypeId',{
-                    initialValue: params.personTypeId
-                  })(
+                  {getFieldDecorator('personTypeId')(
                     <Select>
                       <Option value="">全部</Option>
                       {employeedict && employeedict.personTypeList?employeedict.personTypeList.map(item=>(
@@ -348,6 +333,7 @@ class Staff extends React.Component {
             columns={this.getCol()} 
             pagination={utils.Pagination(staff, page=>{
               params.current = page
+              this.setState({params})
               this.props.actions.getStaff(params)
             })}
             dataSource={staff?utils.addIndex(staff.list):[]} 

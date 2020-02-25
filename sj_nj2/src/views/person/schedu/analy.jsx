@@ -8,6 +8,7 @@ import ReactEcharts from 'echarts-for-react';
 import {option} from "./data"
 import moment from "moment";
 import WeekRangePicker from "./WeekRangePicker"
+import Statiscon from "../attendStatis/statiscon"
 
 const {TreeNode} = TreeSelect
 const {Option} = Select
@@ -31,10 +32,7 @@ class Analy extends React.Component {
     }
   }
   componentDidMount(){
-    this.initial("day",{})
-    this.props.actions.loadSelectDeptByRole({loadType: 1, roleUrl: "/api/pc/plan"}, res=>{
-      this.setState({deptList: res})
-    })
+    this.initial({type:"day"})
   }
   createNode(arr){
     return arr.map(item=>(
@@ -43,14 +41,22 @@ class Analy extends React.Component {
       </TreeNode>
     ))
   }
-  initial(type, params){
+  initial(params){
+    const {type, day, deptId, month} = params
     if(type=="day"){
-      this.props.actions.getDayPlanFormDay(params, res=>{
+      this.props.actions.getDayPlanFormDay({
+        deptId,
+        startTime: day && day.length?moment(day[0]).format("YYYY-MM-DD"):"",
+        endTime: day && day.length?moment(day[1]).format("YYYY-MM-DD"):""
+      }, res=>{
         this.setState({data: res, chartData:""})
         this.handlenOption(res)
       })
     }else if(type=="month"){
-      this.props.actions.getMonthPlanFormM(params, res=>{
+      this.props.actions.getMonthPlanFormM({
+        deptId,
+        startTime: month?moment(month).format("YYYY"):"",
+      }, res=>{
         this.setState({data: res, chartData:""})
         this.handlenOption(res)
       })
@@ -99,43 +105,12 @@ class Analy extends React.Component {
   handlenWeek(startWeek, endWeek){
     this.setState({startWeek, endWeek})
   }
-  handleSearch(e){
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log(values)
-      const {deptId,type, day,week,month} = values
-      let obj= {
-        deptId: values.deptId,
-        
-      }
-      if(type=="day"){
-        this.initial(type, {
-          deptId,
-          startTime: day && day.length?moment(day[0]).format("YYYY-MM-DD"):"",
-          endTime: day && day.length?moment(day[1]).format("YYYY-MM-DD"):"",
-        })
-      }else if(type=="month"){
-        this.initial(type, {
-          deptId,
-          startTime: moment(month).format("YYYY"),
-        })
-      }else {
-        const {startWeek, endWeek} = this.state
-        if(!startWeek || !endWeek){
-          this.props.utils.OpenNotification("error","请选择开始周和结束周!")
-          return
-        }
-        this.initial(type,{
-          deptId,
-          startTime: startWeek?this.getWeekR(startWeek).start:"",
-          endTime: endWeek?this.getWeekR(endWeek).end:"",
-        })
-      }
-      
-    })
-  }
-  handlenReset(){
-
+  handleSearch(values){
+    if(values===null){
+      this.initial({type:"day"})
+      return
+    }
+    this.initial(values)
   }
 
   render(){
@@ -145,59 +120,8 @@ class Analy extends React.Component {
     
     return (
       <div >
-        <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
-          <Form.Item  label="车间/部门">
-            {getFieldDecorator('deptId')( 
-              deptList && deptList.length?
-              <TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll style={{width: 150}}>
-                {this.createNode(deptList)}
-              </TreeSelect>:<span></span>
-            )}
-          </Form.Item>
-          <Form.Item label="统计类型" >
-            {getFieldDecorator('type', {
-              initialValue: "day"
-            })(
-              <Select style={{width: 150}}>
-                <Option value="day">按日统计</Option>
-                <Option value="week">按周统计</Option>
-                <Option value="month">按月统计</Option>
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item>
-            <Radio.Group value={dateType} onChange={this.handlenDateType.bind(this)}>
-              <Radio.Button value="1">本周</Radio.Button>
-              <Radio.Button value="2">自定义</Radio.Button>
-            </Radio.Group>
-          </Form.Item>
-          {dateType==="2" && getFieldValue("type")=="day"?
-          <Form.Item  >
-            {getFieldDecorator('day', {
-            })(
-              <RangePicker disabled={dateType==="1"} />
-            )}
-          </Form.Item>:null}
-          {dateType==="2" &&  getFieldValue("type")=="week"?
-          <Form.Item  >
-            <WeekRangePicker onChange={this.handlenWeek.bind(this)} />
-            {/* <WeekPicker value={moment(new Date())} /><span>-</span>
-            <WeekPicker value={moment(new Date())} /> */}
-          </Form.Item>:null}
-          {dateType==="2" && getFieldValue("type")=="month"?
-          <Form.Item  >
-            {getFieldDecorator('month', {
-              initialValue: moment(new Date().getFullYear(),"YYYY")
-            })(
-              <DatePicker mode="year" format="YYYY" />
-            )}
-          </Form.Item>:null}
-          
-          <Form.Item >
-            <Button type="primary" htmlType="submit"><Icon type="search" />搜索</Button>
-            {/* <Button className="mgl10" onClick={this.handlenReset.bind(this)}><Icon type="retweet" />重置</Button> */}
-          </Form.Item>
-        </Form>
+        <Statiscon handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/plan" />
+        
         <Row className="mgt10" gutter={12}>
           <Col span={8}>
             <Table size="small" columns={analyColumns} 
