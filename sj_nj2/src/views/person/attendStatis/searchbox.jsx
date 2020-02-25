@@ -15,6 +15,7 @@ class Searchbox extends React.Component {
     super(props)
     this.state = {
       deptList: "",
+      isOpen:false
     }
   }
 
@@ -31,6 +32,18 @@ class Searchbox extends React.Component {
       </TreeNode>
     ))
   }
+  handlenYear(v){
+    this.setState({isOpen: false})
+    this.props.form.setFieldsValue({year: v})
+  }
+  handleOpenChange(status){    
+    // console.log(status)    
+    if(status){      
+        this.setState({isOpen: true})    
+    } else {      
+        this.setState({isOpen: false})    
+    }  
+  }
   getWeekR(){
     let week = moment().format("E")
     ,start=moment().subtract(week-1, 'days').format("YYYY-MM-DD")
@@ -40,7 +53,7 @@ class Searchbox extends React.Component {
   handleSearch(e){
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      const {type,deptId, time, dimen, isStaff} = values
+      const {type,deptId, time, dimen, isStaff, year} = values
       let startTime="", endTime=""
       if(type=="1"){
         startTime = endTime = moment().format("YYYY-MM-DD")
@@ -58,7 +71,16 @@ class Searchbox extends React.Component {
         endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD"):""
       }
       if(this.props.quitanaly){
-        
+        if(year){
+          this.props.handleSearch({
+            type:dimen,
+            isStaff,
+            deptId,
+            startTime: `${moment(year).format("YYYY")}-01-01`,
+            endTime: `${moment(year).format("YYYY")}-12-31`,
+          })
+          return
+        }
         this.props.handleSearch({
           type:dimen,
           isStaff,
@@ -67,7 +89,7 @@ class Searchbox extends React.Component {
           endTime
         })
       }else{
-        this.props.handleSearch({
+        this.props.handleSearch({ 
           deptId,
           startTime,
           endTime
@@ -84,7 +106,7 @@ class Searchbox extends React.Component {
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, quitanaly} = this.props
-    const {deptList} = this.state
+    const {deptList, isOpen} = this.state
 
     return (
       <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
@@ -121,6 +143,7 @@ class Searchbox extends React.Component {
             </TreeSelect>:<span></span>
           )}
         </Form.Item>
+        {getFieldValue("dimen")!="yearAvg4"?
         <Form.Item >
           {getFieldDecorator('type', {
             initialValue: "1"
@@ -132,11 +155,22 @@ class Searchbox extends React.Component {
                 <Radio.Button value="4">自定义</Radio.Button>
               </Radio.Group>
           )}
-        </Form.Item>
-        {getFieldValue("type")=="4"?
+        </Form.Item>:null}
+        {getFieldValue("type")=="4" && getFieldValue("dimen")!="yearAvg4"?
         <Form.Item >
           {getFieldDecorator('time')( 
             <RangePicker/>
+          )}
+        </Form.Item>:null}
+        {quitanaly && getFieldValue("dimen")=="yearAvg4"?
+        <Form.Item label="年份统计" >
+          {getFieldDecorator('year', {
+            
+          })(
+            <DatePicker mode="year" format="YYYY" allowClear={false} 
+            onFocus={()=>this.setState({isOpen:true})} open={isOpen} 
+            onOpenChange={this.handleOpenChange.bind(this)}
+            onPanelChange={this.handlenYear.bind(this)}/>
           )}
         </Form.Item>:null}
         <Form.Item >

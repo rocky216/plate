@@ -34,8 +34,13 @@ class Login extends React.Component {
     
     return (
       <div className="login">
+        <div className="top">
+          <img src={require("@/assets/images/logo.png")} />
+        </div>
         <div className="login_box">
-          <Card title="人员管理系统">
+          <img className="mgb10" src={require("@/assets/images/company.png")} />
+          <Card >
+            <div className="title">人员管理系统</div>
             <Form onSubmit={this.handlenSubmit.bind(this)}>
               <Form.Item>
                 {getFieldDecorator('account', {
@@ -43,7 +48,7 @@ class Login extends React.Component {
                 })(
                   <Input
                     size="large"
-                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    prefix={<Icon type="user" style={{ color: '#fff' }} />}
                     placeholder="用户名"
                   />,
                 )}
@@ -54,19 +59,21 @@ class Login extends React.Component {
                 })(
                   <Input
                     size="large"
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    prefix={<Icon type="lock" style={{ color: '#fff' }} />}
                     type="password"
                     placeholder="密码"
                   />,
                 )}
               </Form.Item>
               <Form.Item>
-                <Button size="large" type="primary" htmlType="submit" loading={spinning} >登录</Button>
+                <Button style={{background:"#fa8a1e"}} size="large" block type="primary" htmlType="submit" loading={spinning} >登录</Button>
               </Form.Item>
             </Form>
           </Card>
         </div>
-        
+        <div className="bottom">
+            <img src={require("@/assets/images/company_1.png")} />
+        </div>
       </div>
     )
   }

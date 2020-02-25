@@ -48,6 +48,7 @@ class Attstanaly extends React.Component {
     })
   }
   handlenData(res){
+    if(!res)return
     optionTrendPie.series[0]["data"][0]["value"] =res.zc.count
     optionTrendPie.series[0]["data"][1]["value"] =res.cd.count
     optionTrendPie.series[0]["data"][2]["value"] =res.qj.count

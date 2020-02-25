@@ -36,6 +36,7 @@ class PersonQuit extends React.Component {
     })
   }
   handlenData(res){
+    if(!res)return
     let xaxis = [], dataLine = [], dataBar1=[],dataBar2=[],dataBar3=[]
     _.each(res, item=>{
       xaxis.push(item.ks)
@@ -84,7 +85,6 @@ class PersonQuit extends React.Component {
           <Col span={14}>
             {quitAvg1_data?<ReactEcharts option={quitAvg1_data} />:null}
             {quitAvg1Bar_data?<ReactEcharts option={quitAvg1Bar_data} />:null}
-            
           </Col>
         </Row>
       </div>

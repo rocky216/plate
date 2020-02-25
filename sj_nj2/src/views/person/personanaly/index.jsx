@@ -42,8 +42,8 @@ class Personanaly extends React.Component {
     
   }
   handlenData(res){
+    if(!res)return
     let xaxis = [], dataLine = [], dataBar1=[],dataBar2=[],dataBar3=[]
-    console.log(res, "res")
     _.each(res, item=>{
       xaxis.push(item.ks)
       dataLine.push(item.rate*100)

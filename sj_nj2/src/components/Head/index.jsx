@@ -6,6 +6,7 @@ import {withRouter} from "react-router-dom"
 import {Layout, Icon, Button, Dropdown, Menu, Modal, Badge} from "antd"
 import {goLoginOut, getNoticeNum} from "@/actions/appAction" 
 import "./style.less"
+import moment from "moment"
 
 const {Header} = Layout
 const { confirm } = Modal;
@@ -19,12 +20,12 @@ class Head extends React.Component {
   }
 
   componentDidMount(){
-    // if(NOTICE=="pro"){
-    //   timer && clearInterval(timer)
-    //   timer = setInterval(()=>{
-    //     this.initial()
-    //   }, 3000)
-    // }
+    if(NOTICE=="pro"){
+      timer && clearInterval(timer)
+      timer = setInterval(()=>{
+        this.initial()
+      }, 3000)
+    }
     this.initial()
     
   }
@@ -57,9 +58,27 @@ class Head extends React.Component {
       }
     });
   }
+  getWeek(n){
+    switch(n){
+      case 0:
+        return "日"
+      case 1:
+        return "一"
+      case 2:
+        return "二"
+      case 3:
+        return "三"
+      case 4:
+        return "四"
+      case 5:
+        return "五"
+      case 6:
+        return "六"
+    }
+  }
 
   render(){
-    const {collapsed} = this.props
+    const {collapsed, base} = this.props
     const {count} = this.state
 
 
@@ -70,12 +89,17 @@ class Head extends React.Component {
             <div className="logo">
               <img src={require("@/assets/images/system-logo.png")} style={{width: "50%"}} />
             </div>
-            <div className="mgl10">
-              <img src={require("@/assets/images/system-name.png")} />
+            <div className="loginInfo">
+              <p >欢迎<span style={{color:"red"}}>{base?base.employeeName:""}</span>登录！</p>
+              <p>今天是：{base?moment(base.nowTime).format("YYYY年MM月DD"):""} 
+                <span style={{color:"red"}}>星期{base?this.getWeek(moment(base.nowTime).day()):""}</span></p>
             </div>
+            
           </div>
           
-          
+          <div className="mgl10">
+            <img src={require("@/assets/images/system-name.png")} />
+          </div>
           <div className="right">
             <ul className="rightUl">
               <li style={{paddingTop: 2, marginRight: 10}}>
@@ -104,6 +128,7 @@ function mapDispatchProps(dispatch){
 
 function mapStateProps(state){
   return {
+    base: state.app.base,
     collapsed: state.app.collapsed
   }
 }
