@@ -23,7 +23,7 @@ const formItemLayout = {
   },
 };
 
-class AddAttend extends React.Component {
+class AddAttend extends React.Component { 
   constructor(props){
     super(props)
     this.state = {

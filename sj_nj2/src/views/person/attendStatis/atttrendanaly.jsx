@@ -63,9 +63,9 @@ class Atttrendanaly extends React.Component {
         kgCounts.push(item.kgCount)
         cdCounts.push(item.cdCount)
 
-        qjCountRates.push(item.cqCount && parseInt(item.cqCount)?(item.qjCount/item.cqCount*100).toFixed(2):0)
-        kgCountRates.push(item.cqCount && parseInt(item.cqCount)?(item.kgCount/item.cqCount*100).toFixed(2):0)
-        cdCountRates.push(item.cqCount && parseInt(item.cqCount)?(item.cdCount/item.cqCount*100).toFixed(2):0)
+        qjCountRates.push(item.cqrcCount && parseInt(item.cqrcCount)?(item.qjCount/item.cqrcCount*100).toFixed(2):0)
+        kgCountRates.push(item.cqrcCount && parseInt(item.cqrcCount)?(item.kgCount/item.cqrcCount*100).toFixed(2):0)
+        cdCountRates.push(item.cqrcCount && parseInt(item.cqrcCount)?(item.cdCount/item.cqrcCount*100).toFixed(2):0)
       })
       
       option.xAxis.data = time
@@ -96,10 +96,13 @@ class Atttrendanaly extends React.Component {
 
     return (
       <div>
-        <Statiscon handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/hAttendanceAnalysis" />
+        <div className="fixedend">
+          <Statiscon handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/hAttendanceAnalysis" />
+        </div>
+        
         <Row className="mgt10" gutter={12}>
           <Col span={8}>
-            <Table size="small" columns={attendAnanlyColumns} 
+            <Table size="small" columns={attendAnanlyColumns}  
               dataSource={data?utils.addIndex(data.listData):[]} pagination={false} />
           </Col>
           <Col span={16}>

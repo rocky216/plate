@@ -3,14 +3,73 @@ import {Radio, InputNumber, Button} from "antd"
 import {leaveType} from "../absence/data"
 
 
+export const personstatisColumns = [
+  {
+    title: "所属机构",
+    dataIndex: "deptName"
+  },
+  {
+    title: "员工编号",
+    dataIndex: "employyeNo"
+  },
+  {
+    title: "姓名",
+    dataIndex: "name"
+  },
+  {
+    title: "计划上班时长",
+    dataIndex: "jhH"
+  },
+  {
+    title: "计划加班时长",
+    dataIndex: "planJbH"
+  },
+  {
+    title: "非计划加班时长",
+    dataIndex: "notPlanJbH"
+  },
+  {
+    title: "请假时长",
+    dataIndex: "leaveH"
+  },
+  {
+    title: "请假率",
+    dataIndex: "leaveRate"
+  },
+  {
+    title: "迟到次数",
+    dataIndex: "lateCount"
+  },
+  {
+    title: "迟到率",
+    dataIndex: "lateRate"
+  },
+  {
+    title: "旷工次数",
+    dataIndex: "absenteeism"
+  },
+  {
+    title: "旷工率",
+    dataIndex: "absenteeismRate"
+  },
+  {
+    title: "岗位类别",
+    dataIndex: "personTypeName"
+  },
+  {
+    title: "成本中心",
+    dataIndex: "intoCenterName"
+  },
+]
+
 export const overtrendanalyColumns = [
   {
     title: "日期",
     dataIndex: "jbTime"
   },
   {
-    title: "出勤人数",
-    dataIndex: "cqCount"
+    title: "出勤人次",
+    dataIndex: "cqrcCount"
   },
   {
     title: "计划上班时长(H)",
@@ -40,8 +99,8 @@ export const attendAnanlyColumns = [
     dataIndex: "cqTime"
   },
   {
-    title: "出勤人数",
-    dataIndex: "cqCount"
+    title: "出勤人次",
+    dataIndex: "cqrcCount"
   },
   {
     title: "请假人次",
@@ -88,7 +147,7 @@ export const analyColumns = [
     }
   },
   {
-    title: "排产日期",
+    title: "计划性加班时长",
     dataIndex: "planJbH",
     render(item){
       return item?parseFloat(item).toFixed(2):0

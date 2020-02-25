@@ -7,6 +7,7 @@ import Attstanaly from "./attstanaly"
 import Atttrendanaly from "./atttrendanaly"
 import Overtrendanaly from "./overtrendanaly"
 import Overtimestatis from "./overtimestatis"
+import Personstatis from "./personstatis"
 
 const { TabPane } = Tabs;
 
@@ -21,7 +22,7 @@ class AttendStatis extends React.Component {
         {title: "加班趋势分析", key: "4"},
         {title: "人员考勤统计表", key: "5"},
       ],
-      tabKey: "2"
+      tabKey: "5"
     }
   }
 
@@ -41,6 +42,7 @@ class AttendStatis extends React.Component {
         {tabKey=="2"?<Overtimestatis/>:null}
         {tabKey=="3"?<Atttrendanaly/>:null}
         {tabKey=="4"?<Overtrendanaly/>:null}
+        {tabKey=="5"?<Personstatis/>:null}
         
         </Card>
       </JCard>

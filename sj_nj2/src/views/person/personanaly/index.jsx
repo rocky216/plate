@@ -114,8 +114,8 @@ class Personanaly extends React.Component {
             <TabPane key="3" tab="离职人员统计表" />
           </Tabs>
           {tabKey=="1"?
-          <div>
-            <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
+          <div >
+            <Form className="fixedend" layout="inline" onSubmit={this.handleSearch.bind(this)}>
               <Form.Item label="分析维度" >
                 {getFieldDecorator('type', {
                   initialValue: "avg1"

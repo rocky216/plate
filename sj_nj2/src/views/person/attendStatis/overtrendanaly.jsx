@@ -58,6 +58,7 @@ class Overtrendanaly extends React.Component {
       let time = [], planHs = [], planJbHs = [], trueHs = [],notPlanJbHs = [], sumJbHs = []
       _.each(res.listData, item=>{
         time.push(item.jbTime )
+        
         planHs.push(item.planH)
         planJbHs.push(item.planJbH)
         trueHs.push(item.trueH)
@@ -90,7 +91,10 @@ class Overtrendanaly extends React.Component {
 
     return (
       <div>
-        <Statiscon handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/hAttendanceAnalysis" />
+        <div className="fixedend mgb10">
+          <Statiscon handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/hAttendanceAnalysis" />
+        </div>
+        
         <Row className="mgt10" gutter={12}>
           <Col span={8}>
             <Table size="small" columns={overtrendanalyColumns} 

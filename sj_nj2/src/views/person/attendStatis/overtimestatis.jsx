@@ -34,18 +34,20 @@ class Overtimestatis extends React.Component {
         },
         {
           title: "计划加班时长",
-          dataIndex: "hours2",
+          dataIndex: "hours1",
           render(item){return item?parseFloat(item).toFixed(2):0}
         },
         {
           title: "非计划加班时长",
-          dataIndex: "hours1",
+          dataIndex: "hours2",
           render(item){return item?parseFloat(item).toFixed(2):0}
         },
         {
           title: "总加班时长",
           dataIndex: "hours3",
-          render(item){return item?parseFloat(item).toFixed(2):0}
+          render(item, rows){
+            return !item || !parseInt(item) ? (parseFloat(rows.hours1?rows.hours1:0)+parseFloat(rows.hours2?rows.hours2:0)).toFixed(2):parseFloat(item).toFixed(2)
+          }
         },
       ],
       optionOver1: "",
@@ -59,16 +61,17 @@ class Overtimestatis extends React.Component {
   initial(params){
     this.props.actions.overWorkAnalysis(params, res=>{
       this.setState({detail: res, data: res.top5})
+      
       this.handlenData(res)
     })
   }
   handlenData(res){
     if(!res)return
-    optionOverStatis1.series[0].data[0] = res.sjsbNum
-    optionOverStatis1.series[0].data[1] = res.alljbNum
-
-    optionOverStatis2.series[0].data[0] = res.jhsbNum
-    optionOverStatis2.series[0].data[1] = res.fjhjbNum
+    optionOverStatis1.series[0].data[0]["value"] = res.sjsbNum
+    optionOverStatis1.series[0].data[1]["value"] = res.alljbNum
+    console.log(optionOverStatis2, "optionOverStatis2")
+    optionOverStatis2.series[0].data[0]["value"] = res.jhsbNum
+    optionOverStatis2.series[0].data[1]["value"] = res.fjhjbNum
     this.setState({optionOver1: optionOverStatis1, optionOver2: optionOverStatis2})
   }
   handleSearch(values){
@@ -81,7 +84,7 @@ class Overtimestatis extends React.Component {
   render(){
     const {utils} = this.props
     const {detail, data, key, columns, optionOver1, optionOver2} = this.state
-
+    console.log(optionOver1, "optionOver1")
     return (
       <div>
         <div className="fixedend">

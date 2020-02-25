@@ -5,6 +5,7 @@ import {Card, Row, Col, Input } from "antd";
 import {getWeekCheck} from "@/actions/appAction"
 import ReactEcharts from 'echarts-for-react';
 import {option} from "./data"
+import JCard from "@/components/JCard"
 
 
 class WeekCheck extends React.Component {
@@ -12,12 +13,13 @@ class WeekCheck extends React.Component {
     super(props)
     this.state = {
       detail: "",
-      options: ""
+      options: "",
+      spinning: true
     }
   }
   componentDidMount(){
     this.props.actions.getWeekCheck({},res=>{
-      this.setState({detail:res})
+      this.setState({detail:res, spinning: false})
       this.chartData(res)
     })
   }
@@ -53,10 +55,12 @@ class WeekCheck extends React.Component {
 
   render(){
     const {utils, weekcheck} = this.props
-    const {detail, options} = this.state
+    const {detail, options, spinning} = this.state
 
     return (
-      <Card size="small" title={detail?detail.dept.deptName+'异常考勤':""}>
+
+      <JCard spinning={spinning}>
+        <Card size="small" title={detail?detail.dept.deptName+'异常考勤':""}>
         <Row gutter={10} className="mgb5">
           <Col span={8}>
             <Input addonBefore="正常人次" value={detail.normalCount} />
@@ -94,6 +98,7 @@ class WeekCheck extends React.Component {
         
 
       </Card>
+      </JCard>
     )
   }
 }

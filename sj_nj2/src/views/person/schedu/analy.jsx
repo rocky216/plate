@@ -73,13 +73,13 @@ class Analy extends React.Component {
       let time = [], planHs = [], planJbHs = []
       _.each(res.listData, item=>{
         time.push(item.planTime)
-        planHs.push(item.planH)
-        planJbHs.push(item.planJbH)
+        planHs.push(parseFloat(item.planH))
+        planJbHs.push(parseFloat(item.planJbH))
       })
       
       option.xAxis.data = time
-      option.series[0].data = planHs
-      option.series[1].data = planJbHs
+      option.series[0].data = planJbHs
+      option.series[1].data = planHs
       this.setState({chartData:option})
     }
   }
@@ -117,7 +117,7 @@ class Analy extends React.Component {
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils} = this.props
     const {deptList, dateType, data, chartData, startWeek, endWeek} = this.state
-    
+    console.log(chartData, "chartData")
     return (
       <div >
         <Statiscon handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/plan" />

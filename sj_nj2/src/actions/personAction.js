@@ -2,6 +2,35 @@ import {START_LOADING_PERSON, END_LOADING_PERSON, START_LOADING_PERSON_ONE, END_
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
 
+export function personnelAttendanceStatistics(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hAttendanceAnalysis/personnelAttendanceStatistics/",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+        personstatis: data
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function overWorkAnalysis(params, next){
   return async function(dispatch, getState){
     dispatch({
@@ -1880,7 +1909,6 @@ export function getEmployeeDict(params, next){
       }
       let data = await fetch(options)
       if(next)next(data)
-      console.log(data)
       dispatch({
         type: END_LOADING_PERSON,
         employeedict: data

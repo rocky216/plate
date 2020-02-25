@@ -1,5 +1,5 @@
 export const optionOverStatis1 = { //给每个饼图模块添加颜色
-  color: ['red', '#68d1da'],
+  color: ['#7bca61', '#68d1da'],
   title:{
       text: ""
   },
@@ -11,17 +11,17 @@ export const optionOverStatis1 = { //给每个饼图模块添加颜色
   series: [ //添加一个模型
       {
           type: 'pie', //模型的类型（饼图，柱状图等）
-          radius: '60%',//半径
+          radius: '61%',//半径
           clockwise: false,//饼图是否顺时针排列
           center: ['50%', '50%'],//圆心的位置
           data: [
               {
                   value: 5,
-                  name: '正常上班时长'
+                  name: '正常上班时长1'
               },
               {
                   value: 8,
-                  name: '总加班时长'
+                  name: '总加班时长2'
               },
           ],
           itemStyle: {//鼠标移到图标上的效果
@@ -31,7 +31,7 @@ export const optionOverStatis1 = { //给每个饼图模块添加颜色
                   shadowColor: 'rgba(0, 0, 0, 0.5)'
               }
           },
-          label : {
+          label: {
     　　　　normal : {
     　　　　　　formatter: '{b}({d}%)',
     　　　　　　textStyle : {
@@ -46,7 +46,7 @@ export const optionOverStatis1 = { //给每个饼图模块添加颜色
 }
 
 export const optionOverStatis2 = { //给每个饼图模块添加颜色
-  color: ['red', '#68d1da'],
+  color: ['#7bca61', '#68d1da'],
   title:{
       text: ""
   },
@@ -67,7 +67,7 @@ export const optionOverStatis2 = { //给每个饼图模块添加颜色
                   name: '计划内上班时长'
               },
               {
-                  value: 8,
+                  value: 8, 
                   name: '非计划加班时长'
               },
           ],
@@ -183,31 +183,26 @@ export const optionTrend = {
     {
         name: '计划上班时长',
         type: 'line',
-        stack: '总量',
         data: [120, 132, 101, 134, 90, 230, 210]
     },
     {
         name: '计划加班时长',
         type: 'line',
-        stack: '总量',
         data: [220, 182, 191, 234, 290, 330, 310]
     },
     {
       name: '实际上班时长',
       type: 'line',
-      stack: '总量',
       data: [220, 182, 191, 234, 290, 330, 310]
     },
     {
       name: '非计划加班时长',
       type: 'line',
-      stack: '总量',
       data: [220, 182, 191, 234, 290, 330, 310]
     },
     {
       name: '总加班时长',
       type: 'line',
-      stack: '总量',
       data: [220, 182, 191, 234, 290, 330, 310]
     },
   ]
@@ -246,19 +241,16 @@ export const option = {
       {
           name: '请假人次',
           type: 'line',
-          stack: '总量',
           data: [120, 132, 101, 134, 90, 230, 210]
       },
       {
           name: '旷工人次',
           type: 'line',
-          stack: '总量',
           data: [220, 182, 191, 234, 290, 330, 310]
       },
       {
         name: '迟到人次',
         type: 'line',
-        stack: '总量',
         data: [220, 182, 191, 234, 290, 330, 310]
     },
   ]
@@ -296,19 +288,16 @@ export const optionRate = {
       {
           name: '请假率',
           type: 'line',
-          stack: '总量',
           data: [120, 132, 101, 134, 90, 230, 210]
       },
       {
           name: '旷工率',
           type: 'line',
-          stack: '总量',
           data: [220, 182, 191, 234, 290, 330, 310]
       },
       {
         name: '迟到率',
         type: 'line',
-        stack: '总量',
         data: [220, 182, 191, 234, 290, 330, 310]
     },
   ]

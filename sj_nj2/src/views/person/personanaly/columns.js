@@ -16,7 +16,7 @@ export const workshopColumns = function(title){
       title:"到岗率",
       dataIndex: "rate",
       render(item){
-        return item? parseFloat(item)*100+'%':""
+        return item? (parseFloat(item)*100).toFixed(2)+'%':""
       }
     },
     {

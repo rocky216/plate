@@ -90,7 +90,7 @@ class Head extends React.Component {
               <img src={require("@/assets/images/system-logo.png")} style={{width: "50%"}} />
             </div>
             <div className="loginInfo">
-              <p >欢迎<span style={{color:"red"}}>{base?base.employeeName:""}</span>登录！</p>
+              <p >欢迎<Link to="/other/user"><span style={{color:"red"}}>{base?base.employeeName:""}</span></Link>登录！</p>
               <p>今天是：{base?moment(base.nowTime).format("YYYY年MM月DD"):""} 
                 <span style={{color:"red"}}>星期{base?this.getWeek(moment(base.nowTime).day()):""}</span></p>
             </div>

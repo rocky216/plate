@@ -39,6 +39,7 @@ import Personanaly from "@/views/person/personanaly"
 import AnalyDetail from "@/views/person/personanaly/detail"
 
 import News from "@/views/other/news"
+import UserInfo from "@/views/other/user"
 import AttendStatis from "@/views/person/attendStatis"
 
 class Routers extends React.Component{
@@ -87,8 +88,9 @@ class Routers extends React.Component{
         <AuthRoute exact path="/person/personanaly" Component={Personanaly} name="人力资源分析" />
         <AuthRoute  path="/person/personanaly/:id/detail" Component={AnalyDetail} name="人力资源分析人员统计" />
         <AuthRoute  path="/person/attendstatis" Component={AttendStatis} name="考勤统计" />
-
+        
         <AuthRoute  path="/other/news" Component={News} name="消息列表" />
+        <AuthRoute  path="/other/user" Component={UserInfo} name="个人信息" />
 
       </Switch>
       
