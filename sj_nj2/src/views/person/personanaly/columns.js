@@ -137,3 +137,100 @@ export const quitAvg1Columns = [
     }
   },
 ]
+export const itemAvg2Columns = [ 
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "人员来源",
+    dataIndex: "ks"
+  },
+  {
+    title: "在职人数",
+    dataIndex: "worker"
+  },
+  {
+    title: "离职人数",
+    dataIndex: "quit"
+  },
+  {
+    title: "离职率",
+    render(item){
+      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)
+    }
+  },
+]
+
+export const yearAvg4Columns = [ 
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "月份",
+    dataIndex: "ks"
+  },
+  {
+    title: "在职人数",
+    dataIndex: "worker"
+  },
+  {
+    title: "离职人数",
+    dataIndex: "quit"
+  },
+  {
+    title: "离职率",
+    render(item){
+      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)
+    }
+  },
+]
+
+export const personDetailColumns = [ 
+  {
+    title: "姓名",
+    dataIndex: "name"
+  },
+  {
+    title: "工号",
+    dataIndex: "jobNumber"
+  },
+  {
+    title: "性别",
+    dataIndex: "sex",
+    render(item){
+      return item==0?"女":"男"
+    }
+  },
+  {
+    title: "岗级",
+    dataIndex: "level"
+  },
+  {
+    title: "所属机构",
+    dataIndex: "allDeptNameStr"
+  },
+  {
+    title: "联系电话",
+    dataIndex: "phone"
+  },
+  {
+    title: "成本中心",
+    dataIndex: "intoCenterName"
+  },
+  {
+    title: "入职日期",
+    dataIndex: "entryTime"
+  },
+  {
+    title: "离职日期",
+    dataIndex: "leaveTime"
+  },
+  {
+    title: "人员类别",
+    dataIndex: "personTypeName"
+  },
+]
+
+

@@ -94,7 +94,7 @@ export const stackOption = {
             },
             itemStyle: {
                 normal: {
-                    color: "blue"
+                    color: ""
                 }
             },
             data: [320, 302, 301, 334, 390, 330, 320]
@@ -109,7 +109,7 @@ export const stackOption = {
             },
             itemStyle: {
                 normal: {
-                    color: "red"
+                    color: ""
                 }
             },
             data: [120, 132, 101, 134, 90, 230, 210]

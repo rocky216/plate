@@ -1,6 +1,118 @@
-import {START_LOADING_PERSON, END_LOADING_PERSON, START_LOADING_PERSON_ONE, END_LOADING_PERSON_ONE} from "@/types"
+import {START_LOADING_PERSON, END_LOADING_PERSON, START_LOADING_PERSON_ONE, END_LOADING_PERSON_ONE, END_NOLOADING_PERSON} from "@/types"
 import {log_color} from "@/utils/config"
 import {fetch, setCookie, removeCookie} from "@/utils"
+
+export function quitAnalysisDetailGNd(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hResourceAnalysis/quitAnalysisDetailGNd",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function quitAnalysisDetailGj(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hResourceAnalysis/quitAnalysisDetailGj",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function quitAnalysisDetailFl(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hResourceAnalysis/quitAnalysisDetailFl",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
+export function quitAnalysisDetailCj(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/hResourceAnalysis/quitAnalysisDetailCj",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
 
 export function personnelAttendanceStatistics(params, next){
   return async function(dispatch, getState){
@@ -1895,9 +2007,9 @@ export function getStaff(params, next){
 
 export function getEmployeeDict(params, next){
   return async function(dispatch, getState){
-    dispatch({
-      type: START_LOADING_PERSON
-    })
+    // dispatch({
+    //   type: START_LOADING_PERSON
+    // })
 
     try{
       const options = {
@@ -1910,7 +2022,7 @@ export function getEmployeeDict(params, next){
       let data = await fetch(options)
       if(next)next(data)
       dispatch({
-        type: END_LOADING_PERSON,
+        type: END_NOLOADING_PERSON,
         employeedict: data
       })
     }catch(err){

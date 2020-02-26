@@ -38,7 +38,7 @@ class SideBar extends React.Component {
         collapsed={collapsed}
           style={{
             overflow: 'auto',
-            // height: '100vh',
+            minHeight: '100vh',
             // position: 'fixed',
             left: 0,
           }}

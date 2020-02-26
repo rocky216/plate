@@ -8,6 +8,7 @@ const filterUrl = [
 
 const instance = axios.create({
   baseURL: "",
+  timeout: 60000
 })
 
 instance.interceptors.request.use( async function(config){

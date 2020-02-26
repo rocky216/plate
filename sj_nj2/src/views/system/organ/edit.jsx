@@ -34,14 +34,17 @@ class EditOrgan extends React.Component {
       postCount: 0,
       teachVisible: false,
       index: 0,
-      teach: []
+      teach: [],
+      leader: {}
     }
   }
 
   componentDidMount(){ 
     this.props.actions.getDeptDetail({id: this.props.detail.id}, res=>{
       this.hanlenTeach(res)
-      this.setState({info: res, staffingList: res.staffingList})
+      this.setState({info: res, staffingList: res.staffingList, 
+        leader: {name:res.leaderName, id: res.leaderId}
+      })
       this.handlenCount()
       console.log(res, "res")
     })
@@ -121,14 +124,16 @@ class EditOrgan extends React.Component {
   handlenSubmit(){
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const {leader} = this.state
         this.props.actions.editOrgan({
           ...values,
           id: this.props.detail.id,
           parentId: this.state.dept?this.state.dept.supDept.id:0,
           staffingKeys: this.getJobLevel().join(),
           noticeKeys: this.handlenNoticeKeys().join(),
-          buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):""
+          buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):"",
+          leaderId: leader.id?leader.id:"",
+          leaderName: leader.name?leader.name:""
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.actions.getTreeDept({})
@@ -137,19 +142,24 @@ class EditOrgan extends React.Component {
     });
   }
   onSelect(item){
-    const {index, teach} = this.state
-    teach[index-1]={
-      id: item.id,
-      name: item.name,
+    const {index, teach, leader} = this.state
+    if(typeof index === "number"){
+      teach[index-1]={
+        id: item.id,
+        name: item.name,
+      }
+      this.setState({teach})
+    }else{
+      this.setState({leader: {name:item.name, id: item.id,}})
     }
-    this.setState({teach})
+    
   }
   
 
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, detail, onSwitch} = this.props
-    const {info, dept, staffingList, postCount, nextPostCountSum, teachVisible, teach} = this.state
+    const {info, dept, staffingList, postCount, nextPostCountSum, teachVisible, teach, leader} = this.state
     
     return (
       <div>
@@ -195,11 +205,15 @@ class EditOrgan extends React.Component {
             )}
           </Form.Item>
           <Form.Item label="机构负责人">
-            {getFieldDecorator('leaderName', {
+            <div className="teach_wrap">
+              <Input value={leader.id?leader.name:""} />
+              <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:"leader"})} />
+            </div>
+            {/* {getFieldDecorator('leaderName', {
               initialValue: info?info.leaderName:"",
             })(
               <Input/>
-            )}
+            )} */}
           </Form.Item>
           <Form.Item label="联系电话">
             {getFieldDecorator('phone', {

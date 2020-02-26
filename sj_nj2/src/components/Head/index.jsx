@@ -24,7 +24,7 @@ class Head extends React.Component {
       timer && clearInterval(timer)
       timer = setInterval(()=>{
         this.initial()
-      }, 3000)
+      }, 5000)
     }
     this.initial()
     
@@ -103,10 +103,12 @@ class Head extends React.Component {
           <div className="right">
             <ul className="rightUl">
               <li style={{paddingTop: 2, marginRight: 10}}>
-                <Link to="/other/news">
-                  <Badge count={count?count:0} offset={[5,0]} showZero={true} >
-                    <Icon type="message" style={{color: "#fff"}}  />
-                  </Badge>
+                <Link className="badge" to="/other/news">
+                  <span>{count?count:0}</span>
+                  <Icon type="message" style={{color: "#fff"}}  />
+                  {/* <Badge count={count?count:0} offset={[5,0]} showZero={true} >
+                    
+                  </Badge> */}
                 </Link>
               </li>
               <li onClick={this.loginOut.bind(this)}>

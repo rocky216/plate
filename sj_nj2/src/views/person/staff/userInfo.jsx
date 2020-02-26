@@ -46,7 +46,7 @@ class EditStaff extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getStaffDetail({id: this.props.match.params.id}, detail=>{
+    this.props.actions.getStaffDetail({id: this.props.id}, detail=>{
       this.setState({detail, teach: {id:detail.directorId, name: detail.directorName}, imgUrl:detail.photoaddr})
       if(detail.mDeptType=="4"){
         this.props.actions.getSelectDeptList({
@@ -103,7 +103,7 @@ class EditStaff extends React.Component {
         const {entryTime, regularTime, birthday, startSchool,graduateTime, roleKeys, units} = values
         this.props.actions.editEmployee({
           ...values,
-          id: this.props.match.params.id,
+          id: this.props.id,
           entryTime: entryTime?moment(entryTime).format("YYYY-MM-DD"):null,
           regularTime: regularTime?moment(regularTime).format("YYYY-MM-DD"):null,
           birthday: birthday?moment(birthday).format("YYYY-MM-DD"):null,
@@ -150,12 +150,7 @@ class EditStaff extends React.Component {
     return (
       <JCard spinning={spinning} >
         <Teach visible={visible} onCancel={()=>this.setState({visible: false})} onSelect={this.selectTeach.bind(this)} />
-        <Card size="small" title={"基本信息"} extra={(
-          <div>
-            <Button type="primary" onClick={this.handlenSubmit.bind(this)} ><Icon type="save" />保存</Button>
-            <Link to="/person/staff" className="mgl10"><Button><Icon type="rollback" />返回</Button></Link>
-          </div>
-        )} >
+        <Card size="small" title={"基本信息"}  >
           <Form {...formItemLayout}>
             <Row>
               <Col span={18}>
@@ -166,7 +161,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.name,
                         rules: [{required: true, message: '姓名不能为空！'}]
                       })(
-                        <Input/>
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -174,7 +169,7 @@ class EditStaff extends React.Component {
                     <Form.Item label="入职日期">
                       {getFieldDecorator("entryTime",{
                         initialValue: detail.entryTime?moment(detail.entryTime):null,
-                      })(<DatePicker/>)}
+                      })(<DatePicker disabled />)}
                     </Form.Item>
                   </Col>
                   <Col span={colSpan} >
@@ -182,7 +177,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("personTypeId", { 
                         initialValue: detail.personTypeId,
                       })(
-                        <Select>
+                        <Select disabled>
                           {employeeDict && employeeDict.personTypeList && employeeDict.personTypeList.length?employeeDict.personTypeList.map(item=>(
                             <Option key={item.id} value={item.id}>{item.dictName}</Option>
                           )):null}
@@ -196,7 +191,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.sex,
                         rules: [{required: true, message: '性别不能为空！'}],
                       })(
-                        <Select>
+                        <Select disabled>
                           <Option value="1">男</Option>
                           <Option value="0">女</Option>
                         </Select>
@@ -208,7 +203,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("regularTime", {
                         initialValue: detail.regularTime?moment(detail.regularTime):null,
                       })(
-                        <DatePicker/>
+                        <DatePicker disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -218,7 +213,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.levelId,
                         rules: [{required: true, message: '岗级不能为空！'}],
                       })(
-                        <Select>
+                        <Select disabled >
                           {employeeDict && employeeDict.levelList && employeeDict.levelList.length?employeeDict.levelList.map(item=>(
                             <Option key={item.id} value={item.id}>{item.dictName}</Option>
                           )):null}
@@ -232,7 +227,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.activity,
                         rules: [{required: true, message: '状态不能为空！'}],
                       })(
-                        <Select>
+                        <Select disabled >
                           <Option value="0">待报到</Option>
                           <Option value="1">试用期</Option>
                           <Option value="2">在职</Option>
@@ -247,7 +242,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("probation", {
                         initialValue: detail.probation,
                       })(
-                        <InputNumber min={0} style={{width: "100%"}} />
+                        <InputNumber disabled min={0} style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -257,7 +252,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.card,
                         rules: [{required: true, message: '身份证号码不能为空！'}],
                       })(
-                        <Input/>
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -267,7 +262,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.positionId,
                         rules: [{required: true, message: '身份证号码不能为空！'}],
                       })(
-                        <Select>
+                        <Select disabled >
                           {employeeDict && employeeDict.positionList && employeeDict.positionList.length?employeeDict.positionList.map(item=>(
                             <Option key={item.id} value={item.id}>{item.dictName}</Option>
                           )):null}
@@ -280,7 +275,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("birthday", {
                         initialValue: detail.birthday?moment(detail.birthday):null,
                       })(
-                        <DatePicker/>
+                        <DatePicker disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -290,7 +285,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.phone,
                         rules: [{required: true, message: '电话不能为空！'}],
                       })(
-                        <InputNumber style={{width: "100%"}}/>
+                        <InputNumber disabled style={{width: "100%"}}/>
                       )}
                     </Form.Item>
                   </Col>
@@ -299,7 +294,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("nation", {
                         initialValue: detail.nation,
                       })(
-                        <Input/>
+                        <Input disabled/>
                       )}
                     </Form.Item>
                   </Col>
@@ -308,7 +303,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("workyear", {
                         initialValue: detail.workyear,
                       })(
-                        <InputNumber min={0} style={{width: "100%"}}/>
+                        <InputNumber disabled min={0} style={{width: "100%"}}/>
                       )}
                     </Form.Item>
                   </Col>
@@ -317,7 +312,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("qq", {
                         initialValue: detail.qq,
                       })(
-                        <InputNumber style={{width: "100%"}}/>
+                        <InputNumber disabled style={{width: "100%"}}/>
                       )}
                     </Form.Item>
                   </Col>
@@ -326,7 +321,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("matrimonial", {
                         initialValue: detail.matrimonial,
                       })(
-                        <Select>
+                        <Select disabled >
                           <Option value="0">已婚</Option>
                           <Option value="1">未婚</Option>
                         </Select>
@@ -338,7 +333,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("industryWorkyear", {
                         initialValue: detail.industryWorkyear,
                       })(
-                        <InputNumber min={0} style={{width: "100%"}} />
+                        <InputNumber disabled min={0} style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -347,7 +342,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("wechat", {
                         initialValue: detail.wechat,
                       })(
-                        <Input />
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -356,7 +351,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("nationality", {
                         initialValue: detail.nationality,
                       })(
-                        <Input />
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -364,8 +359,7 @@ class EditStaff extends React.Component {
                     <Form.Item label="带教">
                       {getFieldDecorator("directorId")(
                         <div className="teach_wrap">
-                          <Input  value={teach?teach.name:""} />
-                          <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({visible: true})} />
+                          <Input disabled value={teach?teach.name:""} />
                         </div>
                       )}
                     </Form.Item>
@@ -375,7 +369,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("email", {
                         initialValue: detail.email,
                       })(
-                        <Input />
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -384,7 +378,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("jobtitle", {
                         initialValue: detail.jobtitle,
                       })(
-                        <Input />
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -406,7 +400,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("emergency", {
                         initialValue: detail.emergency,
                       })(
-                        <Input />
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -416,7 +410,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.mDeptId,
                         rules: [{required: true, message: '选择部门/车间！'}]
                       })(
-                        deptNotsmall?<TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll 
+                        deptNotsmall?<TreeSelect disabled dropdownClassName="dropdownStyle" treeDefaultExpandAll 
                           onSelect={this.handlenSelect.bind(this)}>
                           {this.createNode(deptNotsmall)}
                         </TreeSelect>:<span></span>
@@ -430,7 +424,7 @@ class EditStaff extends React.Component {
                         initialValue: deptList && deptList.length?[detail.unitId,detail.workScoreId,detail.classId]:[],
                         rules: [{required: true, message: '单元/工段/班组！'}]
                       })(
-                        <Cascader  options={this.handlenData(deptList)}  />
+                        <Cascader disabled options={this.handlenData(deptList)}  />
                       )}
                     </Form.Item>
                   </Col>:null}
@@ -439,7 +433,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("emergencyTel", {
                         initialValue: detail.emergencyTel,
                       })(
-                        <InputNumber min={0} style={{width: "100%"}} />
+                        <InputNumber disabled min={0} style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -448,7 +442,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("clothSize", {
                         initialValue: detail.clothSize,
                       })(
-                        <InputNumber min={0} style={{width: "100%"}} />
+                        <InputNumber disabled min={0} style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -457,7 +451,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("bDeptId", {
                         initialValue: detail.bDeptId,
                       })(
-                        deptNotsmall?<TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll >
+                        deptNotsmall?<TreeSelect disabled dropdownClassName="dropdownStyle" treeDefaultExpandAll >
                           {this.createNode(deptNotsmall?deptNotsmall:[])}
                         </TreeSelect>:<span></span>
                       )}
@@ -468,7 +462,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("intoCenterId", {
                         initialValue: detail.intoCenterId,
                       })(
-                        <Select>
+                        <Select disabled >
                           {employeeDict&&employeeDict.intoCenterList && employeeDict.intoCenterList.length?employeeDict.intoCenterList.map(item=>(
                             <Option key={item.id} value={item.id}>{item.dictName}</Option>
                           )):null}
@@ -481,7 +475,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("shoeSize", {
                         initialValue: detail.shoeSize,
                       })(
-                        <InputNumber min={0} style={{width: "100%"}} />
+                        <InputNumber disabled min={0} style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -490,7 +484,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("remark", {
                         initialValue: detail.remark,
                       })(
-                        <TextArea rows={1}/>
+                        <TextArea disabled rows={1}/>
                       )}
                     </Form.Item>
                   </Col>
@@ -499,7 +493,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("jobNumber", {
                         initialValue: detail.jobNumber,
                       })(
-                        <Input />
+                        <Input disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -508,7 +502,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("stayCase", {
                         initialValue: detail.stayCase,
                       })(
-                        <Select style={{width: "100%"}}>
+                        <Select disabled style={{width: "100%"}}>
                           <Option value="0">住宿舍</Option>
                           <Option value="1">不住宿舍</Option>
                         </Select>
@@ -520,7 +514,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("stayinfo", {
                         initialValue: detail.stayinfo,
                       })(
-                        <TextArea/>
+                        <TextArea disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -529,7 +523,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("roleKeys", {
                         initialValue: detail.roleKeys?detail.roleKeys.split(","):[],
                       })(
-                        <Select mode="multiple">
+                        <Select disabled mode="multiple">
                           {roles && roles.length?roles.map(item=>(
                             <Option key={item.id} >{item.roleName}</Option>
                           )):null}
@@ -542,7 +536,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("address", {
                         initialValue: detail.address,
                       })(
-                        <TextArea/>
+                        <TextArea disabled />
                       )}
                     </Form.Item>
                   </Col>
@@ -551,6 +545,7 @@ class EditStaff extends React.Component {
               <Col span={6}>
                 <div style={{textAlign: "center", widtt: "80px", margin: "20px auto"}}>
                   <Upload
+                  disabled
                     showUploadList={false}
                     name="file"
                     action="/api/pc/employee/uploadEmployeeHead/"
@@ -565,35 +560,35 @@ class EditStaff extends React.Component {
                   {getFieldDecorator("finishSchool", {
                     initialValue: detail.finishSchool,
                   })(
-                    <Input/>
+                    <Input disabled />
                   )}
                 </Form.Item>
                 <Form.Item label="学历">
                   {getFieldDecorator("education", {
                     initialValue: detail.education,
                   })(
-                    <Input/>
+                    <Input disabled/>
                   )}
                 </Form.Item>
                 <Form.Item label="专业">
                   {getFieldDecorator("profession", {
                     initialValue: detail.profession
                   })(
-                    <Input/>
+                    <Input disabled/>
                   )}
                 </Form.Item>
                 <Form.Item label="入学时间"> 
                   {getFieldDecorator("startSchool", {
                     initialValue: detail.startSchool?moment(detail.startSchool):null,
                   })(
-                    <DatePicker/>
+                    <DatePicker disabled/>
                   )}
                 </Form.Item>
                 <Form.Item label="毕业时间">
                   {getFieldDecorator("graduateTime", {
                     initialValue: detail.graduateTime?moment(detail.graduateTime):null,
                   })(
-                    <DatePicker/>
+                    <DatePicker disabled/>
                   )}
                 </Form.Item>
               </Col>

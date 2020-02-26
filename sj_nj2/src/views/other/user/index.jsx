@@ -5,6 +5,7 @@ import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Form, Input} from "antd";
 import JCard from "@/components/JCard"
 import {editStaffAccount} from "@/actions/personAction"
+import UserInfos from "@/views/person/staff/userInfo"
 
 const formItemLayout = {
   labelCol: {
@@ -46,7 +47,7 @@ class UserInfo extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" title="个人信息" extra={
+        <Card size="small" title="更改密码" extra={
           <div>
             <Button className="mgr10" type="primary" onClick={this.handlenSubmit.bind(this)} ><Icon type="save" />保存</Button>
             <Link to="/"><Button><Icon type="rollback"/>返回</Button></Link>
@@ -78,6 +79,7 @@ class UserInfo extends React.Component {
             </Form.Item>
           </Form>
         </Card>
+        {base?<UserInfos id={base.employeeId}/>:null}
       </JCard>
     )
   }

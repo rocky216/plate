@@ -4,6 +4,7 @@ import {bindActionCreators} from "redux"
 import {Form, Modal, Tree, Row, Col, Table} from "antd";
 import {getTreeDept, getTeach} from "@/actions/personAction"
 import {teachColumns} from "../columns"
+import JCard from "@/components/JCard"
 
 const {TreeNode} = Tree
 
@@ -38,7 +39,6 @@ class Teach extends React.Component {
   }
 
   handlenSelect(key, {node}){
-    
     this.props.actions.getTeach({
       selectDeptId: node.props.dataRef.id,
       selectDeptType: node.props.dataRef.deptType,
@@ -82,7 +82,8 @@ class Teach extends React.Component {
         onCancel={onCancel}
         onOk={this.handlenSubmit.bind(this)}
       >
-        <Row>
+        <JCard spinning={spinning}>
+          <Row>
           <Col span={8}>
             {treeDept?
             <Tree 
@@ -107,6 +108,7 @@ class Teach extends React.Component {
             />
           </Col>
         </Row>
+        </JCard>
       </Modal>
     )
   }

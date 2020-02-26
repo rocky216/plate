@@ -22,7 +22,7 @@ class AttendStatis extends React.Component {
         {title: "加班趋势分析", key: "4"},
         {title: "人员考勤统计表", key: "5"},
       ],
-      tabKey: "5"
+      tabKey: "1"
     }
   }
 

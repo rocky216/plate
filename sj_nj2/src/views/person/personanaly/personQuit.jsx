@@ -1,19 +1,31 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Table, Row, Col} from "antd";
+import {Table, Row, Col, Button} from "antd";
 import {quitAnalysis} from "@/actions/personAction"
-import {quitAvg1Columns, optAgv1} from "./columns"
+import {quitAvg1Columns, itemAvg2Columns, yearAvg4Columns, optAgv1} from "./columns"
 import ReactEcharts from 'echarts-for-react';
 import {stackOption} from "./data"
 import Searchbox from "../attendStatis/searchbox"
 import moment from "moment"
+import Persondetail from "./persondetail"
 
 
 class PersonQuit extends React.Component {
   constructor(props){
     super(props) 
     this.state={
+      visible: false,
+      detail: "",
+      columns: quitAvg1Columns,
+      type:"quitAvg1",
+      initParam: {
+        type: "quitAvg1",
+        isStaff:"1",
+        deptId:"",
+        startTime:moment().format("YYYY-MM-DD"),
+        endTime: moment().format("YYYY-MM-DD")
+      },
       params: {
         type: "quitAvg1",
         isStaff:"1",
@@ -27,7 +39,7 @@ class PersonQuit extends React.Component {
     }
   }
   componentDidMount(){
-    this.initial(this.state.params)
+    this.initial(this.state.initParam)
   }
   initial(params){
     this.props.actions.quitAnalysis(params, res=>{
@@ -54,32 +66,60 @@ class PersonQuit extends React.Component {
     cstackOption.xAxis.data = xaxis
     cstackOption.series[0].data = dataBar1
     cstackOption.series[1].data = dataBar2
-    console.log(cstackOption, "cstackOption")
+    
     this.setState({quitAvg1_data: coptAgv1, quitAvg1Bar_data: cstackOption})
   }
 
   handleSearch(values){
+    
+    let col = quitAvg1Columns
+    if(values){
+      const {type} = values
+      if(type=="itemAvg2" || type=="gradeAvg3"){
+        col = itemAvg2Columns
+      }else if(type=="quitAvg1"){
+        col = quitAvg1Columns
+      }else if(type=="yearAvg4"){
+        col = yearAvg4Columns
+      }
+    }else{
+      col=quitAvg1Columns
+    }
+    
+    this.setState({columns: col})
+
     if(values===null){
-      this.initial(this.state.params)
+      this.initial(this.state.initParam)
+      this.setState({params: _.cloneDeep(this.state.initParam)})
       return
     }
+    this.setState({params: values})
     this.initial({
       ...values
     })
+    
   }
 
   render(){
+    let _this = this
     const {utils} = this.props
-    const {quitAvg1_data, source_data, quitAvg1Bar_data} = this.state
+    const {quitAvg1_data, source_data, quitAvg1Bar_data, columns, visible, params, detail } = this.state
     
     return (
       <div>
+        {detail?<Persondetail visible={visible} detail={detail} params={params} onCancel={()=>this.setState({visible: false, detail: ""})} />:null}
+        
         <div className="mgb10 fixedend">
-          <Searchbox handleSearch={this.handleSearch.bind(this)} quitanaly />
+          <Searchbox handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/hResourceAnalysis" quitanaly />
         </div>
-        <Row>
+        <Row> 
           <Col span={10}>
-            <Table size="small" columns={quitAvg1Columns} pagination={false}
+            <Table size="small" columns={columns.concat([{
+              title: "操作",
+              render(item){
+                return <Button type="link" size="small" onClick={()=>_this.setState({visible: true, detail: item})} >查看</Button>
+              }
+            }])} pagination={false}
               dataSource={source_data?utils.addIndex(source_data):[]} />
           </Col>
           <Col span={14}>

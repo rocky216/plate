@@ -25,7 +25,7 @@ class PersonSource extends React.Component {
   }
   componentDidMount(){
     this.initial({})
-    this.props.actions.loadSelectDeptByRole({loadType: 1, roleUrl: "/api/pc/hResourceAnalysis/employeeSourceDistribute"}, res=>{
+    this.props.actions.loadSelectDeptByRole({loadType: 1, roleUrl: "/api/pc/hResourceAnalysis"}, res=>{
       this.setState({deptList: res})
     })
   }

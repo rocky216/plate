@@ -75,7 +75,7 @@ class Attstanaly extends React.Component {
     return (
       <div>
         <div className="fixedend mgb10">
-          <Searchbox handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/plan" />
+          <Searchbox handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/hAttendanceAnalysis" />
         </div>
         <Row className="mgt10">
           <Col span={12}>

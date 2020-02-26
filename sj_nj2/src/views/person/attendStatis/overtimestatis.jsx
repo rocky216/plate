@@ -88,7 +88,7 @@ class Overtimestatis extends React.Component {
     return (
       <div>
         <div className="fixedend">
-          <Searchbox handleSearch={this.handleSearch.bind(this)} />
+          <Searchbox handleSearch={this.handleSearch.bind(this)} roleUrl="/api/pc/hAttendanceAnalysis" />
         </div>
         <Row className="mgt10" gutter={12}>
           <Col span={12}>

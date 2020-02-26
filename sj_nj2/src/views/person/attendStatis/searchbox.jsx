@@ -76,8 +76,7 @@ class Searchbox extends React.Component {
             type:dimen,
             isStaff,
             deptId,
-            startTime: `${moment(year).format("YYYY")}-01-01`,
-            endTime: `${moment(year).format("YYYY")}-12-31`,
+            year: moment(year).format("YYYY")
           })
           return
         }
@@ -135,6 +134,7 @@ class Searchbox extends React.Component {
             </Select>
           )}
         </Form.Item>:null}
+        {quitanaly &&  getFieldValue("dimen")==="quitAvg1"?null:
         <Form.Item  label="车间/部门">
           {getFieldDecorator('deptId')( 
             deptList && deptList.length?
@@ -142,7 +142,7 @@ class Searchbox extends React.Component {
               {this.createNode(deptList)}
             </TreeSelect>:<span></span>
           )}
-        </Form.Item>
+        </Form.Item>}
         {getFieldValue("dimen")!="yearAvg4"?
         <Form.Item >
           {getFieldDecorator('type', {
@@ -165,7 +165,7 @@ class Searchbox extends React.Component {
         {quitanaly && getFieldValue("dimen")=="yearAvg4"?
         <Form.Item label="年份统计" >
           {getFieldDecorator('year', {
-            
+            initialValue: moment()
           })(
             <DatePicker mode="year" format="YYYY" allowClear={false} 
             onFocus={()=>this.setState({isOpen:true})} open={isOpen} 

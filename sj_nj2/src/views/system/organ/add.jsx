@@ -33,7 +33,8 @@ class AddOrgan extends React.Component {
       postCount: 0,
       teach:[],
       teachVisible: false,
-      index: 0
+      index: 0,
+      leader:{}
     }
   }
 
@@ -82,13 +83,15 @@ class AddOrgan extends React.Component {
   handlenSubmit(){
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const {leader} = this.state
         this.props.actions.addOrgan({
           ...values,
           parentId: this.props.parent.id,
           buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):"",
           staffingKeys: this.getJobLevel().join(),
           noticeKeys: this.handlenNoticeKeys().join(),
+          leaderId: leader.id?leader.id:"",
+          leaderName: leader.name?leader.name:""
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.actions.getTreeDept({})
@@ -98,19 +101,23 @@ class AddOrgan extends React.Component {
   }
   onSelect(item){
     const {index, teach} = this.state
-    console.log({})
-    teach[index-1]={
-      id: item.id,
-      name: item.name,
+    if(typeof index === "number"){
+      teach[index-1]={
+        id: item.id,
+        name: item.name,
+      }
+      this.setState({teach})
+    }else{
+      this.setState({leader: {name:item.name, id: item.id,}})
     }
-    this.setState({teach})
+    
   }
   
 
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {utils, detail, parent} = this.props
-    const {dept, staffingList, postCount, nextPostCountSum, teach, teachVisible} = this.state
+    const {dept, staffingList, postCount, nextPostCountSum, teach, teachVisible, leader} = this.state
     
     return (
       <div>
@@ -157,11 +164,10 @@ class AddOrgan extends React.Component {
               )}
             </Form.Item>
             <Form.Item label="机构负责人">
-              {getFieldDecorator('leaderName', {
-                
-              })(
-                <Input/>
-              )}
+              <div className="teach_wrap">
+                <Input value={leader.id?leader.name:""} />
+                <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true, index:"leader"})} />
+              </div>
             </Form.Item>
             <Form.Item label="联系电话">
               {getFieldDecorator('phone', {
