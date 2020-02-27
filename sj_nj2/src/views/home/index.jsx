@@ -151,7 +151,7 @@ class Home extends React.Component {
               <TabPane key={item.key} tab={
                 <div className="customBadge">
                   {item.title}
-                  <span>{workStaff?workStaff[item.value]:0}</span>
+                  <span>{workStaff?workStaff[item.value]>99?"99+":workStaff[item.value]:0}</span>
                 </div>
               } />
             ))}

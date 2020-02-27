@@ -37,6 +37,9 @@ class Login extends React.Component {
         <div className="top">
           <img src={require("@/assets/images/logo.png")} />
         </div>
+        <div className="circle">
+          <img src="/images/2-1_03.png" />
+        </div>
         <div className="login_box">
           <img className="mgb10" src={require("@/assets/images/company.png")} />
           <Card >

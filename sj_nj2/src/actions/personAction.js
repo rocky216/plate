@@ -1522,6 +1522,34 @@ export function deleteStaff(params, next){
   }
 }
 
+export function loadSelectDeptByRoleSchedu(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PERSON
+    })
+
+    try{
+      const options = {
+        url: "/api/pc/loadSelectDeptByRole",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PERSON,
+      })
+    }catch(err){
+      dispatch({
+        type: END_LOADING_PERSON
+      })
+      console.log(err, `color: ${log_color}`)
+    }
+  }
+}
+
 export function loadSelectDeptByRole(params, next){
   return async function(dispatch, getState){
     // dispatch({

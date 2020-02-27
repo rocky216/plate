@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Row, Col, Tree, Form, DatePicker, Radio, TimePicker, Checkbox, Icon, Button} from "antd";
 import JCard from "@/components/JCard"
-import {getSelectDeptList, addSchedu} from "@/actions/personAction"
+import {getSelectDeptList, addSchedu, loadSelectDeptByRoleSchedu} from "@/actions/personAction"
 import moment from "moment"
 import "./index.less"
 
@@ -40,12 +40,12 @@ class AddSchedu extends React.Component {
       cutThreeStartTime:"",
       cutThreeEndTime:"",
       productionStartTime: "",
-      productionEndTime:""
+      productionEndTime:"" 
     }
   }
 
   componentDidMount(){
-    this.props.actions.getSelectDeptList({loadType: 1, loadPlan: 1}, res=>{
+    this.props.actions.loadSelectDeptByRoleSchedu({loadType: 1, loadPlan: 1, roleUrl:"/api/pc/plan"}, res=>{
       this.setState({dept: res})
     })
   }
@@ -233,7 +233,7 @@ class AddSchedu extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getSelectDeptList, addSchedu}, dispatch)
+    actions: bindActionCreators({getSelectDeptList, addSchedu, loadSelectDeptByRoleSchedu}, dispatch)
   }
 }
 

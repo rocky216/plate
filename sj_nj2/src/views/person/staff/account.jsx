@@ -29,7 +29,7 @@ class StaffAccount extends React.Component {
 
   componentDidMount(){
     this.props.actions.getStaffAccount({id: this.props.detail.id}, res=>{
-      this.setState({account: res?res.account:this.props.detail.phone, isAdd: res?false:true})
+      this.setState({account: res?res.account:this.props.detail.card, isAdd: res?false:true})
     })
   }
   
@@ -45,6 +45,7 @@ class StaffAccount extends React.Component {
           this.props.actions.editStaffAccount({
             id: this.props.detail.id,
             password: values.password,
+            account: values.account
           }, res=>{
             this.props.onCancel()
             this.props.utils.OpenNotification("success")
@@ -88,7 +89,7 @@ class StaffAccount extends React.Component {
                   message: '填写账号!',
                 }
               ],
-            })(<Input disabled={account?true:false} />)}
+            })(<Input />)}
           </Form.Item>
           <Form.Item label=" 密码" hasFeedback>
             {getFieldDecorator('password', {

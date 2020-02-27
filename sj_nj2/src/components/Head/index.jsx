@@ -104,7 +104,7 @@ class Head extends React.Component {
             <ul className="rightUl">
               <li style={{paddingTop: 2, marginRight: 10}}>
                 <Link className="badge" to="/other/news">
-                  <span>{count?count:0}</span>
+                  <span>{count?count>99?"99+":count:0}</span>
                   <Icon type="message" style={{color: "#fff"}}  />
                   {/* <Badge count={count?count:0} offset={[5,0]} showZero={true} >
                     
