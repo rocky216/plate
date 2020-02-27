@@ -175,7 +175,7 @@ class EditStaff extends React.Component {
           <div><span>基本信息</span>
             <Button type="primary" onClick={()=>this.setState({accountVisible: true})} ghost style={{marginLeft: 20}}>平台账号</Button>
           </div>
-        )} extra={(
+        )} extra={( 
           <div>
             <Button type="primary" onClick={this.handlenSubmit.bind(this)} ><Icon type="save" />保存</Button>
             <Link to="/person/staff" className="mgl10"><Button><Icon type="rollback" />返回</Button></Link>

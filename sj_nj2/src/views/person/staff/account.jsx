@@ -22,13 +22,14 @@ class StaffAccount extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      account: ""
+      account: "",
+      isAdd: false
     }
   }
 
   componentDidMount(){
     this.props.actions.getStaffAccount({id: this.props.detail.id}, res=>{
-      this.setState({account: res.account})
+      this.setState({account: res?res.account:this.props.detail.phone, isAdd: res?false:true})
     })
   }
   
@@ -40,7 +41,7 @@ class StaffAccount extends React.Component {
           this.props.utils.OpenNotification("error","两次密码不一致！")
           return 
         }
-        if(this.state.account){
+        if(!this.state.isAdd){
           this.props.actions.editStaffAccount({
             id: this.props.detail.id,
             password: values.password,

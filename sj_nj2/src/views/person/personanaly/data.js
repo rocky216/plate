@@ -1,5 +1,5 @@
 export const option = { //给每个饼图模块添加颜色
-  color: ['#7bca61', '#68d1da', '#61c1e6',  '#f4cb4d'],
+  color: ['#7bca61', '#68d1da', '#61c1e6',  '#f4cb4d', "#e682ad"],
   title:{
       text: ""
   },

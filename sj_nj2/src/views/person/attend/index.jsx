@@ -223,7 +223,7 @@ class Attend extends React.Component {
               </Row>
             </Form>
 
-            <Table size="small" columns={this.getCol()} dataSource={attend?utils.addIndex(attend.list):[]} 
+            <Table size="small" bordered columns={this.getCol()} dataSource={attend?utils.addIndex(attend.list):[]} 
               pagination={utils.Pagination(attend, page=>{
                 params.current = page
                 this.setState({params})

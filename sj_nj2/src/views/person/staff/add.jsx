@@ -2,13 +2,14 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Button, Icon, Row, Col, Select, Form, Input, TreeSelect, DatePicker, Upload, InputNumber, Cascader} from "antd";
+import {Card, Button, message, Icon, Row, Col, Select, Form, Input, TreeSelect, DatePicker, Upload, InputNumber, Cascader} from "antd";
 import {getEmployeeDict, getSelectDeptNotSmall, getSelectDeptList, getSelectRole, addEmployee} from "@/actions/personAction"
 import JCard from "@/components/JCard"
 import {staffInfoList} from "./data"
 import moment from "moment"
 import "./index.less"
 import Teach from "./teach"
+import {checkUploadImg}  from "@/utils"
 
 const { Option } = Select;
 const {TreeNode } = TreeSelect
@@ -66,6 +67,12 @@ class AddStaff extends React.Component {
       })
     }else {
       this.setState({deptList: null})
+    }
+  }
+  handlenBeforeUpload(file){
+    if(!checkUploadImg(file)){
+      message.error('图片格式不对！');
+      return
     }
   }
 
@@ -157,7 +164,7 @@ class AddStaff extends React.Component {
                   </Col>
                   <Col span={colSpan} >
                     <Form.Item label="入职日期">
-                      {getFieldDecorator("entryTime")(<DatePicker/>)}
+                      {getFieldDecorator("entryTime")(<DatePicker style={{width: "100%"}} />)}
                     </Form.Item>
                   </Col>
                   <Col span={colSpan} >
@@ -186,7 +193,7 @@ class AddStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="转正日期">
                       {getFieldDecorator("regularTime")(
-                        <DatePicker/>
+                        <DatePicker style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -250,7 +257,7 @@ class AddStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="出生日期">
                       {getFieldDecorator("birthday")(
-                        <DatePicker/>
+                        <DatePicker style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -309,8 +316,8 @@ class AddStaff extends React.Component {
                     </Form.Item>
                   </Col>
                   <Col span={colSpan} >
-                    <Form.Item label="国籍">
-                      {getFieldDecorator("nationality")(
+                    <Form.Item label="籍贯">
+                      {getFieldDecorator("nativePlace")(
                         <Input />
                       )}
                     </Form.Item>
@@ -475,6 +482,7 @@ class AddStaff extends React.Component {
                 <div style={{textAlign: "center", widtt: "80px", margin: "20px auto"}}>
                   <Upload
                     showUploadList={false}
+                    beforeUpload={this.handlenBeforeUpload.bind(this)}
                     name="file"
                     action="/api/pc/employee/uploadEmployeeHead/"
                     data={{token: utils.getCookie("token")}}
@@ -505,13 +513,13 @@ class AddStaff extends React.Component {
                 <Form.Item label="入学时间"> 
                   {getFieldDecorator("startSchool", {
                   })(
-                    <DatePicker/>
+                    <DatePicker style={{width: "100%"}} />
                   )}
                 </Form.Item>
                 <Form.Item label="毕业时间">
                   {getFieldDecorator("graduateTime", {
                   })(
-                    <DatePicker/>
+                    <DatePicker style={{width: "100%"}} />
                   )}
                 </Form.Item>
               </Col>

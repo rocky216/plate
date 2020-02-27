@@ -1570,7 +1570,7 @@ export function editStaffAccount(params, next){
         type: END_LOADING_PERSON,
       })
     }catch(err){
-      dispatch({
+      dispatch({ 
         type: END_LOADING_PERSON
       })
       console.log(err, `color: ${log_color}`)

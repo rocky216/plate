@@ -2,7 +2,7 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import { Layout, Menu, Icon } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer, Sider} = Layout;
 import "./index.less"
 import  menus from "./menus"
 
@@ -13,7 +13,8 @@ class SideBar extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      menus
+      menus,
+      collapsed: false
     }
   }
   
@@ -26,22 +27,22 @@ class SideBar extends React.Component {
   }
 
   render(){
-    const {collapsed, base} = this.props
-    const {menus} = this.state
+    const {base} = this.props
+    const {menus, collapsed} = this.state
     
     return (
       <Sider
       className="sidebar"
       width={220}
       trigger={null}
-        collapsible 
-        collapsed={collapsed}
-          style={{
-            overflow: 'auto',
-            minHeight: '100vh',
-            // position: 'fixed',
-            left: 0,
-          }}
+      collapsible
+      collapsed={collapsed}
+      style={{
+        overflow: 'auto',
+        // minHeight: '100vh',
+        position: 'relative',
+        left: 0,
+      }}
         
       >
         {/* <div className="logo" >
@@ -74,6 +75,9 @@ class SideBar extends React.Component {
           )}
           
         </Menu>:null}
+        <div className="sideShrink" onClick={()=>this.setState({collapsed:!collapsed})}>
+          <Icon type={collapsed?"right":"left"} />
+        </div>
       </Sider>
     )
   }
@@ -82,7 +86,6 @@ class SideBar extends React.Component {
 function mapStateProps(state){
   return {
     base: state.app.base,
-    collapsed: state.app.collapsed
   }
 }
 

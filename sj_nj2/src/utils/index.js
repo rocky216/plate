@@ -4,6 +4,10 @@ import instance from "./http"
 import { notification } from 'antd';
 import store from "@/store"
 
+export function checkUploadImg(file){
+  return file.type === 'image/jpeg' || file.type === 'image/png' 
+          || file.type === 'image/jpg' || file.type === 'image/gif'|| file.type === 'image/bmp';
+}
 
 export function Pagination(pageInfo, next){
   if(!pageInfo) return {}

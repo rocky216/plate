@@ -196,7 +196,7 @@ class OverWork extends React.Component {
           </Row>
         </Form>
           
-          <Table size="small" columns={overworkColumns(this)} dataSource={overwork?utils.addIndex(overwork.list):[]} 
+          <Table size="small" bordered columns={overworkColumns(this)} dataSource={overwork?utils.addIndex(overwork.list):[]} 
             pagination={utils.Pagination(overwork, page=>{
               params.current = page
               this.setState({params})

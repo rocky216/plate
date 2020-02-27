@@ -229,7 +229,7 @@ class Absence extends React.Component {
 
 
           
-          <Table  size="small" columns={this.getCol()} dataSource={absence?utils.addIndex(absence.list):[]} 
+          <Table  size="small" bordered columns={this.getCol()} dataSource={absence?utils.addIndex(absence.list):[]} 
             pagination={utils.Pagination(absence, page=>{
               params.current = page
               this.setState({params})

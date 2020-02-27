@@ -149,7 +149,10 @@ class Home extends React.Component {
           >
             {tabs.map(item=>(
               <TabPane key={item.key} tab={
-                <Badge count={workStaff?workStaff[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                <div className="customBadge">
+                  {item.title}
+                  <span>{workStaff?workStaff[item.value]:0}</span>
+                </div>
               } />
             ))}
           </Tabs> 

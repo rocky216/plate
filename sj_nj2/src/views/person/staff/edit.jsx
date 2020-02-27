@@ -2,13 +2,15 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Button, Icon, Row, Col, Select, Form, Input, TreeSelect, DatePicker, Upload, InputNumber, Cascader} from "antd";
+import {Card, Button, Icon, message, Row, Col, Select, Form, Input, TreeSelect, DatePicker, Upload, InputNumber, Cascader} from "antd";
 import {getEmployeeDict, getSelectDeptNotSmall, getSelectDeptList, getSelectRole, editEmployee, getStaffDetail} from "@/actions/personAction"
 import JCard from "@/components/JCard"
 import {staffInfoList} from "./data"
 import moment from "moment"
 import "./index.less"
 import Teach from "./teach"
+import StaffAccount from "./account"
+import {checkUploadImg} from "@/utils"
 
 const { Option } = Select;
 const {TreeNode } = TreeSelect
@@ -41,7 +43,8 @@ class EditStaff extends React.Component {
       roles: "",
       imgUrl: "",
       colSpan: 8,
-      detail: ""
+      detail: "",
+      accountVisible: false
     }
   }
 
@@ -80,6 +83,13 @@ class EditStaff extends React.Component {
       })
     }else {
       this.setState({deptList: null})
+    }
+  }
+
+  handlenBeforeUpload(file){
+    if(!checkUploadImg(file)){
+      message.error('图片格式不对！');
+      return
     }
   }
 
@@ -144,13 +154,18 @@ class EditStaff extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, deptNotsmall} = this.props
-    const {imgUrl, visible, teach, colSpan,employeeDict, deptList, roles, detail} = this.state
+    const {imgUrl, visible, teach, colSpan,employeeDict, deptList, roles, detail, accountVisible} = this.state
     
 
     return (
       <JCard spinning={spinning} >
+        {detail && accountVisible?<StaffAccount visible={accountVisible} detail={detail} onCancel={()=>this.setState({accountVisible: false})} />:null}
         <Teach visible={visible} onCancel={()=>this.setState({visible: false})} onSelect={this.selectTeach.bind(this)} />
-        <Card size="small" title={"基本信息"} extra={(
+        <Card size="small" title={(
+          <div><span>基本信息</span>
+            <Button type="primary" onClick={()=>this.setState({accountVisible: true})} ghost style={{marginLeft: 20}}>平台账号</Button>
+          </div>
+        )} extra={(
           <div>
             <Button type="primary" onClick={this.handlenSubmit.bind(this)} ><Icon type="save" />保存</Button>
             <Link to="/person/staff" className="mgl10"><Button><Icon type="rollback" />返回</Button></Link>
@@ -174,7 +189,7 @@ class EditStaff extends React.Component {
                     <Form.Item label="入职日期">
                       {getFieldDecorator("entryTime",{
                         initialValue: detail.entryTime?moment(detail.entryTime):null,
-                      })(<DatePicker/>)}
+                      })(<DatePicker style={{width: "100%"}} />)}
                     </Form.Item>
                   </Col>
                   <Col span={colSpan} >
@@ -208,7 +223,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("regularTime", {
                         initialValue: detail.regularTime?moment(detail.regularTime):null,
                       })(
-                        <DatePicker/>
+                        <DatePicker style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -280,7 +295,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("birthday", {
                         initialValue: detail.birthday?moment(detail.birthday):null,
                       })(
-                        <DatePicker/>
+                        <DatePicker style={{width: "100%"}} />
                       )}
                     </Form.Item>
                   </Col>
@@ -352,9 +367,9 @@ class EditStaff extends React.Component {
                     </Form.Item>
                   </Col>
                   <Col span={colSpan} >
-                    <Form.Item label="国籍">
-                      {getFieldDecorator("nationality", {
-                        initialValue: detail.nationality,
+                    <Form.Item label="籍贯">
+                      {getFieldDecorator("nativePlace", {
+                        initialValue: detail.nativePlace,
                       })(
                         <Input />
                       )}
@@ -552,6 +567,7 @@ class EditStaff extends React.Component {
                 <div style={{textAlign: "center", widtt: "80px", margin: "20px auto"}}>
                   <Upload
                     showUploadList={false}
+                    beforeUpload={this.handlenBeforeUpload.bind(this)}
                     name="file"
                     action="/api/pc/employee/uploadEmployeeHead/"
                     data={{token: utils.getCookie("token")}}
@@ -586,14 +602,14 @@ class EditStaff extends React.Component {
                   {getFieldDecorator("startSchool", {
                     initialValue: detail.startSchool?moment(detail.startSchool):null,
                   })(
-                    <DatePicker/>
+                    <DatePicker style={{width: "100%"}} />
                   )}
                 </Form.Item>
                 <Form.Item label="毕业时间">
                   {getFieldDecorator("graduateTime", {
                     initialValue: detail.graduateTime?moment(detail.graduateTime):null,
                   })(
-                    <DatePicker/>
+                    <DatePicker style={{width: "100%"}} />
                   )}
                 </Form.Item>
               </Col>

@@ -18,11 +18,11 @@ class App extends React.Component {
   render (){
     const {collapsed} = this.props
     return (
-    <Layout>
+    <Layout style={{minHeight: "100vh"}}>
       <Head/>
       <Layout >
         <SiderBar/>
-        <Content style={{ margin: '10px 10px 0', minHeight:810,minWidth: 1000}}>
+        <Content style={{ margin: '10px 10px 0',minWidth: 1000}}>
           <div style={{ }}>
             <Routers/>
           </div>

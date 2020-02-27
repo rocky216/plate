@@ -19,13 +19,17 @@ class Process extends React.Component {
       params: {
         current:1,
         flowName: "",
-        flowType: ""
+        flowType: "",
+        status: ""
       }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getProcess(this.state.params)
+    this.initial(this.state.params)
+  }
+  initial(params){
+    this.props.actions.getProcess(params)
   }
 
   handlenChange(rows){
@@ -81,9 +85,26 @@ class Process extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const {params} = this.state
+        const {flowName, flowType, status} = values
+        params.flowName = flowName
+        params.flowType = flowType
+        params.status = status
+        this.initial(params)
+        this.setState({params})
       }
     });
+  }
+  hanlenReset(){
+    this.props.form.resetFields()
+    let obj = {
+      current:1,
+      flowName: "",
+      flowType: "",
+      status: ""
+    }
+    this.setState({params:obj})
+    this.initial(obj) 
   }
 
   render(){
@@ -97,8 +118,11 @@ class Process extends React.Component {
           <div className="fixedend mgb10">
             <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
               <Form.Item label="流程类型">
-                {getFieldDecorator('flowType')(
+                {getFieldDecorator('flowType', {
+                  initialValue: this.state.params.flowType
+                })(
                   <Select style={{width: 120}}>
+                    <Option value="">全部</Option>
                     {flowType.map(item=>(
                       <Option key={item.value} value={item.value}>{item.name}</Option>
                     ))}
@@ -106,8 +130,11 @@ class Process extends React.Component {
                 )}
               </Form.Item>
               <Form.Item label="状态">
-                {getFieldDecorator('status')(
+                {getFieldDecorator('status', {
+                  initialValue: this.state.params.status
+                })(
                   <Select style={{width: 100}}>
+                    <Option value="">全部</Option>
                     <Option value="0">生效</Option>
                     <Option value="1">不生效</Option>
                   </Select>
@@ -120,6 +147,7 @@ class Process extends React.Component {
               </Form.Item>
               <Form.Item>
                 <Button type="primary" htmlType="submit"><Icon type="search" />搜索</Button>
+                <Button className="mgl10" onClick={this.hanlenReset.bind(this)}><Icon type="rollback" />重置</Button>
               </Form.Item>
             </Form>
           </div>

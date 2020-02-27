@@ -133,7 +133,7 @@ function mapDispatchProps(dispatch){
 function mapStateProps(state){
   return {
     utils: state.app.utils,
-    spinning: state.system.spinning
+    spinning: state.person.spinning
   }
 }
 

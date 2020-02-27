@@ -804,6 +804,13 @@ export const attendColumns = [
       )
     }
   },
+  {
+    title: "考勤时间",
+    dataIndex: "buildTime",
+    render(item){
+      return item?item.substring(0,11):item
+    }
+  }
 ]
 
 export const overworkColumns = function(_this){
