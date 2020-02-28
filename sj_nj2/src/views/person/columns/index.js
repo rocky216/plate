@@ -109,7 +109,7 @@ export const attendAnanlyColumns = [
   {
     title: "请假率",
     render(item){
-      return item.cqCount && parseInt(item.cqCount)?(item.qjCount/item.cqCount*100).toFixed(2):0
+      return item.cqCount && parseInt(item.cqrcCount)?(item.qjCount/item.cqrcCount*100).toFixed(2):0
     }
   },
   {
@@ -119,7 +119,7 @@ export const attendAnanlyColumns = [
   {
     title: "旷工率",
     render(item){
-      return item.cqCount && parseInt(item.cqCount)?(item.kgCount/item.cqCount*100).toFixed(2):0
+      return item.cqCount && parseInt(item.cqrcCount)?(item.kgCount/item.cqrcCount*100).toFixed(2):0
     }
   },
   {
@@ -129,7 +129,7 @@ export const attendAnanlyColumns = [
   {
     title: "迟到率",
     render(item){
-      return item.cqCount && parseInt(item.cqCount)?(item.cdCount/item.cqCount*100).toFixed(2):0
+      return item.cqCount && parseInt(item.cqrcCount)?(item.cdCount/item.cqrcCount*100).toFixed(2):0
     }
   },
 ]

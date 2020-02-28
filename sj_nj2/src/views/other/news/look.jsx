@@ -19,6 +19,7 @@ class NewsLook extends React.Component {
     return (
       <Modal
         destroyOnClose
+        title="消息详情"
         okText="确定"
         cancelText="取消"
         confirmLoading={spinning}

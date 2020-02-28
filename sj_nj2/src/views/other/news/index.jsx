@@ -2,10 +2,11 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Button, Icon, List, Typography} from "antd";
+import {Card, Button, Icon, List, Typography, Table, } from "antd";
 import JCard from "@/components/JCard"
 import {getNotice } from "@/actions/appAction" 
 import NewsLook from "./look"
+import {newsColumns} from "../columns"
 
 
 class News extends React.Component {
@@ -19,6 +20,21 @@ class News extends React.Component {
   componentDidMount(){
     this.props.actions.getNotice({})
   }
+
+  handlenLook(item){
+    this.setState({visible:true, detail: item})
+    this.props.actions.getNotice({})
+  }
+
+  getCol(){
+    let _this = this
+    return newsColumns.concat([{
+      title: "操作",
+      render(item){
+        return <Button size="small" type="link" onClick={_this.handlenLook.bind(_this, item)} >查看</Button>
+      }
+    }])
+  }
   render(){
     const {utils, spinning, news} = this.props
     const {visible, detail} = this.state
@@ -27,7 +43,10 @@ class News extends React.Component {
       <JCard spinning={spinning}>
         {visible?<NewsLook visible={visible} detail={detail} onCancel={()=>this.setState({visible: false, detail:""})} />:null}
         <Card size="small" title="消息列表" extra={<Link to="/"><Button><Icon type="rollback" />返回</Button></Link>}>
-        <List
+        
+        <Table size="small" columns={this.getCol()} dataSource={news?utils.addIndex(news):[]} />
+        
+        {/* <List
           size="small"
           bordered
           dataSource={news?news:[]}
@@ -36,7 +55,7 @@ class News extends React.Component {
               <a href="javascript:;" onClick={()=>this.setState({visible:true, detail: item})} style={{color: "#666"}}>{item.noticeName}</a>
             </List.Item>
           )}
-        />
+        /> */}
         </Card>
       </JCard>
     )

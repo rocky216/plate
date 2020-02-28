@@ -42,6 +42,7 @@ class Attstanaly extends React.Component {
   }
 
   initial(params){
+    this.setState({optionTrend:""})
     this.props.actions.AttendanceAnalysiss(params, res=>{
       this.setState({detail: res, data: res.top5})
       this.handlenData(res)

@@ -192,35 +192,36 @@ class AddSchedu extends React.Component {
                 </Form.Item>
                 <Form.Item label="排产时间">
                   <TimePicker format="HH:mm" value={productionStartTime?moment(productionStartTime, "HH:mm"):null} 
-                  onChange={(d)=>this.setState({productionStartTime: moment(d).format("HH:mm")})}
-                  />
+                  onChange={(d)=>this.setState({productionStartTime: d?moment(d).format("HH:mm"):null})} 
+                  /> 
+                  
                   <span className="timeline">-</span>
                   <TimePicker format="HH:mm" value={productionEndTime?moment(productionEndTime, "HH:mm"):null} 
-                  onChange={(d)=>this.setState({productionEndTime: moment(d).format("HH:mm")})}/>
+                  onChange={(d)=>this.setState({productionEndTime: d?moment(d).format("HH:mm"):null})}/>
                 </Form.Item>
                 <Form.Item label="扣除中饭时间">
                   <TimePicker format="HH:mm" value={cutOneStartTime?moment(cutOneStartTime, "HH:mm"):null} 
-                    onChange={(d)=>this.setState({cutOneStartTime: moment(d).format("HH:mm")})}
+                    onChange={(d)=>this.setState({cutOneStartTime: d?moment(d).format("HH:mm"):null})}
                     />
                     <span className="timeline">-</span>
                     <TimePicker format="HH:mm" value={cutOneEndTime?moment(cutOneEndTime, "HH:mm"):null} 
-                    onChange={(d)=>this.setState({cutOneEndTime: moment(d).format("HH:mm")})}/>
+                    onChange={(d)=>this.setState({cutOneEndTime: d?moment(d).format("HH:mm"):null})}/>
                 </Form.Item>
                 <Form.Item label="扣除晚饭时间">
                   <TimePicker format="HH:mm" value={cutTwoStartTime?moment(cutTwoStartTime, "HH:mm"):null} 
-                    onChange={(d)=>this.setState({cutTwoStartTime: moment(d).format("HH:mm")})}
+                    onChange={(d)=>this.setState({cutTwoStartTime: d?moment(d).format("HH:mm"):null})}
                     />
                     <span className="timeline">-</span>
                     <TimePicker format="HH:mm" value={cutTwoEndTime?moment(cutTwoEndTime, "HH:mm"):null} 
-                    onChange={(d)=>this.setState({cutTwoEndTime: moment(d).format("HH:mm")})}/>
+                    onChange={(d)=>this.setState({cutTwoEndTime: d?moment(d).format("HH:mm"):null})}/>
                 </Form.Item>
                 <Form.Item label="扣除其他时间">
                   <TimePicker format="HH:mm" value={cutThreeStartTime?moment(cutThreeStartTime, "HH:mm"):null} 
-                    onChange={(d)=>this.setState({cutThreeStartTime: moment(d).format("HH:mm")})}
+                    onChange={(d)=>this.setState({cutThreeStartTime: d?moment(d).format("HH:mm"):null})}
                     />
                     <span className="timeline">-</span>
                     <TimePicker format="HH:mm" value={cutThreeEndTime?moment(cutThreeEndTime, "HH:mm"):null} 
-                    onChange={(d)=>this.setState({cutThreeEndTime: moment(d).format("HH:mm")})}/>
+                    onChange={(d)=>this.setState({cutThreeEndTime: d?moment(d).format("HH:mm"):null})}/>
                 </Form.Item>
               </Form>
             </Card>

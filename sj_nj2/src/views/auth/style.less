@@ -3,12 +3,17 @@
   background: url("/images/login1-1_06.jpg");
   .circle {
     width: 50%;
-    position: relative;
+    // position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     img {
-      position: absolute;
-      top: 20px;
-      left: 15%;
-      width: 70%;
+      // position: absolute;
+      // top: 20px;
+      // left: 15%;
+      width: 75%;
     }
   }
   .login_box {
@@ -41,8 +46,10 @@
     display: block;
   }
   .top {
+    position: fixed;
     background-color: #fff;
     padding: 10px;
+    width: 100%;
   }
   .bottom {
     position: fixed;

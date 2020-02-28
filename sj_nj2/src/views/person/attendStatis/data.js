@@ -17,11 +17,11 @@ export const optionOverStatis1 = { //给每个饼图模块添加颜色
           data: [
               {
                   value: 5,
-                  name: '正常上班时长1'
+                  name: '正常上班时长'
               },
               {
                   value: 8,
-                  name: '总加班时长2'
+                  name: '总加班时长'
               },
           ],
           itemStyle: {//鼠标移到图标上的效果

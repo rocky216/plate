@@ -59,9 +59,9 @@ class Overtimestatis extends React.Component {
     this.initial(this.state.params)
   }
   initial(params){
+    this.setState({optionOver1:"", optionOver2:""})
     this.props.actions.overWorkAnalysis(params, res=>{
       this.setState({detail: res, data: res.top5})
-      
       this.handlenData(res)
     })
   }
@@ -69,9 +69,10 @@ class Overtimestatis extends React.Component {
     if(!res)return
     optionOverStatis1.series[0].data[0]["value"] = res.sjsbNum
     optionOverStatis1.series[0].data[1]["value"] = res.alljbNum
-    console.log(optionOverStatis2, "optionOverStatis2")
+    
     optionOverStatis2.series[0].data[0]["value"] = res.jhsbNum
     optionOverStatis2.series[0].data[1]["value"] = res.fjhjbNum
+    
     this.setState({optionOver1: optionOverStatis1, optionOver2: optionOverStatis2})
   }
   handleSearch(values){
@@ -84,7 +85,7 @@ class Overtimestatis extends React.Component {
   render(){
     const {utils} = this.props
     const {detail, data, key, columns, optionOver1, optionOver2} = this.state
-    console.log(optionOver1, "optionOver1")
+    
     return (
       <div>
         <div className="fixedend">

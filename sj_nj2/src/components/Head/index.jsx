@@ -53,6 +53,7 @@ class Head extends React.Component {
       onOk() {
         _this.props.actions.goLoginOut({}, res=>{
           _this.props.history.push("/login")
+          window.location.reload()
         })
         
       }

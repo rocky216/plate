@@ -118,6 +118,7 @@ class StaffQuit extends React.Component {
         params.levelId = levelId
         params.intoCenterId = intoCenterId
         params.personTypeId = personTypeId
+        params.quitReason = quitReason
         this.setState({params})
         this.props.actions.getQuitStaff(params)
     })
@@ -208,7 +209,7 @@ class StaffQuit extends React.Component {
             <Col span={4}>
               <Form.Item label="离职原因">
                 {getFieldDecorator('quitReason')(
-                  <TextArea/>
+                  <TextArea autoSize={{minRows:1}} />
                 )}
               </Form.Item>
             </Col>
