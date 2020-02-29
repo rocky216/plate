@@ -83,6 +83,7 @@ class EditStaff extends React.Component {
       })
     }else {
       this.setState({deptList: null})
+      this.props.form.setFieldsValue({units: null})
     }
   }
 
