@@ -4,13 +4,14 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Modal, Typography} from "antd";
 import JCard from "@/components/JCard"
-import {readNotice, getNoticeNum} from "@/actions/appAction" 
+import {readNotice, getNoticeNum, getNotice} from "@/actions/appAction" 
 
 
 class NewsLook extends React.Component {
   componentDidMount(){
     this.props.actions.readNotice({id: this.props.detail.id}, res=>{
       this.props.actions.getNoticeNum({})
+      this.props.actions.getNotice({})
     })
   }
   render(){
@@ -35,7 +36,7 @@ class NewsLook extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({readNotice, getNoticeNum}, dispatch)
+    actions: bindActionCreators({readNotice, getNoticeNum, getNotice}, dispatch)
   }
 }
 

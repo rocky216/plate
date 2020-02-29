@@ -131,7 +131,7 @@ export const quitAvg1Columns = [
     dataIndex: "quit"
   },
   {
-    title: "离职率",
+    title: "离职率", 
     render(item){
       return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)
     }

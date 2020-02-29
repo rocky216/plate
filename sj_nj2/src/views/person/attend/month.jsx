@@ -140,6 +140,7 @@ class MonthAttend extends React.Component {
       const {name, jobNumber, mDate, deptId} = values
       params.name = name
       params.jobNumber = jobNumber
+      params.deptId = deptId
       params.mDate = mDate?moment(mDate).format("YYYY-MM"):""
       this.setState({params})
       this.initial(params)

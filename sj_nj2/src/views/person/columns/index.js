@@ -866,15 +866,13 @@ export const overworkColumns = function(_this){
     {
       title: "状态",
       render(item) {
-        switch(parseInt(item.sysEmployeeWork.flowStatus)){
+        switch(parseInt(item.workFinalStatus)){
           case 0:
-            return "审批中"
+            return "无效"
           case 1:
-            return "审批中"
+            return "不批准"
           case 2:
-            return "审批通过"
-          case 3:
-            return "审批拒绝"
+            return "批准"
         }
       }
     },

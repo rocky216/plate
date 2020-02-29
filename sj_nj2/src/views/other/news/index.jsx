@@ -23,7 +23,6 @@ class News extends React.Component {
 
   handlenLook(item){
     this.setState({visible:true, detail: item})
-    this.props.actions.getNotice({})
   }
 
   getCol(){

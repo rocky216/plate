@@ -52,7 +52,7 @@ class PersonQuit extends React.Component {
     let xaxis = [], dataLine = [], dataBar1=[],dataBar2=[],dataBar3=[]
     _.each(res, item=>{
       xaxis.push(item.ks)
-      dataLine.push(item.quit*100)
+      dataLine.push( (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2) )
       dataBar1.push(item.worker)
       dataBar2.push(item.quit)
     })

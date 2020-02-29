@@ -134,6 +134,16 @@ class AddStaff extends React.Component {
     return arr
   }
 
+  getBirthday({target}){
+    if(target.value.length==18){
+      let year = target.value.substring(6,10), month=target.value.substring(10,12)
+      ,day=target.value.substring(12,14)
+      if(!this.props.form.getFieldValue("birthday")){
+        this.props.form.setFieldsValue({birthday: moment(`${year}-${month}-${day}`)})
+      }
+    }
+  }
+
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, deptNotsmall} = this.props
@@ -237,7 +247,7 @@ class AddStaff extends React.Component {
                       {getFieldDecorator("card", {
                         rules: [{required: true, message: '身份证号码不能为空！'}],
                       })(
-                        <Input/>
+                        <Input onChange={this.getBirthday.bind(this)} />
                       )}
                     </Form.Item>
                   </Col>
