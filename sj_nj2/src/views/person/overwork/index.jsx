@@ -145,10 +145,9 @@ class OverWork extends React.Component {
                 {getFieldDecorator('flowStatus')(
                   <Select>
                     <Option value="">全部</Option>
-                    <Option value="1">草稿</Option>
-                    <Option value="2">作废</Option>
-                    <Option value="3">审核中</Option>
-                    <Option value="4">审批完成</Option>
+                    <Option value="1">审批中</Option>
+                    <Option value="2">已批准</Option>
+                    <Option value="3">不批准</Option>
                   </Select>
                 )}
               </Form.Item>

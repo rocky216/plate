@@ -110,7 +110,12 @@ class EditStaff extends React.Component {
       // return
       if (!err) {
         
-        const {entryTime, regularTime, birthday, startSchool,graduateTime, roleKeys, units} = values
+        const {entryTime, regularTime, birthday, startSchool,graduateTime, roleKeys, units, probation} = values
+        
+        // if(probation && parseInt(probation)>0){
+        //   this.props.utils.OpenNotification("error", "试用日期格式不对！")
+        //   return
+        // }
         this.props.actions.editEmployee({
           ...values,
           id: this.props.match.params.id,
@@ -272,7 +277,7 @@ class EditStaff extends React.Component {
                       {getFieldDecorator("probation", {
                         initialValue: detail.probation,
                       })(
-                        <InputNumber min={0} style={{width: "100%"}} />
+                        <Input min={0} style={{width: "100%"}} addonAfter="个月" />
                       )}
                     </Form.Item>
                   </Col>

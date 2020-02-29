@@ -341,7 +341,7 @@ export const staffRecordColumns = [
   },
   {
     title: "审批时间",
-    dataIndex: "updateTime"
+    dataIndex: "approveTime"
   },
 ]
 

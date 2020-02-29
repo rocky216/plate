@@ -91,10 +91,13 @@ class AddStaff extends React.Component {
   handlenSubmit(){
     this.props.form.validateFields((err, values) => {
       console.log('Received values of form: ', values);
-      
       if (!err) {
         
-        const {entryTime, regularTime, birthday, startSchool,graduateTime, roleKeys, units} = values
+        const {entryTime, regularTime, birthday, startSchool,graduateTime, roleKeys, units, probation} = values
+        // if(probation && parseInt(probation)===NaN){
+        //   this.props.utils.OpenNotification("error", "试用日期格式不对！")
+        //   return
+        // }
         this.props.actions.addEmployee({
           ...values,
           entryTime: entryTime?moment(entryTime).format("YYYY-MM-DD"):null,
@@ -238,7 +241,7 @@ class AddStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="试用期限">
                       {getFieldDecorator("probation")(
-                        <InputNumber min={0} style={{width: "100%"}} />
+                        <Input min={0} style={{width: "100%"}} addonAfter="个月" />
                       )}
                     </Form.Item>
                   </Col>
