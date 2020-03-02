@@ -30,7 +30,7 @@ class Teach extends React.Component {
     this.props.actions.getTreeDept({deptId: this.props.deptId?this.props.deptId:0},res=>{
       if(res && res.length){
         this.props.actions.getTeach({
-          selectDeptId: res[0]["id"], activity: "2",selectDeptType:res[0]["deptType"] }, res1=>{
+          selectDeptId: res[0]["id"], activityList: "1,2",selectDeptType:res[0]["deptType"] }, res1=>{
           this.setState({staff: res1})
         })
       }
@@ -42,7 +42,7 @@ class Teach extends React.Component {
     this.props.actions.getTeach({
       selectDeptId: node.props.dataRef.id,
       selectDeptType: node.props.dataRef.deptType,
-      activity: "2"
+      activityList: "1,2"
     }, res1=>{
       this.setState({staff: res1})
     })

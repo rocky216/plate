@@ -133,8 +133,8 @@ class Personanaly extends React.Component {
                 })(
                   <Select style={{width: 120}}>
                     <Option value="1">全部</Option>
-                    <Option value="2">工人</Option>
-                    <Option value="3">职员</Option>
+                    <Option value="2">职员</Option>
+                    <Option value="3">工人</Option>
                   </Select>
                 )}
               </Form.Item>

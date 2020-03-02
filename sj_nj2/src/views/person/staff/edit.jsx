@@ -80,10 +80,11 @@ class EditStaff extends React.Component {
         parentId: props.dataRef.id
       }, res=>{
         this.setState({deptList: res})
+        this.props.form.setFieldsValue({units: []})
       })
     }else {
       this.setState({deptList: null})
-      this.props.form.setFieldsValue({units: null})
+      this.props.form.setFieldsValue({units: []})
     }
   }
 
@@ -128,9 +129,9 @@ class EditStaff extends React.Component {
           photoaddr: this.state.imgUrl,
           roleKeys: roleKeys?roleKeys.join():"",
           directorId: this.state.teach?this.state.teach.id:"",
-          unitId: units?units[0]:"",
-          workScoreId: units?units[1]:"",
-          classId: units?units[2]:"",
+          unitId: units && units.length?units[0]:"",
+          workScoreId: units && units.length?units[1]:"",
+          classId: units && units.length?units[2]:"",
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/person/staff")
@@ -459,7 +460,7 @@ class EditStaff extends React.Component {
                     <Form.Item label="单元/工段/班组">
                       {getFieldDecorator("units",{
                         initialValue: deptList && deptList.length?[detail.unitId,detail.workScoreId,detail.classId]:[],
-                        rules: [{required: true, message: '单元/工段/班组！'}]
+                        
                       })(
                         <Cascader  options={this.handlenData(deptList)}  />
                       )}

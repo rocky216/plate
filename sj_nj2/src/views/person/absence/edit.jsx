@@ -165,7 +165,7 @@ class EditAbsence extends React.Component {
       <JCard spinning={spinning}>
         {addVisible?<AddDetail Ok={this.Ok.bind(this)} deptId={getFieldValue("deptId")} visible={addVisible} absenceType={getFieldValue("absenceType")} onCancel={()=>this.setState({addVisible: false})} />:null}
         {editVisible?<EditDetail Ok={this.editOk.bind(this)} deptId={getFieldValue("deptId")} detail={detail} visible={editVisible} absenceType={getFieldValue("absenceType")} onCancel={()=>this.setState({editVisible: false,detail:""})} />:null}
-        <Card size="small" title="新增缺勤单" extra={(
+        <Card size="small" title="编辑缺勤单" extra={(
           <div>
             <Button type="primary" ghost onClick={this.handlenSave.bind(this)} ><Icon type="save"  />保存</Button>
             <Button type="primary" className="mgl10 mgr10" onClick={this.handlenSend.bind(this)}><i className="icon iconfont icon-send"  />保存并发送</Button>

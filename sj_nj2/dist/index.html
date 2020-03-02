@@ -6,9 +6,26 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/fonts/iconfont.css">
   <title>智联万家</title>
-<link href="/app.64cbcd3480cdbaa3c196.css" rel="stylesheet"></head>
+  <script type="text/javascript">
+    window.onload = function(){
+      function getType(){
+      //获取UserAgent属性
+        var type = navigator.userAgent;
+        if(type.indexOf("MSIE")>-1){
+          return "IE";
+        }else if(type.indexOf("Firefox")>-1){
+          return "火狐";
+        }else if(type.indexOf("Chrome")>-1){
+          return "谷歌";
+        }else{
+          return "其他";
+        }
+      }
+    }
+  </script>
+<link href="/app.c5c1120822db00c120eb.css" rel="stylesheet"></head>
 <body>
   
   <div id="root"></div>
-<script type="text/javascript" src="\vendors.dll.js"></script><script type="text/javascript" src="/app.64cbcd3480cdbaa3c196.js"></script></body>
+<script type="text/javascript" src="\vendors.dll.js"></script><script type="text/javascript" src="/app.c5c1120822db00c120eb.js"></script></body>
 </html>

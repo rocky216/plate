@@ -8,6 +8,8 @@ import {loadSelectDeptByRole, getProcessList, addAbsenceOperation} from "@/actio
 import {addabsenceColumns} from "../columns"
 import AddDetail from "./addDetail"
 import EditDetail from "./editDetail"
+import moment from "moment"
+import {getAllDate} from "./utils"
 
 const {TreeNode} = TreeSelect
 const {Option} = Select
@@ -77,7 +79,7 @@ class AddAbsence extends React.Component {
         this.props.actions.addAbsenceOperation({
           ...values,
           type: "draft",
-          details: JSON.stringify(this.state.detailList)
+          details: JSON.stringify( this.handlendetailList(this.state.detailList) )
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/person/absence")
@@ -86,13 +88,42 @@ class AddAbsence extends React.Component {
     })
   }
 
+  handlendetailList(res){
+    let newArr = []
+    _.each(res, item=>{
+      const {absenceTime} = item
+      let arr = absenceTime.split("到")
+      let n1 = moment(arr[0]).format("YYYY-MM-DD"),
+      n2 = moment(arr[1]).format("YYYY-MM-DD");
+      
+      let tarr = getAllDate(n1, n2)
+      _.each(tarr, elem=>{
+        newArr.push({
+          employeeId: item.employeeId,
+          name: item.name,
+          allDeptNameStr: item.allDeptNameStr,
+          absenceEndTime: item.absenceEndTime,
+          absenceStartTime: item.absenceStartTime,
+          absenceTimeLength: item.absenceTimeLength,
+          leaveType: item.leaveType,
+          absenceTime: elem,
+          absenceCause: item.absenceCause,
+        })
+      })
+      
+    })
+    console.log(newArr)
+    return newArr
+  }
+
   handlenSend(){
+    
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
         this.props.actions.addAbsenceOperation({
           ...values,
           type: "send",
-          details: JSON.stringify(this.state.detailList)
+          details: JSON.stringify( this.handlendetailList(this.state.detailList) )
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/person/absence")

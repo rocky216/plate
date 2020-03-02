@@ -105,8 +105,8 @@ class Staff extends React.Component {
             </Link>
             {item.activity=="3"||item.activity=="4"?null:(
               <span>
-                {item.level=="B"||item.level=="C"||item.level=="D"?null:
-                <AuthButton auth="2-01-05" size="small" type="link" onClick={()=>_this.setState({quitVisible: true, quitDetail: item})} >离职</AuthButton>}
+                {item.level=="B"||item.level=="C"||item.level=="D"?
+                <AuthButton auth="2-01-05" size="small" type="link" onClick={()=>_this.setState({quitVisible: true, quitDetail: item})} >离职</AuthButton>:null}
                 <AuthButton auth="2-01-04" size="small" type="link" onClick={()=>_this.setState({postsVisible: true, postsDetail: item})} >调岗</AuthButton>
               </span>
             )}

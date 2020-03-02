@@ -10,6 +10,7 @@ import moment from "moment"
 
 const {TextArea} = Input
 const {Option} = Select
+const {RangePicker} = DatePicker
 
 const formItemLayout = {
   labelCol: {
@@ -54,6 +55,7 @@ class EditDetail extends React.Component {
           this.props.utils.OpenNotification("error", "缺勤开始时间不能大于结束时间！")
           return
         }
+        const {absenceTime, absenceCause, leaveType} = values
         let obj = {
           employeeId: teach.id,
           name: teach.name,
@@ -61,9 +63,9 @@ class EditDetail extends React.Component {
           absenceEndTime,
           absenceStartTime,
           absenceTimeLength,
-          leaveType: values.leaveType,
-          absenceTime: moment(values.absenceTime).format("YYYY-MM-DD"),
-          absenceCause: values.absenceCause
+          leaveType: leaveType,
+          absenceTime: absenceTime && absenceTime.length?`${moment(absenceTime[0]).format("YYYY-MM-DD")}到${moment(absenceTime[1]).format("YYYY-MM-DD")}`:null,
+          absenceCause: absenceCause
         }
         this.props.Ok(obj)
         this.props.onCancel()
@@ -85,7 +87,6 @@ class EditDetail extends React.Component {
 
   changeTime(type, val){
     const {absenceStartTime, absenceEndTime, absenceTimeLength} = this.state
-    
     
     if(type=="start"){
       this.setState({absenceStartTime:val?moment(val).format("HH:mm"):""})
@@ -209,7 +210,7 @@ class EditDetail extends React.Component {
               <Col span={12}>
                 <Form.Item label="缺勤日期" hasFeedback>
                   {getFieldDecorator('absenceTime', {
-                    initialValue: moment(detail.absenceTime),
+                    initialValue: [moment(detail.absenceTime.split("到")[0]),moment(detail.absenceTime.split("到")[1])],
                     rules: [
                       {
                         required: true,
@@ -217,7 +218,7 @@ class EditDetail extends React.Component {
                       }
                     ],
                   })(
-                    <DatePicker />
+                    <RangePicker />
                   )}
                 </Form.Item>
               </Col>

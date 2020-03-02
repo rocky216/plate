@@ -181,8 +181,8 @@ class AddAttend extends React.Component {
                     {getFieldDecorator('productionType')(
                       <Select>
                         <Option value="">全部</Option>
-                        <Option value="1">白班</Option>
-                        <Option value="2">夜班</Option>
+                        <Option value="0">白班</Option>
+                        <Option value="1">夜班</Option>
                       </Select>
                     )}
                   </Form.Item>

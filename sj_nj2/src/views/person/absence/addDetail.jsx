@@ -10,6 +10,7 @@ import moment from "moment"
 
 const {TextArea} = Input
 const {Option} = Select
+const {RangePicker} = DatePicker
 
 const formItemLayout = {
   labelCol: {
@@ -41,11 +42,12 @@ class AddDetail extends React.Component {
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        const {absenceStartTime, absenceEndTime, absenceTimeLength, teach} = this.state
+        const {absenceStartTime, absenceEndTime, absenceTimeLength, teach, } = this.state
         if( moment(absenceStartTime,"HH:mm")> moment(absenceEndTime,"HH:mm")){
           this.props.utils.OpenNotification("error", "缺勤开始时间不能大于结束时间！")
           return
         }
+        const {absenceTime, absenceCause, leaveType} = values
         let obj = {
           employeeId: teach.id,
           name: teach.name,
@@ -53,9 +55,9 @@ class AddDetail extends React.Component {
           absenceEndTime,
           absenceStartTime,
           absenceTimeLength,
-          leaveType: values.leaveType,
-          absenceTime: moment(values.absenceTime).format("YYYY-MM-DD"),
-          absenceCause: values.absenceCause
+          leaveType: leaveType,
+          absenceTime: absenceTime && absenceTime.length?`${moment(absenceTime[0]).format("YYYY-MM-DD")}到${moment(absenceTime[1]).format("YYYY-MM-DD")}`:null,
+          absenceCause: absenceCause
         }
         this.props.Ok(obj)
         this.props.onCancel()
@@ -77,8 +79,6 @@ class AddDetail extends React.Component {
 
   changeTime(type, val){
     const {absenceStartTime, absenceEndTime, absenceTimeLength} = this.state
-    
-    
     if(type=="start"){
       this.setState({absenceStartTime:val?moment(val).format("HH:mm"):""})
     }else {
@@ -87,12 +87,13 @@ class AddDetail extends React.Component {
   }
 
   OpenChange(type){
-    console.log(arguments)
     const {absenceStartTime, absenceEndTime, absenceTimeLength} = this.state
     if(!type && absenceStartTime && absenceEndTime){
+
       let m1 = moment('2020-1-10 '+absenceStartTime),
            m2 = moment('2020-1-10 '+absenceEndTime)
       let min = m2.diff(m1, 'minute')
+      
       this.setState({absenceTimeLength: min<0?0:min})
     }
   }
@@ -207,7 +208,7 @@ class AddDetail extends React.Component {
                       }
                     ],
                   })(
-                    <DatePicker />
+                    <RangePicker />
                   )}
                 </Form.Item>
               </Col>
