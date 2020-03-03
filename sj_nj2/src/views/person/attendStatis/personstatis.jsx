@@ -46,7 +46,7 @@ class Personstatis extends React.Component {
           dataSource={personstatis?utils.addIndex(personstatis.listData):[]} pagination={false} />
         <div className="mgt10">
           <a href={`${IMGURL}/api/pc/hAttendanceAnalysis/personnelAttendanceStatisticsExport/?token=${utils.getCookie("token")}`}>
-            <Button auth="2-01-07" type="danger" ghost className="mgr10"><Icon type="export" />导出员工</Button>
+            <Button auth="2-01-07" type="danger" ghost className="mgr10"><Icon type="export" />导出</Button>
           </a>
         </div>
       </div>

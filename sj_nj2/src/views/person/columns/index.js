@@ -406,7 +406,10 @@ export const postsColumns = [
   },
   {
     title: "性别",
-    dataIndex: "sex"
+    dataIndex: "sex",
+    render(item){
+      return item=="1"?"男":"女"
+    }
   },
   {
     title: "岗级",
@@ -806,7 +809,7 @@ export const attendColumns = [
   },
   {
     title: "考勤时间",
-    dataIndex: "buildTime",
+    dataIndex: "attendanceTime",
     render(item){
       return item?item.substring(0,11):item
     }

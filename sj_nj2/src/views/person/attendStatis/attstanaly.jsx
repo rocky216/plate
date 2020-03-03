@@ -82,7 +82,7 @@ class Attstanaly extends React.Component {
           <Col span={12}>
             <Row gutter={12} className="mgb10">
               <Col span={8}>
-                <Input addonBefore="出勤人数" value={detail?detail.cq.count:0} />
+                <Input addonBefore="出勤人次" value={detail?detail.cq.count:0} />
               </Col>
               <Col span={8}>
                 <Input addonBefore="迟到人次" value={detail?detail.cd.count:0} />
@@ -110,7 +110,7 @@ class Attstanaly extends React.Component {
                 <Input addonBefore="请假人次" value={detail?detail.qj.count:0} />
               </Col>
               <Col span={8}>
-                <Input addonBefore="&nbsp;&nbsp;&nbsp;请假率" value={detail?detail.qj.rate*100+"%":0} />
+                <Input addonBefore="&nbsp;&nbsp;&nbsp;请假率" value={detail?(detail.qj.rate*100).toFixed(2)+"%":0} />
               </Col>
             </Row>
             <div className="mgt10 mgb10">

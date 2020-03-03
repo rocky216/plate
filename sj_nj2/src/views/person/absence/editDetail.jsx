@@ -64,7 +64,7 @@ class EditDetail extends React.Component {
           absenceStartTime,
           absenceTimeLength,
           leaveType: leaveType,
-          absenceTime: absenceTime && absenceTime.length?`${moment(absenceTime[0]).format("YYYY-MM-DD")}到${moment(absenceTime[1]).format("YYYY-MM-DD")}`:null,
+          absenceTime: moment(absenceTime).format("YYYY-MM-DD"),
           absenceCause: absenceCause
         }
         this.props.Ok(obj)
@@ -210,7 +210,7 @@ class EditDetail extends React.Component {
               <Col span={12}>
                 <Form.Item label="缺勤日期" hasFeedback>
                   {getFieldDecorator('absenceTime', {
-                    initialValue: [moment(detail.absenceTime.split("到")[0]),moment(detail.absenceTime.split("到")[1])],
+                    initialValue: detail?moment(detail.absenceTime):null,
                     rules: [
                       {
                         required: true,
@@ -218,7 +218,7 @@ class EditDetail extends React.Component {
                       }
                     ],
                   })(
-                    <RangePicker />
+                    <DatePicker />
                   )}
                 </Form.Item>
               </Col>

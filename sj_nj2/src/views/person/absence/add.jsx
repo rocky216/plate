@@ -60,9 +60,8 @@ class AddAbsence extends React.Component {
   }
 
   Ok(obj){
-    console.log(obj)
-    this.state.detailList.push(obj)
-    this.setState({detailList:this.state.detailList})
+    let arr = this.state.detailList.concat(obj)
+    this.setState({detailList:arr})
   }
 
   editOk(obj){
@@ -79,7 +78,7 @@ class AddAbsence extends React.Component {
         this.props.actions.addAbsenceOperation({
           ...values,
           type: "draft",
-          details: JSON.stringify( this.handlendetailList(this.state.detailList) )
+          details: JSON.stringify( this.state.detailList )
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/person/absence")
@@ -112,18 +111,16 @@ class AddAbsence extends React.Component {
       })
       
     })
-    console.log(newArr)
     return newArr
   }
 
   handlenSend(){
-    
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
         this.props.actions.addAbsenceOperation({
           ...values,
           type: "send",
-          details: JSON.stringify( this.handlendetailList(this.state.detailList) )
+          details: JSON.stringify( this.state.detailList )
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/person/absence")

@@ -95,7 +95,7 @@ class Overtimestatis extends React.Component {
           <Col span={12}>
             <Row gutter={12} className="mgb10">
               <Col span={8}>
-                <Input addonBefore="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出勤人数" value={detail?detail.cqrsNum:0} />
+                <Input addonBefore="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出勤人次" value={detail?detail.cqrsNum:0} />
               </Col>
               <Col span={8}>
                 <Input addonBefore="&nbsp;&nbsp;&nbsp;&nbsp;计划加班时长(H)" value={detail?detail.jhjbNum:0} />

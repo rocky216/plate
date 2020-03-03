@@ -23,6 +23,8 @@ const formItemLayout = {
   },
 };
 
+let timer = null
+
 class EditOrgan extends React.Component {
   constructor(props){
     super(props)
@@ -122,22 +124,28 @@ class EditOrgan extends React.Component {
   }
 
   handlenSubmit(){
+    
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const {leader} = this.state
-        this.props.actions.editOrgan({
-          ...values,
-          id: this.props.detail.id,
-          parentId: this.state.dept?this.state.dept.supDept.id:0,
-          staffingKeys: this.getJobLevel().join(),
-          noticeKeys: this.handlenNoticeKeys().join(),
-          buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):"",
-          leaderId: leader.id?leader.id:"",
-          leaderName: leader.name?leader.name:""
-        }, res=>{
-          this.props.utils.OpenNotification("success")
-          this.props.actions.getTreeDept({})
-        })
+        timer && clearTimeout(timer)
+        timer = setTimeout(()=>{
+          this.props.actions.editOrgan({
+            ...values,
+            id: this.props.detail.id,
+            parentId: this.state.dept?this.state.dept.supDept.id:0,
+            staffingKeys: this.getJobLevel().join(),
+            noticeKeys: this.handlenNoticeKeys().join(),
+            buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):"",
+            leaderId: leader.id?leader.id:"",
+            leaderName: leader.name?leader.name:""
+          }, res=>{
+            this.props.utils.OpenNotification("success")
+            this.props.actions.getTreeDept({})
+          })
+        },500)
+
+        
       }
     });
   }

@@ -137,7 +137,7 @@ class Attend extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, attend, employeedict } = this.props
-    const {deptList, tabKey} = this.state
+    const {deptList, tabKey, params} = this.state
 
     return (
       <JCard spinning={spinning}>

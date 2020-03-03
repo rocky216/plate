@@ -7,6 +7,7 @@ import {getEmployeeDetail} from "@/actions/personAction"
 import Teach from "../staff/teach"
 import {leaveType} from "./data"
 import moment from "moment"
+import {getAllDate} from "./utils"
 
 const {TextArea} = Input
 const {Option} = Select
@@ -38,6 +39,27 @@ class AddDetail extends React.Component {
   componentDidMount(){
     
   }
+  handlenObj(values){
+    const {absenceStartTime, absenceEndTime, absenceTimeLength, teach, } = this.state
+    const {absenceTime, absenceCause, leaveType} = values
+    let arr = getAllDate( moment(absenceTime[0]).format("YYYY-MM-DD"), moment(absenceTime[1]).format("YYYY-MM-DD") )
+    
+    let newArr = []
+    _.each(arr, item=>{
+      newArr.push({
+        employeeId: teach.id,
+        name: teach.name,
+        allDeptNameStr: teach.allDeptNameStr,
+        absenceEndTime,
+        absenceStartTime,
+        absenceTimeLength,
+        leaveType: leaveType,
+        absenceTime: item,
+        absenceCause: absenceCause
+      })
+    })
+    return newArr
+  }
 
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
@@ -47,19 +69,9 @@ class AddDetail extends React.Component {
           this.props.utils.OpenNotification("error", "缺勤开始时间不能大于结束时间！")
           return
         }
-        const {absenceTime, absenceCause, leaveType} = values
-        let obj = {
-          employeeId: teach.id,
-          name: teach.name,
-          allDeptNameStr: teach.allDeptNameStr,
-          absenceEndTime,
-          absenceStartTime,
-          absenceTimeLength,
-          leaveType: leaveType,
-          absenceTime: absenceTime && absenceTime.length?`${moment(absenceTime[0]).format("YYYY-MM-DD")}到${moment(absenceTime[1]).format("YYYY-MM-DD")}`:null,
-          absenceCause: absenceCause
-        }
-        this.props.Ok(obj)
+        
+        
+        this.props.Ok(this.handlenObj(values))
         this.props.onCancel()
       }
     })

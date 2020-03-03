@@ -1847,7 +1847,7 @@ export function getTeach(params, next){
       }
       let data = await fetch(options)
       if(next)next(data)
-      console.log(data)
+      
       dispatch({
         type: END_LOADING_PERSON,
       })

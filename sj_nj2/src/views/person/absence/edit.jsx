@@ -81,15 +81,13 @@ class EditAbsence extends React.Component {
 
   Ok(obj){
     console.log(obj)
-    this.state.detailList.push(obj)
-    this.setState({detailList:this.state.detailList})
+    let arr = this.state.detailList.concat(obj)
+    this.setState({detailList:arr})
   }
 
   editOk(obj){
-    console.log(obj)
     const {detail, detailList} = this.state
     let index = _.findIndex(detailList, o=>o.key==detail.key)
-    
     detailList[index] = obj
     this.setState({detailList})
   }

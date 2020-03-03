@@ -22,6 +22,8 @@ const formItemLayout = {
   },
 };
 
+let timer = null
+
 class AddOrgan extends React.Component {
   constructor(props){
     super(props)
@@ -84,18 +86,22 @@ class AddOrgan extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const {leader} = this.state
-        this.props.actions.addOrgan({
-          ...values,
-          parentId: this.props.parent.id,
-          buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):"",
-          staffingKeys: this.getJobLevel().join(),
-          noticeKeys: this.handlenNoticeKeys().join(),
-          leaderId: leader.id?leader.id:"",
-          leaderName: leader.name?leader.name:""
-        }, res=>{
-          this.props.utils.OpenNotification("success")
-          this.props.actions.getTreeDept({})
-        })
+        timer && clearTimeout(timer)
+        timer = setTimeout(()=>{
+          this.props.actions.addOrgan({
+            ...values,
+            parentId: this.props.parent.id,
+            buildDate: values.buildDate?moment(values.buildDate).format("YYYY-MM-DD"):"",
+            staffingKeys: this.getJobLevel().join(),
+            noticeKeys: this.handlenNoticeKeys().join(),
+            leaderId: leader.id?leader.id:"",
+            leaderName: leader.name?leader.name:""
+          }, res=>{
+            this.props.utils.OpenNotification("success")
+            this.props.actions.getTreeDept({})
+          })
+        }, 500)
+        
       }
     });
   }
