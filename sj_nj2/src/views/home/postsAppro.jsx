@@ -74,7 +74,9 @@ class PostsAppro extends React.Component {
                 )}
               </Form.Item>
               <Form.Item label="审批意见" >
-                {getFieldDecorator('isPass')(
+                {getFieldDecorator('isPass',{
+                  rules: [{required: true, message: '审批意见不能为空！'}],
+                })(
                   <Radio.Group >
                     <Radio value="1">批准</Radio>
                     <Radio value="0">不批准</Radio>
@@ -100,8 +102,10 @@ class PostsAppro extends React.Component {
                   <Input disabled />
                 )}
               </Form.Item>
-              <Form.Item label="审批意见" hasFeedback>
-                {getFieldDecorator('approveOpinion')(
+              <Form.Item label="审批内容" hasFeedback>
+                {getFieldDecorator('approveOpinion', {
+                  rules: [{required: true, message: '审批内容不能为空！'}],
+                })(
                   <TextArea/>
                 )}
               </Form.Item>

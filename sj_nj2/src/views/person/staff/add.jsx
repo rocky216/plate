@@ -184,7 +184,9 @@ class AddStaff extends React.Component {
                   </Col>
                   <Col span={colSpan} >
                     <Form.Item label="人员类别">
-                      {getFieldDecorator("personTypeId")(
+                      {getFieldDecorator("personTypeId",{
+                        rules: [{required: true, message: '人员类别不能为空！'}],
+                      })(
                         <Select>
                           {employeeDict && employeeDict.personTypeList && employeeDict.personTypeList.length?employeeDict.personTypeList.map(item=>(
                             <Option key={item.id} value={item.id}>{item.dictName}</Option>
@@ -252,14 +254,14 @@ class AddStaff extends React.Component {
                       {getFieldDecorator("card", {
                         rules: [{required: true, message: '身份证号码不能为空！'}],
                       })(
-                        <Input onChange={this.getBirthday.bind(this)} />
+                        <Input onChange={this.getBirthday.bind(this)}  />
                       )}
                     </Form.Item>
                   </Col>
                   <Col span={colSpan} >
                     <Form.Item label="职位">
                       {getFieldDecorator("positionId", {
-                        rules: [{required: true, message: '身份证号码不能为空！'}],
+                        rules: [{required: true, message: '职位不能为空！'}],
                       })(
                         <Select>
                           {employeeDict && employeeDict.positionList && employeeDict.positionList.length?employeeDict.positionList.map(item=>(
@@ -281,7 +283,7 @@ class AddStaff extends React.Component {
                       {getFieldDecorator("phone", {
                         rules: [{required: true, message: '电话不能为空！'}],
                       })(
-                        <InputNumber style={{width: "100%"}}/>
+                        <InputNumber style={{width: "100%"}} max={99999999999} />
                       )}
                     </Form.Item>
                   </Col>
@@ -310,8 +312,9 @@ class AddStaff extends React.Component {
                     <Form.Item label="婚姻">
                       {getFieldDecorator("matrimonial")(
                         <Select>
-                          <Option value="0">已婚</Option>
+                          <Option value="0">未知</Option>
                           <Option value="1">未婚</Option>
+                          <Option value="2">已婚</Option>
                         </Select>
                       )}
                     </Form.Item>
@@ -425,7 +428,9 @@ class AddStaff extends React.Component {
                   </Col>
                   <Col span={colSpan} >
                     <Form.Item label="成本中心">
-                      {getFieldDecorator("intoCenterId")(
+                      {getFieldDecorator("intoCenterId", {
+                        rules: [{required: true, message: '成本中心不能为空！'}],
+                      })(
                         <Select>
                           {employeeDict&&employeeDict.intoCenterList && employeeDict.intoCenterList.length?employeeDict.intoCenterList.map(item=>(
                             <Option key={item.id} value={item.id}>{item.dictName}</Option>

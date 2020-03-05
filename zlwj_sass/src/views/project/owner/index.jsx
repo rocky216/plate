@@ -8,8 +8,13 @@ import {getOwnerList, insertExcelUsers, deleteOwner} from "@/actions/projectActi
 import {getHeList} from "@/actions/baseAction"
 import {errInfoColmun, ownerColmuns} from "../colmuns"
 import UploadBar from "@/components/UploadBar"
+import SearchBox from "@/components/SearchBox"
 
 const {Option} = Select
+
+let params = {
+  current:1
+}
 
 class Owner extends React.Component {
   constructor(props){
@@ -19,15 +24,27 @@ class Owner extends React.Component {
       exportVisible: false,
       errInfo: [],
       exportHeId: '',
-      params: {
-        current: 1
-      }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getOwnerList(this.state.params)
+    this.props.actions.getOwnerList(params)
     this.props.actions.getHeList({})
+  }
+
+  handlenSearch(values){
+    if(values===null){
+      this.props.actions.getOwnerList({})
+      params = {
+        current:1
+      }
+      return
+    }
+    params= {
+      ...values,
+      current:1
+    }
+    this.props.actions.getOwnerList(values)
   }
 
   handlenUpload(info){
@@ -96,7 +113,7 @@ class Owner extends React.Component {
 
   render(){
     const {spinning, utils, owner, heList, commonFiles} = this.props
-    const {tipVisible, errInfo, exportVisible, exportHeId, params} = this.state
+    const {tipVisible, errInfo, exportVisible, exportHeId} = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -144,14 +161,13 @@ class Owner extends React.Component {
                 download={commonFiles?commonFiles.ownersImportMode.fileName:''} ><Button type="link">下载模板</Button></a>
           </Modal>
           
-        <div className="mgb10">
-          
+        <div className="flexend mgb10">
+          <SearchBox handlenSearch={this.handlenSearch.bind(this)}/>
         </div>
         
          <Table columns={this.getCol()} dataSource={owner?utils.addIndex(owner.list):[]} 
           pagination={utils.Pagination(owner, page=>{
             params.current = page
-            this.setState({params})
             this.props.actions.getOwnerList(params)
           })} />
        </Card>

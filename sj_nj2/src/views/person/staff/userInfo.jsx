@@ -322,8 +322,9 @@ class EditStaff extends React.Component {
                         initialValue: detail.matrimonial,
                       })(
                         <Select disabled >
-                          <Option value="0">已婚</Option>
+                          <Option value="0">未知</Option>
                           <Option value="1">未婚</Option>
+                          <Option value="2">已婚</Option>
                         </Select>
                       )}
                     </Form.Item>
@@ -385,9 +386,9 @@ class EditStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="来源渠道">
                       {getFieldDecorator("sourceId", {
-                        initialValue: detail.sourceId,
+                        initialValue: detail.sourceId?detail.sourceId:"",
                       })(
-                        <Select>
+                        <Select disabled>
                           {employeeDict && employeeDict.sourceList && employeeDict.sourceList.length?employeeDict.sourceList.map(item=>(
                             <Option key={item.id} value={item.id}>{item.dictName}</Option>
                           )):null}
@@ -449,7 +450,7 @@ class EditStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="附属部门">
                       {getFieldDecorator("bDeptId", {
-                        initialValue: detail.bDeptId,
+                        initialValue: detail.bDeptId?detail.bDeptId:"",
                       })(
                         deptNotsmall?<TreeSelect disabled dropdownClassName="dropdownStyle" treeDefaultExpandAll >
                           {this.createNode(deptNotsmall?deptNotsmall:[])}
@@ -460,7 +461,7 @@ class EditStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="成本中心">
                       {getFieldDecorator("intoCenterId", {
-                        initialValue: detail.intoCenterId,
+                        initialValue: detail.intoCenterId?detail.intoCenterId:"",
                       })(
                         <Select disabled >
                           {employeeDict&&employeeDict.intoCenterList && employeeDict.intoCenterList.length?employeeDict.intoCenterList.map(item=>(

@@ -213,6 +213,7 @@ class EditStaff extends React.Component {
                     <Form.Item label="人员类别">
                       {getFieldDecorator("personTypeId", { 
                         initialValue: detail.personTypeId,
+                        rules: [{required: true, message: '人员类别不能为空！'}],
                       })(
                         <Select>
                           {employeeDict && employeeDict.personTypeList && employeeDict.personTypeList.length?employeeDict.personTypeList.map(item=>(
@@ -297,7 +298,7 @@ class EditStaff extends React.Component {
                     <Form.Item label="职位">
                       {getFieldDecorator("positionId", {
                         initialValue: detail.positionId,
-                        rules: [{required: true, message: '身份证号码不能为空！'}],
+                        rules: [{required: true, message: '职位不能为空！'}],
                       })(
                         <Select>
                           {employeeDict && employeeDict.positionList && employeeDict.positionList.length?employeeDict.positionList.map(item=>(
@@ -322,7 +323,7 @@ class EditStaff extends React.Component {
                         initialValue: detail.phone,
                         rules: [{required: true, message: '电话不能为空！'}],
                       })(
-                        <InputNumber style={{width: "100%"}}/>
+                        <InputNumber style={{width: "100%"}} max={99999999999} />
                       )}
                     </Form.Item>
                   </Col>
@@ -359,8 +360,9 @@ class EditStaff extends React.Component {
                         initialValue: detail.matrimonial,
                       })(
                         <Select>
-                          <Option value="0">已婚</Option>
+                          <Option value="0">未知</Option>
                           <Option value="1">未婚</Option>
+                          <Option value="2">已婚</Option>
                         </Select>
                       )}
                     </Form.Item>
@@ -423,7 +425,7 @@ class EditStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="来源渠道">
                       {getFieldDecorator("sourceId", {
-                        initialValue: detail.sourceId,
+                        initialValue: detail.sourceId?detail.sourceId:"",
                       })(
                         <Select>
                           {employeeDict && employeeDict.sourceList && employeeDict.sourceList.length?employeeDict.sourceList.map(item=>(
@@ -487,7 +489,7 @@ class EditStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="附属部门">
                       {getFieldDecorator("bDeptId", {
-                        initialValue: detail.bDeptId,
+                        initialValue: detail.bDeptId?detail.bDeptId:"",
                       })(
                         deptNotsmall?<TreeSelect dropdownClassName="dropdownStyle" treeDefaultExpandAll >
                           {this.createNode(deptNotsmall?deptNotsmall:[])}
@@ -498,7 +500,8 @@ class EditStaff extends React.Component {
                   <Col span={colSpan} >
                     <Form.Item label="成本中心">
                       {getFieldDecorator("intoCenterId", {
-                        initialValue: detail.intoCenterId,
+                        initialValue: detail.intoCenterId?detail.intoCenterId:"",
+                        rules: [{required: true, message: '成本中心不能为空！'}],
                       })(
                         <Select>
                           {employeeDict&&employeeDict.intoCenterList && employeeDict.intoCenterList.length?employeeDict.intoCenterList.map(item=>(

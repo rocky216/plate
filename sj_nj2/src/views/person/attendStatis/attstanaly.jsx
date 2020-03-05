@@ -50,9 +50,9 @@ class Attstanaly extends React.Component {
   }
   handlenData(res){
     if(!res)return
-    optionTrendPie.series[0]["data"][0]["value"] =res.zc.count
+    optionTrendPie.series[0]["data"][0]["value"] =res.qj.count
     optionTrendPie.series[0]["data"][1]["value"] =res.cd.count
-    optionTrendPie.series[0]["data"][2]["value"] =res.qj.count
+    optionTrendPie.series[0]["data"][2]["value"] =res.zc.count
     optionTrendPie.series[0]["data"][3]["value"] =res.kg.count
     this.setState({optionTrend: optionTrendPie})
   }
@@ -96,21 +96,21 @@ class Attstanaly extends React.Component {
                 <Input addonBefore="正常人次" value={detail?detail.zc.count:0} />
               </Col>
               <Col span={8}>
-                <Input addonBefore="&nbsp;&nbsp;&nbsp;迟到率" value={detail?detail.cd.rate*100+"%":0} />
+                <Input addonBefore="&nbsp;&nbsp;&nbsp;迟到率" value={detail && detail.cq.count?(detail.cd.count/detail.cq.count*100).toFixed(2)+"%":0} />
               </Col>
               <Col span={8}>
-                <Input addonBefore="&nbsp;&nbsp;&nbsp;旷工率" value={detail?detail.kg.rate*100+"%":0} />
+                <Input addonBefore="&nbsp;&nbsp;&nbsp;旷工率" value={detail&& detail.cq.count?(detail.kg.count/detail.cq.count*100).toFixed(2)+"%":0} />
               </Col>
             </Row>
             <Row gutter={12} className="mgb10">
               <Col span={8}>
-                <Input addonBefore="&nbsp;&nbsp;&nbsp;正常率" value={detail?detail.zc.rate*100+"%":0} />
+                <Input addonBefore="&nbsp;&nbsp;&nbsp;正常率" value={detail&& detail.cq.count?(detail.zc.count/detail.cq.count*100).toFixed(2)+"%":0} />
               </Col>
               <Col span={8}>
                 <Input addonBefore="请假人次" value={detail?detail.qj.count:0} />
               </Col>
               <Col span={8}>
-                <Input addonBefore="&nbsp;&nbsp;&nbsp;请假率" value={detail?(detail.qj.rate*100).toFixed(2)+"%":0} />
+                <Input addonBefore="&nbsp;&nbsp;&nbsp;请假率" value={detail&& detail.cq.count?(detail.qj.count/detail.cq.count*100).toFixed(2)+"%":0} />
               </Col>
             </Row>
             <div className="mgt10 mgb10">

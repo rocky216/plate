@@ -110,7 +110,7 @@ export const optionTrendPie = { //给每个饼图模块添加颜色
           radius: '80%',//半径
           clockwise: false,//饼图是否顺时针排列
           center: ['50%', '50%'],//圆心的位置
-          data: [
+          data: [ 
               {
                   value: 5,
                   name: '请假人次'

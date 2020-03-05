@@ -59,6 +59,8 @@ import OtherOrder from "@/views/manage/otherorder"
 import OtherOrderDetail from "@/views/manage/otherorder/detail"
 import AllExpend from "@/views/manage/allexpend"
 import AllExpendDetail from "@/views/manage/allexpend/detail"
+import Merchant from "@/views/system/merchant"
+import ParkList from "@/views/project/park"
 
 
 
@@ -89,6 +91,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/system/company" Component={Company} name="公司列表" auth="9-03" /> 
         <AuthRoute  path="/system/company/:id/he" Component={CompanyHe} name="公司小区"  />
         <AuthRoute  path="/system/message" Component={Message} name="短信平台" auth="9-04" />
+        <AuthRoute  path="/system/merchant" Component={Merchant} name="商户号管理" auth="9-05" />
         
         <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" auth="8-01" />
         <AuthRoute  path="/base/station" Component={Station} name="岗位管理" auth="8-02" />
@@ -97,6 +100,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/base/staff" Component={StaffList} name="员工管理" auth="8-04" />
         <AuthRoute path="/base/staff/:id/edit" Component={EditStaff} name="员工编辑" />
         <AuthRoute path="/base/library" Component={BaseLibrary} name="基础数据字典" auth="8-05" />
+        
 
         <AuthRoute  path="/project/item" Component={ProjectItem} name="项目管理" auth="7-01" />
         <AuthRoute exact  path="/project/prodata" Component={ProData} name="项目信息管理" auth="7-02" />
@@ -105,6 +109,7 @@ class Routers extends React.Component{
         <AuthRoute  path="/project/owner/add" Component={AddOwner} name="新增业主" />
         <AuthRoute  path="/project/owner/:id/edit" Component={EditOwner} name="编辑业主" />
         <AuthRoute  path="/project/shop" Component={Shop} name="商铺信息管理" auth="7-04" />
+        <AuthRoute path="/project/park" Component={ParkList} name="停车场管理" auth="7-05" />
 
         <AuthRoute  path="/user/person" Component={UserPerson} name="用户资料" />
 

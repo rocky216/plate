@@ -1,6 +1,57 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const merchantColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "应用名称",
+    dataIndex: "name"
+  },
+  {
+    title: "应用Key",
+    dataIndex: "skey"
+  },
+  {
+    title: "应用Secret",
+    dataIndex: "secret"
+  },
+  {
+    title: "商户名称",
+    dataIndex: "mchName"
+  },
+  {
+    title: "商户号ID",
+    dataIndex: "mchId"
+  },
+  {
+    title: "商户号Key",
+    dataIndex: "mchKey"
+  },
+  {
+    title: "商户号Secret",
+    dataIndex: "mchSecret"
+  },
+  {
+    title: "类别",
+    dataIndex: "type",
+    render(item){
+      switch(parseInt(item)){
+        case 1:
+          return "微信小程序"
+        case 2:
+          return "微信APP"
+        case 3:
+          return "支付宝小程序"
+        case 4:
+          return "支付宝APP"
+      }
+    }
+  },
+]
+
 export const sysLibraryColmuns = [
   {
     title: "序号",

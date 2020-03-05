@@ -5,6 +5,7 @@ import {Table, Button, Icon} from "antd";
 import {personnelAttendanceStatistics} from "@/actions/personAction"
 import {personstatisColumns} from "../columns"
 import Searchbox from "./searchbox"
+import moment from "moment"
 
 
 class Personstatis extends React.Component {
@@ -12,6 +13,11 @@ class Personstatis extends React.Component {
     super(props)
     this.state = {
       params:{
+        deptId:"",
+        startTime:"",
+        endTime:""
+      },
+      outParams: {
         deptId:"",
         startTime:"",
         endTime:""
@@ -29,13 +35,16 @@ class Personstatis extends React.Component {
   handleSearch(values){
     if(values==null){
       this.initial(this.state.params)
+      this.setState({outParams: _.cloneDeep(this.state.params)})
       return
     }
     this.initial(values)
+    this.setState({outParams: values})
   }
 
   render(){
     const {utils, personstatis} = this.props
+    const {outParams} = this.state
 
     return (
       <div>
@@ -45,7 +54,7 @@ class Personstatis extends React.Component {
         <Table size="small" bordered columns={personstatisColumns} 
           dataSource={personstatis?utils.addIndex(personstatis.listData):[]} pagination={false} />
         <div className="mgt10">
-          <a href={`${IMGURL}/api/pc/hAttendanceAnalysis/personnelAttendanceStatisticsExport/?token=${utils.getCookie("token")}`}>
+          <a href={`${IMGURL}/api/pc/hAttendanceAnalysis/personnelAttendanceStatisticsExport/?token=${utils.getCookie("token")}&deptId=${outParams.deptId}&endTime=${outParams.endTime}&startTime=${outParams.startTime}`}>
             <Button auth="2-01-07" type="danger" ghost className="mgr10"><Icon type="export" />导出</Button>
           </a>
         </div>

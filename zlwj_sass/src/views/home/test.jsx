@@ -6,7 +6,7 @@ import {} from "antd";
 
 class Test extends React.Component {
   render(){
-    const { } = this.props
+    const {utils } = this.props
 
     return (
       <div>Test</div>

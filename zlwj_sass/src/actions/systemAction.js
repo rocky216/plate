@@ -2,6 +2,146 @@ import {START_LOADING_SYSTEM, END_LOADING_SYSTEM} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function onOffMerchant(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/sysWxAccount/onOff",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function editMerchant(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/sysWxAccount/update",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+export function deleteMerchant(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/sysWxAccount/delete",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function addMerchant(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/sysWxAccount/add",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function merchantList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/sysWxAccount/list",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        merchant: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
 export function deleteLinkHeTem(params, next){
   return async function(dispatch, getState){
     dispatch({

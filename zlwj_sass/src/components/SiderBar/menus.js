@@ -154,6 +154,11 @@ export default [
         link: "/project/shop",
         key: 704
       },
+      {
+        title: "停车场管理",
+        link: "/project/park",
+        key: 705
+      },
     ]
   },
   {
@@ -212,6 +217,11 @@ export default [
         title: "短信平台",
         link: "/system/message",
         key: 904
+      },
+      {
+        title: "商户号管理",
+        link: "/system/merchant",
+        key: 905
       },
     ]
   }
