@@ -10,7 +10,7 @@ import EditSchedu from "./edit"
 import Analy from "./analy"
 import "./index.less"
 import moment from "moment"
-import AuthButton from "@/components/AuthButton"
+import AuthButton from "@/components/AuthButton" 
 
 const { TabPane } = Tabs;
 const {TreeNode} = TreeSelect 

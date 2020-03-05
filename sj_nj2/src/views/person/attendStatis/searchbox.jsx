@@ -46,8 +46,9 @@ class Searchbox extends React.Component {
   }
   getWeekR(){
     let week = moment().format("E")
-    ,start=moment().subtract(week-1, 'days').format("YYYY-MM-DD")
-    ,end=moment().subtract(-6, 'days').format("YYYY-MM-DD")
+    ,start=moment().week(moment().week()).startOf('week').format('YYYY-MM-DD')
+    ,end=moment().week(moment().week()).endOf('week').format('YYYY-MM-DD')
+    
     return {start, end}
   }
   handleSearch(e){

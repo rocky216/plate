@@ -53,6 +53,8 @@ class DetailAbsence extends React.Component {
             leaveType: item.leaveType,
             absenceTime: item.absenceTime,
             absenceCause: item.absenceCause,
+            absenceFinalStatus: item.absenceFinalStatus,
+            absenceTemporaryStatus: item.absenceTemporaryStatus,
           })
         })
       }

@@ -133,7 +133,7 @@ export const quitAvg1Columns = [
   {
     title: "离职率", 
     render(item){
-      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)
+      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)+"%"
     }
   },
 ]
@@ -157,7 +157,7 @@ export const itemAvg2Columns = [
   {
     title: "离职率",
     render(item){
-      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)
+      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)+"%"
     }
   },
 ]
@@ -182,7 +182,7 @@ export const yearAvg4Columns = [
   {
     title: "离职率",
     render(item){
-      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)
+      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)+"%"
     }
   },
 ]

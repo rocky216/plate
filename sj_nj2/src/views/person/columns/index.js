@@ -1,5 +1,5 @@
 import React from "react"
-import {Radio, InputNumber, Button} from "antd"
+import {Radio, InputNumber, Button, Tag} from "antd"
 import {leaveType} from "../absence/data"
 
 
@@ -356,7 +356,10 @@ export const scheduColumns = [
   },
   {
     title: "排产日期",
-    dataIndex: "planTime"
+    dataIndex: "planTime",
+    render(item){
+      return item?item.substring(0,11):item
+    }
   },
   {
     title: "班次",
@@ -570,7 +573,10 @@ export const addabsenceColumns = [
   },
   {
     title: "缺勤日期",
-    dataIndex: "absenceTime"
+    dataIndex: "absenceTime",
+    render(item){
+      return item?item.substring(0,11):item
+    }
   },
   {
     title: "开始时间",
@@ -590,6 +596,29 @@ export const addabsenceColumns = [
   {
     title: "缺勤事由",
     dataIndex: "absenceCause"
+  },
+  {
+    title: "临时状态",
+    dataIndex: "absenceTemporaryStatus",
+    render(item){
+      console.log(item)
+      return item=="1"?<Tag color="red">不通过</Tag>:<Tag color="green">通过</Tag>
+    }
+  },
+  {
+    title: "最终状态",
+    dataIndex: "absenceFinalStatus",
+    render(item){
+      console.log(item)
+      switch(parseInt(item)){
+        case 0:
+          return <Tag color="blue">待审核</Tag>
+        case 1:
+          return <Tag color="red">不通过</Tag>
+        case 2:
+          return  <Tag color="green">通过</Tag>
+      }
+    }
   },
 ]
 

@@ -38,21 +38,20 @@ class SystemAuth extends React.Component {
     return roleColumns.concat([{
       title: "操作",
       render(item){
-        return (
-          <div>
-            <Link to={`/system/auth/${item.id}/edit`}>
-              <AuthButton auth="3-02-02" size="small" type="link">修改</AuthButton>
-            </Link>
-            <Popconfirm
-              placement="topRight" 
-              title="是否删除？"
-              okText="是"
-              cancelText="否"
-              onConfirm={_this.handlenDelete.bind(_this, item)}>
-                <AuthButton auth="3-02-03" size="small" type="link">删除</AuthButton>
-            </Popconfirm>
-          </div>
-        )
+        return item.id=="19"?null:
+        <div>
+          <Link to={`/system/auth/${item.id}/edit`}>
+            <AuthButton auth="3-02-02" size="small" type="link">修改</AuthButton>
+          </Link>
+          <Popconfirm
+            placement="topRight" 
+            title="是否删除？"
+            okText="是"
+            cancelText="否"
+            onConfirm={_this.handlenDelete.bind(_this, item)}>
+              <AuthButton auth="3-02-03" size="small" type="link">删除</AuthButton>
+          </Popconfirm>
+        </div>
       }
     }])
   }

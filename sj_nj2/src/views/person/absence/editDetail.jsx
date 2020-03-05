@@ -106,6 +106,11 @@ class EditDetail extends React.Component {
     }
   }
 
+  disabledDate(current){
+    let year = moment().format("YYYY")
+    return current<moment(`${year}-01-01`) || current>moment(`${parseInt(year)+1}-01-01`)
+  }
+
   render(){
     const {getFieldDecorator} = this.props.form
     const {spinning, visible, onCancel, absenceType, detail} = this.props
@@ -218,7 +223,7 @@ class EditDetail extends React.Component {
                       }
                     ],
                   })(
-                    <DatePicker />
+                    <DatePicker  disabledDate={this.disabledDate.bind(this)} />
                   )}
                 </Form.Item>
               </Col>
