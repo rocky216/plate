@@ -194,7 +194,7 @@ class ApprovalOverwork extends React.Component {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item labelCol={{sm:{span:12}}} wrapperCol={{sm:{span:12}}} label="部门/车间累计计划外加班时长">
+              <Form.Item labelCol={{sm:{span:12}}} wrapperCol={{sm:{span:12}}} label="部门/车间人均计划外加班时长">
                 {getFieldDecorator("workTimeAvg",{
                   initialValue: info.workTimeAvg,
                 })(

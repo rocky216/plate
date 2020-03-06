@@ -25,10 +25,14 @@ class WeekCheck extends React.Component {
   }
 
   handlenData(str,all){
-    if(str && all){
+    if(str && all && str<=all){
+      console.log(all)
       return ((str/all)*100).toFixed(2)+'%'
     }else{
-      return 0
+      if(str==0){
+        return 0
+      }
+      return "100%"
     }
   }
   chartData(res){
