@@ -2,6 +2,187 @@ import {START_LOADING_PROJECT, END_LOADING_PROJECT} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function addPlateFeeConfig(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/plate/config/addPlateFeeConfig",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function plateFeeConfigList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/plate/config/plateFeeConfigList",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function deleteParkData(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/carpark/delete",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function getParkData(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/carpark/get",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function editParkData(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/carpark/updateAttaList",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function addParkData(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/carpark/addAttaList",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+
 export function getParkList(params, next){
   return async function(dispatch, getState){
     dispatch({
@@ -20,6 +201,7 @@ export function getParkList(params, next){
       if(next)next(data)
       dispatch({
         type: END_LOADING_PROJECT,
+        park: data
       })
 
     }catch(err){

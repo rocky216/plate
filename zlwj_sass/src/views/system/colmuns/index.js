@@ -1,6 +1,43 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const pileColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "配置类别",
+    dataIndex: "type",
+    render(item){
+      switch(parseInt(item)){
+        case 1:
+          return "小程序"
+        case 2:
+          return "充电卡"
+        case 3:
+          return "智联万家"
+      }
+    }
+  }, 
+  {
+    title: "金额",
+    dataIndex: "money"
+  },
+  {
+    title: "分钟",
+    dataIndex: "minute"
+  },
+ 
+  {
+    title: "是否支持退款",
+    dataIndex: "isRefund",
+    render(item){
+      return item=="1"?"支持":"不支持"
+    }
+  },
+]
+
 export const merchantColumns = [
   {
     title: "序号",

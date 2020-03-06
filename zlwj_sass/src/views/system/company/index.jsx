@@ -14,7 +14,8 @@ class Company extends React.Component {
   }
 
   getCol(){
-    return companyColmuns.concat([{
+    return companyColmuns.concat([
+      {
       title: "操作",
       render(item){
         return (
@@ -22,6 +23,10 @@ class Company extends React.Component {
             <Link to={`/system/company/${item.id}/he`}>
               <Button type="link">项目列表</Button>
             </Link>
+            <Link to={`/system/company/${item.id}/config`}>
+              <Button type="link">项目配置</Button>
+            </Link>
+              
           </div>
         )
       }

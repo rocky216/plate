@@ -1,6 +1,70 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const parkColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "停车场名称",
+    dataIndex: "carparkName",
+  },
+  {
+    title: "停车场编号",
+    dataIndex: "carparkCode",
+  },
+  {
+    title: "关联项目",
+    dataIndex: "heNameStr",
+  },
+  {
+    title: "停车场类型",
+    dataIndex: "carparkType",
+    render(item){
+      switch(parseInt(item)){
+        case 1:
+          return "地下停车场"
+        case 2:
+          return "地面停车场"
+        case 3:
+          return "高层停车场"
+        case 4:
+          return "其他停车场"
+      }
+    }
+  },
+  {
+    title: "停车场层数",
+    dataIndex: "carparkLevel",
+  },
+  {
+    title: "停车场面积",
+    dataIndex: "buildingArea",
+  },
+  {
+    title: "停车场建成时间",
+    dataIndex: "createTime",
+    render(item){
+      return item?item.substring(0,11):item
+    }
+  },
+  {
+    title: "停车场交付时间",
+    dataIndex: "deliversTime",
+    render(item){
+      return item?item.substring(0,11):item
+    }
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    render(item){
+      return item=="0"?<Tag color="blue">正常</Tag>:<Tag color="red">停用</Tag>
+    }
+  },
+]
+
 export const itemColmuns = [
   {
     title: "序号",
