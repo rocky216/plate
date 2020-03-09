@@ -174,7 +174,7 @@ class EditSystemAuth extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, utils} = this.props
+    const {spinning, utils, match} = this.props
     const {treeData, selectAll, detail} = this.state
     
     return (
@@ -187,7 +187,7 @@ class EditSystemAuth extends React.Component {
                   initialValue: detail.roleName,
                   rules: [{ required: true, message: '请输入角色名称！' }],
                 })(
-                  <Input/>,
+                  <Input disabled={match.params.id=="19"}/>,
                 )}
               </Form.Item>
               <Form.Item label="角色代码">
@@ -195,7 +195,7 @@ class EditSystemAuth extends React.Component {
                   initialValue: detail.remark,
                   rules: [{ required: true, message: '请输入角色代码！' }],
                 })(
-                  <Input/>,
+                  <Input disabled={match.params.id=="19"} />,
                 )}
               </Form.Item>
               <Form.Item>

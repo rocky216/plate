@@ -79,7 +79,9 @@ class Posts extends React.Component {
       title: "操作",
       render(item){
         return (
+          
           <div>
+            {item.flowStatus=="3"?null:
             <Popconfirm
               placement="topRight" 
               title="是否删除？"
@@ -87,7 +89,7 @@ class Posts extends React.Component {
               cancelText="否"
               onConfirm={_this.handlenDelete.bind(_this, item)}>
                 <AuthButton auth="2-03-01" size="small" type="link">删除</AuthButton>
-              </Popconfirm>
+              </Popconfirm>}
             <AuthButton auth="2-03-02" onClick={()=>_this.setState({visible: true, detail:item})} size="small" type="link">审批记录</AuthButton>
           </div>
         )
@@ -103,6 +105,8 @@ class Posts extends React.Component {
   handlenDeptType(value){
     this.state.params.organType = value
     this.setState({params:this.state.params})
+    
+    
   }
 
   handleSubmit(e){
@@ -156,8 +160,8 @@ class Posts extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {utils, spinning, staffpos, employeedict } = this.props
-    const {visible, detail, params, deptList} = this.state
-
+    const {visible, detail, params, deptList, postSpinning} = this.state
+    
     return (
       <JCard spinning={spinning}>
         {visible?<Record visible={visible} detail={detail} onCancel={()=>this.setState({visible: false, detail:""})} />:null}

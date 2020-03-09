@@ -106,7 +106,7 @@ class AddDetail extends React.Component {
            m2 = moment('2020-1-10 '+absenceEndTime)
       let min = m2.diff(m1, 'minute')
       
-      this.setState({absenceTimeLength: min<0?0:min})
+      this.setState({absenceTimeLength: min<0?0:min>480?480:min})
     }
   }
 
