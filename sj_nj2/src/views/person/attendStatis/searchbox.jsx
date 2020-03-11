@@ -46,8 +46,8 @@ class Searchbox extends React.Component {
   }
   getWeekR(){
     let week = moment().format("E")
-    ,start=moment().week(moment().week()).startOf('week').format('YYYY-MM-DD')
-    ,end=moment().week(moment().week()).endOf('week').format('YYYY-MM-DD')
+    ,start=moment().week(moment().week()).startOf('week').format('YYYY-MM-DD')+" 00:00:00"
+    ,end=moment().week(moment().week()).endOf('week').format('YYYY-MM-DD')+" 23:59:59"
     
     return {start, end}
   }
@@ -57,19 +57,20 @@ class Searchbox extends React.Component {
       const {type,deptId, time, dimen, isStaff, year} = values
       let startTime="", endTime=""
       if(type=="1"){
-        startTime = endTime = moment().format("YYYY-MM-DD")
+        startTime = moment().format("YYYY-MM-DD")+" 00:00:00"
+        endTime = moment().format("YYYY-MM-DD")+" 23:59:59"
       }
       if(type=="2"){
         startTime = this.getWeekR().start
         endTime = this.getWeekR().end
       }
       if(type=="3"){
-        startTime = moment().month(moment().month()).startOf('month').format("YYYY-MM-DD")
-        endTime = moment().month(moment().month()).endOf('month').format("YYYY-MM-DD")
+        startTime = moment().month(moment().month()).startOf('month').format("YYYY-MM-DD")+" 00:00:00"
+        endTime = moment().month(moment().month()).endOf('month').format("YYYY-MM-DD")+" 23:59:59"
       }
       if(type=="4"){
-        startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD"):""
-        endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD"):""
+        startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD")+" 00:00:00":""
+        endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD")+" 23:59:59":""
       }
       if(this.props.quitanaly){
         if(year){

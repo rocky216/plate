@@ -142,8 +142,8 @@ class Staff extends React.Component {
         params.intoCenterId = intoCenterId
         params.personTypeId = personTypeId
         params.selectDeptId = selectDeptId
-        params.selectStartEntryTime = time && time.length? moment(time[0]).format("YYYY-MM-DD"):""
-        params.selectEndEntryTime = time && time.length? moment(time[1]).format("YYYY-MM-DD"):""
+        params.selectStartEntryTime = time && time.length? moment(time[0]).format("YYYY-MM-DD")+" 00:00:00":""
+        params.selectEndEntryTime = time && time.length? moment(time[1]).format("YYYY-MM-DD")+" 23:59:59":""
         
         console.log('Received values of form: ', values);
         this.props.actions.getStaff({

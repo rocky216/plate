@@ -131,8 +131,8 @@ class Absence extends React.Component {
         params.absenceEmployeeName = absenceEmployeeName
         params.absenceType = absenceType
         params.deptId = deptId
-        params.startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD"):""
-        params.endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD"):""
+        params.startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD")+" 00:00:00":""
+        params.endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD")+" 23:59:59":""
         console.log('Received values of form: ', values);
         this.props.actions.getAbsence(params)
         this.setState({params})

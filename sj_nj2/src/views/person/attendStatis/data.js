@@ -282,13 +282,14 @@ export const optionRate = {
     }
   },
   yAxis: {
+      name:"单位(%)",
       type: 'value'
   },
   series: [
       {
           name: '请假率',
           type: 'line',
-          data: [120, 132, 101, 134, 90, 230, 210]
+          data: [120, 132, 101, 134, 90, 230, 210],
       },
       {
           name: '旷工率',

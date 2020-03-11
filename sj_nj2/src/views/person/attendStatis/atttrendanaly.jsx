@@ -27,8 +27,8 @@ class Atttrendanaly extends React.Component {
     if(params.type=="day"){
       this.props.actions.attendanceTrendAnalysisDay({
         deptId,
-        startTime: day && day.length?moment(day[0]).format("YYYY-MM-DD"):"",
-        endTime: day && day.length?moment(day[1]).format("YYYY-MM-DD"):""
+        startTime: day && day.length?moment(day[0]).format("YYYY-MM-DD")+" 00:00:00":"",
+        endTime: day && day.length?moment(day[1]).format("YYYY-MM-DD")+" 23:59:59":""
       }, res=>{
         this.setState({data: res, chartData:""})
         this.handlenOption(res)
@@ -62,7 +62,6 @@ class Atttrendanaly extends React.Component {
         qjCounts.push(item.qjCount)
         kgCounts.push(item.kgCount)
         cdCounts.push(item.cdCount)
-        console.log(item.qjCount, item.cqrcCount, "asas")
         qjCountRates.push(item.cqrcCount && parseInt(item.cqrcCount)?(item.qjCount/item.cqrcCount*100).toFixed(2):0)
         kgCountRates.push(item.cqrcCount && parseInt(item.cqrcCount)?(item.kgCount/item.cqrcCount*100).toFixed(2):0)
         cdCountRates.push(item.cqrcCount && parseInt(item.cqrcCount)?(item.cdCount/item.cqrcCount*100).toFixed(2):0)

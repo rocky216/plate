@@ -29,7 +29,10 @@ class Attstanaly extends React.Component {
         },
         {
           title: "请假天数",
-          dataIndex: "count"
+          dataIndex: "times",
+          render(item){
+            return item?(item/60/8).toFixed(2):item
+          }
         },
       ]
     }
@@ -67,6 +70,36 @@ class Attstanaly extends React.Component {
     }
     this.initial(values)
 
+  }
+  handlenSwitch(v){
+    const {columns} = this.state
+    this.setState({key:v})
+    if(v=="cd"){
+      columns[2] = {
+        title: "迟到次数",
+        dataIndex: "count"
+      }
+    }
+    if(v=="qj"){
+      console.log(121212)
+      columns[2] = {
+        title: "请假天数",
+        dataIndex: "times",
+        render(item){
+          return item?(item/60/8).toFixed(2):item
+        }
+      }
+    }
+    if(v=="kg"){
+      columns[2] = {
+        title: "旷工天数",
+        dataIndex: "times",
+        render(item){
+          return item?(item/60/8).toFixed(2):item
+        }
+      }
+    }
+    this.setState({columns})
   }
 
   render(){
@@ -115,7 +148,7 @@ class Attstanaly extends React.Component {
             </Row>
             <div className="mgt10 mgb10">
               <span>Top5排名：</span>
-              <Select value={key} onChange={(v)=>this.setState({key:v})} style={{width: 150}}>
+              <Select value={key} onChange={this.handlenSwitch.bind(this)} style={{width: 150}}>
                 <Option value="cd">迟到</Option>
                 <Option value="kg">旷工</Option>
                 <Option value="qj">请假</Option>

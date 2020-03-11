@@ -91,8 +91,8 @@ class OverWork extends React.Component {
         params.employeeName = employeeName
         params.mDeptId = mDeptId
         params.flowStatus = flowStatus
-        params.startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD"):""
-        params.endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD"):""
+        params.startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD")+" 00:00:00":""
+        params.endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD")+" 23:59:59":""
         this.props.actions.getOverWork({
           ...params,
           startTimeLength: params.startTimeLength?Math.floor(params.startTimeLength):"",

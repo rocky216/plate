@@ -52,8 +52,8 @@ class Statiscon extends React.Component {
   }  
   getWeekR(d){
     let week = d.format("E")
-    ,start=d.subtract(week-1, 'days').format("YYYY-MM-DD")
-    ,end=d.subtract(-6, 'days').format("YYYY-MM-DD")
+    ,start=d.subtract(week-1, 'days').format("YYYY-MM-DD")+" 00:00:00"
+    ,end=d.subtract(-6, 'days').format("YYYY-MM-DD")+" 23:59:59"
     return {start, end}
   }
   handleSearch(e){

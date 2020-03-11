@@ -23,15 +23,15 @@ class PersonQuit extends React.Component {
         type: "quitAvg1",
         isStaff:"1",
         deptId:"",
-        startTime:moment().format("YYYY-MM-DD"),
-        endTime: moment().format("YYYY-MM-DD")
+        startTime:moment().format("YYYY-MM-DD")+" 00:00:00",
+        endTime: moment().format("YYYY-MM-DD")+" 23:59:59"
       },
       params: {
         type: "quitAvg1",
         isStaff:"1",
         deptId:"",
-        startTime:moment().format("YYYY-MM-DD"),
-        endTime: moment().format("YYYY-MM-DD")
+        startTime:moment().format("YYYY-MM-DD")+" 00:00:00",
+        endTime: moment().format("YYYY-MM-DD")+" 23:59:59"
       },
       quitAvg1_data: "",
       source_data: "",

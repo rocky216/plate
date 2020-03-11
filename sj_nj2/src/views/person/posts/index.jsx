@@ -124,8 +124,8 @@ class Posts extends React.Component {
         intoCenterId,
         personTypeId} = values
         params.name = name
-        params.startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD"):""
-        params.endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD"):""
+        params.startTime = time && time.length?moment(time[0]).format("YYYY-MM-DD")+" 00:00:00":""
+        params.endTime = time && time.length?moment(time[1]).format("YYYY-MM-DD")+" 23:59:59":""
         params.applyName = applyName
         params.flowStatus = flowStatus
         params.sDeptId = sDeptId

@@ -20,15 +20,15 @@ class Overtrendanaly extends React.Component {
 
   componentDidMount(){
     this.initial({type: "day"})
-  }
+  } 
 
   initial(params){
     const {type, deptId, day, month} = params
     if(type=="day"){
       this.props.actions.overtimeTrendAnalysisDay({
         deptId,
-        startTime: day && day.length?moment(day[0]).format("YYYY-MM-DD"):"",
-        endTime: day && day.length?moment(day[1]).format("YYYY-MM-DD"):""
+        startTime: day && day.length?moment(day[0]).format("YYYY-MM-DD")+" 00:00:00":"",
+        endTime: day && day.length?moment(day[1]).format("YYYY-MM-DD")+" 23:59:59":""
       },res=>{
         this.setState({data: res, chartData:""})
         this.handlenOption(res)
@@ -59,11 +59,11 @@ class Overtrendanaly extends React.Component {
       _.each(res.listData, item=>{
         time.push(item.jbTime )
         
-        planHs.push(item.planH)
-        planJbHs.push(item.planJbH)
-        trueHs.push(item.trueH)
-        notPlanJbHs.push(item.notPlanJbH)
-        sumJbHs.push(item.sumJbH)
+        planHs.push(parseFloat(item.planH).toFixed(2))
+        planJbHs.push(parseFloat(item.planJbH).toFixed(2))
+        trueHs.push(parseFloat(item.trueH).toFixed(2))
+        notPlanJbHs.push(parseFloat(item.notPlanJbH).toFixed(2))
+        sumJbHs.push(parseFloat(item.sumJbH).toFixed(2))
       })
       
       optionTrend.xAxis.data = time

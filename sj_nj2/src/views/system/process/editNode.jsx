@@ -145,10 +145,10 @@ class AddNode extends React.Component {
               <Icon className="pulsIcon" type="user-add" onClick={()=>this.setState({teachVisible: true})} />
             </div>
           </Form.Item>:null}
-          {getFieldValue("nodeTarget")=="2"?<Form.Item label="用户" >
+          {getFieldValue("nodeTarget")=="2"?<Form.Item label="角色" >
             {getFieldDecorator('nodeTargetId2', {
               initialValue: _.findIndex(roleList,o=>o.id==detail.nodeTargetId)==-1?"":detail.nodeTargetId,
-              rules: [{required: true,message: '选择用户!',}]
+              rules: [{required: true,message: '选择角色!',}]
             })(
               <Select>
                 {roleList?roleList.map(item=>(
@@ -157,10 +157,10 @@ class AddNode extends React.Component {
               </Select>
             )}
           </Form.Item>:null}
-          {getFieldValue("nodeTarget")=="3"?<Form.Item label="用户" >
+          {getFieldValue("nodeTarget")=="3"?<Form.Item label="职位" >
             {getFieldDecorator('nodeTargetId3', {
               initialValue: _.findIndex(jobList,o=>o.id==detail.nodeTargetId)==-1?"":detail.nodeTargetId,
-              rules: [{required: true,message: '选择用户!',}]
+              rules: [{required: true,message: '选择职位!',}]
             })(
               <Select>
                 {jobList?jobList.map(item=>(

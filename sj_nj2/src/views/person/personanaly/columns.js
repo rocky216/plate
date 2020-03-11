@@ -52,6 +52,7 @@ export const optAgv1 = {
     }
   },
   yAxis: {
+      name:"单位(%)",
       type: 'value'
   },
   series: [{

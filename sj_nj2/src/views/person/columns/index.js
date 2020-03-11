@@ -18,11 +18,17 @@ export const personstatisColumns = [
   },
   {
     title: "计划上班时长",
-    dataIndex: "jhH"
+    dataIndex: "jhH",
+    render(item){
+      return parseFloat(item).toFixed(2)
+    }
   },
   {
     title: "计划加班时长",
-    dataIndex: "planJbH"
+    dataIndex: "planJbH",
+    render(item){
+      return parseFloat(item).toFixed(2)
+    }
   },
   {
     title: "非计划加班时长",
@@ -73,23 +79,38 @@ export const overtrendanalyColumns = [
   },
   {
     title: "计划上班时长(H)",
-    dataIndex: "planH"
+    dataIndex: "planH",
+    render(item){
+      return parseFloat(item).toFixed(2)
+    }
   },
   {
     title: "计划加班时长(H)",
-    dataIndex: "planJbH"
+    dataIndex: "planJbH",
+    render(item){
+      return parseFloat(item).toFixed(2)
+    }
   },
   {
     title: "实际上班时长(H)",
-    dataIndex: "trueH"
+    dataIndex: "trueH",
+    render(item){
+      return parseFloat(item).toFixed(2)
+    }
   },
   {
     title: "非计划加班时长(H)",
-    dataIndex: "notPlanJbH"
+    dataIndex: "notPlanJbH",
+    render(item){
+      return parseFloat(item).toFixed(2)
+    }
   },
   {
     title: "总加班时长",
-    dataIndex: "sumJbH"
+    dataIndex: "sumJbH",
+    render(item){
+      return parseFloat(item).toFixed(2)
+    }
   },
 ]
 
@@ -109,7 +130,7 @@ export const attendAnanlyColumns = [
   {
     title: "请假率",
     render(item){
-      return item.cqCount && parseInt(item.cqrcCount)?(item.qjCount/item.cqrcCount*100).toFixed(2):0
+      return (item.cqCount && parseInt(item.cqrcCount)?(item.qjCount/item.cqrcCount*100).toFixed(2):0)+"%"
     }
   },
   {
@@ -119,7 +140,7 @@ export const attendAnanlyColumns = [
   {
     title: "旷工率",
     render(item){
-      return item.cqCount && parseInt(item.cqrcCount)?(item.kgCount/item.cqrcCount*100).toFixed(2):0
+      return (item.cqCount && parseInt(item.cqrcCount)?(item.kgCount/item.cqrcCount*100).toFixed(2):0)+"%"
     }
   },
   {
@@ -129,7 +150,7 @@ export const attendAnanlyColumns = [
   {
     title: "迟到率",
     render(item){
-      return item.cqCount && parseInt(item.cqrcCount)?(item.cdCount/item.cqrcCount*100).toFixed(2):0
+      return (item.cqCount && parseInt(item.cqrcCount)?(item.cdCount/item.cqrcCount*100).toFixed(2):0)+"%"
     }
   },
 ]
@@ -900,7 +921,7 @@ export const overworkColumns = function(_this){
       render(item) {
         switch(parseInt(item.workFinalStatus)){
           case 0:
-            return "无效"
+            return "审批中"
           case 1:
             return "不批准"
           case 2:
