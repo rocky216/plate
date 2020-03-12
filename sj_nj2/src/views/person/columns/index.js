@@ -786,7 +786,7 @@ export const attendColumns = [
     title: "班次",
     dataIndex: "productionType",
     render(item){
-      return item=="0"?"白班":"晚班"
+      return item=="0"?"白班":"夜班"
     }
   },
   {

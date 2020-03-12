@@ -162,6 +162,30 @@ export const itemAvg2Columns = [
     }
   },
 ]
+export const itemAvg3Columns = [ 
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "人员岗级",
+    dataIndex: "ks"
+  },
+  {
+    title: "在职人数",
+    dataIndex: "worker"
+  },
+  {
+    title: "离职人数",
+    dataIndex: "quit"
+  },
+  {
+    title: "离职率",
+    render(item){
+      return (item.worker+item.quit)==0?0:( item.quit/(item.worker+item.quit)*100 ).toFixed(2)+"%"
+    }
+  },
+]
 
 export const yearAvg4Columns = [ 
   {
@@ -188,7 +212,7 @@ export const yearAvg4Columns = [
   },
 ]
 
-export const personDetailColumns = [ 
+export const personDetailColumns = [  
   {
     title: "姓名",
     dataIndex: "name"

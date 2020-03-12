@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Table, Row, Col, Button} from "antd";
 import {quitAnalysis} from "@/actions/personAction"
-import {quitAvg1Columns, itemAvg2Columns, yearAvg4Columns, optAgv1} from "./columns"
+import {quitAvg1Columns, itemAvg2Columns, yearAvg4Columns,itemAvg3Columns, optAgv1, } from "./columns"
 import ReactEcharts from 'echarts-for-react';
 import {stackOption} from "./data"
 import Searchbox from "../attendStatis/searchbox"
@@ -74,9 +74,11 @@ class PersonQuit extends React.Component {
     
     let col = quitAvg1Columns
     if(values){
-      const {type} = values
-      if(type=="itemAvg2" || type=="gradeAvg3"){
+      const {type} = values 
+      if(type=="itemAvg2"){
         col = itemAvg2Columns
+      }else if(type=="gradeAvg3"){
+        col = itemAvg3Columns
       }else if(type=="quitAvg1"){
         col = quitAvg1Columns
       }else if(type=="yearAvg4"){
