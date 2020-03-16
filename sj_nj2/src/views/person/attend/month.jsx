@@ -83,7 +83,7 @@ class MonthAttend extends React.Component {
             dataIndex: "a"+(i>9?i:'0'+i),
             key: Math.random()+i,
             render(item){
-              return item.leaveH
+              return item.leaveType? item.leaveType:"-"
             }
           },
           {

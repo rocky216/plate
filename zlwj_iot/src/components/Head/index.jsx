@@ -35,23 +35,6 @@ class Head extends React.Component {
   render(){
     const {collapsed} = this.props
 
-    const menu = (
-      <Menu theme="dark" onClick={this.handleMenuClick.bind(this)}>
-        <Menu.Item key="1">
-          <Icon type="project" />
-          1st menu item
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Icon type="project" />
-          2nd menu item
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Icon type="project" />
-          3rd item
-        </Menu.Item>
-      </Menu>
-    );
-
     return (
       <Header style={{ background: '#fff', padding: 0 }} >
         <Icon
@@ -60,9 +43,6 @@ class Head extends React.Component {
           onClick={this.handlenToggle.bind(this, collapsed)}
         />
         <div className="header_right">
-          <Dropdown.Button overlay={menu} icon={<Icon type="project" />}>
-            选择小区
-          </Dropdown.Button>
           <Button type="link" onClick={this.loginOut.bind(this)} style={{margin: "15px 10px 0 0"}}>
             <Icon type="logout" />
             <span>退出</span>

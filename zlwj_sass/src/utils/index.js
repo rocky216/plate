@@ -86,7 +86,7 @@ export function OpenNotification(type, messgae, desc){
 }
 
 export function fetch(opt){
-  opt.data?opt.data.token = getToken():opt.data={token: getToken()}
+  opt.data?opt.data.token = getToken():opt.data={token: getToken()} 
 
   function handlenInstance(){
     switch(opt.method.toLowerCase()){

@@ -17,8 +17,8 @@ class App extends React.Component {
       <SiderBar/>
       <Layout style={{ marginLeft: collapsed?80:200 }}>
         <Head/>
-        <Content style={{ margin: '24px 16px 0', overflow: 'initial', minHeight:810 }}>
-          <div style={{ padding: 24 }}>
+        <Content style={{ margin: '10px 10px 0', overflow: 'initial', minHeight:810 }}>
+          <div >
             <Routers/>
           </div>
         </Content>

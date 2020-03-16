@@ -1,19 +1,25 @@
 import React from "react"
+import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
 import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 import "./style.less"
+import {goLogin} from "@/actions/appAction"
 
 
 class Login extends React.Component {
-  UNSAFE_componentWillReceiveProps(nextProps){
-    
-  }
 
   handlenSubmit(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        this.props.history.push("/")
+        this.props.actions.goLogin(values, res=>{
+          setTimeout(()=>{
+            this.props.history.push("/")
+            this.props.utils.OpenNotification("success", "登录成功！")
+          },100)
+        })
+        
       }
     });
   }
@@ -28,7 +34,7 @@ class Login extends React.Component {
             <img className="login_logo" src="/images/login_logo.png"  />
             <Form onSubmit={this.handlenSubmit.bind(this)}>
               <Form.Item>
-                {getFieldDecorator('用户名', {
+                {getFieldDecorator('username', {
                   rules: [{ required: true, message: '请输入用户名!' }],
                 })(
                   <Input
@@ -39,26 +45,18 @@ class Login extends React.Component {
                 )}
               </Form.Item>
               <Form.Item>
-                {getFieldDecorator('密码', {
+                {getFieldDecorator('password', {
                   rules: [{ required: true, message: '请输入密码!' }],
                 })(
-                  <Input
+                  <Input.Password 
                     size="large"
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
                     placeholder="密码"
                   />,
                 )}
               </Form.Item>
               <Form.Item>
-                {getFieldDecorator('remember', {
-                  valuePropName: 'checked',
-                  initialValue: true,
-                })(<Checkbox>记住密码</Checkbox>)}
-                <p>
                 <Button size="large" type="primary" htmlType="submit">登录</Button>
-                </p>
-                
               </Form.Item>
             </Form>
           </Card>
@@ -69,4 +67,16 @@ class Login extends React.Component {
   }
 }
 
-export default Form.create()(Login)
+function mapDispatchProps(dispatch){
+  return {
+    actions: bindActionCreators({goLogin}, dispatch)
+  }
+}
+
+function mapStateProps(state){
+  return {
+    utils: state.app.utils
+  }
+}
+
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(Login) )

@@ -1,9 +1,15 @@
 import {START_LOADING_APP, END_LOADING_APP} from "@/types"
+import {OpenNotification, addIndex, Pagination } from "@/utils"
 
 let initialState = {
   spinning: false,
   collapsed: false,
-  keeptabs: [{name: "首页", path: "/"}]
+  keeptabs: [{name: "首页", path: "/"}],
+  utils: {
+    OpenNotification,
+    addIndex,
+    Pagination 
+  }
 }
 
 

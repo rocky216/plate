@@ -1,14 +1,17 @@
 import React from "react"
 import {connect} from "react-redux"
-import {withRouter} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {} from "antd";
+import {Spin} from "antd";
 
 
-class PropertyFee extends React.Component {
+class JCard extends React.Component {
+
+
   render(){
+    const {spinning } = this.props
+
     return (
-      <div>PropertyFee</div>
+    <Spin spinning={spinning} size="large" tip="正在加载...">{this.props.children}</Spin>
     )
   }
 }
@@ -21,8 +24,8 @@ function mapDispatchProps(dispatch){
 
 function mapStateProps(state){
   return {
-
+    
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(PropertyFee)
+export default connect(mapStateProps, mapDispatchProps)(JCard)

@@ -1,4 +1,39 @@
 import {START_LOADING_APP, END_LOADING_APP} from "@/types"
+import {fetch, setCookie} from "@/utils"
+import {log_color} from "@/utils/config"
+
+
+export function goLogin(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/iot/pc/login",
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        token: data
+      })
+      setCookie("token", data)
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
 
 export function setCollapsedTrue(){
   return async function(dispatch, getState){

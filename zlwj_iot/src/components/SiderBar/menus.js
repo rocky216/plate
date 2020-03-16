@@ -6,64 +6,27 @@ export default [
     icon: "icon iconfont icon-shouye1"
   },
   {
-    title: "工作中心",
+    title: "公司管理",
     key: 2,
     icon: "icon iconfont icon-gongzuozhongxin",
     children: [
       {
-        title: "物业费订单",
-        link: "/",
-        link: '/workcenter/propertyfee',
+        title: "公司设备",
+        link: "/company",
         key: 201
       }
     ]
   },
   {
-    title: "流程中心",
+    title: "字典管理",
     key: 3,
-    icon: "icon iconfont icon-liuchengzhongxin",
+    icon: "icon iconfont icon-gongzuozhongxin",
     children: [
       {
-        title: "我的流程",
-        link: "/",
+        title: "设备字典管理",
+        link: '/dict/device',
         key: 301
       }
     ]
   },
-  {
-    title: "报修管理",
-    key: 4,
-    icon: "icon iconfont icon-ranqibaoxiuguanli",
-    children: [
-      {
-        title: "报修记录",
-        link: "/",
-        key: 401
-      }
-    ]
-  },
-  {
-    title: "议事堂",
-    key: 5,
-    icon: "icon iconfont icon-yishiting",
-    children: [
-      {
-        title: "投票列表",
-        link: "/",
-        key: 501
-      }
-    ]
-  },
-  {
-    title: "政务公开",
-    key: 6,
-    icon: "icon iconfont icon-zhengwugongkai2",
-    children: [
-      {
-        title: "公开列表",
-        link: "/",
-        key: 601
-      }
-    ]
-  }
 ]

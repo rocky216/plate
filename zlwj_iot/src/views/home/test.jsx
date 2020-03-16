@@ -5,7 +5,9 @@ import {} from "antd";
 
 
 class Test extends React.Component {
+  
   render(){
+    const {utils} = this.props
     return (
       <div>Test</div>
     )
@@ -20,7 +22,7 @@ function mapDispatchProps(dispatch){
 
 function mapStateProps(state){
   return {
-
+    utils: state.app.utils
   }
 }
 
