@@ -8,6 +8,10 @@ import Home from "@/views/home"
 import PropertyFee from "@/views/workcenter/propertyfee"
 import ShopFee from "@/views/workcenter/shopfee"
 import Expend from "@/views/workcenter/expend"
+import CarList from "@/views/workcenter/car"
+import AddCar from "@/views/workcenter/car/add"
+import EditCar from "@/views/workcenter/car/edit"
+
 import TreeMenu from "@/views/system/treemenu"
 import BaseDepartment from "@/views/base/department"
 import Station from "@/views/base/station"
@@ -64,6 +68,7 @@ import ParkList from "@/views/project/park"
 import AddPark from "@/views/project/park/add"
 import EditPark from "@/views/project/park/edit"
 import HeConfig from "@/views/system/company/config"
+import ParkLot from "@/views/project/park/parklot"
 
 
 
@@ -88,6 +93,9 @@ class Routers extends React.Component{
         <AuthRoute exact path="/workcenter/expend" Component={Expend} name="其他支付订单" auth="2-04" />
         <AuthRoute path="/workcenter/expend/add" Component={AddOtherExpend} name="新增其他支出订单" /> 
         <AuthRoute path="/workcenter/expend/:id/detail" Component={OtherExpendDetail} name="查看其他支出订单" /> 
+        <AuthRoute exact path="/workcenter/car" Component={CarList} name="车辆管理" auth="2-05" /> 
+        <AuthRoute path="/workcenter/car/add" Component={AddCar} name="新增车辆"  /> 
+        <AuthRoute path="/workcenter/car/:id/edit" Component={EditCar} name="编辑车辆"  /> 
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" auth="9-01" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" auth="9-02" />
@@ -117,6 +125,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/project/park" Component={ParkList} name="停车场管理" auth="7-05" />
         <AuthRoute path="/project/park/add" Component={AddPark} name="新增停车场" />
         <AuthRoute path="/project/park/:id/edit" Component={EditPark} name="编辑停车场" />
+        <AuthRoute path="/project/park/:id/parklot" Component={ParkLot} name="停车场区域" />
 
         <AuthRoute  path="/user/person" Component={UserPerson} name="用户资料" />
 

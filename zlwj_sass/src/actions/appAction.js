@@ -5,6 +5,64 @@ import { setCookie, getCookie, getToken} from "../utils"
 import routermenus from "@/routers/routermenus"
 
 
+export function getSearchPlate(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/carInfo/list",
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function getOwnersListByNameOrPhone(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadOwnersListByNameOrPhone",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
 export function updatePassword(params, next){
   return async function(dispatch, getState){
     dispatch({

@@ -7,6 +7,7 @@ import JCard from "@/components/JCard"
 import AddDevice from "./add"
 import EditDevice from "./edit"
 import {companyDeviceColumns} from "../columns"
+import SearchBox from "./searchBox"
 
 
 class Device extends React.Component {
@@ -16,9 +17,21 @@ class Device extends React.Component {
       addVisible: false,
       editVisible: false,
       detail: "",
+      initParams: {
+        current: 1,
+        companyId: props.match.params.id,
+        deviceType:"",
+        iotId:"",
+        online:"",
+        deviceSerial:""
+      },
       params: {
         current: 1,
-        companyId: props.match.params.id
+        companyId: props.match.params.id,
+        deviceType:"",
+        iotId:"",
+        online:"",
+        deviceSerial:""
       }
     }
   }
@@ -40,6 +53,22 @@ class Device extends React.Component {
       }
     }])
   }
+
+  handlenSearch(values){
+    const {initParams, params} = this.state
+    if(values==null){
+      this.props.actions.getCompanyDevice(initParams)
+      this.setState({params: initParams})
+      return
+    }
+    const {deviceType, iotId, online, deviceSerial} = values
+    params.deviceType = deviceType
+    params.iotId = iotId
+    params.online = online
+    params.deviceSerial = deviceSerial
+    this.setState({params})
+    this.props.actions.getCompanyDevice(params)
+  }
   
   render(){
     const {utils, spinning, deviceList} = this.props
@@ -51,6 +80,10 @@ class Device extends React.Component {
         {detail?<EditDevice visible={editVisible} detail={detail} 
           onCancel={()=>this.setState({editVisible: false,detail: ""})} />:null}
         <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}><Icon type="plus"/>新增设备</Button>}>
+          <div className="fixedend mgb10">
+            <SearchBox handlenSearch={this.handlenSearch.bind(this)} />
+          </div>
+          
           <Table columns={this.getCol()} dataSource={deviceList?utils.addIndex(deviceList.list):[]} 
             pagination={utils.Pagination(deviceList, page=>{
               params.current = page

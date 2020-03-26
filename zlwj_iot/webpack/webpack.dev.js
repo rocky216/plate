@@ -15,7 +15,7 @@ module.exports = webpackMerge(webpackBase, {
   devServer: {
     contentBase: resolve('dist'),
     port: 3002,
-    host:"192.168.0.101",
+    host: config.host,
     hot: true,
     hotOnly:true, //禁用自动刷新
     noInfo: true,

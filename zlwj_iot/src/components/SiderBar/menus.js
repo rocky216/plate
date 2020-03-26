@@ -18,14 +18,48 @@ export default [
     ]
   },
   {
-    title: "字典管理",
+    title: "配置管理",
     key: 3,
+    icon: "icon iconfont icon-gongzuozhongxin",
+    children: [
+      {
+        title: "交换机",
+        link: '/config/switch',
+        key: 301
+      },
+      {
+        title: "队列",
+        link: '/config/align',
+        key: 302
+      },
+      {
+        title: "接口管理",
+        link: '/config/api',
+        key: 303
+      },
+    ]
+  },
+  {
+    title: "字典管理",
+    key: 4,
     icon: "icon iconfont icon-gongzuozhongxin",
     children: [
       {
         title: "设备字典管理",
         link: '/dict/device',
-        key: 301
+        key: 401
+      }
+    ]
+  },
+  {
+    title: "设备管理",
+    key: 5,
+    icon: "icon iconfont icon-gongzuozhongxin",
+    children: [
+      {
+        title: "设备列表",
+        link: '/device/all',
+        key: 501
       }
     ]
   },

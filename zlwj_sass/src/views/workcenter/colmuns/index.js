@@ -2,6 +2,39 @@ import React from "react"
 import {Input, InputNumber, Icon, Button, Tag} from "antd"
 const {TextArea} = Input
 
+
+export const carColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "车牌",
+    dataIndex: "licensePlate"
+  },
+  {
+    title: "业主",
+    dataIndex: "ownerName"
+  },
+  {
+    title: "联系人",
+    dataIndex: "linkName"
+  },
+  {
+    title: "联系人电话",
+    dataIndex: "linkPhone"
+  },
+  {
+    title: "关联停车场",
+    dataIndex: "carCarparksList",
+    render(item){
+      return item && item.length?item.map(elem=>(
+      <Tag key={elem.id}>{elem.carparkName}({elem.pastStatus})</Tag>
+      )):""
+    }
+  },
+]
+
 export const propertyfeeColmuns = [
   {
     title: "状态",

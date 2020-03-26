@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import JCard from "@/components/JCard"
 import {Card, Button, Icon, Tree, Popconfirm} from "antd";
-import {getDeviceDictTree} from "@/actions/dictAction"
+import {getDeviceDictTree, deleteDictDevice} from "@/actions/dictAction" 
 import AddDictDevice from "./add"
 import EditDictDevice from "./edit"
 
@@ -27,7 +27,8 @@ class DeviceDict extends React.Component {
       <div style={{display: "flex", justifyContent: "space-between"}}>
         <span>{item.name}</span>
         <div span={19} >
-          <Icon type="plus" className="mgr20" onClick={()=>this.setState({addVisible: true, detail: item})} />
+          {item.sort=="2" || item.sort=="4"?null:
+          <Icon type="plus" className="mgr20" onClick={()=>this.setState({addVisible: true, detail: item})} />}
           <Icon type="edit"  className="mgr20" onClick={()=>this.setState({editVisible: true, detail: item})} />
           <Popconfirm 
             placement="topRight" 
@@ -42,7 +43,12 @@ class DeviceDict extends React.Component {
     )
   }
   handlenDelete(item){
-
+    this.props.actions.deleteDictDevice({
+      id: item.id
+    }, res=>{
+      this.props.utils.OpenNotification("success")
+      this.props.actions.getDeviceDictTree({})
+    })
   }
 
   createNode(arr){
@@ -78,7 +84,7 @@ class DeviceDict extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getDeviceDictTree}, dispatch)
+    actions: bindActionCreators({getDeviceDictTree, deleteDictDevice}, dispatch)
   }
 }
 

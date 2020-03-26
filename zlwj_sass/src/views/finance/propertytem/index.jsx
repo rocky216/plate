@@ -9,7 +9,15 @@ import {propertyTemColmuns} from "../colmuns"
 
 
 class Properytem extends React.Component {
-  
+  constructor(props){
+    super(props)
+    this.state = {
+      params:{
+        current: 1,
+        
+      }
+    }
+  }
   componentDidMount(){
     this.props.actions.getPropertyTemplate({})
   }
@@ -34,12 +42,18 @@ class Properytem extends React.Component {
 
   render(){
     const {spinning, utils, propertytem} = this.props
+    const {params} = this.state
 
     return (
       <JCard spinning={spinning}>
         <Card title={<Link to="/finance/propertytem/add"><Button type="primary"><Icon type="plus" />添加模板</Button></Link>}>
           <Table columns={this.getCol()}
             dataSource={propertytem?utils.addIndex(propertytem.list):[]}
+            pagination={utils.Pagination(propertytem, page=>{
+              params.current = page
+              this.setState({params})
+              this.props.actions.getPropertyTemplate(params)
+            })}
           />
         </Card>
       </JCard>

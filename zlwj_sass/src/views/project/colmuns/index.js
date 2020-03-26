@@ -1,6 +1,87 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const importPlateColumns = [
+  {
+    title: "行数",
+    dataIndex: "line"
+  },
+  {
+    title: "业主",
+    dataIndex: "ownersName"
+  },
+  {
+    title: "电话",
+    dataIndex: "ownersPhone"
+  },
+  {
+    title: "房间",
+    dataIndex: "parkingSpaceCode"
+  },
+  {
+    title: "异常信息",
+    dataIndex: "errorRemark"
+  },
+]
+
+export const parkPlateLotColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "车位名称",
+    dataIndex: "parkingSpaceName"
+  },
+  {
+    title: "车位编号",
+    dataIndex: "parkingSpaceCode"
+  },
+  {
+    title: "车位类型",
+    dataIndex: "typeName"
+  },
+  {
+    title: "交付时间",
+    dataIndex: "deliversTime",
+    render(item){
+      return item?item.substring(0,10):""
+    }
+  },
+  {
+    title: "缴费开始时间",
+    dataIndex: "payFristTime",
+    render(item){
+      return item?item.substring(0,10):""
+    }
+  },
+  {
+    title: "缴费结束时间",
+    dataIndex: "payLastTime",
+    render(item){
+      return item?item.substring(0,10):""
+    }
+  },
+  {
+    title: "车位建筑面积",
+    dataIndex: "buildingArea"
+  },
+  {
+    title: "业主信息",
+    dataIndex: "ownerName"
+  },
+  {
+    title: "车位车牌",
+    dataIndex: "carParkingList",
+    render(item){
+      console.log(item)
+      return item && item.length?item.map(elem=>(
+        <Tag key={elem.id}>{elem.licensePlate}</Tag>
+      )):""
+    }
+  },
+]
+
 export const parkColmuns = [
   {
     title: "序号",

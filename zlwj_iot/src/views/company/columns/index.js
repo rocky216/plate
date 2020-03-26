@@ -1,5 +1,5 @@
 import React from "react"
-import {Icon} from "antd"
+import {Icon, Tag} from "antd"
 
 export const companyColumns = [
   {
@@ -49,7 +49,7 @@ export const companyDeviceColumns = [
   },
   {
     title: "设备ID",
-    width: 200,
+    width: 100,
     dataIndex: "iotId"
   },
   {
@@ -63,6 +63,18 @@ export const companyDeviceColumns = [
   {
     title: "设备Screct",
     dataIndex: "deviceSecret"
+  },
+  {
+    title: "属性名称",
+    dataIndex: "deviceAttrName"
+  },
+  {
+    title: "版本名称",
+    dataIndex: "deviceVerName"
+  },
+  {
+    title: "设备型号",
+    dataIndex: "deviceModelName"
   },
   {
     title: "字段1",
@@ -84,10 +96,16 @@ export const companyDeviceColumns = [
     title: "字段5",
     dataIndex: "reserveFive"
   },
-  // {
-  //   title: "上下线日志",
-  //   dataIndex: "key"
-  // },
+  {
+    title: "上下线日志",
+    dataIndex: "deviceLogList",
+    width: 150,
+    render(item){
+      return item.map(elem=>(
+      <Tag color={elem.logType=="onLine"?"green":"red"}>{elem.logType=="onLine"?"上线":"下线"}{elem.buildTime}</Tag>
+      ))
+    }
+  },
   {
     title: "备注",
     dataIndex: "remark"

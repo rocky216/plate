@@ -30,6 +30,11 @@ export default [
         link: '/workcenter/expend',
         key: 204
       },
+      {
+        title: "车辆管理",
+        link: '/workcenter/car',
+        key: 205
+      },
     ]
   },
   // {

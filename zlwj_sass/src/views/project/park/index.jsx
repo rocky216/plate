@@ -36,6 +36,9 @@ class ParkList extends React.Component {
           <Link to={`/project/park/${item.id}/edit`}>
             <Button type="link">编辑</Button>
           </Link>
+          <Link to={`/project/park/${item.id}/parklot`}>
+            <Button  type="link" >编辑车位</Button>
+          </Link>
           <Popconfirm
               placement="topRight" 
               title="是否删除？"

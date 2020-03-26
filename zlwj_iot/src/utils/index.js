@@ -102,9 +102,6 @@ export async function fetch(opt){
       }else if(code == -1){
         _navigation.push("/login")
         reject()
-      }else if(code == 0){
-        OpenNotification("error", "操作异常")
-        reject()
       }else{
         OpenNotification("error", msg)
         reject()

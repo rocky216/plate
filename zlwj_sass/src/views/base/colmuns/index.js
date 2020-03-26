@@ -71,9 +71,7 @@ export const staffColmuns = [
     title: "部门",
     dataIndex: "dept",
     render(item){
-      return (
-        <span>{item.deptName}</span>
-      )
+      return item?item.deptName:""
     }
   },
   {
