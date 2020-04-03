@@ -35,6 +35,16 @@ export default [
         link: '/workcenter/car',
         key: 205
       },
+      {
+        title: "一卡通管理",
+        link: '/workcenter/solution',
+        key: 206
+      },
+      {
+        title: "日志管理",
+        link: '/workcenter/record',
+        key: 207
+      },
     ]
   },
   // {
@@ -227,6 +237,16 @@ export default [
         title: "商户号管理",
         link: "/system/merchant",
         key: 905
+      },
+      {
+        title: "设备管理",
+        link: "/system/device/pile",
+        key: 906
+      },
+      {
+        title: "日志管理",
+        link: "/system/record",
+        key: 907
       },
     ]
   }

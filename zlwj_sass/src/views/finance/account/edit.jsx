@@ -152,7 +152,7 @@ class AddItem extends React.Component {
               <Select placeholder="选择小区">
                 <Option value="0">选择小区</Option>
                 {projectitem?projectitem.list.map(item=>(
-                  <Option key={item.id} value={item.id}>{item.name}</Option>
+                  <Option key={item.id} value={String(item.id)}>{item.name}</Option>
                 )):null}
                 
               </Select>

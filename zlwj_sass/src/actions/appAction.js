@@ -4,6 +4,79 @@ import {log_color} from "@/utils/config"
 import { setCookie, getCookie, getToken} from "../utils"
 import routermenus from "@/routers/routermenus"
 
+export function loadCarparkList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadCarparkList",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        loadcarpark: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function getCompanyProject(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/loadCompanyAndHe",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      function handlenData(arr){
+        if(!_.isArray(arr)) return []
+        _.each(arr, item=>{
+          if(item.children && !item.children.length){
+            item.children = null
+          }else{
+            if(item.children && item.children.length){
+              handlenData(item.children)
+            }
+          }
+        })
+      }
+      handlenData(data)
+      
+      dispatch({
+        type: END_LOADING_APP,
+        companyPro: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
 
 export function getSearchPlate(params, next){
   return async function(dispatch, getState){

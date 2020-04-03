@@ -116,7 +116,8 @@ class ParkLot extends React.Component {
       action: "/api/pc/parkingSpace/excelImportCheck",
       insertExcel: this.props.actions.excelImportParkingSpace,
       callback(){
-        this.loadParkFloorArea({floorAreaId: activeKey})
+        _this.loadParkFloorArea({floorAreaId: activeKey})
+        _this.setState({importVisible: false})
       },
       onCancel(){
         _this.setState({importVisible: false})
@@ -153,7 +154,7 @@ class ParkLot extends React.Component {
             <div>
               <Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />新增楼层区域</Button>
               <Link to="/project/park">
-                <Button className="mgl10"><Icon type="rollback" />返回</Button>
+                <Button className="mgl10"><Icon type="rollback" />返回</Button> 
               </Link>
             </div>
           )}>

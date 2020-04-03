@@ -2,6 +2,227 @@ import React from "react"
 import {Input, InputNumber, Icon, Button, Tag} from "antd"
 const {TextArea} = Input
 
+export const plateRecordColumns = [
+  {
+    title: "通行时间",
+    dataIndex: "updateTime"
+  },
+  {
+    title: "车牌号码",
+    dataIndex: "license"
+  },
+  {
+    title: "入口信息",
+    dataIndex: "inIotName",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item?item:"暂无"}</Tag>
+          <Tag>{rows.iTime?rows.iTime:"暂无"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "出口信息",
+    dataIndex: "outIotName",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item?item:"暂无"}</Tag>
+          <Tag>{rows.oTime?rows.oTime:"暂无"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "收费金额",
+    dataIndex: "money"
+  },
+  {
+    title: "通行状态",
+    dataIndex: "inOut",
+    render(item){
+      switch(parseInt(item)){
+        case 1:
+          return <Tag>进口</Tag>
+        case 2:
+          return <Tag>出口</Tag>
+        case 3:
+          return <Tag>异常</Tag>
+        case 4:
+          return <Tag>待支付</Tag>
+        case 5:
+          return <Tag>已支付</Tag>
+      }
+    }
+  },
+]
+
+export const powerOrderColumns = [
+  {
+    title: "充电状态",
+    dataIndex: "orderStatus",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return <div style={{color: "rgb(135, 208, 104)", textAlign:"center"}}>
+                  <Icon type="exclamation-circle"  />
+                  <p>待充电</p>
+                </div>
+        case 1:
+          return <div style={{color: "rgb(45, 183, 245)", textAlign:"center"}}>
+                  <Icon type="clock-circle"  />
+                  <p>充电中</p>
+                </div>
+              
+        case 2:
+          return <div style={{color: "rgb(16, 142, 233)", textAlign:"center"}}>
+                  <Icon  type="check-circle" />
+                  <p>充电完成</p>
+                </div>
+        case 3:
+          return <div style={{color: "rgb(255, 85, 0)", textAlign:"center"}}>
+                  <Icon  type="close-circle" />
+                  <p>待充失败</p>
+                </div>
+      }
+    }
+  },
+  {
+    title: "下单途径",
+    dataIndex: "useType",
+    render(item){
+      switch(item){
+        case "W":
+          return "微信"
+        case "C":
+          return "充点卡"
+        case "G":
+          return "智联万家"
+      }
+    }
+  },
+  {
+    title: "充电桩",
+    dataIndex: "deviceName",
+    render(item, rows){
+    return <Tag>{item+" 端口"+rows.port}</Tag>
+    }
+  },
+  {
+    title: "收费信息",
+    dataIndex: "unitFee",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item+"元/"+rows.unitMin+"分钟"}</Tag>
+          <Tag>{"付款金额"+rows.payFee+"元"}</Tag>
+          <Tag>{"退款金额"+rows.returnFee+"元"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "订单配置",
+    dataIndex: "returnFeeStatus",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item=="0"?"提前结束不退还金额":"提前结束退还多余金额"}</Tag>
+          <Tag>{rows.selfHelpCloseStatus==0?"不允许手动结束":"允许手动结束"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "基础信息",
+    dataIndex: "powerTimeStr",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item}</Tag>
+          <Tag>{"电量"+rows.sumPower?rows.sumPower:"暂无"}</Tag>
+          <Tag>{rows.startTime+"-"+(rows.endTime?rows.endTime:"暂无")}</Tag>
+        </div>
+      ) 
+    }
+  },
+  {
+    title: "订单金额",
+    render(item){
+      return (item.payFee-item.returnFee)+"元"
+    }
+  },
+]
+
+export const importPlateColumns = [
+  {
+    title: "行数",
+    dataIndex: "line"
+  },
+  {
+    title: "车牌",
+    dataIndex: "licensePlate"
+  },
+  {
+    title: "联系人",
+    dataIndex: "linkName" 
+  },
+  {
+    title: "联系人电话",
+    dataIndex: "linkPhone"
+  },
+  {
+    title: "异常信息",
+    dataIndex: "errorRemark"
+  },
+]
+
+export const onecardColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "IC卡",
+    dataIndex: "icNumber"
+  },
+  {
+    title: "ID卡",
+    dataIndex: "idNumber"
+  },
+  {
+    title: "业主",
+    dataIndex: "ownerName"
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    render(item){
+      return item=="0"?<Tag color="green">正常</Tag>:<Tag color="red">停用</Tag>
+    }
+  },
+  {
+    title: "类型",
+    dataIndex: "cardType",
+    render(item){
+      return item=="0"?"普通卡":"工作卡"
+    }
+  },
+  {
+    title: "余额",
+    dataIndex: "balance"
+  },
+  {
+    title: "积分",
+    dataIndex: "score"
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+]
 
 export const carColumns = [
   {

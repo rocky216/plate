@@ -1,5 +1,310 @@
 import React from "react"
-import {Tag} from "antd"
+import {Tag, Icon} from "antd"
+
+export const controlDeviceColumns = [
+  {
+    title: "在线状态",
+    dataIndex: "online",
+    render(item){
+      return item=="1"?<Icon type="check-circle" style={{color:"green", fontSize: 20}} />
+      :<Icon type="close-circle" style={{color:"red", fontSize: 20}} />
+    }
+  },
+  {
+    title: "设备名称",
+    dataIndex: "deviceName"
+  },
+  {
+    title: "IOT序列号",
+    dataIndex: "deviceSerial"
+  },
+  {
+    title: "KEY",
+    dataIndex: "deviceKey"
+  },
+  {
+    title: "关联信息",
+    dataIndex: "companyNameStr",
+    render(item, rows){
+      return item?item+"/"+rows.heNameStr:"无"
+    }
+  },
+  {
+    title: "设备品牌",
+    dataIndex: "deviceBrandName"
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+]
+
+export const plateRecordColumns = [
+  {
+    title: "通行时间",
+    dataIndex: "updateTime"
+  },
+  {
+    title: "车牌号码",
+    dataIndex: "license"
+  },
+  {
+    title: "入口信息",
+    dataIndex: "inIotName",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item?item:"暂无"}</Tag>
+          <Tag>{rows.iTime?rows.iTime:"暂无"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "出口信息",
+    dataIndex: "outIotName",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item?item:"暂无"}</Tag>
+          <Tag>{rows.oTime?rows.oTime:"暂无"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "收费金额",
+    dataIndex: "money"
+  },
+  {
+    title: "通行状态",
+    dataIndex: "inOut",
+    render(item){
+      switch(parseInt(item)){
+        case 1:
+          return <Tag>进口</Tag>
+        case 2:
+          return <Tag>出口</Tag>
+        case 3:
+          return <Tag>异常</Tag>
+        case 4:
+          return <Tag>待支付</Tag>
+        case 5:
+          return <Tag>已支付</Tag>
+      }
+    }
+  },
+]
+
+export const powerOrderColumns = [
+  {
+    title: "充电状态",
+    dataIndex: "orderStatus",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return <div style={{color: "rgb(135, 208, 104)", textAlign:"center"}}>
+                  <Icon type="exclamation-circle"  />
+                  <p>待充电</p>
+                </div>
+        case 1:
+          return <div style={{color: "rgb(45, 183, 245)", textAlign:"center"}}>
+                  <Icon type="clock-circle"  />
+                  <p>充电中</p>
+                </div>
+              
+        case 2:
+          return <div style={{color: "rgb(16, 142, 233)", textAlign:"center"}}>
+                  <Icon  type="check-circle" />
+                  <p>充电完成</p>
+                </div>
+        case 3:
+          return <div style={{color: "rgb(255, 85, 0)", textAlign:"center"}}>
+                  <Icon  type="close-circle" />
+                  <p>待充失败</p>
+                </div>
+      }
+    }
+  },
+  {
+    title: "结束状态",
+    dataIndex: "endStatus",
+    render(item){
+      switch(parseInt(item)){
+        case 1:
+          return "正常饱和结束"
+        case 2:
+          return "手动停止订单"
+        case 3:
+          return "负载丢失"
+        case 4:
+          return "时间到结束"
+        case 5:
+          return "过载结束"
+        case 6:
+          return "涓流充电时掉电"
+        case 9:
+          return "复位重启结束充电"
+      }
+    }
+  },
+  {
+    title: "下单途径",
+    dataIndex: "useType",
+    render(item){
+      switch(item){
+        case "W":
+          return "微信"
+        case "C":
+          return "充点卡"
+        case "G":
+          return "智联万家"
+      }
+    }
+  },
+  {
+    title: "充电桩",
+    dataIndex: "deviceName",
+    render(item, rows){
+    return <Tag>{item+" 端口"+rows.port}</Tag>
+    }
+  },
+  {
+    title: "收费信息",
+    dataIndex: "unitFee",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item+"元/"+rows.unitMin+"分钟"}</Tag>
+          <Tag>{"付款金额"+rows.payFee+"元"}</Tag>
+          <Tag>{"退款金额"+rows.returnFee+"元"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "订单配置",
+    dataIndex: "returnFeeStatus",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item=="0"?"提前结束不退还金额":"提前结束退还多余金额"}</Tag>
+          <Tag>{rows.selfHelpCloseStatus==0?"不允许手动结束":"允许手动结束"}</Tag>
+        </div>
+      )
+    }
+  },
+  {
+    title: "基础信息",
+    dataIndex: "powerTimeStr",
+    render(item, rows){
+      return (
+        <div>
+          <Tag>{item}</Tag>
+          <Tag>{"电量"+rows.sumPower?rows.sumPower:"暂无"}</Tag>
+          <Tag>{rows.startTime+"-"+(rows.endTime?rows.endTime:"暂无")}</Tag>
+        </div>
+      ) 
+    }
+  },
+  {
+    title: "订单金额",
+    render(item){
+      return (item.payFee-item.returnFee)+"元"
+    }
+  },
+]
+
+
+export const plateDeviceColumns = [
+  {
+    title: "在线状态",
+    dataIndex: "online",
+    render(item){
+      return item=="1"?<Icon type="check-circle" style={{color:"green", fontSize: 20}} />
+      :<Icon type="close-circle" style={{color:"red", fontSize: 20}} />
+    }
+  },
+  {
+    title: "设备名称",
+    dataIndex: "deviceName"
+  },
+  {
+    title: "IOT序列号",
+    dataIndex: "deviceSerial"
+  },
+  {
+    title: "KEY",
+    dataIndex: "deviceKey"
+  },
+  {
+    title: "关联信息",
+    dataIndex: "companyName",
+    render(item, rows){
+      return item?item+"/"+rows.heNameStr:"无"
+    }
+  },
+  {
+    title: "设备型号",
+    dataIndex: "deviceBrandName"
+  },
+  
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+]
+
+export const pileDeviceColumns = [
+  {
+    title: "在线状态",
+    dataIndex: "online",
+    render(item){
+      return item=="1"?<Icon type="check-circle" style={{color:"green", fontSize: 20}} />
+      :<Icon type="close-circle" style={{color:"red", fontSize: 20}} />
+    }
+  },
+  {
+    title: "设备名称",
+    dataIndex: "deviceName"
+  },
+  {
+    title: "IOT序列号",
+    dataIndex: "deviceSerial"
+  },
+  {
+    title: "KEY",
+    dataIndex: "deviceKey"
+  },
+  {
+    title: "关联信息",
+    dataIndex: "companyName",
+    render(item, rows){
+      return item?item+"/"+rows.heNameStr:"无"
+    }
+  },
+  {
+    title: "设备类型",
+    dataIndex: "deviceTypeName"
+  },
+  {
+    title: "设备品牌",
+    dataIndex: "deviceBrandName"
+  },
+  {
+    title: "端口",
+    dataIndex: "portList",
+    render(item){
+      return item && item.length? item.map(elem=>(
+      <Tag key={elem.id}>{elem.port}端口{elem.type==0?"空闲":elem.type==1?"使用":"异常"}</Tag>
+      )):""
+    }
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+]
 
 export const pileColumns = [
   {

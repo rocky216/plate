@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --config ./webpack/webpack.dev.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/webpack.dev.js",
     "dll": "webpack --config ./webpack/webpack.dll.js",
-    "pro": "webpack --config ./webpack/webpack.pro.js"
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.pro.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "@babel/preset-react": "^7.6.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.12.2",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
     "html-loader": "^0.5.5",

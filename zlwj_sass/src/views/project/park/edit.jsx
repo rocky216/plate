@@ -7,6 +7,7 @@ import {getSelectHeList, } from "@/actions/appAction"
 import {editParkData, getParkData} from "@/actions/projectAction"
 import moment from "moment"
 import Chargrules from "./chargrules"
+import Configrules from "./configrules"
 import JCard from "@/components/JCard"
 
 const {Option} = Select
@@ -256,6 +257,9 @@ class EditPark extends React.Component {
         <Row gutter={10}>
           <Col span={12}>
             <Chargrules/>
+          </Col>
+          <Col span={12}>
+            <Configrules/>
           </Col>
         </Row>
       </JCard>

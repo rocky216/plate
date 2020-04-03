@@ -2,6 +2,65 @@ import {START_LOADING_PROJECT, END_LOADING_PROJECT} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function updateAndAddPlateConfig(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/plate/config/updateAndAddPlateConfig",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function parkPlateConfig(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/plate/config/plateConfig",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
 
 export function excelImportParkingSpace(params, next){
   return async function(dispatch, getState){

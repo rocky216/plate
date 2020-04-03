@@ -18,8 +18,8 @@ export const houseColumns = [
     title: "小区/房间",
     dataIndex: "detailsList",
     render(item){
-      return item.map(elem=>(
-              <Tag>{elem.heName}{elem.linkCode}({elem.linkType})({elem.type})</Tag>
+      return item.map((elem, index)=>(
+              <Tag key={index}>{elem.heName}{elem.linkCode}({elem.linkType})({elem.type})</Tag>
               ))
     }
   },

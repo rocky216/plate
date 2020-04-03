@@ -2,7 +2,242 @@ import {START_LOADING_OTHER, END_LOADING_OTHER} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function getPowerOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/powerOrder/listPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
 
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        recordpower: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getPlateRecord(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/plateRecord/listPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        recordcar: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function oneCardSystemRecharge(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/oneCardSystem/recharge",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function carInfoExcelImport(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/carInfo/excelImport",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function oneCardLog(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/oneCardSystem/cardLogPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        solutionlog: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function editOneCardSystem(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/oneCardSystem/update",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addOneCardSystem(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/oneCardSystem/add",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+
+export function getOneCardSystem(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/oneCardSystem/listPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        onecard: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
 
 export function deleteCarAttaList(params, next){
   return async function(dispatch, getState){

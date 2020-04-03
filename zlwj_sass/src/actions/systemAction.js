@@ -2,6 +2,432 @@ import {START_LOADING_SYSTEM, END_LOADING_SYSTEM} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+
+export function editControlDoorsPass(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/controller/door/update",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getBuildAndUnitByHeId(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadBuildAndUnitByHeId",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function editControlDoors(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/controller/doors",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function editControl(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/controller/update",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getControlPage(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/controller/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        controldevice: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function autoControlInit(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/controller/init",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getAllPowerOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/powerOrder/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        allpowerecord: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getAllplateRecord(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/plateRecord/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        allcardrecord: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function deletePileDevice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/devicePower/delete",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function editPlateDevice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/plate/update",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getPlateDevice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/plate/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        plateDevice: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function autoInitDevice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/devicePower/autoInitDevice",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function plateInit(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/device/plate/init",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function editPileDevice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/devicePower/update",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getPileDevice(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/devicePower/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        piledevice: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
 export function heLinkMch(params, next){
   return async function(dispatch, getState){
     dispatch({

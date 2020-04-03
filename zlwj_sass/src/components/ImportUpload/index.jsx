@@ -27,14 +27,12 @@ class ImportUpload extends React.Component {
           okText: '确认',
           cancelText: '取消',
           onOk: ()=>{
-            this.props.actions.insertExcelUsers({
+            this.props.insertExcel({
               token: this.props.utils.getCookie("token"),
-              heId: this.state.exportHeId,
               excelKey
             }, res=>{
-              this.setState({exportHeId: ''})
               this.props.utils.OpenNotification("success")
-              this.props.actions.getOwnerList(this.state.params)
+              this.props.callback()
             })
           }
         });

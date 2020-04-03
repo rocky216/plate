@@ -4,10 +4,11 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Table, Button, Icon, Popconfirm} from "antd";
 import JCard from "@/components/JCard"
-import {getCarList, deleteCarAttaList} from "@/actions/otherAction"
-import {carColumns} from "../colmuns"
+import {getCarList, deleteCarAttaList, carInfoExcelImport} from "@/actions/otherAction"
+import {carColumns, importPlateColumns} from "../colmuns"
 import CarSearch from "./CarSearch"
 import _default from "antd/lib/date-picker";
+import ImportUpload from "@/components/ImportUpload"
 
 let params = {
   current: 1,
@@ -21,7 +22,7 @@ class CarList extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      
+      importVisible: false
     }
   }
 
@@ -77,14 +78,39 @@ class CarList extends React.Component {
   }
 
   render(){
-    const {utils, spinning, car} = this.props
+    let _this = this
+    const {utils, spinning, car, commonFiles } = this.props
+    const {importVisible} = this.state
+
+    const uploadProps = {
+      visible: importVisible,
+      download: commonFiles?commonFiles.carImportMode:"",
+      columns: importPlateColumns,
+      name: "file",
+      action: "/api/pc/carInfo/excelImportCheck",
+      insertExcel: this.props.actions.carInfoExcelImport,
+      callback(){
+        _this.props.actions.getCarList(params)
+        _this.setState({importVisible: false})
+      },
+      onCancel(){
+        _this.setState({importVisible: false})
+      },
+      data: {
+        token: utils.getCookie("token"),
+      }
+    }
 
     return (
       <JCard spinning={spinning}>
+        {importVisible?<ImportUpload {...uploadProps}  />:null}
         <Card title={(
-          <Link to="/workcenter/car/add">
-            <Button type="primary"><Icon type="plus" />新增车牌</Button>
-          </Link>
+          <div>
+            <Link to="/workcenter/car/add">
+              <Button type="primary"><Icon type="plus" />新增车牌</Button>
+            </Link>
+            <Button type="danger" ghost className="mgl10" onClick={()=>this.setState({importVisible: true})}><Icon type="export" />批量导入</Button>
+          </div>
         )}>
           <div className="flexend mgb10">
             <CarSearch params={params} handlenSearch={this.handlenSearch.bind(this)} />
@@ -102,12 +128,13 @@ class CarList extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getCarList, deleteCarAttaList}, dispatch)
+    actions: bindActionCreators({getCarList, deleteCarAttaList, carInfoExcelImport}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
+    commonFiles: state.app.commonFiles,
     car: state.other.car,
     spinning: state.other.spinning,
     utils: state.app.utils

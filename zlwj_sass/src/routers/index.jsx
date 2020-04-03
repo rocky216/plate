@@ -64,12 +64,17 @@ import OtherOrderDetail from "@/views/manage/otherorder/detail"
 import AllExpend from "@/views/manage/allexpend"
 import AllExpendDetail from "@/views/manage/allexpend/detail"
 import Merchant from "@/views/system/merchant"
+import RecordSystem from "@/views/system/record"
 import ParkList from "@/views/project/park"
 import AddPark from "@/views/project/park/add"
 import EditPark from "@/views/project/park/edit"
 import HeConfig from "@/views/system/company/config"
 import ParkLot from "@/views/project/park/parklot"
-
+import DeviceManage from "@/views/system/device"
+import Solution from "@/views/workcenter/solution"
+import SolutionLog from "@/views/workcenter/solution/log"
+import Record from "@/views/workcenter/record"
+import ControlDevicePass from "@/views/system/device/control/editpass"
 
 
 
@@ -96,6 +101,9 @@ class Routers extends React.Component{
         <AuthRoute exact path="/workcenter/car" Component={CarList} name="车辆管理" auth="2-05" /> 
         <AuthRoute path="/workcenter/car/add" Component={AddCar} name="新增车辆"  /> 
         <AuthRoute path="/workcenter/car/:id/edit" Component={EditCar} name="编辑车辆"  /> 
+        <AuthRoute exact path="/workcenter/solution" Component={Solution} name="一卡通管理" auth="2-06"  /> 
+        <AuthRoute path="/workcenter/solution/:id/log" Component={SolutionLog} name="一卡通日志"  /> 
+        <AuthRoute path="/workcenter/record" Component={Record} name="日志管理" auth="2-07"  /> 
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" auth="9-01" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" auth="9-02" />
@@ -104,6 +112,9 @@ class Routers extends React.Component{
         <AuthRoute  path="/system/message" Component={Message} name="短信平台" auth="9-04" />
         <AuthRoute  path="/system/merchant" Component={Merchant} name="商户号管理" auth="9-05" />
         <AuthRoute  path="/system/company/:id/config" Component={HeConfig} name="小区设备配置" />
+        <AuthRoute path="/system/device" Component={DeviceManage} auth="9-06" name="设备管理" />
+        <AuthRoute path="/system/record" Component={RecordSystem} auth="9-07" name="日志管理" />
+        <AuthRoute exact path="/system/pass/:id/pass" Component={ControlDevicePass} name="通道设置" />
         
         
         <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" auth="8-01" />
