@@ -33,7 +33,7 @@ module.exports = webpackMerge(webpackBase, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
-      IMGURL: JSON.stringify(config.baseUrl),
+      IMGURL: JSON.stringify(config.baseUrl), 
       NOTICE: JSON.stringify("")
     })
    

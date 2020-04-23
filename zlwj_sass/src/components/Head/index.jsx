@@ -19,7 +19,7 @@ class Head extends React.Component {
   componentDidMount(){
     this.props.actions.getCommonFile({})
     this.props.actions.getBaseInfo({}, res=>{
-      this.setState({proName: res.heList[0]["name"]})
+      this.setState({proName: res.heList.length?res.heList[0]["name"]:"暂无"})
     })
   }
 

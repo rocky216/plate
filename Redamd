@@ -1,0 +1,6 @@
+夜神模拟器:
+sdk 中的adb.exe改名为nox_adb.exe后替换\Nox\bin下的nox_adb.exe文件就行了
+cmd  adb devices
+---> List of devices attached
+--->  127.0.0.1:62001 device
+adb connect 127.0.0.1:62026

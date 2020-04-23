@@ -31,6 +31,9 @@ module.exports = webpackMerge(webpackBase, {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin({
+      BASEURL: JSON.stringify(config.baseUrl),
+    })
   ]
 })

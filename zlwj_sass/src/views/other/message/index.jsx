@@ -36,7 +36,7 @@ class SendMes extends React.Component {
 
   componentDidMount(){
     this.props.actions.getSignAndTemplate({}, res=>{
-      this.setState({signs: res.sign})
+      res.sign?this.setState({signs: res.sign}):null
     })
   }
 

@@ -37,8 +37,11 @@ module.exports = webpackMerge(webpackBase, {
     }),
 
     //压缩css
-    new OptimizeCssAssetsPlugin()
-    // new BundleAnalyzerPlugin()
+    new OptimizeCssAssetsPlugin(),
+    // new BundleAnalyzerPlugin(),
+    new webpack.DefinePlugin({
+      BASEURL: JSON.stringify(""),
+    })
   ],
   module: {
     rules: [

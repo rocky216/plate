@@ -21,6 +21,7 @@ class PileDevice extends React.Component {
 
   componentDidMount(){
     this.props.actions.getPileDevice(this.state.params)
+    
   }
 
   initData(){
@@ -38,13 +39,18 @@ class PileDevice extends React.Component {
     })
   }
   getCol(){
+    const {utils} = this.props;
     let _this = this
-    return pileDeviceColumns.concat([{
+    return pileDeviceColumns.concat([{ 
       title: "操作",
       render(item){
         return (
           <div>
             <Button type="link" onClick={()=>_this.setState({editVisible: true, detail: item})}>编辑</Button>
+            <a href={`${BASEURL}/api/pc/admin/devicePower/createImg/?token=${utils.getCookie("token")}&iotId=${item.iotId}`}>
+              <Button type="link">下载二维码</Button>
+            </a>
+            
             <Popconfirm
               placement="topRight" 
               title="是否删除？"

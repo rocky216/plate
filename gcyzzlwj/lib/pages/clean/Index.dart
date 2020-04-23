@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+import '../../components/MyHeader.dart';
+import '../http.dart';
+import '../../components/MyList.dart';
+
+class CleanPage extends StatefulWidget {
+  CleanPage({Key key}) : super(key: key);
+
+  @override
+  _CleanPageState createState() => _CleanPageState();
+}
+
+class _CleanPageState extends State<CleanPage> {
+  @override
+  void initState() { 
+    super.initState();
+    
+  }
+
+  handlenStatus(str){
+    Color color = Colors.red;
+    String text = "";
+    if(str.toString()=="0"){
+      color=Colors.red;
+      text="待处理";
+    }else if(str.toString()=="1"){
+      color=Colors.orange;
+      text="待处中";
+    }else {
+      color=Theme.of(context).primaryColor;
+      text="已处理";
+    }
+    return Container(
+      padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
+      margin: EdgeInsets.only(right: 10.0),
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.all( Radius.circular(3.0) )),
+      child: Text(text, style: TextStyle(color: Colors.white),),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MyHeader(
+        title: Text("保洁维修"),
+        actions: FlatButton(
+          child: Text("我要报修", style: TextStyle(color: Theme.of(context).primaryColor)),
+          onPressed: (){
+            Navigator.of(context).pushNamed("/clean/add");
+          },
+        ),
+      ),
+      body: MyList(
+        url: "/api/app/he/repair/",
+        itemBuilder: (dataList, index){
+          return Container(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: GestureDetector(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                Image.network(dataList[index]["sysAttachmentList"][0]["dowloadHttpUrl"],
+                width: 80.0, height: 80.0, fit: BoxFit.fill),
+                Container(
+                  margin: EdgeInsets.only(left: 10.0),
+                  width: MediaQuery.of(context).size.width-120,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: Text(dataList[index]["repairName"], maxLines: 1, overflow: TextOverflow.ellipsis, 
+                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700),)
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0),
+                      child: Text(dataList[index]["repairInfo"], maxLines: 1, overflow: TextOverflow.ellipsis, 
+                            style: TextStyle(color: Color(0xFF666666))),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            this.handlenStatus(dataList[index]["processingState"]),
+                            Text(dataList[index]["processingUserName"]),
+                          ],
+                        ),
+                        Text(dataList[index]["buildTime"]!=null?dataList[index]["buildTime"].substring(0,11):"", style: TextStyle(color: Color(0xFF999999)),),
+                      ],
+                    )
+                  ],),
+                )
+              ],),
+              onTap: (){
+                Navigator.of(context).pushNamed("/clean/detail", arguments: dataList[index]);
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
