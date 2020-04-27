@@ -28,13 +28,13 @@ class UserPerson extends React.Component {
   }
   componentDidMount(){
     if(this.props.baseInfo && !this.state.file){
-      this.setState({file: {url: this.props.baseInfo.userInfo.headUrl, attaId: ''} })
+      this.setState({file: this.props.baseInfo.userInfo.headUrl })
     }
   }
   componentWillReceiveProps(nextProps){
     
     if(nextProps.baseInfo && !this.state.file){
-      this.setState({file: {url: nextProps.baseInfo.userInfo.headUrl, attaId: ''} })
+      this.setState({file: nextProps.baseInfo.userInfo.headUrl })
     }
   }
 
@@ -61,7 +61,7 @@ class UserPerson extends React.Component {
         this.props.actions.editPerson({
           ...values,
           id: this.props.baseInfo.userInfo.id,
-          attaId: this.state.file.attaId
+          attaUrl: this.state.file
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.actions.getBaseInfo({})
@@ -72,9 +72,9 @@ class UserPerson extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, commonFiles, baseInfo} = this.props
+    const {utils, spinning, commonFiles, baseInfo} = this.props
     const {file} = this.state
-    console.log(file)
+    
     return (
       <JCard spinning={spinning} >
         <Row gutter={10}>
@@ -85,14 +85,15 @@ class UserPerson extends React.Component {
                 <Form.Item label="我的头像">
                   {getFieldDecorator('files', {
                     valuePropName: 'fileList',
-                    getValueFromEvent: this.upLoadChange.bind(this)
+                    getValueFromEvent: this.upLoadChange.bind(this),
                   })(
                     <Upload 
                       name="file" 
                       showUploadList={false}
-                      action={`${commonFiles?commonFiles.resourceServerAddress:''}common/${this.props.utils.getCookie("token")}`} listType="picture">
+                      action={`${commonFiles?commonFiles.resourceServerAddress:""}/file/uploadFile`} 
+                      listType="picture">
                       
-                      {file && file.url?<img style={{width: 60, height: 60, borderRadius: "50%"}} src={file.url} />
+                      {file?<img style={{width: 60, height: 60, borderRadius: "50%"}} src={file} />
                       :<i className="icon iconfont icon-touxiang" style={{fontSize: 30}} />}
                     </Upload>
                   )}

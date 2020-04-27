@@ -75,7 +75,10 @@ import Solution from "@/views/workcenter/solution"
 import SolutionLog from "@/views/workcenter/solution/log"
 import Record from "@/views/workcenter/record"
 import ControlDevicePass from "@/views/system/device/control/editpass"
-
+import Resources from "@/views/system/resources"
+import EditResources from "@/views/system/resources/edit"
+import ItemContact from "@/views/project/item/contact"
+import RepairManage from "@/views/workcenter/repair"
 
 
 
@@ -104,6 +107,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/workcenter/solution" Component={Solution} name="一卡通管理" auth="2-06"  /> 
         <AuthRoute path="/workcenter/solution/:id/log" Component={SolutionLog} name="一卡通日志"  /> 
         <AuthRoute path="/workcenter/record" Component={Record} name="日志管理" auth="2-07"  /> 
+        <AuthRoute path="/workcenter/repair" Component={RepairManage} name="报修管理" auth="2-08"  /> 
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" auth="9-01" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" auth="9-02" />
@@ -115,6 +119,8 @@ class Routers extends React.Component{
         <AuthRoute path="/system/device" Component={DeviceManage} auth="9-06" name="设备管理" />
         <AuthRoute path="/system/record" Component={RecordSystem} auth="9-07" name="日志管理" />
         <AuthRoute exact path="/system/pass/:id/pass" Component={ControlDevicePass} name="通道设置" />
+        <AuthRoute exact path="/system/resources" Component={Resources} auth="9-08" name="资源管理" />
+        <AuthRoute path="/system/resources/:id/edit" Component={EditResources} name="编辑资源" />
         
         
         <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" auth="8-01" />
@@ -126,7 +132,8 @@ class Routers extends React.Component{
         <AuthRoute path="/base/library" Component={BaseLibrary} name="基础数据字典" auth="8-05" />
         
 
-        <AuthRoute  path="/project/item" Component={ProjectItem} name="项目管理" auth="7-01" />
+        <AuthRoute exact path="/project/item" Component={ProjectItem} name="项目管理" auth="7-01" />
+        <AuthRoute  path="/project/item/:id/concact" Component={ItemContact} name="项目联系人" />
         <AuthRoute exact  path="/project/prodata" Component={ProData} name="项目信息管理" auth="7-02" />
         <AuthRoute  path="/project/prodata/:heId/util/:id" Component={Unit} name="单元" />
         <AuthRoute exact path="/project/owner" Component={Owner} name="业主管理" auth="7-03" />
@@ -137,6 +144,7 @@ class Routers extends React.Component{
         <AuthRoute path="/project/park/add" Component={AddPark} name="新增停车场" />
         <AuthRoute path="/project/park/:id/edit" Component={EditPark} name="编辑停车场" />
         <AuthRoute path="/project/park/:id/parklot" Component={ParkLot} name="停车场区域" />
+        
 
         <AuthRoute  path="/user/person" Component={UserPerson} name="用户资料" />
 

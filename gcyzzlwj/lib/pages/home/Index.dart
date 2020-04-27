@@ -38,13 +38,15 @@ class _HomePageState extends State<HomePage> {
       });
     }
     var data = await NetHttp.getRequest("/api/app/owner/common/indexInfo", context:context, params: {});
+    if (data != null) {
+      setState(() {
+        this.banners = data["banner"];
+        this.notices = data["notice"];
+        this.repairList = data["repair"];
+        this.passList = data["record"];
+      });
+    }
     
-    setState(() {
-      this.banners = data["banner"];
-      this.notices = data["notice"];
-      this.repairList = data["repair"];
-      this.passList = data["record"];
-    });
   }
 
   

@@ -16,14 +16,14 @@ class Discussion extends React.Component {
       const fd = new FormData()
       fd.append('file', param.file);
       const options = {
-        url: `${commonFiles?commonFiles.resourceServerAddress:'/'}common/${utils.getCookie("token")}`,
+        url: `${commonFiles?commonFiles.resourceServerAddress:""}/file/uploadFile`,
         method: "formdata",
         data: fd
       }
       let data = await fetch(options)
       console.log(data)
       param.success({
-        url: data.url
+        url: data
       })
       
   }

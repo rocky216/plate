@@ -26,7 +26,12 @@ module.exports = webpackMerge(webpackBase, {
         target: config.baseUrl,
         pathRewrite: {'^/api' : '/api'},
         changeOrigin: true,
-      }
+      },
+      "/resource": {
+        target: config.baseRes,
+        pathRewrite: {'^/resource' : '/resource'},
+        changeOrigin: true,
+      },
     },
   },
   plugins: [

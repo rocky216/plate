@@ -57,7 +57,7 @@ class AddGovern extends React.Component {
         this.props.actions.editGovern({
           ...values,
           content: this.state.content,
-          cover: this.state.info.attaId,
+          attaUrl: this.props.utils.submitFiles(values.attaUrl),
           id: this.props.match.params.id
         }, res=>{
           this.props.history.push("/other/govern")
@@ -75,7 +75,7 @@ class AddGovern extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {commonFiles, spinning} = this.props
+    const {utils, commonFiles, spinning} = this.props
     const {info, detail, content} = this.state
     console.log(info)
     return (
@@ -109,20 +109,25 @@ class AddGovern extends React.Component {
               ],
             })(<TextArea autoSize={{minRows: 3}} />)}
           </Form.Item>
-          <Form.Item label="展示图片" hasFeedback>
-            <div>
+          <Form.Item label="展示图片" >
+            {getFieldDecorator('attaUrl', {
+              initialValue: detail.cover?[{url: detail.url, uid: 1, name: detail.title}]:null,
+              valuePropName: 'fileList',
+              getValueFromEvent: utils.normFileSingle,
+              rules: [
+                {
+                  required: true,
+                  message: '展示图片!',
+                }
+              ],
+            })(
               <Upload
-                showUploadList={false}
-                action={`${commonFiles?commonFiles.resourceServerAddress:''}common/${this.props.utils.getCookie("token")}`}
+                action={`${commonFiles?commonFiles.resourceServerAddress:""}/file/uploadFile`}
                 name="file"
-                onChange={this.handlenUpload.bind(this)}
               >
                 <Button><Icon type="upload" />上传图片</Button>
               </Upload>
-              <div>
-                {info?<img src={info.url} style={{width: 120}} />:null}
-              </div>
-            </div>
+            )}
           </Form.Item>
           <Form.Item label="内容" hasFeedback>
             {content?<BraftEditor defaultValue={content} onChange={val=>this.setState({content: val})}/>:null}

@@ -2,6 +2,94 @@ import {START_LOADING_OTHER, END_LOADING_OTHER} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function processingRepair(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/repairInfo/processingRepair",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addRepair(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/repairInfo/addAttaList",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getRepairList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/repairInfo/listPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        repair: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
 export function getPowerOrder(params, next){
   return async function(dispatch, getState){
     dispatch({

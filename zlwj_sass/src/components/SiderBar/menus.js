@@ -45,6 +45,11 @@ export default [
         link: '/workcenter/record',
         key: 207
       },
+      {
+        title: "报修管理",
+        link: '/workcenter/repair',
+        key: 208
+      },
     ]
   },
   // {
@@ -247,6 +252,11 @@ export default [
         title: "日志管理",
         link: "/system/record",
         key: 907
+      },
+      {
+        title: "资源管理",
+        link: "/system/resources",
+        key: 908
       },
     ]
   }

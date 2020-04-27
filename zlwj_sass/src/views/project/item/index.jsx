@@ -1,5 +1,6 @@
 import React from "react"
 import {connect} from "react-redux"
+import { Link } from "react-router-dom";
 import {bindActionCreators} from "redux"
 import {Table, Card, Button, Popconfirm} from "antd";
 import {getHeHousingEstate, deleteHeHousingEstate} from "@/actions/projectAction"
@@ -7,6 +8,7 @@ import JCard from "@/components/JCard"
 import {itemColmuns } from "../colmuns"
 import AddItem from "./add"
 import EditItem from "./edit"
+
 
 
 
@@ -45,6 +47,10 @@ class ProjectItem extends React.Component {
         return (
           <div>
             <Button  type="link" onClick={()=>_this.setState({editVisible: true, detail: item})}>编辑</Button>
+            <Link to={`/project/item/${item.id}/concact`}>
+              <Button  type="link" >联系人</Button>
+            </Link>
+            
             {/* <Button  type="link"  >详情</Button> */}
             <Popconfirm
               placement="topRight" 

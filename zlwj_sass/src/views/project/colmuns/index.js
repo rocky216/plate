@@ -1,6 +1,39 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const itemConcactColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "头像",
+    dataIndex: "headUrl",
+    render(item){
+      return item?<img src={item} style={{width: 60, height: 60, borderRadius: "50%"}} />:""
+    }
+  },
+  {
+    title: "联系人",
+    dataIndex: "name"
+  },
+  {
+    title: "电话",
+    dataIndex: "info"
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    render(item){
+      return item=="0"?<Tag color="green">启用</Tag>:<Tag color="red">禁用</Tag>
+    }
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+]
+
 export const importPlateColumns = [
   {
     title: "行数",

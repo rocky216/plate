@@ -4,6 +4,40 @@ import instance from "./http"
 import { notification } from 'antd';
 import store from "@/store"
 
+export function normFileMulti(e){
+  if (Array.isArray(e)) {
+    return e;
+  }
+  if(e.file.status == "done"){
+    e.fileList.push({url: e.file.response.data, uid: e.file.uid, name:  e.file.name})
+    return _.filter(e.fileList, o=>!o.response);
+  }else{
+    return e && e.fileList
+  }
+}
+
+export function submitFiles(arr){
+  if(!_.isArray(arr)) return "";
+  
+  let newArr = []
+  _.each(arr, item=>{
+    newArr.push(item.url)
+  })
+  return newArr.join();
+}
+
+
+
+export function normFileSingle(e){
+  if (Array.isArray(e)) {
+    return e;
+  }
+  if(e.file.status == "done"){
+    return [{url: e.file.response.data, uid: e.file.uid, name:  e.file.name}];
+  }else{
+    return e && e.fileList
+  }
+}
 
 export function isNumber(val){
   var regPos = /^\d+(\.\d+)?$/; //非负浮点数
@@ -11,7 +45,7 @@ export function isNumber(val){
   if(regPos.test(val) || regNeg.test(val)) {
     return true;
   } else {
-  return false;
+    return false;
   }
 
 }

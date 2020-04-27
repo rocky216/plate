@@ -2,6 +2,288 @@ import {START_LOADING_SYSTEM, END_LOADING_SYSTEM} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function upgradeOrDowngradeCompany(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/company/upgradeOrDowngradeCompany",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function initCompanyInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/company/initCompanyInfo",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getPartnerCompanyList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/loadPartnerCompanyList",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function setAssignedParent(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/company/assignedParent",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getPartnerCompanyListPage(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/company/partnerCompanyListPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        partnerCompany: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function editAttaMobileInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/mobileInfo/updateAtta",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function addAttaMobileInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/mobileInfo/addAtta",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getMobileInfoList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/mobileInfo/listPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        mobilesingledata: data,
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getMobileInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/mobileInfo/get",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getMobileType(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/mobileType/list",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+        mobiledata: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
 
 export function editControlDoorsPass(params, next){
   return async function(dispatch, getState){
@@ -1055,8 +1337,8 @@ export function getCompany(params, next){
     })
     try{
       const options = {
-        url: "/api/pc/admin/company/list",
-        method: "post",
+        url: "/api/pc/admin/company/unallocatedCompanyListPage",
+        method: "get",
         data: {...params}
       }
 

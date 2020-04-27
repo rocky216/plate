@@ -2,6 +2,70 @@ import React from "react"
 import {Input, InputNumber, Icon, Button, Tag} from "antd"
 const {TextArea} = Input
 
+
+export const repairColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "报修名称",
+    dataIndex: "repairName"
+  },
+  {
+    title: "报修类型",
+    dataIndex: "repairTypeName"
+  },
+  {
+    title: "报修单号",
+    dataIndex: "repairNo"
+  },
+  {
+    title: "提交途径",
+    dataIndex: "submitType",
+    render(item){
+      switch(item){
+        case "A":
+          return "业主App"
+        case "B":
+          return "物业后台"
+        case "C":
+          return "物业APP"
+      }
+    }
+  },
+  {
+    title: "处理状态",
+    dataIndex: "processingState",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "待处理"
+        case 1:
+          return "处理中"
+        case 2:
+          return "已处理"
+      }
+    }
+  },
+  {
+    title: "备注",
+    dataIndex: "processingInfo"
+  },
+  {
+    title: "接单类型",
+    dataIndex: "processingOrderType",
+    render(item){
+      switch(item){
+        case "A":
+          return "物业后台接单"
+        case "B":
+          return "物业APP"
+      }
+    }
+  },
+]
+
 export const plateRecordColumns = [
   {
     title: "通行时间",

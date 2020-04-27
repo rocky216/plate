@@ -31,10 +31,6 @@ class AddGovern extends React.Component {
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        if(!this.state.info.url) {
-          this.props.utils.OpenNotification("error", "展示图片不能为空！")
-          return 
-        }
 
         if(!this.state.content) {
           this.props.utils.OpenNotification("error", "内容不能为空！")
@@ -43,7 +39,7 @@ class AddGovern extends React.Component {
         this.props.actions.addGovern({
           ...values,
           content: this.state.content,
-          attaId: this.state.info.attaId
+          attaUrl: this.props.utils.submitFiles(values.attaUrl)
         }, res=>{
           this.props.history.push("/other/govern")
           this.props.utils.OpenNotification("success")
@@ -60,7 +56,7 @@ class AddGovern extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {commonFiles } = this.props
+    const {utils, commonFiles } = this.props
     const {info} = this.state
     console.log(info)
     return (
@@ -91,20 +87,24 @@ class AddGovern extends React.Component {
               ],
             })(<TextArea autoSize={{minRows: 3}} />)}
           </Form.Item>
-          <Form.Item label="展示图片" hasFeedback>
-            <div>
+          <Form.Item label="展示图片" >
+            {getFieldDecorator('attaUrl', {
+              valuePropName: 'fileList',
+              getValueFromEvent: utils.normFileSingle,
+              rules: [
+                {
+                  required: true,
+                  message: '展示图片!',
+                }
+              ],
+            })(
               <Upload
-                showUploadList={false}
-                action={`${commonFiles?commonFiles.resourceServerAddress:''}common/${this.props.utils.getCookie("token")}`}
+                action={`${commonFiles?commonFiles.resourceServerAddress:""}/file/uploadFile`}
                 name="file"
-                onChange={this.handlenUpload.bind(this)}
               >
                 <Button><Icon type="upload" />上传图片</Button>
               </Upload>
-              <div>
-                {info?<img src={info.url} style={{width: 120}} />:null}
-              </div>
-            </div>
+            )}
           </Form.Item>
           <Form.Item label="内容" hasFeedback>
             <BraftEditor onChange={val=>this.setState({content: val})}/>

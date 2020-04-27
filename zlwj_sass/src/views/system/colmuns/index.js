@@ -1,6 +1,84 @@
 import React from "react"
 import {Tag, Icon} from "antd"
 
+
+export const resourcesEditColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "资源名称",
+    dataIndex: "name"
+  },
+  {
+    title: "广告描述/图片路径",
+    dataIndex: "desc",
+    render(item){
+      return <img src={item} style={{width:80, height:80}} />
+    }
+  },
+  {
+    title: "排序",
+    dataIndex: "sort"
+  },
+  {
+    title: "资源类型",
+    dataIndex: "showType",
+    render(item){
+      return item==0?"图片资源":"文字资源"
+    }
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    render(item){
+      return item=="0"?<Tag color="green">正常</Tag>:<Tag color="red">停用</Tag>
+    }
+  },
+  {
+    title: "资源类型id",
+    dataIndex: "typeId"
+  },
+]
+
+export const resourcesColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "资源类型名称",
+    dataIndex: "typeName"
+  },
+  {
+    title: "资源类型编码",
+    dataIndex: "typeCode"
+  },
+  {
+    title: "资源类型",
+    dataIndex: "showType",
+    render(item){
+      return item==0?"图片资源":"文字资源"
+    }
+  },
+  {
+    title: "资源类型描述",
+    dataIndex: "desc"
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    render(item){
+      return item=="0"?<Tag color="green">正常</Tag>:<Tag color="red">停用</Tag>
+    }
+  },
+  {
+    title: "所属资源数量",
+    dataIndex: "resourceCount"
+  },
+]
+
 export const controlDeviceColumns = [
   {
     title: "在线状态",
@@ -412,6 +490,45 @@ export const sysLibraryColmuns = [
     dataIndex: "tableField"
   },
   
+]
+export const partnerCompanyColmuns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "公司全称",
+    dataIndex: "name"
+  },
+  {
+    title: "公司简称",
+    dataIndex: "nickname"
+  },
+  {
+    title: "公司地址",
+    render(item){
+      return item.province+item.city+item.area;
+    }
+  },
+  {
+    title: "联系人",
+    dataIndex: "headName"
+  },
+  {
+    title: "联系电话",
+    dataIndex: "headContactNumber"
+  },
+  {
+    title: "logo",
+    dataIndex: "logoUrl",
+    render(item){
+      return item?<img src={item} style={{width:100}} />:""
+    }
+  },
+  // {
+  //   title: "基础配置",
+  //   dataIndex: "name"
+  // },
 ]
 
 export const companyColmuns = [

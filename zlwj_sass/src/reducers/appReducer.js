@@ -1,10 +1,13 @@
 import {START_LOADING_APP, END_LOADING_APP} from "@/types"
-import {OpenNotification, setCookie, getCookie, removeCookie, addIndex, Pagination} from "@/utils"
+import {OpenNotification, setCookie, getCookie, removeCookie, addIndex, Pagination, normFileSingle, normFileMulti, submitFiles} from "@/utils"
 
 let initialState = {
   spinning: false,
   collapsed: false,
   utils: {
+    submitFiles,
+    normFileMulti,
+    normFileSingle,
     OpenNotification,
     setCookie,  
     getCookie, 

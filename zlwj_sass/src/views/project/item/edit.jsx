@@ -33,7 +33,7 @@ class EditItem extends React.Component {
         this.props.actions.editHeHousingEstate({
           ...values,
           id: this.props.detail.id,
-          attaId: this.state.file.attaId
+          attaUrl: this.state.file
         }, res=>{
           this.props.actions.getHeHousingEstate({})
           this.props.onCancel()
@@ -45,10 +45,7 @@ class EditItem extends React.Component {
   componentWillReceiveProps(nextProps){
     
     if(nextProps.detail.heUrl&&!this.state.file){
-      this.setState({file: {
-        attaId: '',
-        url: nextProps.detail.heUrl
-      }})
+      this.setState({file: nextProps.detail.heUrl})
     }
     if(!nextProps.detail){
       this.setState({file: ''})
@@ -137,9 +134,10 @@ class EditItem extends React.Component {
                 name="file" 
                 showUploadList={false}
                 beforeUpload={this.handlenBeforeUpload.bind(this)}
-                action={`${commonFiles?commonFiles.resourceServerAddress:''}common/${this.props.utils.getCookie("token")}`} listType="picture">
+                action={`${commonFiles?commonFiles.resourceServerAddress:""}/file/uploadFile`}
+                listType="picture">
                 
-                {file?<img style={{width: 100}} src={file.url} />:<div className="itemEditUpload"><Icon type="upload" /></div>}
+                {file?<img style={{width: 100}} src={file} />:<div className="itemEditUpload"><Icon type="upload" /></div>}
               </Upload>
             )}
           </Form.Item>

@@ -1,6 +1,6 @@
-final baseUrl = "https://api.jxjizhi.com/mobile";
-final baseUrlIot = "https://api.jxjizhi.com/iot";
-final baseUrlResource = "https://api.jxjizhi.com";
+final baseUrl = "https://api.jxhtservice.com/mobile";
+final baseUrlIot = "https://api.jxhtservice.com/iot";
+final baseUrlResource = "https://api.jxhtservice.com";
 
 // final baseUrl = "http://192.168.0.109:80/mobile";
 // final baseUrlIot = "http://192.168.0.109:80/iot";
