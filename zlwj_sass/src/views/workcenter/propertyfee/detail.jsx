@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table} from "antd";
-import {getPropertyfee, getHousePropertyOrder, subOrderException, recallPropertyOrder} from "@/actions/otherAction"
+import {getBasePropertyOrder, goPrintOrder, getPropertyfee, getHousePropertyOrder, subOrderException, recallPropertyOrder} from "@/actions/otherAction"
 import JCard from "@/components/JCard"
 import {detailInfo} from "./data"
 import ReactToPrint from 'react-to-print';
@@ -33,7 +33,7 @@ class PropertyFeeDetail extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getHousePropertyOrder({
+    this.props.actions.getBasePropertyOrder({
       id: this.props.match.params.id
     }, res=>{
       console.log(res)
@@ -105,6 +105,10 @@ class PropertyFeeDetail extends React.Component {
     });
   }
 
+  handlenPrintOrder(){
+    this.props.actions.goPrintOrder({id: this.props.match.params.id})
+  }
+
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {spinning,utils, match} = this.props
@@ -117,6 +121,7 @@ class PropertyFeeDetail extends React.Component {
             <ReactToPrint
               trigger={() => <Button type="primary"><Icon type="printer" />打印</Button>}
               content={() => this.componentRef}
+              onAfterPrint={this.handlenPrintOrder.bind(this)}
             />
             <Button type="primary" ghost className="mgl10" onClick={()=>this.setState({isRemark:!this.state.isRemark})} >
               {this.state.isRemark?"隐藏备注":"显示备注"}
@@ -264,7 +269,7 @@ class PropertyFeeDetail extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getHousePropertyOrder, subOrderException, recallPropertyOrder}, dispatch)
+    actions: bindActionCreators({getBasePropertyOrder, getHousePropertyOrder,goPrintOrder, subOrderException, recallPropertyOrder}, dispatch)
   }
 }
 

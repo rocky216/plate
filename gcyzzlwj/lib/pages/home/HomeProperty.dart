@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../../config/index.dart';
+import '../utils.dart';
+
 
 class HomeProperty extends StatelessWidget {
   
@@ -8,7 +8,7 @@ class HomeProperty extends StatelessWidget {
     {"title": "议事堂", "icon": 0xe631, "bgcolor": 0xFF628dc7, "url":"/dishall"},
     {"title": "政务公开", "icon": 0xe621, "bgcolor": 0xFFf4c200, "url":"/govern"},
     {"title": "保洁维修", "icon": 0xe70e, "bgcolor": 0xFF3fb785, "url":"/clean"},
-    {"title": "呼叫物业", "icon": 0xe785, "bgcolor": 0xFFec6497, "url":null},
+    {"title": "呼叫物业", "icon": 0xe785, "bgcolor": 0xFFec6497, "url":"/contact"},
   ];
 
   HomeProperty({Key key}) : super(key: key);
@@ -38,17 +38,9 @@ class HomeProperty extends StatelessWidget {
                 ],
               ),
               onPressed: () async {
-                if(f["url"]!=null){
+                auth((){
                   Navigator.of(context).pushNamed(f["url"]);
-                }else{
-                    var url = "tel:$propertyPhone";
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                }
-                
+                });
               },
             )
           )

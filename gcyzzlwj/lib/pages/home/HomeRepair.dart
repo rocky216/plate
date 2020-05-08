@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/MyCard.dart';
+import '../../components/MyEmpty.dart';
 
 class HomeRepair extends StatelessWidget {
   final List dataList;
@@ -31,8 +32,9 @@ class HomeRepair extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 5.0),
       child: MyCard(
-        title: Text("维修记录"), extra: Text("更多"),
-        child: Column(
+        title: Text("维修记录"), 
+        // extra: Text("更多"),
+        child: this.dataList.isNotEmpty? Column(
         crossAxisAlignment: CrossAxisAlignment.start,  
         children: this.dataList.map((f){
           return Container(
@@ -41,8 +43,17 @@ class HomeRepair extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-              Image.network("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4176816726,2568559965&fm=11&gp=0.jpg",
-              width: 80.0, height: 80.0, fit: BoxFit.fill),
+                Container(
+                  decoration: BoxDecoration(color: Color(0xFFeeeeee)),
+                  alignment: Alignment.center,
+                  width: 80.0, height: 80.0, 
+                  child: f["sysAttachmentList"].isNotEmpty?
+                      Image.network(  f["sysAttachmentList"][0]["dowloadHttpUrl"],
+                          width: 80.0, height: 80.0, fit: BoxFit.fill):Text("暂无图"),
+                ),
+                
+              // Image.network("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4176816726,2568559965&fm=11&gp=0.jpg",
+              // width: 80.0, height: 80.0, fit: BoxFit.fill),
               Container(
                 margin: EdgeInsets.only(left: 10.0),
                 width: MediaQuery.of(context).size.width-120,
@@ -50,7 +61,7 @@ class HomeRepair extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                  Container(
+                  Container( 
                     margin: EdgeInsets.only(bottom: 5.0),
                     child: Text(f["repairName"], maxLines: 1, overflow: TextOverflow.ellipsis, 
                     style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700),)
@@ -77,7 +88,7 @@ class HomeRepair extends StatelessWidget {
               )
             ],),
           );
-        }).toList())
+        }).toList() ): MyEmpty()
       ),
     );
   }

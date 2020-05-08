@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../utils.dart';
+
 
 class PartTwo extends StatelessWidget {
   final balance;
@@ -37,7 +39,9 @@ class PartTwo extends StatelessWidget {
                         ],
                       ),
                       onPressed: (){
-                        Navigator.of(context).pushNamed("/user/passcard");
+                        auth((){
+                          Navigator.of(context).pushNamed("/user/passcard");
+                        });
                       },
                     ),
                   ),
@@ -53,7 +57,10 @@ class PartTwo extends StatelessWidget {
                         ],
                       ),
                       onPressed: (){
-                        Navigator.of(context).pushNamed("/user/ownerhouse");
+                        auth((){
+                          Navigator.of(context).pushNamed("/user/ownerhouse");
+                        });
+                        
                       },
                     ),
                   ),
@@ -69,7 +76,9 @@ class PartTwo extends StatelessWidget {
                         ],
                       ),
                       onPressed: (){
-                        Navigator.of(context).pushNamed("/user/updatepassword");
+                        auth((){
+                          Navigator.of(context).pushNamed("/user/updatepassword");
+                        });
                       },
                     ),
                   ),

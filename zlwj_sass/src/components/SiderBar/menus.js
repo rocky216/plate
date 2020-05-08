@@ -170,8 +170,8 @@ export default [
         key: 703
       },
       {
-        title: "商铺信息管理",
-        link: "/project/shop",
+        title: "非住宅房屋",
+        link: "/project/nothouse",
         key: 704
       },
       {
@@ -257,6 +257,11 @@ export default [
         title: "资源管理",
         link: "/system/resources",
         key: 908
+      },
+      {
+        title: "apk管理",
+        link: "/system/apk",
+        key: 909
       },
     ]
   }

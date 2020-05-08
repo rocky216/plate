@@ -22,10 +22,12 @@ import '../pages/plate/Index.dart';
 import '../pages/pile/Index.dart';
 import '../pages/clean/Detail.dart';
 import '../pages/clean/Add.dart';
+import '../pages/contact/Index.dart';
+
 
 
 final routes={
-      '/':(context)=>IndexPage(),
+      '/home':(context)=>IndexPage(),
       '/login':(context)=>LoginPage(),
       '/register':(context)=>RegisterPage(),
       '/statement':(context)=>StatementPage(),
@@ -48,6 +50,7 @@ final routes={
       '/pile': (context)=>PilePage(),
       '/clean/detail': (context, {arguments})=>CleanDetailPage(arguments:arguments),
       '/clean/add': (context)=>AddCleanPage(),
+      '/contact': (context)=>ContactPage(),
       // '/form':(context)=>FormPage(),'/search':(context,{arguments})=>SearchPage(arguments:arguments),
 };
 

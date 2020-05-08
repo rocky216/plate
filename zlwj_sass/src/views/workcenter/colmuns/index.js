@@ -343,39 +343,69 @@ export const propertyfeeColmuns = [
     }
   },
   {
-    title: "姓名",
-    dataIndex: "owners",
-    render(item){
-      return item?item.name:"无"
-    }
-  },
-  {
-    title: "手机号",
-    dataIndex: "phone",
-    render(e,rows){
-      return rows.owners?rows.owners.phone:"无"
-    }
-  },
-  {
     title: "订单号",
     dataIndex: "orderNo"
   },
   {
-    title: "房间号",
-    dataIndex: "houseUrlStr"
+    title: "住宅信息/非住宅信息/车位信息",
+    dataIndex: "showOrderLinkName",
   },
   {
-    title: "缴费时间",
-    dataIndex: "buildTime"
+    title: "业主信息",
+    dataIndex: "owners",
+    render(item){
+      return item?`${item.name}(${item.phone})`:"无"
+    }
   },
   {
-    title: "优惠金额",
-    dataIndex: "orderDiscountFee"
+    title: "缴费信息",
+    dataIndex: "feeEndTime",
+    render(item, rows){
+      return item?`${item.substring(0,10)}到${rows.feeStartTime?rows.feeStartTime.substring(0,10):""}`:"无"
+    }
   },
   {
-    title: "缴费金额",
-    dataIndex: "orderTrueFee"
-  }
+    title: "金额",
+    dataIndex: "orderTrueFee",
+  },
+  {
+    title: "打印操作",
+    dataIndex: "printCount"
+  },
+  // {
+  //   title: "姓名",
+  //   dataIndex: "owners",
+  //   render(item){
+  //     return item?item.name:"无"
+  //   }
+  // },
+  // {
+  //   title: "手机号",
+  //   dataIndex: "phone",
+  //   render(e,rows){
+  //     return rows.owners?rows.owners.phone:"无"
+  //   }
+  // },
+  // {
+  //   title: "订单号",
+  //   dataIndex: "orderNo"
+  // },
+  // {
+  //   title: "房间号",
+  //   dataIndex: "houseUrlStr"
+  // },
+  // {
+  //   title: "缴费时间",
+  //   dataIndex: "buildTime"
+  // },
+  // {
+  //   title: "优惠金额",
+  //   dataIndex: "orderDiscountFee"
+  // },
+  // {
+  //   title: "缴费金额",
+  //   dataIndex: "orderTrueFee"
+  // }
 ]
 
 export const propertyDetailColmuns = [

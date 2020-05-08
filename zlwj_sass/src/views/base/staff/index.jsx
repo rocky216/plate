@@ -30,9 +30,10 @@ class Staff extends React.Component {
     }
   }
 
-  componentDidMount(){
+  async componentDidMount(){
+   await this.props.actions.getStaffList(this.state.params)
     this.props.actions.clearUserTreeMenuList()
-    this.props.actions.getStaffList(this.state.params)
+    
     this.props.actions.getHeList({})
     this.props.actions.getDeptList({})
     this.props.actions.getSelectJobList({})

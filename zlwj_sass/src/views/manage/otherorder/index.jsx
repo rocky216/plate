@@ -154,7 +154,7 @@ class OtherOrder extends React.Component {
             ))}
           </Tabs>
           <Table columns={this.getCol()}  dataSource={otherOrder?utils.addIndex(otherOrder.pages.list):[]}
-          pagination={otherOrder?utils.Pagination(otherOrder.page, page=>{
+          pagination={otherOrder?utils.Pagination(otherOrder.pages, page=>{
             params.current = page
             this.setState({params})
             this.props.actions.getOtherCostsOrderListAuth(params)

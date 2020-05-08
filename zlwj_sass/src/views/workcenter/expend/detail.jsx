@@ -84,7 +84,8 @@ class OtherFeeDetail extends React.Component {
     
     return (
       <JCard spinning={spinning}>
-        <Card title="其他支出单"  extra={<Link to="/workcenter/expend"><Button><Icon type="rollback" />返回</Button></Link>} >
+        <Card title="其他支出单"  extra={<Link to="/workcenter/expend">
+          <Button><Icon type="rollback" />返回</Button></Link>} >
           
           <div className="PropertyFeeDetail"  ref={el=>this.componentRef = el} >
             {detail?<Card >

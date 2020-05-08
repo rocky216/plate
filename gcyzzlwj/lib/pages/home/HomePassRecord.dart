@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/MyCard.dart';
+import '../../components/MyEmpty.dart';
 
 class HomePassRecord extends StatelessWidget {
 
@@ -17,8 +18,8 @@ class HomePassRecord extends StatelessWidget {
       alignment: Alignment.topLeft,
        child: MyCard(
         title: Text("通行记录"),
-        extra: Text("更多"),
-        child: Column(
+        // extra: Text("更多"),
+        child: this.dataList.isNotEmpty? Column(
           children: this.dataList.map((f)=>
             Container(
               padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
@@ -39,7 +40,7 @@ class HomePassRecord extends StatelessWidget {
               ),
             )
           ).toList()
-        ),
+        ): MyEmpty(),
       ),
     );
   }

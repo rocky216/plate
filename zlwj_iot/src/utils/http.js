@@ -7,6 +7,9 @@ const filterUrl = [
 ]
 
 const instance = axios.create({
+  // headers: {
+  //     'Content-Type': 'application/json;charset=utf-8'
+  // },
   baseURL: "",
 })
 

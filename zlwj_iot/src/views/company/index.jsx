@@ -34,6 +34,9 @@ class CompanyDevice extends React.Component {
             <Link to={`/company/${item.id}/device`}>
               <Button type="link" >设备管理</Button>
             </Link>
+            <Link to={`/company/${item.id}/callbackurl`}>
+              <Button type="link" >回调url</Button>
+            </Link>
             
           </div>
         )

@@ -7,7 +7,7 @@ import AddHouse from "./add"
 
 const {Option} = Select
 
-class Test extends React.Component {
+class SearchHouse extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -48,4 +48,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(Test)
+export default connect(mapStateProps, mapDispatchProps)(SearchHouse)

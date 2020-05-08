@@ -4,8 +4,8 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Form, Input, Divider, Row, Col, Modal, DatePicker, Select, Table, Switch} from "antd";
 import JCard from "@/components/JCard"
-import {addInitPropertyfee, countPropertyOrder, addPropertyOrder, getPropertyfee} from "@/actions/otherAction"
-import {ownersInfo, houseInfo} from "./data"
+import {initBasePropertyOrder,initLoadOrderMoney,addBasePropertyOrder,getPropertyOrderPage} from "@/actions/otherAction"
+import {ownersInfo, houseInfo, shopInfo} from "./data"
 import moment from "moment"
 import {propertyDetailColmuns} from "../colmuns"
 
@@ -36,11 +36,18 @@ class AddPropertyfee extends React.Component {
     }
   }
   componentDidMount(){
-    this.props.actions.addInitPropertyfee({
-      houseId: this.props.houseId
+    const {houseItem} = this.props
+    
+    this.props.actions.initBasePropertyOrder({
+      linkId: this.props.houseItem.id,
+      orderType: this.props.houseItem.type,
     }, res=>{
-      const {owners, templateList, accountList, house, startTime} = res
-      this.setState({owners, templateList, accountList, house, startTime})
+      const {owners, templateList, accountList, house, startTime, shop} = res
+      let myhouse = house
+      if(houseItem.type=="shops"){
+        myhouse=shop
+      }
+      this.setState({owners, templateList, accountList, house:myhouse, startTime})
     })
   }
 
@@ -59,20 +66,21 @@ class AddPropertyfee extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values)=>{
       console.log(values)
       
-      const {houseType, houseId} = this.props
+      const {houseType, houseItem} = this.props
       const {templeId, accountId, endTime} = values
       
-      this.props.actions.addPropertyOrder({
+      this.props.actions.addBasePropertyOrder({
         templateId:templeId, 
         accountId, 
         feeEndTime: moment(endTime).format("YYYY-MM-DD"),
-        // orderType: houseType,
-        houseId: houseId,
+        orderTypeCode: houseItem.type,
+        linkId: houseItem.id,
         freeDetailsIds: this.getFreeDetailsIds()
       }, res=>{
         this.props.utils.OpenNotification("success")
         this.props.onCancel()
-        this.props.actions.getPropertyfee()
+        this.props.actions.getPropertyOrderPage({orderType: houseItem.type, 
+          linkTypeId: houseItem.linkTypeId, linkId: houseItem.id})
       })
     })
   }
@@ -106,16 +114,38 @@ class AddPropertyfee extends React.Component {
     return val
   }
 
+  handlenData(key, obj){
+    let arrKey = key.split(".")
+    let val = obj
+    _.each(arrKey, item=>{
+      val = val[item]
+    })
+    if(key=="owners.sex"){
+      return val=="1"?"男":"女"
+    }
+    if(key=="elevatorHouse"){
+      return val=="0"?"楼梯房":"电梯房"
+    }
+    if(key=="heShopsInfo.packingStatus"){
+      return val=="0"?"未装修":val=="1"?"装修中":"已装修"
+    }
+    if(key=="heShopsInfo.payLastTime"){
+      return obj["heShopsInfo"]["payLastTime"]?obj["heShopsInfo"]["payFristTime"]+"至"+obj["heShopsInfo"]["payLastTime"]:"无缴费记录"
+    }
+    return val
+  }
+
   handlenCountMomey(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       console.log(values)
       if(!err){
-        const {houseType, houseId} = this.props
+        const {houseType, houseItem} = this.props
         const {templeId, accountId, endTime} = values
-        this.props.actions.countPropertyOrder({
+        this.props.actions.initLoadOrderMoney({
           templeId, 
           endTime: moment(endTime).format("YYYY-MM-DD"),
-          houseId: houseId
+          linkId: houseItem.id,
+          orderType: houseItem.type,
         }, res=>{
           _.each(res.detailsList, item=>{
             item.oldtotalFee = item.totalFee
@@ -166,9 +196,9 @@ class AddPropertyfee extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, utils, visible, onCancel, showName} = this.props
+    const {spinning, utils, visible, onCancel, showName, houseItem} = this.props
     const {owners, templateList, accountList, house, startTime, temDetail} = this.state
-
+    
     return (
       <Modal
       title={showName}
@@ -201,11 +231,11 @@ class AddPropertyfee extends React.Component {
           
           <Divider orientation="left" >房屋信息</Divider>
           <Row className="specialForm">
-            {houseInfo.map((item, index)=>(
+            {(houseItem.type=="shops"?shopInfo:houseInfo).map((item, index)=>(
               <Col key={index} span={item.span?item.span:6}>
                 <Form.Item  label={item.title}>
                   {getFieldDecorator(item.key, {
-                    initialValue: house?this.handlenHouseData(item.key,house):""
+                    initialValue: house?this[(houseItem.type=="shops"?"handlenData":"handlenHouseData")](item.key,house):""
                   })(<Input disabled style={{ color: "#333"}} />)}
                 </Form.Item>
               </Col>
@@ -290,7 +320,7 @@ class AddPropertyfee extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addInitPropertyfee, countPropertyOrder, addPropertyOrder, getPropertyfee}, dispatch)
+    actions: bindActionCreators({initBasePropertyOrder, initLoadOrderMoney,addBasePropertyOrder, getPropertyOrderPage,}, dispatch)
   }
 }
 

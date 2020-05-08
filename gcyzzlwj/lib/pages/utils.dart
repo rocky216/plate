@@ -3,10 +3,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert' as convert;
 
+auth( next ) async {
+  var userInfo = await getUserInfo();
+  if (userInfo != null && userInfo is Map && userInfo["he"] !=null ) {
+      next();
+  }else{
+    showToast("请前往物业分配房间");
+  }
+}
 
 Future<bool> confirm(context,{msg:"是否删除", ok, cancel}){
   return showDialog(
     context: context, 
+    barrierDismissible: false,
     builder: (context){
       return AlertDialog(
         title: Text(msg),

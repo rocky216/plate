@@ -1,6 +1,22 @@
 import React from "react"
 import {Tag} from "antd"
 
+
+export const argumentsColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "名称",
+    dataIndex: "callbackParamName"
+  },
+  {
+    title: "编码",
+    dataIndex: "callbackParamCode"
+  }
+]
+
 export const apiColumns = [
   {
     title: "序号",

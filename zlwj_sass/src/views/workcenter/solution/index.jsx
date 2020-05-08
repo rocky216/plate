@@ -19,12 +19,15 @@ class Solution extends React.Component {
       editVisible: false,
       detail: "",
       rechargeVisible: false,
-      reDetail: ""
+      reDetail: "",
+      params: {
+        current: 1,
+      }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getOneCardSystem({})
+    this.props.actions.getOneCardSystem(this.state.params)
   }
 
   getCol(){
@@ -48,7 +51,7 @@ class Solution extends React.Component {
 
   render(){
     const {utils, spinning, onecard} = this.props
-    const {addVisible, editVisible, detail, rechargeVisible, reDetail} = this.state
+    const {addVisible, editVisible, detail, rechargeVisible, reDetail, params} = this.state
 
     return (
       <JCard spinning={spinning}>
@@ -58,7 +61,12 @@ class Solution extends React.Component {
         {editVisible && detail?
         <EditSolution visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:""})} />:null}
         <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />添加一卡通</Button>} >
-          <Table columns={this.getCol()} dataSource={onecard?utils.addIndex(onecard.list):[]} />
+          <Table columns={this.getCol()} dataSource={onecard?utils.addIndex(onecard.list):[]} 
+          pagination={utils.Pagination(onecard, page=>{
+            params.current = page
+            this.setState({params})
+            this.props.actions.getOneCardSystem(params)
+          })}/>
         </Card>
       </JCard>
     )

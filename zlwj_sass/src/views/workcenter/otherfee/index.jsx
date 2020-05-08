@@ -4,9 +4,12 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Table, Tabs, Badge, Form, Input, DatePicker, Select} from "antd";
 import JCard from "@/components/JCard"
-import {getOtherfee} from "@/actions/otherAction"
+import SelectAllType from "@/components/SelectAllType"
+import {getOtherCostsOrderLists} from "@/actions/otherAction"
 import "./index.less"
+import "../propertyfee/index.less"
 import {otherfeeColmuns} from "../colmuns"
+import AddOtherFee from "./add"
 
 const {TabPane} = Tabs
 const {RangePicker} = DatePicker
@@ -43,27 +46,31 @@ class Otherfee extends React.Component {
           key: "close"
         },
       ],
+      houseItem: "",
       params: {
         current: 1,
         orderType: "",
-        orderStatus: "",
+        orderStatusStr: "",
         selectStartBuildTime: "",
         selectEndBuildTime: "",
-        orderNo: ""
-      }
+        orderNo: "",
+        linkTypeId: "",
+        linkId: ""
+      },
+      addVisible: false
     } 
   }
 
   componentDidMount(){
-    this.props.actions.getOtherfee(this.state.params)
+    this.props.actions.getOtherCostsOrderLists(this.state.params)
   }
 
   handlenTab(key){
     const {params} = this.state
     params.current = 1
-    params.orderStatus = key
+    params.orderStatusStr = key
     this.setState({params})
-    this.props.actions.getOtherfee(params)
+    this.props.actions.getOtherCostsOrderLists(params)
   }
 
   getCol(){
@@ -93,60 +100,74 @@ class Otherfee extends React.Component {
         params.orderType = values.orderType
         this.setState({params})
         
-        this.props.actions.getOtherfee(params)
+        this.props.actions.getOtherCostsOrderLists(params)
     })
+  }
+
+  handlenSelectShop(data){
+    const {params} = this.state
+    const {linkTypeId, isLeaf, id, type} = data
+
+    params.linkTypeId = linkTypeId?linkTypeId:""
+    params.linkId = id
+    params.orderType = type
+    this.setState({params, houseItem: data})
+    this.props.actions.getOtherCostsOrderLists(params)
   }
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning, utils, otherfee} = this.props
-    const {tabs} = this.state
-
+    const {spinning, utils, otherfeeorder} = this.props
+    const {tabs, houseItem, params, addVisible} = this.state
+    
     return (
       <JCard spinning={spinning}>
-        <Card title="其他缴费订单" extra={<Link to="/workcenter/otherfee/add"><Button type="primary"><Icon type="plus" />新增其他订单</Button></Link>}>
-        <div className="flexend mgb10">
-          <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
-            <Form.Item label="类型" >
-              {getFieldDecorator('orderType')(
-                <Select style={{width: 100}}>
-                  <Option value="" >全部</Option>
-                  <Option value="0" >住宅</Option>
-                  <Option value="1" >商铺</Option>
-                  <Option value="3" >合作商</Option>
-                </Select>
-              )}
-            </Form.Item>
-            <Form.Item label="订单号" >
-              {getFieldDecorator('orderNo')(
-                <Input  />,
-              )}
-            </Form.Item>
-            <Form.Item label="创建时间" >
-              {getFieldDecorator('time',{
-                rules: [{type: 'array'}]
-              })(
-                <RangePicker />,
-              )} 
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" ><Icon type="search" />搜索</Button>
-            </Form.Item>
-          </Form>
+        {addVisible?
+          <AddOtherFee visible={addVisible} detail={houseItem}  onCancel={()=>this.setState({addVisible: false})} />:null}
+        <div style={{display: "flex"}}>
+          <div className="select_house">
+            <Card title="选择房间" size="small" bodyStyle={{padding:0}}>
+              <SelectAllType isLoadCoOperative onSelect={this.handlenSelectShop.bind(this)}  />
+            </Card>
+          </div>
+          <div style={{width: "100%"}}>
+            <Card title={(
+              <div>{houseItem.name}</div>
+            )} extra={houseItem.linkTypeId || houseItem.type=="tempCoOperativeMenu"?<Button type="primary" onClick={()=>this.setState({addVisible: true})}><Icon type="plus" />新增其他订单</Button>:null}>
+              <div className="flexend mgb10">
+                <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
+                  <Form.Item label="订单号" >
+                    {getFieldDecorator('orderNo')(
+                      <Input  />,
+                    )}
+                  </Form.Item>
+                  <Form.Item label="创建时间" >
+                    {getFieldDecorator('time',{
+                      rules: [{type: 'array'}]
+                    })(
+                      <RangePicker />,
+                    )} 
+                  </Form.Item>
+                  <Form.Item>
+                    <Button type="primary" htmlType="submit" ><Icon type="search" />搜索</Button>
+                  </Form.Item>
+                </Form>
+              </div>
+                
+                <Tabs
+                  onChange={this.handlenTab.bind(this)}
+                >
+                  {tabs.map(item=>(
+                    <TabPane key={item.key} tab={
+                      <Badge count={otherfeeorder?otherfeeorder[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                    } />
+                  ))}
+                </Tabs>
+                
+                <Table columns={this.getCol()} dataSource={otherfeeorder?utils.addIndex(otherfeeorder.page.list):[]} />
+              </Card>
+          </div>
         </div>
-          
-          <Tabs
-            onChange={this.handlenTab.bind(this)}
-          >
-            {tabs.map(item=>(
-              <TabPane key={item.key} tab={
-                <Badge count={otherfee?otherfee[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
-              } />
-            ))}
-          </Tabs>
-          
-          <Table columns={this.getCol()} dataSource={otherfee?utils.addIndex(otherfee.pages.list):[]} />
-        </Card>
       </JCard>
     )
   }
@@ -154,13 +175,13 @@ class Otherfee extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOtherfee}, dispatch)
+    actions: bindActionCreators({getOtherCostsOrderLists}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-    otherfee: state.other.otherfee,
+    otherfeeorder: state.other.otherfeeorder,
     spinning: state.other.spinning,
     utils: state.app.utils
   }

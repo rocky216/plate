@@ -4,10 +4,12 @@ import {withRouter, Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Table, Tabs, Badge, Button, Icon, Select, Form, DatePicker, Input} from "antd";
 import SelectHouse from "@/components/SelectHouse"
+import SelectOwner from "@/components/SelectOwner"
+import SelectAllType from "@/components/SelectAllType"
 import JCard from "@/components/JCard"
 import "./index.less"
 import {propertyfeeColmuns} from "../colmuns"
-import {getPropertyfee} from "@/actions/otherAction"
+import {getPropertyOrderPage} from "@/actions/otherAction"
 import AddPropertyfee from "./add"
 import moment from "moment"
 
@@ -52,16 +54,19 @@ class PropertyFee extends React.Component {
       houseItem: "",
       params: {
         current:1,
-        houseId: "",
         selectStartBuildTime: "",
-        selectEndBuildTime: ""
+        selectEndBuildTime: "",
+        orderType: "",
+        linkTypeId: "",
+        linkId:""
       }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getPropertyfee(this.state.params)
+    this.props.actions.getPropertyOrderPage(this.state.params)
   }
+
 
   getCol(){
     return propertyfeeColmuns.concat([{
@@ -82,12 +87,16 @@ class PropertyFee extends React.Component {
   }
 
   handlenSelectShop(data){
-    this.state.params.houseId = data.id
-    this.state.params.selectStartBuildTime = ""
-    this.state.params.selectEndBuildTime = ""
-    this.state.params.orderNo = ""
-    this.setState({houseId: data.id, houseItem: data, params: this.state.params})
-    this.props.actions.getPropertyfee(this.state.params)
+    console.log(data)
+    const {params} = this.state
+    params.orderType = data.type
+    params.linkTypeId = data.linkTypeId?data.linkTypeId:""
+    params.linkId = data.id
+    params.selectStartBuildTime = ""
+    params.selectEndBuildTime = ""
+    params.orderNo = ""
+    this.setState({houseId: data.linkTypeId?data.id:"", houseItem: data.linkTypeId?data:"", params})
+    this.props.actions.getPropertyOrderPage(params)
   }
   handleSearch(e){
     e.preventDefault();
@@ -100,7 +109,7 @@ class PropertyFee extends React.Component {
         params.orderNo = values.orderNo
         this.setState({params})
         
-        this.props.actions.getPropertyfee(params)
+        this.props.actions.getPropertyOrderPage(params)
     })
   }
   handlenTab(key){
@@ -108,7 +117,7 @@ class PropertyFee extends React.Component {
     params.current = 1
     params.orderStatusStr = key
     this.setState({params})
-    this.props.actions.getPropertyfee(params)
+    this.props.actions.getPropertyOrderPage(params)
   }
 
   render(){
@@ -117,19 +126,20 @@ class PropertyFee extends React.Component {
     const {houseType, houseId, addVisible, houseItem, tabs, params} = this.state
     
     return (
-      <JCard spinning={spinning}>
+      <JCard spinning={spinning}> 
         <div className="propertyfee">
           <div className="select_house">
-            <Card title="选择房间" size="small">
-              <SelectHouse showLine onSelect={this.handlenSelectShop.bind(this)} />
+            <Card title="选择房间" size="small" bodyStyle={{padding:0}}>
+              <SelectAllType showLine onSelect={this.handlenSelectShop.bind(this)}  />
             </Card>
           </div>
           <div style={{width: "100%"}}>
-            <Card title={houseItem?houseItem.showCodeAll:null} extra={houseId?<Button type="primary" onClick={()=>this.setState({addVisible:true})}>
+            <Card title={houseItem?houseItem.name:null} extra={houseId?<Button type="primary" 
+            onClick={()=>this.setState({addVisible:true})}>
                 <Icon type="plus" />新增物业费订单</Button>:null} >
-                  {houseId && addVisible?<AddPropertyfee visible={addVisible} 
+                  {houseItem && addVisible?<AddPropertyfee visible={addVisible} 
                               showName={houseItem?houseItem.showCodeAll:null}
-                              houseType={houseType} houseId={houseId} onCancel={()=>this.setState({addVisible: false})} />:null}
+                              houseType={houseType} houseItem={houseItem} onCancel={()=>this.setState({addVisible: false})} />:null}
               <div className="flexend mgb10">
                 <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
                 <Form.Item label="订单号" >
@@ -164,7 +174,7 @@ class PropertyFee extends React.Component {
                 pagination={propertyfee?utils.Pagination(propertyfee.page, page=>{
                   params.current = page
                   this.setState({params})
-                  this.props.actions.getPropertyfee(params)
+                  this.props.actions.getPropertyOrderPage(params)
                 }):false}
               />
             </Card>
@@ -178,13 +188,13 @@ class PropertyFee extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getPropertyfee}, dispatch)
+    actions: bindActionCreators({getPropertyOrderPage}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-    propertyfee: state.other.propertyfee,
+    propertyfee: state.other.propertyfeepage,
     utils: state.app.utils,
     spinning: state.other.spinning
   }

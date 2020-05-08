@@ -53,7 +53,6 @@ class SelectRoom extends React.Component {
   }
 
   onLoadData(data){
-    console.log(data.props)
     return new Promise((resolve, reject)=>{
       if (data.props.children) {
         resolve();

@@ -94,7 +94,7 @@ class Expendfee extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const {spinning, utils, otherExpend} = this.props
-    const {tabs} = this.state
+    const {tabs, params} = this.state
 
     return (
       <JCard spinning={spinning}>
@@ -139,7 +139,13 @@ class Expendfee extends React.Component {
             ))}
           </Tabs>
           
-          <Table columns={this.getCol()} dataSource={otherExpend?utils.addIndex(otherExpend.pages.list):[]} />
+          <Table columns={this.getCol()} dataSource={otherExpend?utils.addIndex(otherExpend.pages.list):[]} 
+          pagination={otherExpend?utils.Pagination(otherExpend.pages, page=>{
+            params.current = page
+            this.setState({params})
+            this.props.actions.getOtherExpendList(params)
+          }):false}
+          />
         </Card>
       </JCard>
     )

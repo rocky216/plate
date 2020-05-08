@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils.dart';
 
 class AddService extends StatelessWidget {
   List serviceList = [
@@ -24,7 +25,10 @@ class AddService extends StatelessWidget {
             child: GestureDetector(
                 child: Image(image: AssetImage(serviceList[f]["img"]), fit: BoxFit.fitHeight),
                 onTap: (){
-                  Navigator.of(context).pushNamed(serviceList[f]["url"]);
+                  auth((){
+                    Navigator.of(context).pushNamed(serviceList[f]["url"]);
+                  });
+                  
                 }),
           ),
         ).toList()

@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     var userInfo = await getUserInfo();
     if(userInfo is Map && userInfo!=null){
       setState(() {
-        this.title = userInfo["he"]["name"];
+        this.title = userInfo["he"]!=null?userInfo["he"]["name"]:"";
       });
     }
     var data = await NetHttp.getRequest("/api/app/owner/common/indexInfo", context:context, params: {});

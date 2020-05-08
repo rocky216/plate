@@ -9,14 +9,21 @@ import {parkColmuns} from "../colmuns"
 
 
 class ParkList extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      params: {
+        current: 1,
+        pageSize:1
+      }
+    }
+  }
+
 
   componentDidMount(){
-    this.initial({})
+    this.props.actions.getParkList(this.state.params)
   }
 
-  initial(params){
-    this.props.actions.getParkList({})
-  }
 
   handlenDelete(item){
     this.props.actions.deleteParkData({
@@ -55,11 +62,18 @@ class ParkList extends React.Component {
 
   render(){
     const {utils, spinning, park} = this.props
+    const {params} = this.state
 
     return (
       <JCard spinning={spinning}>
         <Card title={<Link to="/project/park/add"><Button type="primary"><Icon type="plus" />新增停车场</Button></Link>}>
-          <Table columns={this.getCol()} dataSource={park?utils.addIndex(park.list):[]} />
+          <Table columns={this.getCol()} dataSource={park?utils.addIndex(park.list):[]} 
+            pagination={utils.Pagination(park, page=>{
+              params.current = page
+              this.setState({params})
+              this.props.actions.getParkList(params)
+            })}
+          />
         </Card>
       </JCard>
     )
@@ -75,7 +89,7 @@ function mapDispatchProps(dispatch){
 function mapStateProps(state){
   return {
     park: state.project.park,
-    spinning: state.base.spinning,
+    spinning: state.project.spinning,
     utils: state.app.utils
   }
 }

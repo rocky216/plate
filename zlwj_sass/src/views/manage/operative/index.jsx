@@ -15,12 +15,16 @@ class ManageOperative extends React.Component {
     this.state = {
       addVisible: false,
       editVisible: false,
-      detail: ""
+      detail: "",
+      params: {
+        current:1,
+        
+      }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getOperative({})
+    this.props.actions.getOperative(this.state.params)
   }
 
   handlenDelete(item){
@@ -54,14 +58,20 @@ class ManageOperative extends React.Component {
 
   render(){
     const {spinning, utils, operative} = this.props
-    const {addVisible, editVisible, detail} = this.state
+    const {addVisible, editVisible, detail, params} = this.state
     
     return (
       <JCard spinning={spinning}>
         <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}><Icon type="plus" />新增合作商</Button>}>
           <AddOperative visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditOperative visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:""})}  />
-          <Table columns={this.getCol()} dataSource={operative?utils.addIndex(operative.list):[]} />
+          <Table columns={this.getCol()} dataSource={operative?utils.addIndex(operative.list):[]} 
+            pagination={utils.Pagination(operative, page=>{
+              params.current = page
+              this.setState({params})
+              this.props.actions.getOperative(params)
+            })}
+          />
         </Card>
       </JCard>
     )

@@ -1,6 +1,26 @@
 import React from "react"
 import {Icon, Tag} from "antd"
 
+
+export const companyCallbackColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "公司名称",
+    dataIndex: "companyNameStr"
+  },
+  {
+    title: "编码",
+    dataIndex: "callbackParamCode"
+  },
+  {
+    title: "URL",
+    dataIndex: "callbackUrl"
+  },
+]
+
 export const companyColumns = [
   {
     title: "序号",

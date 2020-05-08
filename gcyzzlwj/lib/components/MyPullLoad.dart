@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './MyEmpty.dart';
+
 
 class MyPullLoad extends StatelessWidget {
   final List dataList;
@@ -14,7 +16,8 @@ class MyPullLoad extends StatelessWidget {
       Container(
         alignment: Alignment.center,
         width: double.infinity,
-        child: Text("暂无"))
+        child: MyEmpty()
+        )
       :Container(
         padding: EdgeInsets.all(16.0),
         alignment: Alignment.center,

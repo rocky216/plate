@@ -34,11 +34,15 @@ class ParkLot extends React.Component {
     }
   }
   componentDidMount(){
+    console.log(this.props.match.params, "this.props.match.params")
     this.props.actions.getParkLot({
       id: this.props.match.params.id
     }, res=>{
-      this.loadParkFloorArea({floorAreaId: res[0]["id"], ...this.state.params})
-      this.setState({activeKey: res[0]["id"] })
+      if(res && res.length){
+        this.loadParkFloorArea({floorAreaId: res?res[0]["id"]:"", ...this.state.params})
+        this.setState({activeKey: res?res[0]["id"]:"" })
+      }
+      
     })
   }
   loadParkFloorArea(params){

@@ -154,7 +154,7 @@ class AllOrder extends React.Component {
             ))}
           </Tabs>
           <Table columns={this.getCol()}  dataSource={allorder?utils.addIndex(allorder.page.list):[]}
-          pagination={allorder?utils.Pagination(allorder.page, page=>{
+          pagination={allorder?utils.Pagination(allorder.pages, page=>{
             params.current = page
             this.setState({params})
             this.props.actions.getAllPropertyOrder(params)

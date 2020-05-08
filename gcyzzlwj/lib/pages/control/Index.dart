@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../utils.dart';
 import '../../components/MyHeader.dart';
 import '../../components/MyCard.dart';
+import '../../components/MyList.dart';
 import '../http.dart';
 
 class ControlPage extends StatefulWidget {
@@ -28,6 +31,22 @@ class _ControlPageState extends State<ControlPage> {
     }
   }
   openDoor(item) async {
+    item["times"] = 10;
+    setState(() {
+      this.doorlist=doorlist;
+    });
+    item["timer"] = Timer.periodic(Duration(seconds: 1), (t){
+      item["times"]--;
+      if(item["times"]==0){
+        item["times"]=null;
+        item["timer"]?.cancel();
+      }
+      setState(() {
+        this.doorlist=doorlist;
+      });
+    });
+    
+    
     Map params = {
       "iotId":item["iotId"],
       "openSecond":item["openSecond"].toString(),
@@ -39,6 +58,8 @@ class _ControlPageState extends State<ControlPage> {
       showToast("开门成功");
     }
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +81,15 @@ class _ControlPageState extends State<ControlPage> {
                     height: 90.0,
                     width: 90.0,
                     child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      child: Text("开门", style: TextStyle(color: Colors.white, fontSize: 16.0),),
+                      color: this.doorlist[index]["times"]==null?Theme.of(context).primaryColor: Colors.grey,
+                      child: Text(this.doorlist[index]["times"]==null?"开门":doorlist[index]["times"].toString()+'s', style: TextStyle(color: Colors.white, fontSize: 16.0),),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50.0))
                       ),
                       onPressed: (){
-                        this.openDoor(this.doorlist[index]);
+                        if(this.doorlist[index]["times"]==null){
+                          this.openDoor(this.doorlist[index]);
+                        }
                       },
                     ),
                   ),

@@ -2,6 +2,94 @@ import {START_LOADING_COMPANY, END_LOADING_COMPANY } from "@/types"
 import {log_color} from "@/utils/config"
 import {fetch} from "@/utils"
 
+export function editCompanyCallbackUrl(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_COMPANY,
+    })
+    try{
+      const options = {
+        url: "/iot/pc/callback/"+params.id,
+        method: "put",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_COMPANY,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_COMPANY,
+      })
+    }
+
+  }
+}
+
+export function addCompanyCallbackUrl(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_COMPANY,
+    })
+    try{
+      const options = {
+        url: "/iot/pc/callback/",
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_COMPANY,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_COMPANY,
+      })
+    }
+
+  }
+}
+
+export function getCompanyCallbackUrl(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_COMPANY,
+    })
+    try{
+      const options = {
+        url: "/iot/pc/callback/index/page",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_COMPANY,
+        callbackurl: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_COMPANY,
+      })
+    }
+
+  }
+}
+
 export function editCompanyDevice(params, next){
   return async function(dispatch, getState){
     dispatch({

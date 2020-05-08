@@ -53,14 +53,22 @@ class _CleanPageState extends State<CleanPage> {
       body: MyList(
         url: "/api/app/he/repair/",
         itemBuilder: (dataList, index){
+          List sysAttachmentList = dataList[index]["sysAttachmentList"];
           return Container(
             padding: EdgeInsets.only(bottom: 8.0),
             child: GestureDetector(
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                Image.network(dataList[index]["sysAttachmentList"][0]["dowloadHttpUrl"],
-                width: 80.0, height: 80.0, fit: BoxFit.fill),
+                Container(
+                  decoration: BoxDecoration(color: Color(0xFFeeeeee)),
+                  alignment: Alignment.center,
+                  width: 80.0, height: 80.0,
+                  child: sysAttachmentList.isNotEmpty?
+                      Image.network(  dataList[index]["sysAttachmentList"][0]["dowloadHttpUrl"],
+                          width: 80.0, height: 80.0, fit: BoxFit.fill):Text("暂无图"),
+                ),
+                
                 Container(
                   margin: EdgeInsets.only(left: 10.0),
                   width: MediaQuery.of(context).size.width-120,

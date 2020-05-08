@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../components/MyCard.dart';
+import '../utils.dart';
 
 class PartThree extends StatelessWidget {
   const PartThree({Key key}) : super(key: key);
@@ -23,7 +24,9 @@ class PartThree extends StatelessWidget {
                     ],
                   ),
                   onPressed: (){
-                    Navigator.of(context).pushNamed("/user/carpass");
+                    auth((){
+                      Navigator.of(context).pushNamed("/user/carpass");
+                    });
                   },
                 ),
               ),
@@ -36,7 +39,10 @@ class PartThree extends StatelessWidget {
                     ],
                   ),
                   onPressed: (){
-                    Navigator.of(context).pushNamed("/user/controlpass");
+                    auth((){
+                      Navigator.of(context).pushNamed("/user/controlpass");
+                    });
+                    
                   },
                 ),
               ),
@@ -49,7 +55,9 @@ class PartThree extends StatelessWidget {
                     ],
                   ),
                   onPressed: (){
-                    Navigator.of(context).pushNamed("/user/clean");
+                    auth((){
+                      Navigator.of(context).pushNamed("/user/clean");
+                    });
                   },
                 ),
               ),

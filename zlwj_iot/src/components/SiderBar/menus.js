@@ -37,6 +37,11 @@ export default [
         link: '/config/api',
         key: 303
       },
+      {
+        title: "回调参数",
+        link: '/config/arguments',
+        key: 304
+      },
     ]
   },
   {

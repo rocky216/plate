@@ -224,7 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                               },
                             ),
                           ),
-                          Text("忘记密码？", style: TextStyle(color: Color(0xFF666666)),)
+                          // Text("忘记密码？", style: TextStyle(color: Color(0xFF666666)),)
                         ],
                       ),
                     )

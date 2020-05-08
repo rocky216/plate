@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table} from "antd";
-import {getPropertyfee, getOtherCostsOrderDesc, otherFeesignException, otherFeeRecallException} from "@/actions/otherAction"
+import {getPropertyfee, countPrintOrderNum, getOtherCostsOrderDesc, getBaseOtherCostsOrderDetail, otherFeesignException, otherFeeRecallException} from "@/actions/otherAction"
 import JCard from "@/components/JCard"
 import ReactToPrint from 'react-to-print';
 import {exceptionColumns} from "../colmuns"
@@ -33,7 +33,7 @@ class OtherFeeDetail extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getOtherCostsOrderDesc({
+    this.props.actions.getBaseOtherCostsOrderDetail({
       id: this.props.match.params.id
     }, res=>{
       console.log(res)
@@ -105,6 +105,10 @@ class OtherFeeDetail extends React.Component {
     });
   }
 
+  handlenPrintOrder(){
+    this.props.actions.countPrintOrderNum({id: this.props.match.params.id})
+  }
+
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {spinning,utils, match} = this.props
@@ -117,6 +121,7 @@ class OtherFeeDetail extends React.Component {
             <ReactToPrint
               trigger={() => <Button type="primary"><Icon type="printer" />打印</Button>}
               content={() => this.componentRef}
+              onAfterPrint={this.handlenPrintOrder.bind(this)}
             />
             <Button type="primary" ghost className="mgl10" onClick={()=>this.setState({isRemark:!this.state.isRemark})} >
               {this.state.isRemark?"隐藏备注":"显示备注"}
@@ -125,21 +130,18 @@ class OtherFeeDetail extends React.Component {
           
           <div className="PropertyFeeDetail"  ref={el=>this.componentRef = el} >
             {detail?<Card >
-              <div className="table_title" style={{justifyContent: "start"}}>
+              <div className="table_title" style={{justifyContent: "start"}} >
                 <img src={detail.companyLogo} />
                 <div className="mgt10" style={{marginLeft:30}}>
-                  <h2>{detail.orderTitle}</h2>
-                  <span >房间名称:{detail.faOtherCostsOrderR.nickname}</span>
-                </div>
-                <div style={{marginTop: 40}}>
-                  
+                  <h2>{detail.heNameStr}</h2>
+                  <span >编号:{detail.linkCode}</span>
                 </div>
               </div>
               <table className="Property_table">
                 <tr>
-                  <td>业主姓名：{detail.faOtherCostsOrderR?detail.faOtherCostsOrderR.name:"无"}</td>
-                  <td>业主电话：{detail.faOtherCostsOrderR?detail.faOtherCostsOrderR.phone:"无"}</td>
-                  <td>{detail.orderNo}</td>
+                  <td>姓名：{detail.linkName}</td>
+                  <td>电话：{detail.linkPhone}</td>
+                  <td>{detail?detail.order.orderNo:""}</td>
                 </tr>
               </table>
               <table className="Property_table mgt10">
@@ -149,16 +151,16 @@ class OtherFeeDetail extends React.Component {
                   <th>收费金额</th>
                   <th>备注</th>
                 </tr>
-                {detail.faOtherOrderDescs.map((item, index)=>(
+                {detail?detail.order.faOtherOrderDescs.map((item, index)=>(
                   <tr key={index}>
                     <td>{index+1}</td>
                     <td>{item.feeName}</td>
                     <td>{`${item.feeMoney}`}</td>
                     <td>{item.remark}</td>
                   </tr>
-                ))}
+                )):null}
                 <tr>
-                  <td colspan="3">合计金额(大写): {detail.moneyStr}</td>
+                  <td colspan="3">合计金额(大写): {detail.orderTrueFeeChinese}</td>
                   <td>合计: {detail.orderTrueFee} ¥</td>
                 </tr>
                 {isRemark?<tr>
@@ -174,7 +176,7 @@ class OtherFeeDetail extends React.Component {
         </Card>
         {match.params.type==1?<div>
 
-          {detail && detail.orderStatus=="0"?<Card className="mgt10" title="异常操作" extra={<Button type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save"/>提交</Button>}> 
+          {detail && detail.order.orderStatus=="0"?<Card className="mgt10" title="异常操作" extra={<Button type="primary" onClick={this.handlenSubmit.bind(this)}><Icon type="save"/>提交</Button>}> 
             {detail?<Form {...formItemLayout}>
               <Form.Item label="异常说明">
                 {getFieldDecorator("exceptionInfo", {
@@ -204,11 +206,12 @@ class OtherFeeDetail extends React.Component {
             </Form>:null}
           </Card>:null}
 
-          {detail && detail.orderStatus=="1"?<Card className="mgt10" title="撤回异常操作" extra={<Button type="danger" onClick={this.handlenSubmitRecall.bind(this)}><Icon type="save"/>撤回</Button>}> 
+          {detail && detail.order.orderStatus=="1"?
+          <Card className="mgt10" title="撤回异常操作" extra={<Button type="danger" onClick={this.handlenSubmitRecall.bind(this)}><Icon type="save"/>撤回</Button>}> 
             {detail?<Form {...formItemLayout}>
               <Form.Item label="异常说明">
                 {getFieldDecorator("exceptionInfo", {
-                  initialValue: detail.faOrderException.exceptionInfo,
+                  initialValue: detail?detail.nowException.exceptionInfo:"",
                   rules: [{ required: true, message:"填写异常说明！"}]
                 })(
                   <TextArea disabled autoSize={{minRows: 3}} />
@@ -216,7 +219,7 @@ class OtherFeeDetail extends React.Component {
               </Form.Item>
               <Form.Item label="更新订单金额">
                 {getFieldDecorator("updateFeeStatus", {
-                  initialValue: String(detail.faOrderException.updateFeeStatus),
+                  initialValue: String(detail?detail.nowException.updateFeeStatus:""),
                   rules: [{ required: true, message:"选择更新订单！"}]
                 })(
                   <Radio.Group disabled >
@@ -229,7 +232,7 @@ class OtherFeeDetail extends React.Component {
               {getFieldValue("updateFeeStatus")=="0"?null:
               <Form.Item label="增减金额(元)">
                 {getFieldDecorator("updateFee", {
-                  initialValue: detail.faOrderException.updateFee,
+                  initialValue: detail?detail.nowException.updateFee:"",
                   rules: [{ required: true, message:"填写金额！"}]
                 })(<InputNumber disabled min={0} style={{width: "100%"}} />)}
               </Form.Item>}
@@ -246,7 +249,7 @@ class OtherFeeDetail extends React.Component {
           </Card>:null}
 
           <Card className="mgt10" title="历史异常">
-            <Table columns={exceptionColumns} dataSource={detail?utils.addIndex(detail.faOrderExceptions):[]} pagination={false} />
+            <Table columns={exceptionColumns} dataSource={detail?utils.addIndex(detail.exceptionList):[]} pagination={false} />
           </Card>
 
         </div>:null}
@@ -259,7 +262,7 @@ class OtherFeeDetail extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOtherCostsOrderDesc, otherFeesignException, otherFeeRecallException}, dispatch)
+    actions: bindActionCreators({getOtherCostsOrderDesc,countPrintOrderNum, getBaseOtherCostsOrderDetail, otherFeesignException, otherFeeRecallException}, dispatch)
   }
 }
 

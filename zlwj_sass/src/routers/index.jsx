@@ -25,7 +25,7 @@ import EditStaff from "@/views/base/staff/edit"
 import Owner from "@/views/project/owner"
 import AddOwner from "@/views/project/owner/add"
 import EditOwner from "@/views/project/owner/edit"
-import Shop from "@/views/project/shop"
+// import Shop from "@/views/project/shop"
 import UserPerson from "@/views/user/person"
 import FinanceAccount from "@/views/finance/account"
 import AccountLog from "@/views/finance/account/log"
@@ -79,6 +79,8 @@ import Resources from "@/views/system/resources"
 import EditResources from "@/views/system/resources/edit"
 import ItemContact from "@/views/project/item/contact"
 import RepairManage from "@/views/workcenter/repair"
+import ApkSystem from "@/views/system/apk"
+import ProjectNothouse from "@/views/project/nothouse"
 
 
 
@@ -96,7 +98,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/workcenter/shopfee" Component={ShopFee} name="商铺缴费订单" auth="2-02" /> 
         <AuthRoute  path="/workcenter/shopfee/:id/detail/:type" Component={ShopFeeDetail} name="查看商铺订单" /> 
         <AuthRoute exact path="/workcenter/otherfee" Component={Otherfee} name="其他缴费订单" auth="2-03" /> 
-        <AuthRoute path="/workcenter/otherfee/add" Component={AddOtherfee} name="新增其他缴费订单" />   
+        <AuthRoute path="/workcenter/otherfee/:orderType/:linkId/add" Component={AddOtherfee} name="新增其他缴费订单" />   
         <AuthRoute path="/workcenter/otherfee/:id/detail/:type" Component={OtherFeeDetail} name="查看其他缴费订单" />
         <AuthRoute exact path="/workcenter/expend" Component={Expend} name="其他支付订单" auth="2-04" />
         <AuthRoute path="/workcenter/expend/add" Component={AddOtherExpend} name="新增其他支出订单" /> 
@@ -121,6 +123,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/system/pass/:id/pass" Component={ControlDevicePass} name="通道设置" />
         <AuthRoute exact path="/system/resources" Component={Resources} auth="9-08" name="资源管理" />
         <AuthRoute path="/system/resources/:id/edit" Component={EditResources} name="编辑资源" />
+        <AuthRoute exact path="/system/apk" Component={ApkSystem} auth="9-09" name="apk管理" />
         
         
         <AuthRoute  path="/base/department" Component={BaseDepartment} name="部门信息列表" auth="8-01" />
@@ -139,7 +142,8 @@ class Routers extends React.Component{
         <AuthRoute exact path="/project/owner" Component={Owner} name="业主管理" auth="7-03" />
         <AuthRoute  path="/project/owner/add" Component={AddOwner} name="新增业主" />
         <AuthRoute  path="/project/owner/:id/edit" Component={EditOwner} name="编辑业主" />
-        <AuthRoute  path="/project/shop" Component={Shop} name="商铺信息管理" auth="7-04" />
+        {/* <AuthRoute  path="/project/shop" Component={Shop} name="商铺信息管理" auth="7-04" /> */}
+        <AuthRoute  path="/project/nothouse" Component={ProjectNothouse} name="商铺信息管理" auth="7-04" />
         <AuthRoute exact path="/project/park" Component={ParkList} name="停车场管理" auth="7-05" />
         <AuthRoute path="/project/park/add" Component={AddPark} name="新增停车场" />
         <AuthRoute path="/project/park/:id/edit" Component={EditPark} name="编辑停车场" />

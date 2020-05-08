@@ -88,7 +88,11 @@ export async function fetch(opt){
       case "formdata":
         return instance.post(opt.url, {...opt.data,hash})
       case "put":
-        return instance.put(opt.url, qs.stringify({...opt.data, hash}))
+        // instance.defaults.headers.put = {
+        //   'Content-Type': 'application/json charset=utf-8'
+        // }
+        // console.log(instance, "instance")
+        return instance.put(opt.url, qs.stringify({...opt.data, hash}) )
       default:
         return instance.get(opt.url, {params: {...opt.data,hash}})
     }

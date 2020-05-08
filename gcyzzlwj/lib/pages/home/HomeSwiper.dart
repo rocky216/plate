@@ -27,7 +27,7 @@ class _HomeSwiperState extends State<HomeSwiper> {
             borderRadius: BorderRadius.circular(10),
             child: Swiper(
               itemBuilder: (BuildContext context, int index){
-                return Image.network(widget.banners[index]["url"],
+                return Image.network(widget.banners[index]["desc"],
                   fit: BoxFit.fill,);
               },
               autoplay: true,

@@ -14,11 +14,22 @@ class _HomeDrawerState extends State<HomeDrawer> {
   String username="";
   String phone="";
   List hes=[];
+  String avatarUrl="";
   
   @override
   void initState() { 
     super.initState();
     this.getUsers();
+    this.initial();
+  }
+
+  initial() async {
+    var data = await NetHttp.getRequest("/api/app/owner/user/info/", context: context, params: {});
+    if(data != null){
+      setState(() {
+        this.avatarUrl = data[0]["avatarUrl"];
+      });
+    }
   }
 
   getUsers() async {
@@ -26,8 +37,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
     if(userInfo is Map && userInfo != null){
       
       setState(() {
-        this.username = userInfo["he"]["heOwners"]["name"];
-        this.phone = userInfo["he"]["heOwners"]["phone"];
+        this.username = userInfo["he"]!=null?userInfo["he"]["heOwners"]["name"]:"";
+        this.phone = userInfo["he"]!=null?userInfo["he"]["heOwners"]["phone"]:"";
       });
     }
     var data = await NetHttp.getRequest("/api/app/owner/common/getHeList",context: context, params: {});
@@ -53,13 +64,21 @@ class _HomeDrawerState extends State<HomeDrawer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ClipOval(
-                  child: Image.network(
-                    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3173584241,3533290860&fm=26&gp=0.jpg",
+                  child: this.avatarUrl==""? Container(
                     width: 60.0, 
                     height: 60.0,
-                    fit: BoxFit.cover,
-                  ),
+                    decoration: BoxDecoration(color: Colors.grey),
+                    child: Icon(Icons.person, color: Colors.white, size: 30.0,),
+                  ):Image.network(this.avatarUrl,width: 60.0, height: 60.0, fit: BoxFit.fill),
                 ),
+                // ClipOval(
+                //   child: Image.network(
+                //     "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3173584241,3533290860&fm=26&gp=0.jpg",
+                //     width: 60.0, 
+                //     height: 60.0,
+                //     fit: BoxFit.cover,
+                //   ),
+                // ),
                 Padding(padding: EdgeInsets.fromLTRB(15.0, 5.0, 0, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

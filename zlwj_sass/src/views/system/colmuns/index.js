@@ -2,6 +2,26 @@ import React from "react"
 import {Tag, Icon} from "antd"
 
 
+export const appApkColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "名称",
+    dataIndex: "appName"
+  },
+  {
+    title: "版本号",
+    dataIndex: "versionNo"
+  },
+  {
+    title: "下载地址",
+    dataIndex: "appResourceUrl"
+  },
+  
+]
+
 export const resourcesEditColumns = [
   {
     title: "序号",

@@ -149,7 +149,7 @@ class AllExpend extends React.Component {
             ))}
           </Tabs>
           <Table columns={this.getCol()}  dataSource={allexpend?utils.addIndex(allexpend.pages.list):[]}
-          pagination={allexpend?utils.Pagination(allexpend.page, page=>{
+          pagination={allexpend?utils.Pagination(allexpend.pages, page=>{
             params.current = page
             this.setState({params})
             this.props.actions.getOtherExpendListAuth(params)

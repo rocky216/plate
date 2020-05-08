@@ -1,6 +1,6 @@
 export const ownersInfo = [
   {
-    title: "业主姓名",
+    title: "业主姓名", 
     key: "name"
   },
   {
@@ -23,6 +23,51 @@ export const ownersInfo = [
     title: "邮箱",
     key: "email"
   }
+]
+
+
+export const shopInfo = [
+  {
+    title: "商铺名称",
+    key: "shopsName"
+  },
+  {
+    title: "商铺编号",
+    key: "shopsCode"
+  },
+  {
+    title: "楼层",
+    key: "floorNum"
+  },
+  {
+    title: "建筑面积",
+    key: "houseArea"
+  },
+  {
+    title: "室内面积",
+    key: "indoorArea"
+  },
+  {
+    title: "公摊面积",
+    key: "poolArea"
+  },
+  {
+    title: "交房时间",
+    key: "deliversTime"
+  },
+  {
+    title: "是否电梯房",
+    key: "elevatorHouse"
+  },
+  {
+    title: "装修状态",
+    key: "heShopsInfo.packingStatus"
+  },
+  {
+    title: "已缴物业费区间",
+    key: "heShopsInfo.payLastTime",
+    span: 8
+  },
 ]
 
 export const houseInfo = [

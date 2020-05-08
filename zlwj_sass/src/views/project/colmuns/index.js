@@ -1,6 +1,57 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const nothouseColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "房屋编号",
+    dataIndex: "shopsCode"
+  },
+  {
+    title: "房屋名称",
+    dataIndex: "heNameStr"
+  },
+  {
+    title: "关联信息",
+    dataIndex: "ownersId",
+    render(item, rows){
+      return item?rows.ownerName+rows.ownerPhone:"暂无"
+    }
+  },
+  {
+    title: "楼层",
+    dataIndex: "floorNum"
+  },
+  {
+    title: "是否有电梯",
+    dataIndex: "elevatorHouse",
+    render(item){
+      return item==1?"电梯房":"楼梯房"
+    }
+  },
+  {
+    title: "建筑面积",
+    dataIndex: "houseArea"
+  },
+  {
+    title: "交房时间",
+    dataIndex: "deliversTime",
+    render(item){
+      return item?item.substring(0,10):""
+    }
+  },
+  {
+    title: "已缴区间",
+    dataIndex: "heShopsInfo",
+    render(item){
+      return `${item.payFristTime?item.payFristTime.substring(0,10):""}到${item.payLastTime?item.payLastTime.substring(0,10):""}`
+    }
+  },
+]
+
 export const itemConcactColumns = [
   {
     title: "序号",

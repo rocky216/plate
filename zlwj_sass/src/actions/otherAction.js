@@ -2,6 +2,561 @@ import {START_LOADING_OTHER, END_LOADING_OTHER} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function countPrintOrderNum(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherCostsOrder/printOrder",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getBaseOtherCostsOrderDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherCostsOrder/getOrder",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addBaseOtherCostsOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherCostsOrder/addOrder",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getBaseOtherCostsOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherCostsOrder/initOrder",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getOtherCostsOrderLists(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherCostsOrder/getOtherCostsOrderList",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        otherfeeorder: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getCoOperativeRedis(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadCoOperativeRedis",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function goPrintOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/printOrder",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getBasePropertyOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/getOrder",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addBasePropertyOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/addOrder",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function initLoadOrderMoney(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/loadOrderMoney",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function initBasePropertyOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/addInit",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function selectHeAssetListByKey(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/selectHeAssetListByKey",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getCarparkAssetRedis(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadCarparkAssetRedis",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getPropertyOrderPage(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/propertyOrderPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        propertyfeepage: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getOtherAssetRedis(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadOtherAssetRedis",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getHouseAssetRedis(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadHouseAssetRedis",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getAssetMenu(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadAssetMenu",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getHouseByUnitId(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadHouseByUnitId",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+      return data;
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getBuildAndUnitByHeId(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadBuildAndUnitByHeId",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+      return data;
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
 export function processingRepair(params, next){
   return async function(dispatch, getState){
     dispatch({

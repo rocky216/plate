@@ -15,12 +15,15 @@ class RepairManage extends React.Component {
     this.state = {
       addVisible: false,
       stampVisible: false,
-      stampDetail:""
+      stampDetail:"",
+      params: {
+        current: 1,
+      }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getRepairList({})
+    this.props.actions.getRepairList(this.state.params)
   }
 
   getCol(){
@@ -39,7 +42,7 @@ class RepairManage extends React.Component {
 
   render(){
     const {utils, spinning, repair} = this.props
-    const {addVisible, stampVisible, stampDetail} = this.state
+    const {addVisible, stampVisible, stampDetail, params} = this.state
 
     return (
       <JCard spinning={spinning}>
@@ -49,7 +52,12 @@ class RepairManage extends React.Component {
           onCancel={()=>this.setState({stampVisible: false, stampDetail: ""})} />:null}
 
         <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />新增报修单</Button>}>
-          <Table columns={this.getCol()} dataSource={repair?utils.addIndex(repair.list):[]} />
+          <Table columns={this.getCol()} dataSource={repair?utils.addIndex(repair.list):[]} 
+          pagination={utils.Pagination(repair, page=>{
+            params.current = page
+            this.setState({params})
+            this.props.actions.getRepairList(params)
+          })}/>
         </Card>
       </JCard>
     )
