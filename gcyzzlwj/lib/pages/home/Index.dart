@@ -10,6 +10,10 @@ import './HomeRepair.dart';
 import './HomePassRecord.dart';
 import './HomeDrawer.dart';
 import '../../components/MyHeader.dart';
+import '../../redux/exports.dart';
+
+
+
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -37,52 +41,55 @@ class _HomePageState extends State<HomePage> {
         this.title = userInfo["he"]!=null?userInfo["he"]["name"]:"";
       });
     }
-    var data = await NetHttp.getRequest("/api/app/owner/common/indexInfo", context:context, params: {});
-    if (data != null) {
-      setState(() {
-        this.banners = data["banner"];
-        this.notices = data["notice"];
-        this.repairList = data["repair"];
-        this.passList = data["record"];
-      });
-    }
-    
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyHeader(
-        leading: Builder(builder: (context){
-          return Container(
-              width: 60.0,
-              child: FlatButton(
-                child: Icon(Icons.dehaze),
-                onPressed: (){
-                  Scaffold.of(context).openDrawer();
-                },
-              ),
-            );
-        },),
-        title: Text(this.title),
-      ),
-      body: MyScrollView(
-        child: Column(
-          children: <Widget>[
-            this.banners.isNotEmpty? HomeSwiper(banners: this.banners):Text(""),
-            HomeProperty(),
-            this.notices.isNotEmpty?HomeNotice(notices: this.notices):Text(""),
-            AddService(),
-            HomeRepair(dataList: this.repairList,),
-            HomePassRecord(dataList: this.passList,)
-          ],
-        ),
-      ),
-      drawer: Drawer(child: HomeDrawer(callback: (){
-        this.initail();
-      })),
+    return StoreConnector<IndexState, AppState>(
+      onInit: (store){
+        if(store.state.app.home == null){
+          store.dispatch( getHomeInfoFetch(context) );
+        }
+        if(store.state.app.user == null){
+          store.dispatch( getUserInfoFetch(context) );
+        }
+      },
+      converter: (store)=>store.state.app,
+      builder: (context, state){
+        return Scaffold(
+          appBar: MyHeader(
+            leading: Builder(builder: (context){
+              return Container(
+                  width: 60.0,
+                  child: FlatButton(
+                    child: Icon(Icons.dehaze),
+                    onPressed: (){
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
+                );
+            },),
+            title: Text(this.title),
+          ),
+          body: MyScrollView(
+            child: Column(
+              children: <Widget>[
+                HomeSwiper(),
+                // this.banners.isNotEmpty? HomeSwiper(banners: this.banners):Text(""),
+                HomeProperty(),
+                HomeNotice(),
+                // this.notices.isNotEmpty?HomeNotice(notices: this.notices):Text(""),
+                AddService(),
+                HomeRepair(dataList: state.home!=null?state.home["repair"]:[],),
+                HomePassRecord(dataList: state.home!=null?state.home["record"]:[],)
+              ],
+            ),
+          ),
+          drawer: Drawer(child: HomeDrawer(callback: (){
+            this.initail();
+          })),
+        );
+      },
     );
   }
 }

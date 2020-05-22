@@ -83,6 +83,7 @@ class NetHttp {
   static post (String url, {context, params}) async{
     var newParams = await getNewParams(params);
     EasyLoading.show(status:"正在加载");
+    print(baseUrl+url);
     print(newParams);
     try{
       var response = await http.post(baseUrl+url, body: newParams);

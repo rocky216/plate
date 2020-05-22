@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Tabs, Table, Badge, Form, Input, Button, Icon, Select, DatePicker } from "antd";
 import JCard from "@/components/JCard"
-import {getOtherCostsOrderListAuth, getAllProject} from "@/actions/manageAction"
+import {getOtherCostsOrderListAuth, getAllProject, getOtherCostsOrderAllList} from "@/actions/manageAction"
 import {allOrderColumns} from "../columns"
 import moment from "moment"
 
@@ -50,13 +50,13 @@ class OtherOrder extends React.Component {
         orderNo: "",
         startTime: "",
         endTime: "",
-        orderStatus: "wait"
+        orderStatusStr: "wait"
       }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getOtherCostsOrderListAuth(this.state.params)
+    this.props.actions.getOtherCostsOrderAllList(this.state.params)
     this.props.actions.getAllProject({pageSize:1000})
   }
 
@@ -64,9 +64,9 @@ class OtherOrder extends React.Component {
     console.log(arguments)
     const {params} = this.state
     params.current = 1
-    params.orderStatus = key
+    params.orderStatusStr = key
     this.setState({params})
-    this.props.actions.getOtherCostsOrderListAuth(params)
+    this.props.actions.getOtherCostsOrderAllList(params)
   }
 
   handleSearch(e){
@@ -80,7 +80,7 @@ class OtherOrder extends React.Component {
       params.startTime = values.time && values.time.length?moment(values.time[0]).format("YYYY-MM-DD"):""
       params.endTime = values.time && values.time.length?moment(values.time[1]).format("YYYY-MM-DD"):""
       this.setState({params})
-      this.props.actions.getOtherCostsOrderListAuth(params)
+      this.props.actions.getOtherCostsOrderAllList(params)
     });
   }
   
@@ -101,9 +101,9 @@ class OtherOrder extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const { spinning, utils, otherOrder, allproject} = this.props
+    const { spinning, utils, otherallorder, allproject} = this.props
     const {tabs, params} = this.state
-    console.log(otherOrder, "otherOrder")
+    
     return (
       <JCard spinning={spinning}>
         <Card>
@@ -123,8 +123,10 @@ class OtherOrder extends React.Component {
                 {getFieldDecorator('orderType')(
                   <Select style={{width: 120}}>
                     <Option value="" >全部</Option>
-                    <Option value="0" >住宅</Option>
-                    <Option value="1" >商铺</Option>
+                    <Option value="house" >住宅</Option>
+                    <Option value="shops" >非住宅</Option>
+                    <Option value="coOperative" >合作商</Option>
+                    <Option value="tempCoOperative" >临时合作商</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -149,15 +151,15 @@ class OtherOrder extends React.Component {
           >
             {tabs.map(item=>(
               <TabPane key={item.key} tab={
-                <Badge count={otherOrder?otherOrder[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                <Badge count={otherallorder?otherallorder[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
               } />
             ))}
           </Tabs>
-          <Table columns={this.getCol()}  dataSource={otherOrder?utils.addIndex(otherOrder.pages.list):[]}
-          pagination={otherOrder?utils.Pagination(otherOrder.pages, page=>{
+          <Table columns={this.getCol()}  dataSource={otherallorder?utils.addIndex(otherallorder.page.list):[]}
+          pagination={otherallorder?utils.Pagination(otherallorder.page, page=>{
             params.current = page
             this.setState({params})
-            this.props.actions.getOtherCostsOrderListAuth(params)
+            this.props.actions.getOtherCostsOrderAllList(params) 
           }):false} /> 
         </Card>
       </JCard>
@@ -167,14 +169,14 @@ class OtherOrder extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOtherCostsOrderListAuth, getAllProject}, dispatch)
+    actions: bindActionCreators({getAllProject, getOtherCostsOrderAllList}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
     allproject: state.manage.allproject,
-    otherOrder: state.manage.otherOrder,
+    otherallorder: state.manage.otherallorder,
     spinning: state.manage.spinning,
     utils: state.app.utils
   }

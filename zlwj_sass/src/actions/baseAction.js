@@ -3,6 +3,61 @@ import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
 
+export function updateCompanyInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/company/updateCompanyInfo",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
+
+export function getCompanyInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_BASE
+    })
+    try{
+      const options = {
+        url: "/api/pc/company/getCompanyInfo",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_BASE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_BASE
+      })
+    }
+
+  }
+}
 
 export function deleteLibrary(params, next){
   return async function(dispatch, getState){

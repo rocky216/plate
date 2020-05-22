@@ -131,7 +131,7 @@ class AddPropertyTem extends React.Component {
               })(
                 <Select>
                   <Option value="0">住宅</Option>
-                  <Option value="1">商铺</Option>
+                  <Option value="1">非住宅</Option>
                 </Select>
               )}
             </Form.Item>

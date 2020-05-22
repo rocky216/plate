@@ -58,11 +58,9 @@ class ProData extends React.Component {
        render(item){
          return (
            <div>
-             <Button type="link" onClick={()=>_this.setState({editVisible: true, detail: item})} >编辑</Button>
+             {/* <Button type="link" onClick={()=>_this.setState({editVisible: true, detail: item})} >编辑</Button> */}
              <Link to={`/project/prodata/${item.heId}/util/${item.id}`}>
-             <Button type="link">
-               单元
-             </Button>
+              <Button type="link">编辑单元</Button>
              </Link>
              <Popconfirm
                 placement="topRight" 
@@ -96,7 +94,7 @@ class ProData extends React.Component {
 
     return (
       <JCard spinning={spinning}  >
-        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}>新增楼宇</Button>} >
+        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})}><Icon type="plus" />新增楼宇</Button>} >
           <AddProdata visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditProdata visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:''})} />
           

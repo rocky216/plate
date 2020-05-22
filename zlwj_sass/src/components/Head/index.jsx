@@ -19,7 +19,6 @@ class Head extends React.Component {
   componentDidMount(){
     this.props.actions.getCommonFile({})
     this.props.actions.getBaseInfo({}, res=>{
-      console.log(res, "resresres")
       this.setState({proName: res.heList&&res.heList.length?_.filter(res.heList, o=>o.id==res.selectHeId)[0]["name"]:"选择小区"})
     })
   }
@@ -38,6 +37,7 @@ class Head extends React.Component {
     },res=>{
       this.props.utils.OpenNotification("success")
       this.props.history.push("/")
+      location.reload() 
     })
   }
 

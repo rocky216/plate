@@ -7,6 +7,8 @@ import 'PartTwo.dart';
 import 'PartThree.dart';
 import '../utils.dart';
 import './Login.dart';
+import '../../redux/exports.dart';
+
 
 class UserPage extends StatefulWidget {
   UserPage({Key key}) : super(key: key);
@@ -24,7 +26,7 @@ class _UserPageState extends State<UserPage> {
   @override
   void initState() { 
     super.initState();
-    this.initial();
+    // this.initial();
     
   }
 
@@ -51,6 +53,7 @@ class _UserPageState extends State<UserPage> {
             new MaterialPageRoute(builder: (context) => new LoginPage()),
             (route) => route == null,
           );
+          StoreProvider.of<IndexState>(context).dispatch(clearAllState(context));
         }
     });
   }
@@ -58,23 +61,33 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyHeader(title: Text("个人中心"), 
-      actions: FlatButton(
-        child: Text("退出", style: TextStyle(color: Color(0xFF666666))),
-        onPressed: () {
-          this.loginout();
-        },
-      )),
-      body: MyScrollView(
-        child: Column(
-          children: <Widget>[
-            UserHeader(avatarUrl: this.avatarUrl, userinfo: this.userinfo),
-            PartTwo(balance: this.balance, allScore: this.allScore,),
-            PartThree()
-          ],
-        ),
-      ),
+    return StoreConnector<IndexState, Map>(
+      onInit: (store){
+        if(store.state.app.user==null){
+          store.dispatch( getUserInfoFetch(context) );
+        }
+      },
+      converter: (store)=>store.state.app.user,
+      builder: (context, user){
+        return Scaffold(
+          appBar: MyHeader(title: Text("个人中心"), 
+          actions: FlatButton(
+            child: Text("退出", style: TextStyle(color: Color(0xFF666666))),
+            onPressed: () {
+              this.loginout();
+            },
+          )),
+          body: MyScrollView(
+            child: Column(
+              children: <Widget>[
+                UserHeader(avatarUrl: user!=null?user["avatarUrl"]:"", userinfo: user!=null?user:null),
+                PartTwo(balance: this.balance, allScore: this.allScore,),
+                PartThree()
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

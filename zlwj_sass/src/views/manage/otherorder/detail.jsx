@@ -3,8 +3,8 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table} from "antd";
-import {getOtherCostsOrderDesc} from "@/actions/otherAction"
-import { checkSignException} from "@/actions/manageAction"
+import {getOtherCostsOrderDesc, } from "@/actions/otherAction"
+import { checkSignException, setCheckOrderException, getBaseOtherCostsOrderDetail} from "@/actions/manageAction"
 import JCard from "@/components/JCard"
 import ReactToPrint from 'react-to-print';
 import {exceptionColumns} from "../columns"
@@ -34,7 +34,7 @@ class OtherFeeDetail extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getOtherCostsOrderDesc({
+    this.props.actions.getBaseOtherCostsOrderDetail({
       id: this.props.match.params.id
     }, res=>{
       console.log(res)
@@ -80,23 +80,24 @@ class OtherFeeDetail extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        this.props.actions.checkSignException({
+        this.props.actions.setCheckOrderException({
           ...values,
-          isPass: value,
-          exceptionId: this.state.detail.faOrderException.id
+          orderType: "otherOrder",
+          id: this.props.match.params.id,
+          checkStatus: value
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/manage/otherorder")
         })
       }
     });
-  }
+  } 
 
 
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {spinning,utils, match} = this.props
-    const {detail, isRemark} = this.state
+    const {detail, isRemark} = this.state 
     
     return (
       <JCard spinning={spinning}>
@@ -107,18 +108,18 @@ class OtherFeeDetail extends React.Component {
               <div className="table_title" style={{justifyContent: "start"}}>
                 <img src={detail.companyLogo} />
                 <div className="mgt10" style={{marginLeft:30}}>
-                  <h2>{detail.orderTitle}</h2>
-                  <span >房间名称:{detail.faOtherCostsOrderR.nickname}</span>
+                  <h2>{detail.heNameStr}</h2>
+                  <span >{detail?detail.order.orderTitle:""}</span>
                 </div>
                 <div style={{marginTop: 40}}>
-                  
                 </div>
               </div>
               <table className="Property_table">
                 <tr>
-                  <td>业主姓名：{detail.faOtherCostsOrderR?detail.faOtherCostsOrderR.name:"无"}</td>
-                  <td>业主电话：{detail.faOtherCostsOrderR?detail.faOtherCostsOrderR.phone:"无"}</td>
-                  <td>{detail.orderNo}</td>
+                  <td>姓名：{detail.linkName}</td>
+                  <td>电话：{detail.linkPhone}</td>
+                  <td>订单号：{detail?detail.order.orderNo:""}</td>
+                  <td>编号：{detail.linkCode}</td>
                 </tr>
               </table>
               <table className="Property_table mgt10">
@@ -128,20 +129,20 @@ class OtherFeeDetail extends React.Component {
                   <th>收费金额</th>
                   <th>备注</th>
                 </tr>
-                {detail.faOtherOrderDescs.map((item, index)=>(
+                {detail?detail.order.faOtherOrderDescs.map((item, index)=>(
                   <tr key={index}>
                     <td>{index+1}</td>
                     <td>{item.feeName}</td>
                     <td>{`${item.feeMoney}`}</td>
                     <td>{item.remark}</td>
                   </tr>
-                ))}
+                )):null}
                 <tr>
-                  <td colspan="3">合计金额(大写): {detail.moneyStr}</td>
-                  <td>合计: {detail.orderTrueFee} ¥</td>
+                  <td colspan="3">合计金额(大写): {detail.order.orderTrueFeeChinese}</td>
+                  <td>合计: {detail.order.orderTrueFee} ¥</td>
                 </tr>
                 {isRemark?<tr>
-                  <td colspan="4">备注: {detail.remark} </td>
+                  <td colspan="4">备注: {detail.order.remark} </td>
                 </tr>:null}
               </table>
               <div className="footer mgt10">
@@ -154,11 +155,11 @@ class OtherFeeDetail extends React.Component {
         {match.params.type==1?<div>
 
 
-          {detail && detail.orderStatus=="1"?<Card className="mgt10" title="撤回异常操作" > 
+          {detail && detail.order.orderStatus=="1"?<Card className="mgt10" title="撤回异常操作" > 
             {detail?<Form {...formItemLayout}>
               <Form.Item label="异常说明">
                 {getFieldDecorator("exceptionInfo", {
-                  initialValue: detail.faOrderException.exceptionInfo,
+                  initialValue: detail.order.nowException.exceptionInfo,
                   rules: [{ required: true, message:"填写异常说明！"}]
                 })(
                   <TextArea disabled autoSize={{minRows: 3}} />
@@ -166,10 +167,10 @@ class OtherFeeDetail extends React.Component {
               </Form.Item>
               <Form.Item label="更新订单金额">
                 {getFieldDecorator("updateFeeStatus", {
-                  initialValue: String(detail.faOrderException.updateFeeStatus),
+                  initialValue: String(detail.order.nowException.updateFeeStatus),
                   rules: [{ required: true, message:"选择更新订单！"}]
                 })(
-                  <Radio.Group  >
+                  <Radio.Group disabled >
                     <Radio value="0">不做修改</Radio>
                     <Radio value="1">增加金额</Radio>
                     <Radio value="2">减少金额</Radio>
@@ -179,7 +180,7 @@ class OtherFeeDetail extends React.Component {
               {getFieldValue("updateFeeStatus")=="0"?null:
               <Form.Item label="增减金额(元)">
                 {getFieldDecorator("updateFee", {
-                  initialValue: detail.faOrderException.updateFee,
+                  initialValue: detail.order.nowException.updateFee,
                   rules: [{ required: true, message:"填写金额！"}]
                 })(<InputNumber  min={0} style={{width: "100%"}} />)}
               </Form.Item>}
@@ -193,16 +194,16 @@ class OtherFeeDetail extends React.Component {
               </Form.Item>
 
               <Form.Item wrapperCol={{sm: {span:10, offset: 3}}}>
-                <Button onClick={this.handlenSubmit.bind(this,"3")} type="primary" style={{background: "#faad14", borderColor: "#faad14"}} className="mgr10"><Icon type="save"/>驳回申请</Button>
-                <Button onClick={this.handlenSubmit.bind(this,"2")} type="primary" className="mgr10"><Icon type="save"/>通过审核</Button>
-                <Button onClick={this.handlenSubmit.bind(this,"4")} type="danger"><Icon type="save"/>关闭订单</Button>
+                <Button onClick={this.handlenSubmit.bind(this,"no")} type="primary" style={{background: "#faad14", borderColor: "#faad14"}} className="mgr10"><Icon type="save"/>驳回申请</Button>
+                <Button onClick={this.handlenSubmit.bind(this,"yes")} type="primary" className="mgr10"><Icon type="save"/>通过审核</Button>
+                
               </Form.Item>
 
             </Form>:null}
           </Card>:null}
         </div>:null}
         <Card className="mgt10" title="历史异常">
-            <Table columns={exceptionColumns} dataSource={detail?utils.addIndex(detail.faOrderExceptions):[]} pagination={false} />
+            <Table columns={exceptionColumns} dataSource={detail?utils.addIndex(detail.order.exceptionList):[]} pagination={false} />
           </Card>
         
       </JCard>
@@ -212,13 +213,13 @@ class OtherFeeDetail extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOtherCostsOrderDesc, checkSignException}, dispatch)
+    actions: bindActionCreators({getOtherCostsOrderDesc, checkSignException, setCheckOrderException, getBaseOtherCostsOrderDetail}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-    spinning: state.other.spinning,
+    spinning: state.manage.spinning,
     utils: state.app.utils
   }
 }

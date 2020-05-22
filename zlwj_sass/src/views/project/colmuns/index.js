@@ -12,7 +12,7 @@ export const nothouseColumns = [
   },
   {
     title: "房屋名称",
-    dataIndex: "heNameStr"
+    dataIndex: "shopsName"
   },
   {
     title: "关联信息",
@@ -261,15 +261,15 @@ export const buildColmuns = [
     dataIndex: "key"
   },
   {
-    title: "楼栋",
+    title: "楼宇名称",
     dataIndex: "buildingName",
-    render(item){
-    return <span>{item}栋</span>
-    }
   },
   {
-    title: "楼栋编码",
-    dataIndex: "showCode"
+    title: "系统编号/展示编号",
+    dataIndex: "showCode",
+    render(item, rows){
+      return rows.code+'/'+item
+    }
   },
   {
     title: "所属项目",
@@ -279,14 +279,7 @@ export const buildColmuns = [
     title: "是否电梯房",
     dataIndex: "elevatorBuilding",
     render(item){
-      return <span>{item=="0"?"楼梯房":"电梯房"}</span>
-    }
-  },
-  {
-    title: "电梯数量(个)",
-    dataIndex: "elevatorCount",
-    render(item, row){
-      return <span>{row.elevatorBuilding=="0"?"无":item}</span>
+      return <span>{item=="0"?"有电梯":"无电梯"}</span>
     }
   },
 ]

@@ -51,63 +51,70 @@ class Login extends React.Component {
 
     return (
       <div className="login">
+        <div className="login_title">
+          <img src="/images/logo2.png" />
+        </div>
         <div className="login_box">
-          <Card title="用户登录">
-            <img className="login_logo" src="/images/login_logo.png"  />
-            <Form onSubmit={this.handlenSubmit.bind(this)}>
-              <Form.Item>
-                {getFieldDecorator('account', {
-                  rules: [{ required: true, message: '请输入用户名!' }],
-                })(
-                  <Input
-                    size="large"
-                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="用户名"
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item>
-                {getFieldDecorator('password', {
-                  rules: [{ required: true, message: '请输入密码!' }],
-                })(
-                  <Input
-                    size="large"
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
-                    placeholder="密码"
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item>
-                {getFieldDecorator('verifyCode', {
-                  rules: [{ required: true, message: '请输入图片验证码!' }],
-                })(
-                  <Row>
-                    <Col span={12}>
-                      <Input
-                        size="large"
-                        prefix={<Icon type="appstore" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="图片验证"
-                      />
-                    </Col>
-                    <Col span={12}>
-                      <img onClick={this.changeBase64.bind(this)} style={{height:40}}  className="mgl10" src={'data:image/jpeg;base64,'+imgUrl} />
-                    </Col>
-                  </Row>
-                )}
-              </Form.Item>
-              <Form.Item>
-                {getFieldDecorator('remember', {
-                  valuePropName: 'checked',
-                  initialValue: true,
-                })(<Checkbox>记住密码</Checkbox>)}
-                <p>
-                <Button size="large" type="primary" htmlType="submit" loading={spinning} >登录</Button>
-                </p>
-                
-              </Form.Item>
-            </Form>
-          </Card>
+          <div className="login_card">
+            <div className="login_bg">
+              <Card title="用户登录">
+              <img className="login_logo" src="/images/login_logo.png"  />
+              <Form onSubmit={this.handlenSubmit.bind(this)}>
+                <Form.Item>
+                  {getFieldDecorator('account', {
+                    rules: [{ required: true, message: '请输入用户名!' }],
+                  })(
+                    <Input
+                      size="large"
+                      prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                      placeholder="用户名"
+                    />,
+                  )}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('password', {
+                    rules: [{ required: true, message: '请输入密码!' }],
+                  })(
+                    <Input
+                      size="large"
+                      prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                      type="password"
+                      placeholder="密码"
+                    />,
+                  )}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('verifyCode', {
+                    rules: [{ required: true, message: '请输入图片验证码!' }],
+                  })(
+                    <Row>
+                      <Col span={12}>
+                        <Input
+                          size="large"
+                          prefix={<Icon type="appstore" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                          placeholder="图片验证"
+                        />
+                      </Col>
+                      <Col span={12}>
+                        <img onClick={this.changeBase64.bind(this)} style={{height:40}}  className="mgl10" src={'data:image/jpeg;base64,'+imgUrl} />
+                      </Col>
+                    </Row>
+                  )}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('remember', {
+                    valuePropName: 'checked',
+                    initialValue: true,
+                  })(<Checkbox>记住密码</Checkbox>)}
+                  <p>
+                  <Button size="large" type="primary" htmlType="submit" loading={spinning} >登录</Button>
+                  </p>
+                  
+                </Form.Item>
+              </Form>
+            </Card>
+            </div>
+          </div>
         </div>
         
       </div>

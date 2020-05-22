@@ -53,7 +53,7 @@ import OtherFeeDetail from "@/views/workcenter/otherfee/detail"
 import ManageOperative from "@/views/manage/operative"
 import Otherfee from "@/views/workcenter/otherfee"
 import AddOtherfee from "@/views/workcenter/otherfee/add" 
-import AddOtherExpend from "@/views/workcenter/expend/add" 
+// import AddOtherExpend from "@/views/workcenter/expend/add" 
 import OtherExpendDetail from "@/views/workcenter/expend/detail" 
 import AllOrder from "@/views/manage/allorder"
 import AllOrderDetail from "@/views/manage/allorder/detail"
@@ -81,6 +81,8 @@ import ItemContact from "@/views/project/item/contact"
 import RepairManage from "@/views/workcenter/repair"
 import ApkSystem from "@/views/system/apk"
 import ProjectNothouse from "@/views/project/nothouse"
+import BaseCompany from "@/views/base/company"
+
 
 
 
@@ -101,7 +103,7 @@ class Routers extends React.Component{
         <AuthRoute path="/workcenter/otherfee/:orderType/:linkId/add" Component={AddOtherfee} name="新增其他缴费订单" />   
         <AuthRoute path="/workcenter/otherfee/:id/detail/:type" Component={OtherFeeDetail} name="查看其他缴费订单" />
         <AuthRoute exact path="/workcenter/expend" Component={Expend} name="其他支付订单" auth="2-04" />
-        <AuthRoute path="/workcenter/expend/add" Component={AddOtherExpend} name="新增其他支出订单" /> 
+        {/* <AuthRoute path="/workcenter/expend/add" Component={AddOtherExpend} name="新增其他支出订单" />  */}
         <AuthRoute path="/workcenter/expend/:id/detail" Component={OtherExpendDetail} name="查看其他支出订单" /> 
         <AuthRoute exact path="/workcenter/car" Component={CarList} name="车辆管理" auth="2-05" /> 
         <AuthRoute path="/workcenter/car/add" Component={AddCar} name="新增车辆"  /> 
@@ -133,6 +135,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/base/staff" Component={StaffList} name="员工管理" auth="8-04" />
         <AuthRoute path="/base/staff/:id/edit" Component={EditStaff} name="员工编辑" />
         <AuthRoute path="/base/library" Component={BaseLibrary} name="基础数据字典" auth="8-05" />
+        <AuthRoute path="/base/company" Component={BaseCompany} name="公司信息" auth="8-06" />
         
 
         <AuthRoute exact path="/project/item" Component={ProjectItem} name="项目管理" auth="7-01" />

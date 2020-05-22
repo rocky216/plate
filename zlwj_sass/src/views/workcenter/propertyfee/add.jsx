@@ -43,6 +43,7 @@ class AddPropertyfee extends React.Component {
       orderType: this.props.houseItem.type,
     }, res=>{
       const {owners, templateList, accountList, house, startTime, shop} = res
+      
       let myhouse = house
       if(houseItem.type=="shops"){
         myhouse=shop
@@ -85,7 +86,7 @@ class AddPropertyfee extends React.Component {
     })
   }
 
-  handlenData(key, str){
+  handlenOwnerData(key, str){
     if(key=="sex"){
       return str==1?"男":"女"
     }else {
@@ -220,7 +221,7 @@ class AddPropertyfee extends React.Component {
                 <Col key={index} span={6}>
                   <Form.Item  label={item.title}>
                     {getFieldDecorator(item.key, {
-                      initialValue: owners?this.handlenData(item.key,owners[item.key]):""
+                      initialValue: owners?this.handlenOwnerData(item.key,owners[item.key]):""
                     })(<Input disabled style={{ color: "#333"}} />)}
                   </Form.Item>
                 </Col>

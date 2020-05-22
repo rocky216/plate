@@ -3,8 +3,8 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table} from "antd";
-import {getBasePropertyOrder, goPrintOrder, getPropertyfee, getHousePropertyOrder, subOrderException, recallPropertyOrder} from "@/actions/otherAction"
-import JCard from "@/components/JCard"
+import {getBasePropertyOrder, goPrintOrder, getPropertyfee, getHousePropertyOrder, subOrderException, revokeBaseOrderException} from "@/actions/otherAction"
+import JCard from "@/components/JCard" 
 import {detailInfo} from "./data"
 import ReactToPrint from 'react-to-print';
 import {exceptionColumns} from "../colmuns"
@@ -81,6 +81,7 @@ class PropertyFeeDetail extends React.Component {
         console.log('Received values of form: ', values);
         this.props.actions.subOrderException({
           ...values,
+          orderType: "propertyOrder",
           id: this.props.match.params.id
         }, res=>{
           this.props.utils.OpenNotification("success")
@@ -94,7 +95,8 @@ class PropertyFeeDetail extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        this.props.actions.recallPropertyOrder({
+        this.props.actions.revokeBaseOrderException({
+          orderType: "propertyOrder",
           revokeInfo:values.revokeInfo,
           id: this.props.match.params.id
         }, res=>{
@@ -193,19 +195,19 @@ class PropertyFeeDetail extends React.Component {
                   <TextArea autoSize={{minRows: 3}} />
                 )}
               </Form.Item>
-              <Form.Item label="更新订单金额">
-                {getFieldDecorator("updateFeeStatus", {
-                  initialValue: "0",
-                  rules: [{ required: true, message:"选择更新订单！"}]
+              <Form.Item label="异常操作">
+                {getFieldDecorator("exceptionStatus", {
+                  initialValue:"0",
+                  rules: [{ required: true, message:"异常操作"}]
                 })(
                   <Radio.Group >
-                    <Radio value="0">不做修改</Radio>
+                    <Radio value="0">关闭订单</Radio>
                     <Radio value="1">增加金额</Radio>
                     <Radio value="2">减少金额</Radio>
                   </Radio.Group>
                 )}
               </Form.Item>
-              {getFieldValue("updateFeeStatus")=="0"?null:
+              {getFieldValue("exceptionStatus")=="0"?null:
               <Form.Item label="增减金额(元)">
                 {getFieldDecorator("updateFee", {
                   rules: [{ required: true, message:"填写金额！"}]
@@ -214,7 +216,8 @@ class PropertyFeeDetail extends React.Component {
             </Form>:null}
           </Card>:null}
 
-          {detail && detail.order.orderStatus=="1"?<Card className="mgt10" title="撤回异常操作" extra={<Button type="danger" onClick={this.handlenSubmitRecall.bind(this)}><Icon type="save"/>撤回</Button>}> 
+          {detail && detail.order.orderStatus=="1"?
+          <Card className="mgt10" title="撤回异常操作" extra={<Button type="danger" onClick={this.handlenSubmitRecall.bind(this)}><Icon type="save"/>撤回</Button>}> 
             {detail?<Form {...formItemLayout}>
               <Form.Item label="异常说明">
                 {getFieldDecorator("exceptionInfo", {
@@ -224,10 +227,10 @@ class PropertyFeeDetail extends React.Component {
                   <TextArea disabled autoSize={{minRows: 3}} />
                 )}
               </Form.Item>
-              <Form.Item label="更新订单金额">
-                {getFieldDecorator("updateFeeStatus", {
+              <Form.Item label="异常操作">
+                {getFieldDecorator("exceptionStatus", {
                   initialValue: String(detail.order.nowException.updateFeeStatus),
-                  rules: [{ required: true, message:"选择更新订单！"}]
+                  rules: [{ required: true, message:"异常操作"}]
                 })(
                   <Radio.Group disabled >
                     <Radio value="0">不做修改</Radio>
@@ -236,7 +239,7 @@ class PropertyFeeDetail extends React.Component {
                   </Radio.Group>
                 )}
               </Form.Item>
-              {getFieldValue("updateFeeStatus")=="0"?null:
+              {getFieldValue("exceptionStatus")=="0"?null:
               <Form.Item label="增减金额(元)">
                 {getFieldDecorator("updateFee", {
                   initialValue: detail.order.nowException.updateFee,
@@ -269,7 +272,7 @@ class PropertyFeeDetail extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getBasePropertyOrder, getHousePropertyOrder,goPrintOrder, subOrderException, recallPropertyOrder}, dispatch)
+    actions: bindActionCreators({getBasePropertyOrder, getHousePropertyOrder,goPrintOrder, subOrderException, revokeBaseOrderException}, dispatch)
   }
 }
 

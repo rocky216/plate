@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Table, Tabs, Badge, Form, Input, DatePicker, Select} from "antd";
 import JCard from "@/components/JCard"
-import SelectAllType from "@/components/SelectAllType"
+import SelectAllType from "@/components/SelectAllType" 
 import {getOtherCostsOrderLists} from "@/actions/otherAction"
 import "./index.less"
 import "../propertyfee/index.less"
@@ -126,7 +126,7 @@ class Otherfee extends React.Component {
           <AddOtherFee visible={addVisible} detail={houseItem}  onCancel={()=>this.setState({addVisible: false})} />:null}
         <div style={{display: "flex"}}>
           <div className="select_house">
-            <Card title="选择房间" size="small" bodyStyle={{padding:0}}>
+            <Card title="请选择" size="small" bodyStyle={{padding:0}}>
               <SelectAllType isLoadCoOperative onSelect={this.handlenSelectShop.bind(this)}  />
             </Card>
           </div>

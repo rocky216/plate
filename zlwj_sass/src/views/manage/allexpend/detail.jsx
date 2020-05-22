@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table} from "antd";
-import {getOtherExpendDesc, expendCheckSignException} from "@/actions/manageAction"
+import {getOtherExpendDesc, checkOrderBaseOtherExpendOrder, getBaseOtherExpendOrderDetail} from "@/actions/manageAction"
 import JCard from "@/components/JCard"
 import ReactToPrint from 'react-to-print';
 import {exceptionColumns} from "../columns"
@@ -33,7 +33,7 @@ class OtherFeeDetail extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getOtherExpendDesc({
+    this.props.actions.getBaseOtherExpendOrderDetail({
       id: this.props.match.params.id
     }, res=>{
       console.log(res)
@@ -79,10 +79,10 @@ class OtherFeeDetail extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        this.props.actions.expendCheckSignException({
+        this.props.actions.checkOrderBaseOtherExpendOrder({
           ...values,
-          isPass: value,
-          orderId: this.state.detail.id
+          checkStatus: value,
+          id: this.props.match.params.id
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/manage/allexpend")
@@ -106,8 +106,8 @@ class OtherFeeDetail extends React.Component {
               <div className="table_title" style={{justifyContent: "start"}}>
                 <img src={detail.companyLogo} />
                 <div className="mgt10" style={{marginLeft:30}}>
-                  <h2>{detail.orderTitle}</h2>
-                  <span >房间名称:{detail.faOtherCostsOrderR.nickname}</span>
+                  <h2>{detail.heNameStr}</h2>
+                  <span >{detail?detail.order.orderTitle:""}</span>
                 </div>
                 <div style={{marginTop: 40}}>
                   
@@ -115,9 +115,10 @@ class OtherFeeDetail extends React.Component {
               </div>
               <table className="Property_table">
                 <tr>
-                  <td>业主姓名：{detail.faOtherCostsOrderR?detail.faOtherCostsOrderR.name:"无"}</td>
-                  <td>业主电话：{detail.faOtherCostsOrderR?detail.faOtherCostsOrderR.phone:"无"}</td>
-                  <td>{detail.orderNo}</td>
+                  <td>姓名：{detail.linkName}</td>
+                  <td>电话：{detail.linkPhone}</td>
+                  <td>订单号：{detail?detail.order.orderNo:""}</td>
+                  <td>编号：{detail.linkCode}</td>
                 </tr>
               </table>
               <table className="Property_table mgt10">
@@ -127,20 +128,20 @@ class OtherFeeDetail extends React.Component {
                   <th>收费金额</th>
                   <th>备注</th>
                 </tr>
-                {detail.faOtherExpendDescs.map((item, index)=>(
+                {detail?detail.order.faOtherExpendDescs.map((item, index)=>(
                   <tr key={index}>
                     <td>{index+1}</td>
                     <td>{item.feeName}</td>
                     <td>{`${item.feeMoney}`}</td>
                     <td>{item.remark}</td>
                   </tr>
-                ))}
+                )):null}
                 <tr>
-                  <td colspan="3">合计金额(大写): {detail.moneyStr}</td>
-                  <td>合计: {detail.orderTrueFee} ¥</td>
+                  <td colspan="3">合计金额(大写): {detail.order.orderTrueFeeChinese}</td>
+                  <td>合计: {detail.order.orderTrueFee} ¥</td>
                 </tr>
                 {isRemark?<tr>
-                  <td colspan="4">备注: {detail.remark} </td>
+                  <td colspan="4">备注: {detail.order.remark} </td>
                 </tr>:null}
               </table>
               <div className="footer mgt10">
@@ -161,8 +162,8 @@ class OtherFeeDetail extends React.Component {
                 )}
               </Form.Item>
               <Form.Item wrapperCol={{sm: {span:10, offset: 3}}}>
-                <Button onClick={this.handlenSubmit.bind(this,"3")} type="primary" style={{background: "#faad14", borderColor: "#faad14"}} className="mgr10"><Icon type="save"/>驳回申请</Button>
-                <Button onClick={this.handlenSubmit.bind(this,"2")} type="primary" className="mgr10"><Icon type="save"/>通过审核</Button>
+                <Button onClick={this.handlenSubmit.bind(this,"no")} type="primary" style={{background: "#faad14", borderColor: "#faad14"}} className="mgr10"><Icon type="save"/>驳回申请</Button>
+                <Button onClick={this.handlenSubmit.bind(this,"yes")} type="primary" className="mgr10"><Icon type="save"/>通过审核</Button>
               </Form.Item>
             </Form>:null}
           </Card>:null}
@@ -171,7 +172,7 @@ class OtherFeeDetail extends React.Component {
             {detail?<Form {...formItemLayout}>
               <Form.Item label="审核说明">
                 {getFieldDecorator("checkInfo", {
-                  initialValue: detail.remark,
+                  initialValue: detail.order.remark,
                   rules: [{ required: true, message:"填写审核说明！"}]
                 })(
                   <TextArea disabled autoSize={{minRows: 3}} />
@@ -187,7 +188,13 @@ class OtherFeeDetail extends React.Component {
               </Form.Item>
             </Form>:null}
           </Card>:null}
-        
+          <Card>
+            {detail && detail.order.attaList.length?detail.order.attaList.map(item=>(
+              <div>
+                <img key={item.id} src={item.dowloadHttpUrl} style={{width:600}} />
+              </div>
+            )):<span style={{color: "red"}}>未上传单据</span>} 
+          </Card>
       </JCard>
     )
   }
@@ -195,13 +202,13 @@ class OtherFeeDetail extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOtherExpendDesc, expendCheckSignException}, dispatch)
+    actions: bindActionCreators({getOtherExpendDesc, checkOrderBaseOtherExpendOrder, getBaseOtherExpendOrderDetail}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
-    spinning: state.other.spinning,
+    spinning: state.manage.spinning,
     utils: state.app.utils
   }
 }

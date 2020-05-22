@@ -1,14 +1,16 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Tabs, Card, Table, Button, Icon, Popconfirm} from "antd";
+import {Tabs, Card, Table, Button, Icon, Popconfirm, Form, Input, Select} from "antd";
 import JCard from "@/components/JCard"
 import {otherAssetList, getHeShops, deleteNothouse } from "@/actions/projectAction"
 import {nothouseColumns} from "../colmuns"
 import AddNothouse from "./add"
 import EditNothouse from "./edit"
+import HeList from "@/components/HeList"
 
 const { TabPane } = Tabs;
+const {Option} = Select
 
 class ProjectNothouse extends React.Component {
   constructor(props){
@@ -20,7 +22,11 @@ class ProjectNothouse extends React.Component {
       otherasset: [],
       params: {
         current: 1,
-        id: ""
+        heId: "",
+        shopsName: "",
+        shopsCode: "",
+        otherType: "",
+        status:""
       }
     }
   }
@@ -30,14 +36,14 @@ class ProjectNothouse extends React.Component {
     let otherasset =  await this.props.actions.otherAssetList({})
     this.setState({otherasset})
     if(otherasset && otherasset.length){
-      params.id = otherasset[0]["id"]
+      params.otherType = otherasset[0]["id"]
       await this.props.actions.getHeShops(params)
       this.setState({params})
     }
   }
   handleTabs(key){
     const {params} = this.state
-    params.id = key
+    params.otherType = key
     this.props.actions.getHeShops(params)
   }
 
@@ -70,13 +76,41 @@ class ProjectNothouse extends React.Component {
     }])
   }
 
+  handleSubmit(e){
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      const {params} = this.state
+      params.shopsName = values.shopsName
+      params.shopsCode = values.shopsCode
+      params.status = values.status
+      params.heId = values.heId
+      this.props.actions.getHeShops(params)
+    });
+  }
+
+  handlenReset(){
+    this.props.form.resetFields()
+    let obj = {
+      current: 1,
+      heId: "",
+      shopsName: "",
+      shopsCode: "",
+      otherType: this.state.params.otherType,
+      status:""
+    }
+    this.setState({params: obj})
+    this.props.actions.getHeShops(obj)
+  }
+
   render(){
+    const {getFieldDecorator} = this.props.form
     const {utils, spinning, nothouse} = this.props
     const {otherasset , params, addVisible, editVisible, detail} = this.state
 
     return (
       <JCard spinning={spinning}  >
-        <AddNothouse params={params} visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
+        {addVisible?
+        <AddNothouse params={params} visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />:null}
         {editVisible?
         <EditNothouse visible={editVisible}  params={params} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:""})} />:null}
         <Card >
@@ -88,6 +122,42 @@ class ProjectNothouse extends React.Component {
               <TabPane tab={item.dictLabel} key={item.id} />
             )):<TabPane tab="" key="" />}
           </Tabs>
+          <div className="flexend mgb10">
+            <Form layout="inline" onSubmit={this.handleSubmit.bind(this)}>
+              <Form.Item label="房屋名称">
+                {getFieldDecorator('shopsName')(
+                  <Input />
+                )}
+              </Form.Item>
+              <Form.Item label="房屋编号">
+                {getFieldDecorator('shopsCode')(
+                  <Input />
+                )}
+              </Form.Item>
+              <Form.Item label="小区">
+                {getFieldDecorator('heId', {
+                  initialValue: ""
+                })(
+                  <HeList style={{width: 120}}/>
+                )}
+              </Form.Item>
+              <Form.Item label="状态">
+                {getFieldDecorator('status', {
+                  initialValue: ""
+                })(
+                  <Select>
+                    <Option value="">全部</Option>
+                    <Option value="0">正常</Option>
+                    <Option value="1">停用</Option>
+                  </Select>
+                )}
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit"><Icon type="search" />搜索</Button>
+                <Button className="mgl10" onClick={this.handlenReset.bind(this)} ><Icon type="rollback" />重置</Button>
+              </Form.Item>
+            </Form>
+          </div>
           <Table columns={this.getCol()} dataSource={nothouse?utils.addIndex(nothouse.list):[]} 
             pagination={utils.Pagination(nothouse, page=>{
               params.current = page
@@ -115,4 +185,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(ProjectNothouse)
+export default connect(mapStateProps, mapDispatchProps)( Form.create()(ProjectNothouse) )

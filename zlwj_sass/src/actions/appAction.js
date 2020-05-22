@@ -4,6 +4,187 @@ import {log_color} from "@/utils/config"
 import { setCookie, getCookie, getToken} from "../utils"
 import routermenus from "@/routers/routermenus"
 
+
+export function getHomeloadHeNoticeInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/homepage/loadHeNoticeInfo",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        homeHeNoticebase: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function getHomeloadHeDeviceInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/homepage/loadHeDeviceInfo",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        homeHeDevicebase: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function getHomeloadHePassInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/homepage/loadHePassInfo",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        homeHePassbase: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function getHomeloadHeOrderInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/homepage/loadHeOrderInfo",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        homeHeOrderbase: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function getHomeloadHeRepairInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/homepage/loadHeRepairInfo",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        homeRepairbase: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
+export function getHomeloadHeBaseInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_APP,
+    })
+    try{
+      const options = {
+        url: "/api/pc/homepage/loadHeBaseInfo",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_APP,
+        homebase: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_APP,
+      })
+    }
+
+  }
+}
+
 export function loadCarparkList(params, next){
   return async function(dispatch, getState){
     dispatch({

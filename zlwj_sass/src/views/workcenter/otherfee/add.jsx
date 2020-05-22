@@ -2,7 +2,7 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Icon, Button, Form, Input, Select, Radio, Modal, Tag, Table} from "antd";
+import {Card, Icon, Button, Form, Input, Select, Radio, Modal, Tag, Table, InputNumber} from "antd";
 import JCard from "@/components/JCard"
 import SelectHouse from "@/components/SelectHouse"
 import SelectShopL from "@/components/SelectShopL" 
@@ -112,7 +112,7 @@ class AddOtherfee extends React.Component {
         this.props.actions.addBaseOtherCostsOrder({
           ...values,
           linkId: detail.id,
-          linkType: detail.type,
+          linkType: this.state.initdata.linkType,
           orderDescJSON: JSON.stringify(dataDetail)
         }, res=>{
           this.props.utils.OpenNotification("success")
@@ -171,7 +171,7 @@ class AddOtherfee extends React.Component {
               </Select>
             )}
           </Form.Item>
-          {detail.type=="coOperative"?null:
+          {detail.type=="tempCoOperativeMenu"?null:
           <Form.Item label="编号" >
             {getFieldDecorator('linkCode', {
               initialValue: initdata.linkCode
@@ -190,7 +190,7 @@ class AddOtherfee extends React.Component {
             {getFieldDecorator('linkPhone', {
               initialValue: initdata.linkPhone
             })(
-              <Input disabled={detail.type=="tempCoOperativeMenu"?false:true} />
+              <InputNumber style={{width: "100%"}} disabled={detail.type=="tempCoOperativeMenu"?false:true} />
             )}
           </Form.Item>
           <Form.Item label="备注" >

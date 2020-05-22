@@ -122,7 +122,7 @@ class SelectAllType extends React.Component {
     
     if(keyCode===13){
       console.log(target.value)
-      this.props.actions.selectHeAssetListByKey({key: target.value}, res=>{
+      this.props.actions.selectHeAssetListByKey({key: target.value, isLoadCoOperative:this.props.isLoadCoOperative?"yes":""}, res=>{
         if(res && res.length){
           let newData = this.handlenData(res)
           this.setState({searchData: newData})

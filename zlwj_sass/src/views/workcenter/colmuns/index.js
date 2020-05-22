@@ -321,7 +321,7 @@ export const carColumns = [
 ]
 
 export const propertyfeeColmuns = [
-  {
+  { 
     title: "状态",
     width:80,
     dataIndex: "key",
@@ -347,7 +347,22 @@ export const propertyfeeColmuns = [
     dataIndex: "orderNo"
   },
   {
-    title: "住宅信息/非住宅信息/车位信息",
+    title: "类型",
+    dataIndex: "orderType",
+    render(item){
+      switch( parseInt(item) ){
+        case 0:
+          return <Tag>住宅</Tag>
+        case 1:
+          return <Tag>非住宅</Tag>
+        case 2:
+          return <Tag>停车位</Tag>
+      }
+    }
+  },
+  
+  {
+    title: "关联信息",
     dataIndex: "showOrderLinkName",
   },
   {
@@ -361,7 +376,7 @@ export const propertyfeeColmuns = [
     title: "缴费信息",
     dataIndex: "feeEndTime",
     render(item, rows){
-      return item?`${item.substring(0,10)}到${rows.feeStartTime?rows.feeStartTime.substring(0,10):""}`:"无"
+      return item?`${rows.feeStartTime?rows.feeStartTime.substring(0,10):""}到${item.substring(0,10)}`:"无"
     }
   },
   {
@@ -369,43 +384,9 @@ export const propertyfeeColmuns = [
     dataIndex: "orderTrueFee",
   },
   {
-    title: "打印操作",
-    dataIndex: "printCount"
+    title: "创建信息",
+    dataIndex: "buildInfo"
   },
-  // {
-  //   title: "姓名",
-  //   dataIndex: "owners",
-  //   render(item){
-  //     return item?item.name:"无"
-  //   }
-  // },
-  // {
-  //   title: "手机号",
-  //   dataIndex: "phone",
-  //   render(e,rows){
-  //     return rows.owners?rows.owners.phone:"无"
-  //   }
-  // },
-  // {
-  //   title: "订单号",
-  //   dataIndex: "orderNo"
-  // },
-  // {
-  //   title: "房间号",
-  //   dataIndex: "houseUrlStr"
-  // },
-  // {
-  //   title: "缴费时间",
-  //   dataIndex: "buildTime"
-  // },
-  // {
-  //   title: "优惠金额",
-  //   dataIndex: "orderDiscountFee"
-  // },
-  // {
-  //   title: "缴费金额",
-  //   dataIndex: "orderTrueFee"
-  // }
 ]
 
 export const propertyDetailColmuns = [
@@ -683,17 +664,11 @@ export const otherfeeColmuns = [
   },
   {
     title: "姓名",
-    dataIndex: "faOtherCostsOrderR",
-    render(item){
-      return item?item.name:"无"
-    }
+    dataIndex: "partnerName",
   },
   {
     title: "手机号",
-    dataIndex: "phone",
-    render(e,rows){
-      return rows.faOtherCostsOrderR?rows.faOtherCostsOrderR.phone:"无"
-    }
+    dataIndex: "partnerPhone"
   },
   {
     title: "类型",
@@ -703,25 +678,27 @@ export const otherfeeColmuns = [
         case 0:
           return <Tag>住宅</Tag>
         case 1:
-          return <Tag>商铺</Tag>
+          return <Tag>非住宅</Tag>
         case 3:
           return <Tag>合作商</Tag>
       }
     }
   },
   {
-    title: "名称",
-    render(e,rows){
-      return rows.faOtherCostsOrderR?rows.faOtherCostsOrderR.nickname:"无"
-    }
+    title: "关联信息",
+    dataIndex: "partnerCode"
+  },
+  {
+    title: "订单标题",
+    dataIndex: "orderTitle"
   },
   {
     title: "订单号",
     dataIndex: "orderNo"
   },
   {
-    title: "缴费时间",
-    dataIndex: "buildTime"
+    title: "创建信息",
+    dataIndex: "buildInfo"
   },
   {
     title: "缴费金额",
@@ -749,17 +726,11 @@ export const expendfeeColmuns = [
   },
   {
     title: "姓名",
-    dataIndex: "faOtherCostsOrderR",
-    render(item){
-      return item?item.name:"无"
-    }
+    dataIndex: "partnerName",
   },
   {
     title: "手机号",
-    dataIndex: "phone",
-    render(e,rows){
-      return rows.faOtherCostsOrderR?rows.faOtherCostsOrderR.phone:"无"
-    }
+    dataIndex: "partnerPhone"
   },
   {
     title: "类型",
@@ -769,25 +740,27 @@ export const expendfeeColmuns = [
         case 0:
           return <Tag>住宅</Tag>
         case 1:
-          return <Tag>商铺</Tag>
+          return <Tag>非住宅</Tag>
         case 3:
           return <Tag>合作商</Tag>
       }
     }
   },
   {
-    title: "名称",
-    render(e,rows){
-      return rows.faOtherCostsOrderR?rows.faOtherCostsOrderR.nickname:"无"
-    }
+    title: "关联信息",
+    dataIndex: "partnerCode"
+  },
+  {
+    title: "订单标题",
+    dataIndex: "orderTitle"
   },
   {
     title: "订单号",
     dataIndex: "orderNo"
   },
   {
-    title: "支出时间",
-    dataIndex: "buildTime"
+    title: "创建信息",
+    dataIndex: "buildInfo"
   },
   {
     title: "支出金额",

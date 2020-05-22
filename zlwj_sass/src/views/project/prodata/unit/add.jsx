@@ -33,7 +33,7 @@ class AddUtil extends React.Component {
           ...values,
           heId: this.props.match.params.heId,
           buildingId: this.props.match.params.id,
-          unitName: values.unitName+'单元'
+          unitName: values.unitName
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.actions.getUtilList({
@@ -78,7 +78,7 @@ class AddUtil extends React.Component {
               </div>
             )}
           </Form.Item>
-          <Form.Item label="单元编号" hasFeedback>
+          {/* <Form.Item label="单元编号" hasFeedback>
             {getFieldDecorator('code', {
               rules: [
                 {
@@ -87,7 +87,7 @@ class AddUtil extends React.Component {
                 }
               ],
             })(<Input min={1} style={{width:"70%"}} />)}
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item label="展示编号" hasFeedback>
             {getFieldDecorator('showCode', {
               rules: [

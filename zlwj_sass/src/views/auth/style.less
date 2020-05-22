@@ -1,10 +1,30 @@
 .login {
   height: 100vh;
-  background: url("/images/bg2.jpg");
+  background: url("/images/bg1.jpg");
+  .login_title {
+    width: 200px;
+    position: fixed;
+    left: 50px;
+    top: 50px;
+    img{
+      width: 100%;
+    }
+  }
   .login_box {
-    width: 500px;
-    margin: auto;
-    padding-top:5%;
+    height: 90vh;
+    background: url("/images/bg2.png") no-repeat;
+    background-size: 100%;
+    background-position: center;
+    .login_card {
+      padding-top: 7%;
+      width: 500px;
+      margin: auto;
+      .login_bg {
+        background: rgba(69, 163, 252, 0.7);
+        padding: 10px;
+        border-radius: 6px;
+      }
+    }
   }
   .login_logo {
     width: 80px;

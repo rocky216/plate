@@ -34,7 +34,7 @@ class AddProdata extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
         this.props.actions.addBuild({
-          ...values
+          ...values,
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.actions.getBuildList({current:1})
@@ -60,7 +60,7 @@ class AddProdata extends React.Component {
         onOk={this.handlenSubmit.bind(this)}
       >
         <Form {...formItemLayout} >
-          <Form.Item label="楼宇名称" hasFeedback>
+          <Form.Item label="楼宇名称" >
             {getFieldDecorator('buildingName', {
               rules: [
                 {
@@ -70,9 +70,19 @@ class AddProdata extends React.Component {
               ],
             })(
               <div>
-                <InputNumber min={1}/><span>栋</span>
+                <InputNumber min={0} /><span>栋</span>
               </div>
             )}
+          </Form.Item>
+          <Form.Item label="楼宇展示编号" hasFeedback>
+            {getFieldDecorator('showCode', {
+              rules: [
+                {
+                  required: true,
+                  message: '填写楼宇展示编号!',
+                }
+              ],
+            })(<Input/>)}
           </Form.Item>
           <Form.Item label="所属项目" hasFeedback>
             {getFieldDecorator('heId', {
@@ -89,26 +99,6 @@ class AddProdata extends React.Component {
                 )):null}
               </Select>
             )}
-          </Form.Item>
-          <Form.Item label="楼宇展示编号" hasFeedback>
-            {getFieldDecorator('showCode', {
-              rules: [
-                {
-                  required: true,
-                  message: '填写楼宇展示编号!',
-                }
-              ],
-            })(<Input/>)}
-          </Form.Item>
-          <Form.Item label="楼宇编号" hasFeedback>
-            {getFieldDecorator('code', {
-              rules: [
-                {
-                  required: true,
-                  message: '填写楼宇编号!',
-                }
-              ],
-            })(<Input/>)}
           </Form.Item>
           <Form.Item label="楼层数" hasFeedback>
             {getFieldDecorator('buildingLevel', {
@@ -134,25 +124,11 @@ class AddProdata extends React.Component {
               ],
             })(
               <Select onChange={(value)=>this.setState({isEve: value})} >
-                <Option value="0">楼梯房</Option>
-                <Option value="1">电梯房</Option>
+                <Option value="0">无电梯</Option>
+                <Option value="1">有电梯</Option>
               </Select>
             )}
           </Form.Item>
-          {isEve=="1"?<Form.Item label="电梯个数" hasFeedback>
-            {getFieldDecorator('elevatorCount', {
-              rules: [
-                {
-                  required: true,
-                  message: '填写电梯个数!',
-                }
-              ],
-            })(
-              <div>
-                <InputNumber min={1} /><span>个</span>
-              </div>
-            )}
-          </Form.Item>:null}
           
         </Form>
       </Modal>

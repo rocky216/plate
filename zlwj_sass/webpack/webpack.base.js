@@ -4,7 +4,7 @@ const themeColor = require("../src/assets/theme/index")
 
 
 function resolve(str){
-  return path.resolve(__dirname,"../",str)
+  return path.resolve(__dirname,"../",str) 
 }
 
 module.exports = {

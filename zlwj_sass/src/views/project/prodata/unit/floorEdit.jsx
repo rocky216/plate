@@ -71,7 +71,7 @@ class FloorEdit extends React.Component {
                   message: '填写楼层展示编号!',
                 }
               ],
-            })(<InputNumber />)}
+            })(<Input />)}
           </Form.Item>
           <Form.Item label="实际楼层数" hasFeedback>
             {getFieldDecorator('trueLevel', {
@@ -82,7 +82,7 @@ class FloorEdit extends React.Component {
                   message: '填写实际楼层数!',
                 }
               ],
-            })(<Input/>)}
+            })(<InputNumber/>)}
           </Form.Item>
         </Form>
       </Modal>

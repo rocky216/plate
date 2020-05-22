@@ -32,11 +32,8 @@ class PlateDevice extends React.Component {
         return (
           <div> 
             <Button type="link" onClick={()=>_this.setState({editVisible: true, detail: item})} >编辑</Button>
-            <a href={`${BASEURL}/api/pc/admin/device/plate/appCreateImg?token=${_this.props.utils.getCookie("token")}&iotId=${item.iotId}`}>
-              <Button type="link">下载APP码</Button>
-            </a>
-            <a href={`${BASEURL}/api/pc/admin/device/plate/miniCreateImg?token=${_this.props.utils.getCookie("token")}&iotId=${item.iotId}`}>
-              <Button type="link">下载小程序码</Button> 
+            <a href={`${BASEURL}/api/pc/admin/device/plate/createImg?token=${_this.props.utils.getCookie("token")}&iotId=${item.iotId}`}>
+              <Button type="link">下载二维码</Button>
             </a>
           </div>
         )

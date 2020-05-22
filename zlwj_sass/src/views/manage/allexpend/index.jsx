@@ -45,7 +45,7 @@ class AllExpend extends React.Component {
         orderNo: "",
         startTime: "",
         endTime: "",
-        orderStatus: "wait"
+        orderStatusStr: "wait"
       }
     }
   }
@@ -59,7 +59,7 @@ class AllExpend extends React.Component {
     console.log(arguments)
     const {params} = this.state
     params.current = 1
-    params.orderStatus = key
+    params.orderStatusStr = key
     this.setState({params})
     this.props.actions.getOtherExpendListAuth(params)
   }
@@ -118,8 +118,10 @@ class AllExpend extends React.Component {
                 {getFieldDecorator('orderType')(
                   <Select style={{width: 120}}>
                     <Option value="" >全部</Option>
-                    <Option value="0" >住宅</Option>
-                    <Option value="1" >商铺</Option>
+                    <Option value="house" >住宅</Option>
+                    <Option value="shops" >非住宅</Option>
+                    <Option value="coOperative" >合作商</Option>
+                    <Option value="tempCoOperative" >临时合作商</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -148,8 +150,8 @@ class AllExpend extends React.Component {
               } />
             ))}
           </Tabs>
-          <Table columns={this.getCol()}  dataSource={allexpend?utils.addIndex(allexpend.pages.list):[]}
-          pagination={allexpend?utils.Pagination(allexpend.pages, page=>{
+          <Table columns={this.getCol()}  dataSource={allexpend?utils.addIndex(allexpend.page.list):[]}
+          pagination={allexpend?utils.Pagination(allexpend.page, page=>{
             params.current = page
             this.setState({params})
             this.props.actions.getOtherExpendListAuth(params)

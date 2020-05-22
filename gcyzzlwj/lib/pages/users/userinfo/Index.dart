@@ -4,6 +4,7 @@ import '../../../components/MyHeader.dart';
 import '../../../components/MyScrollView.dart';
 import '../../http.dart';
 import '../../../components/MyUpload.dart';
+import '../../../redux/exports.dart';
 
 class UserInfoPage extends StatefulWidget {
   final arguments;
@@ -27,7 +28,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
   void initState() { 
     super.initState();
     this.initial();
-    print(widget.arguments);
   }
 
   initial(){
@@ -37,11 +37,11 @@ class _UserInfoPageState extends State<UserInfoPage> {
       this.phone.text = widget.arguments["phone"]!=null?widget.arguments["phone"]:"";
       this.email.text = widget.arguments["email"]!=null?widget.arguments["email"]:"";
       this.avatarUrl = widget.arguments["avatarUrl"];
+      this.sex = widget.arguments["sex"];
     });
   }
 
   handlenSubmit() async {
-    
     var data = await NetHttp.post("/api/app/owner/user/info/updateUserInfo", context: context, params: {
       "avatarUrl": this.avatarUrl,
       "email": this.email.text,
@@ -51,7 +51,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
     });
     if(data != null){
       showToast("修改成功！");
-      Navigator.of(context).pop();
+      StoreProvider.of<IndexState>(context).dispatch(getUserInfoFetch(context, next: (){
+        Navigator.of(context).pop();
+      }) );
     }
   }
   

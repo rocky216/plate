@@ -166,7 +166,7 @@ class AddOwner extends React.Component {
             })(<Input/>)}
           </Form.Item>
           
-          <Form.Item label="房间号" hasFeedback>
+          <Form.Item label="住宅" hasFeedback>
             {getFieldDecorator('houseShowCode')(
               <div style={{display: "flex"}}>
                 <div className="selectRoom">
@@ -180,12 +180,12 @@ class AddOwner extends React.Component {
               </div>
             )}
           </Form.Item>
-          <Form.Item label="店铺号" hasFeedback>
+          <Form.Item label="非住宅" hasFeedback>
             {getFieldDecorator('houseShowCode')(
               <div style={{display: "flex"}}>
                 <div className="selectRoom">
                   {selectShop.map(item=>(
-                    <Tag closable  key={item.id} onClose={this.handlenShopClose.bind(this, item)}>{item.showCodeAll}：
+                    <Tag closable  key={item.id} onClose={this.handlenShopClose.bind(this, item)}>{item.shopsName}：
                       <span style={{color: "#f74c4c"}}>{item.ownerType=="0"?"业主":"租客"}</span>
                     </Tag>
                   ))}

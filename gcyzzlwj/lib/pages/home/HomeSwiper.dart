@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import '../../redux/exports.dart';
+
 
 class HomeSwiper extends StatefulWidget {
   List banners;
@@ -18,27 +20,32 @@ class _HomeSwiperState extends State<HomeSwiper> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.white),
-      child: Container(
-        margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
-        child: AspectRatio(aspectRatio: 16/7,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Swiper(
-              itemBuilder: (BuildContext context, int index){
-                return Image.network(widget.banners[index]["desc"],
-                  fit: BoxFit.fill,);
-              },
-              autoplay: true,
-              itemCount: widget.banners.length,
-              pagination: new SwiperPagination(alignment: Alignment.bottomRight, 
-                builder: DotSwiperPaginationBuilder(size: 8)),
-              
-            )
+    return StoreConnector<IndexState, Map>(
+      converter: (store)=>store.state.app.home,
+      builder: (context, home){
+        return Container(
+          decoration: BoxDecoration(color: Colors.white),
+          child: home==null?Text(""):Container(
+            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
+            child: AspectRatio(aspectRatio: 16/7,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Swiper(
+                  itemBuilder: (BuildContext context, int index){
+                    return Image.network(home["banner"][index]["desc"],
+                      fit: BoxFit.fill,);
+                  },
+                  autoplay: true,
+                  itemCount: home["banner"].length,
+                  pagination: new SwiperPagination(alignment: Alignment.bottomRight, 
+                    builder: DotSwiperPaginationBuilder(size: 8)),
+                  
+                )
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -23,11 +23,9 @@ class Meassge extends React.Component {
       signDetail: "",
       params:{
         current:1,
-        pageSize: 1,
       },
       temParams: {
         current:1,
-        pageSize: 1,
       }
     }
   }

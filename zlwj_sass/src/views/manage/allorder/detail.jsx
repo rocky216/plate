@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Form, Row, Col, Button, Icon, Input, Radio, InputNumber, Table, Modal, Alert} from "antd";
 import JCard from "@/components/JCard"
-import {getHousePropertyOrder, getShopsPropertyOrder, checkOrderException} from "@/actions/manageAction"
+import {getHousePropertyOrder, getShopsPropertyOrder, setCheckOrderException, checkOrderException, getBasePropertyOrderDetail} from "@/actions/manageAction"
 import "./index.less"
 import {exceptionColumns} from "../columns"
 
@@ -31,15 +31,9 @@ class AllOrderDetail extends React.Component {
   }
 
   componentDidMount(){
-    if(this.props.match.params.order=="0"){
-      this.props.actions.getHousePropertyOrder({id: this.props.match.params.id}, res=>{
-        this.setState({detail: res})
-      })
-    }else if(this.props.match.params.order=="1"){
-      this.props.actions.getShopsPropertyOrder({id: this.props.match.params.id}, res=>{
-        this.setState({detail: res})
-      })
-    }
+    this.props.actions.getBasePropertyOrderDetail({id: this.props.match.params.id}, res=>{
+      this.setState({detail: res})
+    })
   }
 
   checkedDate(item){
@@ -71,13 +65,14 @@ class AllOrderDetail extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values);
         function submit(){
-          _this.props.actions.checkOrderException({
+          _this.props.actions.setCheckOrderException({
             ...values,
+            orderType: "propertyOrder",
             checkStatus: val,
             id: _this.props.match.params.id
           }, res=>{
             _this.props.utils.OpenNotification("success")
-            _this.props.history.push("/workcenter/propertyfee")
+            _this.props.history.push("/manage/allorder")
           })
         }
         if(val=="4"){
@@ -127,7 +122,7 @@ class AllOrderDetail extends React.Component {
                 <img src={detail.companyLogo} />
                 <div className="mgt10">
                   <h2>{detail.order.heNameStr}服务部</h2>
-                  <span >房间名称:{match.params.order=="0"?detail.order.houseUrlStr:detail.order.shopsCode}</span>
+                  <span >房间名称:{detail?detail.order.houseUrlStr:""}</span>
                 </div>
                 <div style={{marginTop: 40}}>
                   <h3>{detail.order.orderNo}</h3>
@@ -190,8 +185,8 @@ class AllOrderDetail extends React.Component {
                   initialValue: String(detail.order.nowException.updateFeeStatus),
                   rules: [{ required: true, message:"选择更新订单！"}]
                 })(
-                  <Radio.Group  >
-                    <Radio value="0">不做修改</Radio>
+                  <Radio.Group disabled >
+                    <Radio value="0">关闭订单</Radio>
                     <Radio value="1">增加金额</Radio>
                     <Radio value="2">减少金额</Radio>
                   </Radio.Group>
@@ -202,7 +197,7 @@ class AllOrderDetail extends React.Component {
                 {getFieldDecorator("updateFee", {
                   initialValue: detail.order.nowException.updateFee,
                   rules: [{ required: true, message:"填写金额！"}]
-                })(<InputNumber min={0} style={{width: "100%"}} />)}
+                })(<InputNumber min={0} disabled style={{width: "100%"}} />)}
               </Form.Item>}
               
               <Form.Item label="审核说明">
@@ -213,11 +208,9 @@ class AllOrderDetail extends React.Component {
                 )}
               </Form.Item>
               <Form.Item wrapperCol={{sm: {span:10, offset: 3}}}>
-                <Button onClick={this.handlenSubmit.bind(this,"3")} type="primary" style={{background: "#faad14", borderColor: "#faad14"}} className="mgr10"><Icon type="save"/>驳回申请</Button>
-                <Button onClick={this.handlenSubmit.bind(this,"2")} type="primary" className="mgr10"><Icon type="save"/>通过审核</Button>
+                <Button onClick={this.handlenSubmit.bind(this,"no")} type="primary" style={{background: "#faad14", borderColor: "#faad14"}} className="mgr10"><Icon type="save"/>驳回异常</Button>
+                <Button onClick={this.handlenSubmit.bind(this,"yes")} type="primary" className="mgr10"><Icon type="save"/>通过异常</Button>
                 
-                {detail.order.nowException.checkClossException?
-                <Button onClick={this.handlenSubmit.bind(this,"4")} type="danger"><Icon type="save"/>关闭订单</Button>:null}
               </Form.Item>
             </Form>:null}
           </Card>:null}
@@ -232,7 +225,7 @@ class AllOrderDetail extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getHousePropertyOrder, getShopsPropertyOrder, checkOrderException}, dispatch)
+    actions: bindActionCreators({getHousePropertyOrder, getShopsPropertyOrder, setCheckOrderException, checkOrderException, getBasePropertyOrderDetail}, dispatch)
   }
 }
 

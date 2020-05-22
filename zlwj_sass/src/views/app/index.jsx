@@ -22,7 +22,7 @@ class App extends React.Component {
       <SiderBar/>
       <Layout style={{ marginLeft: collapsed?80:200 }}>
         <Head/>
-        <KeepTab/>
+        {/* <KeepTab/> */}
         {/* <BreadCrumb/> */}
         <Content style={{ margin: '10px 10px 0', overflow: 'initial', minHeight:810 }}>
           <div >

@@ -4,13 +4,16 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Tabs, Table, Badge, Form, Input, Button, Icon, Select, DatePicker } from "antd";
 import JCard from "@/components/JCard"
-import {getAllPropertyOrder, getAllProject} from "@/actions/manageAction"
-import {allOrderColumns} from "../columns"
+import {getPropertyOrderPage, getAllProject} from "@/actions/manageAction" 
+import {propertyfeeColmuns} from "../columns"
+// import {propertyfeeColmuns} from "../../workcenter/colmuns"
 import moment from "moment"
 
 const {TabPane} = Tabs
 const {Option} = Select
 const {RangePicker } = DatePicker
+
+
 
 class AllOrder extends React.Component {
   constructor(props){
@@ -45,7 +48,7 @@ class AllOrder extends React.Component {
       ],
       params: {
         current: 1,
-        houseHeId: "",
+        heId: "",
         orderType: "",
         orderNo: "",
         selectStartBuildTime: "",
@@ -56,7 +59,7 @@ class AllOrder extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getAllPropertyOrder(this.state.params)
+    this.props.actions.getPropertyOrderPage(this.state.params)
     this.props.actions.getAllProject({pageSize:1000})
   }
 
@@ -66,7 +69,7 @@ class AllOrder extends React.Component {
     params.current = 1
     params.orderStatusStr = key
     this.setState({params})
-    this.props.actions.getAllPropertyOrder(params)
+    this.props.actions.getPropertyOrderPage(params)
   }
 
   handleSearch(e){
@@ -74,18 +77,18 @@ class AllOrder extends React.Component {
     this.props.form.validateFields((err, values) => {
       const {params} = this.state
       console.log('Received values of form: ', values);
-      params.houseHeId = values.houseHeId
+      params.heId = values.heId
       params.orderType = values.orderType
       params.orderNo = values.orderNo
       params.selectStartBuildTime = values.time?moment(values.time[0]).format("YYYY-MM-DD"):""
       params.selectEndBuildTime = values.time?moment(values.time[1]).format("YYYY-MM-DD"):""
       this.setState({params})
-      this.props.actions.getAllPropertyOrder(params)
+      this.props.actions.getPropertyOrderPage(params)
     });
   }
   
   getCol(){
-    return allOrderColumns.concat([{
+    return propertyfeeColmuns.concat([{
       title: "操作",
       render(item){
         return (
@@ -101,7 +104,7 @@ class AllOrder extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form
-    const { spinning, utils, allorder, allproject} = this.props
+    const { spinning, utils, orderAll, allproject} = this.props
     const {tabs, params} = this.state
     
     return (
@@ -110,7 +113,7 @@ class AllOrder extends React.Component {
           <div className="flexend mgb10">
             <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
               <Form.Item label="项目">
-                {getFieldDecorator('houseHeId')(
+                {getFieldDecorator('heId')(
                   <Select style={{width: 120}}>
                     <Option value="" >全部</Option>
                     {allproject?allproject.list.map(item=>(
@@ -123,8 +126,8 @@ class AllOrder extends React.Component {
                 {getFieldDecorator('orderType')(
                   <Select style={{width: 120}}>
                     <Option value="" >全部</Option>
-                    <Option value="0" >住宅</Option>
-                    <Option value="1" >商铺</Option>
+                    <Option value="house" >住宅</Option>
+                    <Option value="shops" >非住宅</Option>
                   </Select>
                 )}
               </Form.Item>
@@ -149,15 +152,15 @@ class AllOrder extends React.Component {
           >
             {tabs.map(item=>(
               <TabPane key={item.key} tab={
-                <Badge count={allorder?allorder[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
+                <Badge count={orderAll?orderAll[item.value]:0} offset={[10,0]} showZero>{item.title}</Badge>
               } />
             ))}
           </Tabs>
-          <Table columns={this.getCol()}  dataSource={allorder?utils.addIndex(allorder.page.list):[]}
-          pagination={allorder?utils.Pagination(allorder.pages, page=>{
+          <Table columns={this.getCol()}  dataSource={orderAll?utils.addIndex(orderAll.page.list):[]}
+          pagination={orderAll?utils.Pagination(orderAll.page, page=>{
             params.current = page
             this.setState({params})
-            this.props.actions.getAllPropertyOrder(params)
+            this.props.actions.getPropertyOrderPage(params)
           }):false} /> 
         </Card>
       </JCard>
@@ -167,14 +170,14 @@ class AllOrder extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getAllPropertyOrder, getAllProject}, dispatch)
+    actions: bindActionCreators({getPropertyOrderPage, getAllProject}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
     allproject: state.manage.allproject,
-    allorder: state.manage.allorder,
+    orderAll: state.manage.orderAll,
     spinning: state.manage.spinning,
     utils: state.app.utils
   }

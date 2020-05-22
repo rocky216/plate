@@ -73,7 +73,7 @@ class AddItemConact extends React.Component {
                   message: '联系人!',
                 }
               ],
-            })(<InputNumber style={{width: "100%"}} />)}
+            })(<Input/>)}
           </Form.Item>
           <Form.Item label="联系人电话" hasFeedback>
             {getFieldDecorator('info', {

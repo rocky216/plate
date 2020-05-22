@@ -11,15 +11,15 @@ export default [
     icon: "icon iconfont icon-gongzuozhongxin",
     children: [
       {
-        title: "住宅物业费订单",
+        title: "物业费订单",
         link: '/workcenter/propertyfee',
         key: 201
       },
-      {
-        title: "商铺物业费订单",
-        link: '/workcenter/shopfee',
-        key: 202
-      },
+      // {
+      //   title: "商铺物业费订单",
+      //   link: '/workcenter/shopfee',
+      //   key: 202
+      // },
       {
         title: "其他缴费订单",
         link: '/workcenter/otherfee',
@@ -80,7 +80,7 @@ export default [
         key: 403
       }, 
       {
-        title: "全部支出订单",
+        title: "全部其他支出订单",
         link: "/manage/allexpend",
         key: 404
       }, 
@@ -160,17 +160,12 @@ export default [
         key: 701
       },
       {
-        title: "项目信息管理",
+        title: "楼宇管理",
         link: "/project/prodata",
         key: 702
       },
       {
-        title: "业主管理",
-        link: "/project/owner",
-        key: 703
-      },
-      {
-        title: "非住宅房屋",
+        title: "非住宅房屋管理",
         link: "/project/nothouse",
         key: 704
       },
@@ -178,6 +173,11 @@ export default [
         title: "停车场管理",
         link: "/project/park",
         key: 705
+      },
+      {
+        title: "业主管理",
+        link: "/project/owner",
+        key: 703
       },
     ]
   },
@@ -210,6 +210,11 @@ export default [
         title: "数据字典",
         link: "/base/library",
         key: 805
+      },
+      {
+        title: "公司信息",
+        link: "/base/company",
+        key: 806
       },
     ]
   },

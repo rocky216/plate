@@ -4,16 +4,47 @@ import {bindActionCreators} from "redux"
 import {} from "antd";
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/title';
+import 'echarts/lib/component/legend';
 import {options} from "./data"
 
 
 class Test extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      options: ""
+    }
+  }
+  componentDidMount(){
+    options.xAxis.data = this.handleData("fcHouseOrder",  "key")
+    options.series[0].data = this.handleData("fcHouseOrder")
+    options.series[1].data = this.handleData("fcNoHouseOrder")
+    this.setState({options})
+  }
+
+  handleData(attr,type){
+    let arr = [];
+    _.each(this.props.data[attr], item=>{
+      if(type=="key"){
+        arr.push(item.title)
+      }else{
+        arr.push(item.number)
+      }
+      
+    })
+    return arr
+  }
+
+
   render(){
+    const {options} = this.state
     return (
-      <ReactEchartsCore echarts={echarts} option={options}/>
+      <div>
+        {options?<ReactEchartsCore echarts={echarts} option={this.state.options}/>:null}
+      </div>
     )
   }
 }

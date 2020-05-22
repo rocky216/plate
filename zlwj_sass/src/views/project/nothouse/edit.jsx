@@ -45,8 +45,8 @@ class EditNothouse extends React.Component {
           ...newValues,
           id: this.props.detail.id,
           deliversTime: moment(deliversTime).format("YYYY-MM-DD"),
-          payFristTime: moment(time[0]).format("YYYY-MM-DD"),
-          payLastTime: moment(time[1]).format("YYYY-MM-DD"),
+          payFristTime: time && time.length==2?moment(time[0]).format("YYYY-MM-DD"):"",
+          payLastTime: time && time.length==2?moment(time[1]).format("YYYY-MM-DD"):"",
           ownersId: ownersId?ownersId.ownersId:""
         }, res=>{
           this.props.actions.getHeShops(this.props.params)
@@ -108,7 +108,20 @@ class EditNothouse extends React.Component {
               <HeList />
             )}
           </Form.Item>
-          
+          <Form.Item label="楼层" hasFeedback>
+            {getFieldDecorator('floorNum', {
+              initialValue: detail.floorNum,
+              rules: [
+                {
+                  required: true,
+                  message: '楼层!',
+                }
+              ],
+            })(
+              <InputNumber style={{width: "100%"}} />
+            )}
+          </Form.Item>
+
           <Form.Item label="非住宅类型" hasFeedback>
             {getFieldDecorator('otherType', {
               initialValue: detail.otherType,
@@ -152,12 +165,6 @@ class EditNothouse extends React.Component {
             {getFieldDecorator('time', {
               initialValue: detail.heShopsInfo &&  detail.heShopsInfo.payFristTime && detail.heShopsInfo.payLastTime?
                 [moment(detail.heShopsInfo.payFristTime),moment(detail.heShopsInfo.payLastTime)]:null,
-              rules: [
-                {
-                  required: true,
-                  message: '选择交房时间!',
-                }
-              ],
             })(<RangePicker />)}
           </Form.Item>
           <Form.Item label="选择业主" >

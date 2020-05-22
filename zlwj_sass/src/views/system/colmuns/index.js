@@ -226,25 +226,25 @@ export const powerOrderColumns = [
   },
   {
     title: "结束状态",
-    dataIndex: "endStatus",
-    render(item){
-      switch(parseInt(item)){
-        case 1:
-          return "正常饱和结束"
-        case 2:
-          return "手动停止订单"
-        case 3:
-          return "负载丢失"
-        case 4:
-          return "时间到结束"
-        case 5:
-          return "过载结束"
-        case 6:
-          return "涓流充电时掉电"
-        case 9:
-          return "复位重启结束充电"
-      }
-    }
+    dataIndex: "remark",
+    // render(item){
+    //   switch(parseInt(item)){
+    //     case 1:
+    //       return "正常饱和结束"
+    //     case 2:
+    //       return "手动停止订单"
+    //     case 3:
+    //       return "负载丢失"
+    //     case 4:
+    //       return "时间到结束"
+    //     case 5:
+    //       return "过载结束"
+    //     case 6:
+    //       return "涓流充电时掉电"
+    //     case 9:
+    //       return "复位重启结束充电"
+    //   }
+    // }
   },
   {
     title: "下单途径",

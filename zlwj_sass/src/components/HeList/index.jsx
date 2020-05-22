@@ -16,6 +16,7 @@ class HeList extends React.Component {
 
     return (
       <Select {...this.props}>
+        <Option value="">全部</Option>
         {allHeList?allHeList.map(item=>(
           <Option value={item.id} key={item.id}>{item.name}</Option>
         )):null}

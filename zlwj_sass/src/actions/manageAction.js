@@ -2,6 +2,204 @@ import {START_LOADING_MANAGE, END_LOADING_MANAGE} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function checkOrderBaseOtherExpendOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherExpendOrder/checkOrder",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
+export function getBaseOtherExpendOrderDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherExpendOrder/getOrder",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
+export function getBasePropertyOrderDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/getOrder",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
+export function getBaseOtherCostsOrderDetail(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherCostsOrder/getOrder",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
+export function getOtherCostsOrderAllList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOtherCostsOrder/manage/getOtherCostsOrderList",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+        otherallorder: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
+export function setCheckOrderException(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseOrderException/checkOrderException",
+        method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
+export function getPropertyOrderPage(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/basePropertyOrder/manage/propertyOrderPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+        orderAll: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
 export function expendCheckSignException(params, next){
   return async function(dispatch, getState){
     dispatch({
@@ -66,7 +264,7 @@ export function getOtherExpendListAuth(params, next){
     })
     try{
       const options = {
-        url: "/api/pc/otherExpendOrder/getOtherExpendListAuth",
+        url: "/api/pc/baseOtherExpendOrder/manage/getOtherExpendOrderList",
         method: "get",
         data: {...params}
       }

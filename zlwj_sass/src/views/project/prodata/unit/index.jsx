@@ -154,15 +154,15 @@ class UnitList extends React.Component {
                       </Divider>
               {e.heHouseInfo?
                 <div>
-                  <Text code className="mgr10 inlineBlock">开始缴费时间：{e.heHouseInfo.payFristTime}</Text>
-                  <Text code className="mgr10 inlineBlock">最近缴费时间：{e.heHouseInfo.payLastTime}</Text>
+                  <Text code className="mgr10 inlineBlock">已缴费开始时间：{e.heHouseInfo.payFristTime?e.heHouseInfo.payFristTime.substring(0,10):""}</Text>
+                  <Text code className="mgr10 inlineBlock">已缴费结束时间：{e.heHouseInfo.payLastTime?e.heHouseInfo.payLastTime.substring(0,10):""}</Text>
                   <Text code className="mgr10 inlineBlock">
                     是否装修：{e.heHouseInfo.packingStatus==0?"未装修":e.heHouseInfo.packingStatus=="1"?"装修中":"已装修"}
                   </Text>
                   {e.heHouseInfo.packingStatus==0?null:
                     <div>
-                      <Text code className="mgr10 inlineBlock">装修开始时间：{e.heHouseInfo.packingStartTime}</Text>
-                      <Text code className="mgr10 inlineBlock">装修结束时间：{e.heHouseInfo.packingEndTime}</Text>
+                      <Text code className="mgr10 inlineBlock">装修开始时间：{e.heHouseInfo.packingStartTime?e.heHouseInfo.packingStartTime.substring(0,10):""}</Text>
+                      <Text code className="mgr10 inlineBlock">装修结束时间：{e.heHouseInfo.packingEndTime?e.heHouseInfo.packingEndTime.substring(0,10):""}</Text>
                       <Text code className="mgr10 inlineBlock">装修说明：{e.heHouseInfo.packingInfo}</Text>
                     </div>}
                   

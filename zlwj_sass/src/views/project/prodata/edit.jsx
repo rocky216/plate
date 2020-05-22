@@ -67,24 +67,13 @@ class AddProdata extends React.Component {
               ],
             })(<InputNumber />)}
           </Form.Item>
-          <Form.Item label="楼宇编号" hasFeedback>
+          <Form.Item label="楼宇展示编号" hasFeedback>
             {getFieldDecorator('showCode', {
               initialValue: detail.showCode,
               rules: [
                 {
                   required: true,
                   message: '填写楼宇编号!',
-                }
-              ],
-            })(<Input/>)}
-          </Form.Item>
-          <Form.Item label="楼宇编号" hasFeedback>
-            {getFieldDecorator('code', {
-              initialValue: detail.code,
-              rules: [
-                {
-                  required: true,
-                  message: '填写楼栋编号!',
                 }
               ],
             })(<Input/>)}
@@ -100,8 +89,8 @@ class AddProdata extends React.Component {
               ],
             })(
               <Select onChange={(value)=>this.setState({isEve: value})} >
-                <Option value="0">楼梯房</Option>
-                <Option value="1">电梯房</Option>
+                <Option value="0">有电梯</Option>
+                <Option value="1">无电梯</Option>
               </Select>
             )}
           </Form.Item>
