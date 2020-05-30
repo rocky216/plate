@@ -87,7 +87,21 @@ export const allOrderColumns = [
   {
     title: "缴费金额",
     dataIndex: "orderTrueFee"
-  }
+  },
+  {
+    title: "打印信息",
+    dataIndex: "printCount",
+    render(item, rows){
+      return (
+        item!=0?
+        <div>
+          {rows.printUserName?<Tag>{rows.printUserName}</Tag>:null}
+          <Tag>打印次数:{item}</Tag>
+          {rows.printTime?<Tag>打印时间:{rows.printTime}</Tag>:null}
+        </div>:<Tag>暂无打印</Tag>
+      )
+    }
+  },
 ]
 export const allExpendColumns = [
   {
@@ -244,5 +258,19 @@ export const propertyfeeColmuns = [
   {
     title: "创建信息",
     dataIndex: "buildInfo"
+  },
+  {
+    title: "打印信息",
+    dataIndex: "printCount",
+    render(item, rows){
+      return (
+        item!=0?
+        <div>
+          {rows.printUserName?<Tag>{rows.printUserName}</Tag>:null}
+          <Tag>打印次数:{item}</Tag>
+          {rows.printTime?<Tag>打印时间:{rows.printTime}</Tag>:null}
+        </div>:<Tag>暂无打印</Tag>
+      )
+    }
   },
 ]

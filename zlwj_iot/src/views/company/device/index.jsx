@@ -8,6 +8,7 @@ import AddDevice from "./add"
 import EditDevice from "./edit"
 import {companyDeviceColumns} from "../columns"
 import SearchBox from "./searchBox"
+import DeviceChart from "./chart"
 
 
 class Device extends React.Component {
@@ -73,7 +74,7 @@ class Device extends React.Component {
   render(){
     const {utils, spinning, deviceList} = this.props
     const {addVisible, editVisible, detail, params} = this.state
-
+    
     return (
       <JCard spinning={spinning}>
         <AddDevice visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
@@ -85,6 +86,9 @@ class Device extends React.Component {
           </div>
           
           <Table columns={this.getCol()} dataSource={deviceList?utils.addIndex(deviceList.list):[]} 
+            expandedRowRender={record=>{
+              return <DeviceChart data={record} />
+            }}
             pagination={utils.Pagination(deviceList, page=>{
               params.current = page
               this.setState({params})

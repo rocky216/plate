@@ -11,17 +11,18 @@ import 'echarts/lib/component/legend';
 import {options} from "./data"
 
 
-class Test extends React.Component {
+
+class DeviceChart extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       option: ""
     }
   }
+
   componentDidMount(){
-    options.xAxis.data = this.handleData("fcHouseOrder",  "key")
-    options.series[0].data = this.handleData("fcHouseOrder")
-    options.series[1].data = this.handleData("fcNoHouseOrder")
+    options.xAxis.data = this.handleData("signal",  "key")
+    options.series[0].data = this.handleData("signal")
     this.setState({option: options})
   }
 
@@ -29,18 +30,19 @@ class Test extends React.Component {
     let arr = [];
     _.each(this.props.data[attr], item=>{
       if(type=="key"){
-        arr.push(item.title)
+        arr.push(item.buildTimeStr)
       }else{
-        arr.push(item.number)
+        arr.push(item.signalStrength)
       }
       
     })
     return arr
   }
 
-
   render(){
+    const {utils} = this.props
     const {option} = this.state
+    console.log(option, "asas")
     return (
       <div>
         {option?<ReactEchartsCore echarts={echarts} option={option}/>:null}
@@ -61,4 +63,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(Test)
+export default connect(mapStateProps, mapDispatchProps)(DeviceChart)

@@ -12,6 +12,16 @@ const {TabPane} = Tabs
 const {Option} = Select
 const {RangePicker } = DatePicker
 
+let params = {
+  current: 1,
+  heId: "",
+  orderType: "",
+  orderNo: "",
+  selectStartBuildTime: "",
+  selectEndBuildTime: "",
+  orderStatusStr: "wait"
+}
+
 class AllExpend extends React.Component {
   constructor(props){
     super(props)
@@ -38,43 +48,41 @@ class AllExpend extends React.Component {
           key: "all"
         },
       ],
-      params: {
-        current: 1,
-        heId: "",
-        orderType: "",
-        orderNo: "",
-        startTime: "",
-        endTime: "",
-        orderStatusStr: "wait"
-      }
+      // params: {
+      //   current: 1,
+      //   heId: "",
+      //   orderType: "",
+      //   orderNo: "",
+      //   startTime: "",
+      //   endTime: "",
+      //   orderStatusStr: "wait"
+      // }
     }
   }
 
   componentDidMount(){
-    this.props.actions.getOtherExpendListAuth(this.state.params)
+    this.props.actions.getOtherExpendListAuth(params)
     this.props.actions.getAllProject({pageSize:1000})
   }
 
   handlenTab(key){
-    console.log(arguments)
-    const {params} = this.state
     params.current = 1
     params.orderStatusStr = key
-    this.setState({params})
+    
     this.props.actions.getOtherExpendListAuth(params)
   }
 
   handleSearch(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      const {params} = this.state
+      
       console.log('Received values of form: ', values);
       params.heId = values.heId
       params.orderType = values.orderType
       params.orderNo = values.orderNo
-      params.startTime = values.time && values.time.length?moment(values.time[0]).format("YYYY-MM-DD"):""
-      params.endTime = values.time && values.time.length?moment(values.time[1]).format("YYYY-MM-DD"):""
-      this.setState({params})
+      params.selectStartBuildTime = values.time && values.time.length?moment(values.time[0]).format("YYYY-MM-DD"):""
+      params.selectEndBuildTime = values.time && values.time.length?moment(values.time[1]).format("YYYY-MM-DD"):""
+      
       this.props.actions.getOtherExpendListAuth(params)
     });
   }
@@ -97,7 +105,7 @@ class AllExpend extends React.Component {
   render(){
     const {getFieldDecorator} = this.props.form
     const { spinning, utils, allexpend, allproject} = this.props
-    const {tabs, params} = this.state
+    const {tabs } = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -105,7 +113,9 @@ class AllExpend extends React.Component {
           <div className="flexend mgb10">
             <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
               <Form.Item label="项目">
-                {getFieldDecorator('heId')(
+                {getFieldDecorator('heId', {
+                  initialValue: params.heId
+                })(
                   <Select style={{width: 120}}>
                     <Option value="" >全部</Option>
                     {allproject?allproject.list.map(item=>(
@@ -115,7 +125,9 @@ class AllExpend extends React.Component {
                 )}
               </Form.Item>
               <Form.Item label="类型" >
-                {getFieldDecorator('orderType')(
+                {getFieldDecorator('orderType', {
+                  initialValue: params.orderType
+                })(
                   <Select style={{width: 120}}>
                     <Option value="" >全部</Option>
                     <Option value="house" >住宅</Option>
@@ -126,12 +138,16 @@ class AllExpend extends React.Component {
                 )}
               </Form.Item>
               <Form.Item label="订单号" >
-                {getFieldDecorator('orderNo')(
+                {getFieldDecorator('orderNo', {
+                  initialValue: params.orderNo
+                })(
                   <Input/>
                 )}
               </Form.Item>
               <Form.Item label="查询时间" >
-                {getFieldDecorator('time')(
+                {getFieldDecorator('time', {
+                  initialValue: params.selectStartBuildTime?[moment(params.selectStartBuildTime), moment(params.selectEndBuildTime)]:null
+                })(
                   <RangePicker/>
                 )}
               </Form.Item>
@@ -143,6 +159,7 @@ class AllExpend extends React.Component {
 
           <Tabs
             onChange={this.handlenTab.bind(this)}
+            activeKey={params.orderStatusStr}
           >
             {tabs.map(item=>(
               <TabPane key={item.key} tab={
@@ -153,7 +170,7 @@ class AllExpend extends React.Component {
           <Table columns={this.getCol()}  dataSource={allexpend?utils.addIndex(allexpend.page.list):[]}
           pagination={allexpend?utils.Pagination(allexpend.page, page=>{
             params.current = page
-            this.setState({params})
+            
             this.props.actions.getOtherExpendListAuth(params)
           }):false} /> 
         </Card>

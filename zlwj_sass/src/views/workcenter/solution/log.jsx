@@ -31,7 +31,9 @@ class SolutionLog extends React.Component {
 
     return (
       <JCard spinning={spinning}>
-        <Card size="small" extra={<Link to="/workcenter/solution"><Button><Icon type="rollback" />返回</Button></Link>} >
+        <Card size="small" 
+          title="一卡通日志"
+          extra={<Link to="/workcenter/solution"><Button><Icon type="rollback" />返回</Button></Link>} >
           <Tabs
             activeKey={activeKey}
             onChange={this.handlenTab.bind(this)}

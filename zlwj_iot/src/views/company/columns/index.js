@@ -56,6 +56,7 @@ export const companyColumns = [
 ]
 
 export const companyDeviceColumns = [
+  
   {
     title: "在线状态",
     dataIndex: "online",
@@ -121,8 +122,8 @@ export const companyDeviceColumns = [
     dataIndex: "deviceLogList",
     width: 150,
     render(item){
-      return item.map(elem=>(
-      <Tag color={elem.logType=="onLine"?"green":"red"}>{elem.logType=="onLine"?"上线":"下线"}{elem.buildTime}</Tag>
+      return item.map((elem, i)=>(
+      <Tag key={i} color={elem.logType=="onLine"?"green":"red"}>{elem.logType=="onLine"?"上线":"下线"}{elem.buildTime}</Tag>
       ))
     }
   },
