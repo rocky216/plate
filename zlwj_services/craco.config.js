@@ -1,7 +1,7 @@
 const path = require("path")
 const CracoLessPlugin = require('craco-less');
 const CracoAlias = require("craco-alias");
-const config = require("./config/index.ts")
+
 
 
 
@@ -38,13 +38,13 @@ module.exports = function({env}){
       return {
         ...devServerConfig,
         compress: true,
-        proxy: {
-          "/api": {
-            target: config.baseUrl,
-            pathRewrite: {'^/api' : '/api'},
-            changeOrigin: true,
-          },
-        },
+        // proxy: {
+        //   "/api": {
+        //     target: config.baseUrl,
+        //     pathRewrite: {'^/api' : '/api'},
+        //     changeOrigin: true,
+        //   },
+        // },
       }
     }
     
