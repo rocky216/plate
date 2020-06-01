@@ -33,22 +33,18 @@ module.exports = function({env}){
         }
       },
     ],
-    webpack: {
-      devServer: (devServerConfig)=>{
-        console.log(devServerConfig)
-        return {
-          ...devServerConfig,
-          compress: true,
-          host: config.host,
-          port: 3003,
-          proxy: {
-            "/api": {
-              target: config.baseUrl,
-              pathRewrite: {'^/api' : '/api'},
-              changeOrigin: true,
-            },
+    devServer: (devServerConfig)=>{
+      console.log(devServerConfig)
+      return {
+        ...devServerConfig,
+        compress: true,
+        proxy: {
+          "/api": {
+            target: config.baseUrl,
+            pathRewrite: {'^/api' : '/api'},
+            changeOrigin: true,
           },
-        }
+        },
       }
     }
     
