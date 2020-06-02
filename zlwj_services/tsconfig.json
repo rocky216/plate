@@ -1,0 +1,65 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "module": "es2015", 
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "sourceMap": true,
+    // "noEmit": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
+
+
+
+// {
+//   "compilerOptions": {
+//     "jsx": "react",
+//     "lib": ["es6", "dom"],
+//     "rootDir": "src",
+//     "module": "commonjs",
+//     "target": "es5",
+//     "sourceMap": true,
+//     "moduleResolution": "node",
+//     "noImplicitReturns": true,
+//     "noImplicitThis": true,
+//     "noImplicitAny": true,
+//     "allowSyntheticDefaultImports": true,  //恢复导入方式
+//     "strictNullChecks": true,
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": [
+//         "src/*"
+//       ]
+//     }
+//   },
+//   "include": [
+//     "./src"
+//   ],
+//   "exclude": [
+//     "node_modules",
+//     "build"
+//   ]
+// }
