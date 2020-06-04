@@ -5,7 +5,9 @@ const webpack = require("webpack");
 const webpackDevMiddleware  = require("webpack-dev-middleware");
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevConfig = require('../webpack/webpack.dev.config');
+var proxyMiddleWare = require("http-proxy-middleware").createProxyMiddleware;
 const open = require("open");
+const config = require("../config")
 
 
 
@@ -36,27 +38,33 @@ if(ENV == "development"){
       colors: true
     }
   }))
+
   /* 热更新配置 */
   app.use(webpackHotMiddleware(compiler));
 
   /* 打开浏览器 */
-  open("http://localhost:3003/power");
+  open(`http://${config.host}:${config.port}/${config.type}`);
 
+  console.log(proxyMiddleWare)
 
-  app.get("/power", (req, res)=>{
-    
-    res.render("index.html",{mytype: req.url})
-  })
+  /* 开发环境代理接口 */
+  app.use("/api",proxyMiddleWare({
+    target:config.baseUrl,
+    changeOrigoin:true,
+    pathRewrite: {'^/api' : '/api'},
+  }));
+
 }else{
   
   app.set('views', path.resolve(__dirname, "../dist"));
-  app.get("/power", (req, res)=>{
-    res.render("index.html",{mytype: req.url})
-  })
+  
 }
 
+app.get("/power", (req, res)=>{
+  res.render("index.html",{mytype: req.url})
+});
 
-app.listen(3003, ()=>{
+app.listen(config.port, ()=>{
   
   
 })

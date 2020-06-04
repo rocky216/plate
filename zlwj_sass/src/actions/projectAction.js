@@ -2,6 +2,233 @@ import {START_LOADING_PROJECT, END_LOADING_PROJECT} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+
+export function removeOwnersLink(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/removeOwnersLink",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function addOwnersLink(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/addOwnersLink",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function loadSelectAssetRedis(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/loadSelectAssetRedis",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function deleteOwners(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/deleteOwners",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function getOwners(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/getOwners",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+        ownerdetail: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function editOwners(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/updateOwners",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function addOwners(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/addOwners",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
+export function ownersListPage(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_PROJECT
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/ownersListPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_PROJECT,
+        newowners: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_PROJECT
+      })
+    }
+
+  }
+}
+
 export function deleteNothouse(params, next){
   return async function(dispatch, getState){
     dispatch({

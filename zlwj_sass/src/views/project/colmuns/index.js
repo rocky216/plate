@@ -1,6 +1,48 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const relationColumns = [
+  {
+    title: "状态",
+    dataIndex: "isPast",
+    render:item=>item=="0"?"续存中":"过期"
+  },
+  {
+    title: "项目",
+    dataIndex: "heNameStr"
+  },
+  {
+    title: "资产类型",
+    dataIndex: "linkTypeName",
+    
+  },
+  {
+    title: "资产编号",
+    dataIndex: "linkCode"
+  },
+  {
+    title: "关联类型",
+    dataIndex: "ownerType",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "业主"
+        case 1:
+          return "家庭成员"
+        case 2:
+          return "租客"
+      }
+    }
+  },
+  {
+    title: "关联时间",
+    dataIndex: "startTime",
+    render(item, rows){
+      return `${item}-${rows.pastTime?rows.pastTime:"暂无"}`
+    }
+  },
+]
+
 export const nothouseColumns = [
   {
     title: "序号",
@@ -333,40 +375,29 @@ export const ownerColmuns = [
     dataIndex: "phone",
   },
   {
-    title: "房间号",
-    dataIndex: "houseShowCode",
-    width: 430, 
-    render(item){
-      return (
-        <div>
-          {getRooms(item).map((elem, i)=><Tag key={i} color="red">{elem.room+':'+elem.name}</Tag>)}
-        </div>
-      )
-    }
-  },
-  {
-    title: "店铺号",
-    dataIndex: "shopShowCode",
-    width: 430, 
-    render(item){
-      return (
-        <div>
-          {getRooms(item).map((elem, i)=><Tag key={i} color="red">{elem.room+':'+elem.name}</Tag>)}
-        </div>
-      )
-    }
-  },
-  {
-    title: "邮箱",
-    dataIndex: "email"
-  },
-  {
     title: "性别",
     dataIndex: "sex",
     render(item){
-      return item=="1"?"男":item=="2"?"女":"不知"
+      return item=="1"?"男":item=="2"?"女":"未知"
     }
   },
+  {
+    title: "关联信息",
+    dataIndex: "detailsList",
+    width: 430, 
+    render(item){
+      return (
+        <div>
+          {item.map((elem, i)=><Tag key={i} color="red">{`${elem.linkType}:${elem.heName}:${elem.linkCode}:${elem.type}`}</Tag>)}
+        </div>
+      )
+    }
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+ 
 ]
 
 export const shopColmuns = [

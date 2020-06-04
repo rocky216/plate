@@ -4,15 +4,15 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Table, Button, Icon, Upload, Modal, Select, Form, Popconfirm } from "antd";
 import JCard from "@/components/JCard"
-import {getOwnerList, insertExcelUsers, deleteOwner} from "@/actions/projectAction"
+import {ownersListPage, insertExcelUsers, deleteOwners} from "@/actions/projectAction"
 import {getHeList} from "@/actions/baseAction"
 import {errInfoColmun, ownerColmuns} from "../colmuns"
 import UploadBar from "@/components/UploadBar"
-import SearchBox from "@/components/SearchBox"
+import SearchBox from "@/components/SearchBox" 
 
 const {Option} = Select
 
-let params = {
+let params = { 
   current:1
 }
 
@@ -28,13 +28,14 @@ class Owner extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getOwnerList(params)
+    this.props.actions.ownersListPage(params)
     this.props.actions.getHeList({})
   }
 
   handlenSearch(values){
+    console.log(values)
     if(values===null){
-      this.props.actions.getOwnerList({})
+      this.props.actions.ownersListPage({})
       params = {
         current:1
       }
@@ -44,7 +45,7 @@ class Owner extends React.Component {
       ...values,
       current:1
     }
-    this.props.actions.getOwnerList(values)
+    this.props.actions.ownersListPage(values)
   }
 
   handlenUpload(info){
@@ -69,7 +70,7 @@ class Owner extends React.Component {
             }, res=>{
               this.setState({exportHeId: ''})
               this.props.utils.OpenNotification("success")
-              this.props.actions.getOwnerList(this.state.params)
+              this.props.actions.ownersListPage(this.state.params)
             })
           }
         });
@@ -79,11 +80,11 @@ class Owner extends React.Component {
   }
 
   handlenDelete(item){
-    this.props.actions.deleteOwner({
+    this.props.actions.deleteOwners({
       id: item.id
     }, res=>{
       this.props.utils.OpenNotification("success")
-      this.props.actions.getOwnerList(this.state.params)
+      this.props.actions.ownersListPage(this.state.params)
     })
   }
 
@@ -112,13 +113,14 @@ class Owner extends React.Component {
   }
 
   render(){
-    const {spinning, utils, owner, heList, commonFiles} = this.props
+    const {spinning, utils, newowners, heList, commonFiles} = this.props
     const {tipVisible, errInfo, exportVisible, exportHeId} = this.state
     
     return (
       <JCard spinning={spinning}>
        <Card title={<div style={{display: "flex"}}>
-          <Button type="primary" ghost className="mgr10" onClick={()=>this.setState({exportVisible: true})}  ><Icon type="import" />批量导入</Button>
+          <Button type="primary" ghost className="mgr10" 
+          onClick={()=>this.setState({exportVisible: true})}  ><Icon type="import" />批量导入</Button>
           <Link to="/project/owner/add">
             <Button type="primary" ><Icon type="plus" />新增</Button>
           </Link>
@@ -165,8 +167,8 @@ class Owner extends React.Component {
           <SearchBox handlenSearch={this.handlenSearch.bind(this)}/>
         </div>
         
-         <Table columns={this.getCol()} dataSource={owner?utils.addIndex(owner.list):[]} 
-          pagination={utils.Pagination(owner, page=>{
+         <Table columns={this.getCol()} dataSource={newowners?utils.addIndex(newowners.list):[]} 
+          pagination={utils.Pagination(newowners, page=>{
             params.current = page
             this.props.actions.getOwnerList(params)
           })} />
@@ -178,7 +180,7 @@ class Owner extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOwnerList, insertExcelUsers, getHeList, deleteOwner}, dispatch)
+    actions: bindActionCreators({ownersListPage, insertExcelUsers, getHeList, deleteOwners}, dispatch)
   }
 }
 
@@ -186,7 +188,7 @@ function mapStateProps(state){
   return {
     commonFiles: state.app.commonFiles,
     heList: state.base.heList,
-    owner: state.project.owner,
+    newowners: state.project.newowners,
     utils: state.app.utils,
     spinning: state.project.spinning
   }

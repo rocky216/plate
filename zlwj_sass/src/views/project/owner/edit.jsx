@@ -2,23 +2,26 @@ import React from "react"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Card, Form, Input, InputNumber, Button, Icon, Modal, Tag, Select} from "antd";
-import { getOwnerDetail, addOwner} from "@/actions/projectAction"
-import SelectRoom from "@/components/SelectRoom"
+import {Card, Form, Input, Table, Button, Icon, Select,} from "antd";
+import {editOwners, getOwners} from "@/actions/projectAction"
 import "./index.less"
 import JCard from "@/components/JCard"
-import SelectShop from "@/components/SelectShop"
+import Relation from "./relation"
+import {relationColumns} from "../colmuns"
+import EndLink from "./endlink"
+
 
 const {Option} = Select
+const {TextArea } = Input
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 4 },
+    sm: { span: 2 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 16 },
+    sm: { span: 8 },
   },
 };
 const tailFormItemLayout = {
@@ -38,89 +41,25 @@ class EditOwner extends React.Component {
   constructor(props){
     super(props)
     this.state={
-      addVisible: false,
-      addShopVisible: false,
-      selectRoom: [],
-      selectShop: [],
-      detail: ''
+      endVisible: false,
+      endDetail: "",
+      visible: false,
+      type:"",
+      types: [{title: "住宅", key: "house"}, {title: "非住宅", key: "other"}, {title: "停车位", key: "carpark"}]
     }
   }
 
   componentDidMount(){
-    this.props.actions.getOwnerDetail({
-      ownerId: this.props.match.params.id
-    }, res=>{
-      this.setState({detail: res, selectRoom: res.houses, selectShop: res.shops})
-    })
-  }
-
-  handlenOnSelect(item){
-    const {selectRoom} = this.state
-    let index = _.findIndex(selectRoom, o=>item.showCodeAll == o.showCodeAll)
-    if(index>-1) {
-      this.props.utils.OpenNotification("error", "该房间已存在！")
-      return
-    }
-    selectRoom.push(item)
-    this.setState({selectRoom: selectRoom, addVisible: false})
-  }
-
-  handlenClose(item){
-    const {selectRoom} = this.state
-    console.log(item)
-    let arr = _.filter(selectRoom, o=>o.id!=item.id)
-    this.setState({selectRoom: arr})
-  }
-
-  handlenHouseInfo(arr){
-    let newArr = []
-    _.each(arr, item=>{
-      newArr.push( `${item.heId}-${item.buildingId}-${item.unitId}-${item.houseId}-${item.ownerType}` )
-    })
-    return newArr
-  }
-
-  handlenShopClose(item){
-    const {selectShop} = this.state
-    console.log(item)
-    let arr = _.filter(selectShop, o=>o.id!=item.id)
-    this.setState({selectShop: arr})
-  }
-
-  handlenOnSelectShop(item){
-    const {selectShop} = this.state
-    
-    let index = _.findIndex(selectShop, o=>item.showCodeAll == o.showCodeAll)
-    if(index>-1) {
-      this.props.utils.OpenNotification("error", "该房间已存在！")
-      return
-    }
-    selectShop.push(item)
-    this.setState({selectShop: selectShop, addShopVisible: false})
-  }
-
-  handlenShopInfo(arr){
-    let newArr = []
-    _.each(arr, item=>{
-      newArr.push( `${item.heId}-${item.shopsId}-${item.ownerType}` )
-    })
-    return newArr
+    this.props.actions.getOwners({id: this.props.match.params.id})
   }
 
   handlenSubmit(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        let houseInfo = this.handlenHouseInfo(this.state.selectRoom)
-        let shopsInfo = this.handlenShopInfo(this.state.selectShop)
-        // if(houseInfo.length==0 &&  shopsInfo.length == 0 ){
-        //   this.props.utils.OpenNotification("error", "房间或者店铺不能为空")
-        //   return
-        // }
-        this.props.actions.addOwner({
+        this.props.actions.editOwners({
+          id: this.props.match.params.id,
           ...values,
-          houseInfo: houseInfo.join(),
-          shopsInfo: shopsInfo.join()
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.history.push("/project/owner")
@@ -129,102 +68,105 @@ class EditOwner extends React.Component {
     });
   }
 
+  getCol(){
+    let _this = this;
+    return relationColumns.concat([{
+      title: "操作",
+      render(item){
+        return (
+          <div>
+            {item.isPast=="0"?<Button type="link" 
+              onClick={()=>_this.setState({endVisible:true, endDetail: item})}>结束关联</Button>:<Button disabled type="link" >无操作</Button>}
+          </div>
+        )
+      }
+    }])
+  }
+
   render(){
     const {getFieldDecorator} = this.props.form
-    const {spinning} = this.props
-    const {addVisible, selectRoom, detail, addShopVisible, selectShop} = this.state
+    const {utils, spinning, detail} = this.props
+    const { types, visible, type, endVisible, endDetail} = this.state
     
+
     return (
       <JCard spinning={spinning}>
-        <Card title="编辑业主" extra={<Button><Link to="/project/owner"><Icon type="rollback" />返回</Link></Button>} >
-          <Modal 
-            onText="确定"
-            cancelText="取消"
-            onCancel={()=>this.setState({addVisible: false})}
-            footer={null}
-            visible={addVisible}>
-            <SelectRoom onSelect={this.handlenOnSelect.bind(this)} />
-          </Modal>
-          <Modal 
-            onText="确定"
-            cancelText="取消"
-            onCancel={()=>this.setState({addShopVisible: false})}
-            footer={null}
-            visible={addShopVisible}>
-            <SelectShop onSelect={this.handlenOnSelectShop.bind(this)} />
-          </Modal>
+        {visible?<Relation visible={visible} type={type} onCancel={()=>this.setState({visible: false})} />:null}
+        {endVisible? <EndLink visible={endVisible} detail={endDetail} onCancel={()=>this.setState({endVisible: false, endDetail: ""})} />:null}
+        <Card title="新增业主" extra={
+          <div>
+            <Button type="primary"  onClick={this.handlenSubmit.bind(this)} ><Icon type="save" />提交</Button>
+            <Button className="mgl10"><Link to="/project/owner"><Icon type="rollback" />返回</Link></Button>
+          </div>
+        } >
           
-          <Form {...formItemLayout} onSubmit={this.handlenSubmit.bind(this)} >
-            <Form.Item label="业主姓名" hasFeedback>
-              {getFieldDecorator('name', {
-                initialValue: detail?detail.owners.name:'',
-                rules: [
-                  {
-                    required: true,
-                    message: '业主姓名!',
-                  }
-                ],
-              })(<Input/>)}
-            </Form.Item>
-            <Form.Item label="手机号" hasFeedback>
-              {getFieldDecorator('phone', {
-                initialValue: detail?detail.owners.phone:'',
-                rules: [
-                  {
-                    required: true,
-                    message: '手机号!',
-                  }
-                ],
-              })(<Input disabled />)}
-            </Form.Item>
-            <Form.Item label="住宅" hasFeedback>
-              {getFieldDecorator('houseShowCode')(
-                <div style={{display: "flex"}}>
-                  <div className="selectRoom">
-                    {selectRoom.map(item=>(
-                      <Tag closable  key={item.id} onClose={this.handlenClose.bind(this, item)}>{item.showCodeAll}：
-                        <span style={{color: "#f74c4c"}}>{item.ownerType=="0"?"业主":item.ownerType=="1"?"家庭成员":"租客"}</span>
-                      </Tag>
-                    ))}
-                  </div>
-                  <i onClick={()=>this.setState({addVisible: true})} className="icon iconfont icon-fangjian"/>
-                </div>
-              )}
-            </Form.Item>
-            <Form.Item label="非住宅" hasFeedback>
-              {getFieldDecorator('houseShowCode')(
-                <div style={{display: "flex"}}>
-                  <div className="selectRoom">
-                    {selectShop.map(item=>(
-                      <Tag closable  key={item.id} onClose={this.handlenShopClose.bind(this, item)}>{item.shopsName}：
-                        <span style={{color: "#f74c4c"}}>{item.ownerType=="0"?"业主":"租客"}</span>
-                      </Tag>
-                    ))}
-                  </div>
-                  <i onClick={()=>this.setState({addShopVisible: true})} className="icon iconfont icon-fangjian"/>
-                </div>
-              )}
-            </Form.Item>
-            <Form.Item label="邮箱" hasFeedback>
-              {getFieldDecorator('email', {
-                initialValue: detail?detail.owners.email:'',
-              })(<Input/>)}
-            </Form.Item>
-            <Form.Item label="性别" hasFeedback>
-              {getFieldDecorator('sex',{
-                initialValue: detail?String(detail.owners.sex):'',
-              })(
-                <Select>
-                  <Option value="0">无</Option>
-                  <Option value="1">男</Option>
-                  <Option value="2">女</Option>
-                </Select>
-              )}
-            </Form.Item>
-            <Form.Item {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit"><Icon type="save" />提交</Button>
-            </Form.Item>
-          </Form>
+        
+        <Form {...formItemLayout} onSubmit={this.handlenSubmit.bind(this)} >
+          <Form.Item label="业主姓名" hasFeedback>
+            {getFieldDecorator('name', {
+              initialValue: detail.name,
+              rules: [
+                {
+                  required: true,
+                  message: '业主姓名!',
+                }
+              ],
+            })(<Input/>)}
+          </Form.Item>
+          <Form.Item label="手机号" hasFeedback>
+            {getFieldDecorator('phone', {
+              initialValue: detail.phone,
+              rules: [
+                {
+                  required: true,
+                  message: '手机号!',
+                }
+              ],
+            })(<Input/>)}
+          </Form.Item>
+          <Form.Item label="身份证" hasFeedback>
+            {getFieldDecorator('idCard',{
+              initialValue: detail.idCard,
+            })(<Input/>)}
+          </Form.Item>
+          <Form.Item label="微信" hasFeedback>
+            {getFieldDecorator('weixin', {
+              initialValue: detail.weixin,
+            })(<Input/>)}
+          </Form.Item>
+          <Form.Item label="邮箱" hasFeedback>
+            {getFieldDecorator('email', {
+              initialValue: detail.email,
+            })(<Input/>)}
+          </Form.Item>
+          <Form.Item label="性别" hasFeedback>
+            {getFieldDecorator('sex',{
+              initialValue: detail.sex?detail.sex.toString():""
+            })(
+              <Select>
+                <Option value="0">无</Option>
+                <Option value="1">男</Option>
+                <Option value="2">女</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item label="备注" hasFeedback>
+            {getFieldDecorator('remark',{
+              initialValue: detail.remark
+            })(<TextArea/>)}
+          </Form.Item>
+          
+        </Form>
+      </Card>
+        <Card title="添加关联信息" extra={(
+          <div>
+            {types.map(item=><Button className="mgl10" 
+              onClick={()=>this.setState({type: item.key, visible: true})}
+              key={item.key} type="primary" ghost>
+              <Icon type="plus" />{item.title}</Button>)}
+          </div>
+        )} >
+          <Table columns={this.getCol()} dataSource={detail?utils.addIndex(detail.assetsList):[]} />
         </Card>
       </JCard>
     )
@@ -233,12 +175,13 @@ class EditOwner extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({getOwnerDetail, addOwner}, dispatch)
+    actions: bindActionCreators({editOwners, getOwners}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
+    detail: state.project.ownerdetail || {},
     utils: state.app.utils,
     spinning: state.project.spinning
   }

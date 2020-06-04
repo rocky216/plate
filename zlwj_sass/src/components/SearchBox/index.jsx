@@ -3,6 +3,8 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Form, Input, Select, Button, Icon, InputNumber} from "antd";
 import {getSelectHeList} from "@/actions/appAction"
+import SpecialBox from "./SpecialBox"
+
 const {Option} = Select
 
 class SearchBox extends React.Component {
@@ -13,7 +15,13 @@ class SearchBox extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      this.props.handlenSearch(values)
+      console.log(values, "Asas")
+      _.assign(values, {
+        code:values.info.code?values.info.code:"",
+        codeType:values.info.codeType?values.info.codeType:"",
+      })
+      let newValues = _.omit(values, "info")
+      this.props.handlenSearch(newValues)
     });
   }
   handlenReset(){
@@ -22,7 +30,7 @@ class SearchBox extends React.Component {
   }
 
   render(){
-    const {getFieldDecorator} = this.props.form
+    const {getFieldDecorator, getFieldValue} = this.props.form
     const {allHeList, } = this.props
 
     return (
@@ -37,23 +45,6 @@ class SearchBox extends React.Component {
             <InputNumber style={{width:160}}/>
           )}
         </Form.Item>
-        <Form.Item label="用户类型">
-          {getFieldDecorator('ownersType', {
-            initialValue: ""
-          })(
-            <Select style={{width:100}}>
-              <Option value="">全部</Option>
-              <Option value="0">业主</Option>
-              <Option value="1">家庭成员</Option>
-              <Option value="2">租客</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="房间展示编号">
-          {getFieldDecorator('houseCode')(
-            <Input/>
-          )}
-        </Form.Item>
         <Form.Item label="项目">
           {getFieldDecorator('heId', {
             initialValue: ""
@@ -66,6 +57,29 @@ class SearchBox extends React.Component {
             </Select>
           )}
         </Form.Item>
+        {getFieldValue("heId")?
+        <>
+          <Form.Item >
+            {getFieldDecorator('info',{
+              initialValue: {code: "", codeType: "house"}
+            })(
+              <SpecialBox/>
+            )}
+          </Form.Item>
+          <Form.Item label="用户类型">
+            {getFieldDecorator('ownersType', {
+              initialValue: ""
+            })(
+              <Select style={{width:100}}>
+                <Option value="">全部</Option>
+                <Option value="0">业主</Option>
+                <Option value="1">家庭成员</Option>
+                <Option value="2">租客</Option>
+              </Select>
+            )}
+          </Form.Item>
+        </>:null}
+        
         <Form.Item>
           <Button type="primary" htmlType="submit"><Icon type="search" />搜索</Button>
           <Button className="mgl10" onClick={this.handlenReset.bind(this)} ><Icon type="rollback" />重置</Button>
