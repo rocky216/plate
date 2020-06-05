@@ -2,9 +2,39 @@ import qs from "qs"
 import instance from "./http"
 import {RequestOption } from "@/interface/utils"
 import {notification } from "antd"
-import Store from "@/store"
+import {save, load, remove } from "react-cookies"
+import _ from "lodash"
 
 
+/* 添加KEY */
+export function addIndex(arr:Array<any>) {
+  _.each(arr, (item,index)=>{
+    item.key = index+1
+  })
+  return arr;
+}
+
+/* 获取token */
+export function getToken():string{
+  return load("token")
+}
+
+/* 设置token */
+export function setToken(str:string):void{
+  save("token", str, {
+    path: "/"
+  })
+}
+
+/* 删除token */
+export function removeToken():void{
+  remove("token", {
+    path: "/"
+  })
+}
+
+
+/* 提示 */
 export function OpenNotification(type:string="success", msg:string="操作成功"){
   (notification as any)[type]({
     message: msg

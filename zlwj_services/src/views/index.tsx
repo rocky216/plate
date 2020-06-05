@@ -1,4 +1,5 @@
 import React from "react"
+import {connect } from "react-redux"
 import {Switch, Route, withRouter} from "react-router-dom"
 import  App from "@/views/app"
 import LoginPage from "@/views/auth/login"
@@ -20,4 +21,11 @@ class Index extends React.Component<IProps> {
   }
 }
 
-export default withRouter( (Index as any) );
+const mapStateToProps = (state: { prop: any }, ownProps: any) => {
+  console.log(state)
+  return {
+    prop: state.prop
+  }
+}
+
+export default withRouter(  connect(mapStateToProps)(Index)  );

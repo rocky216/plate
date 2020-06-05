@@ -24,6 +24,12 @@ export default [
       {
         title: "公司管理",
         key: "1-05",
+        link: "/power/company"
+      },
+      {
+        title: "小区管理",
+        key: "1-06",
+        link: "/power/estate"
       },
     ]
   }

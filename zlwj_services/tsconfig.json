@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "types": ["lodash"],
+    "declaration": true, //生成相应的 .d.ts文件。
+    "noImplicitAny": true, // 不允许隐式的 any 类型
+    "noImplicitThis": true, // 不允许 this 有隐式的 any 类型
+
     "target": "es5",
     "lib": ["es6", "dom"],
     "allowJs": true,
@@ -10,7 +13,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "strictNullChecks": true,
-    "module": "es2015", 
+    "module": "commonjs",  // "ES2015"
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,

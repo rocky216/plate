@@ -1,10 +1,10 @@
 import {START_LOADING_APP, END_LOADING_APP} from "@/types"
-import {fetch} from "@/utils"
-import { Store } from "redux"
+import {fetch, setToken} from "@/utils"
 
 
 
-export function goLogin(params:any, next:any){
+
+export function goLogin(params:any, next: (arg0: any) => void){
   return async function(dispatch:any, getState:any){
     dispatch({
       type: START_LOADING_APP,
@@ -18,8 +18,9 @@ export function goLogin(params:any, next:any){
         }
       }
 
-      let data = await fetch(options)
+      let data:any = await fetch(options)
       if(next)next(data)
+      setToken( data )
       dispatch({
         type: END_LOADING_APP,
       })

@@ -5,20 +5,22 @@ import {HashRouter, Route, Switch} from "react-router-dom"
 import "./index.less"
 import Index from "@/views/index"
 import store from "@/store"
-import _ from "lodash"
+import {ConfigProvider } from "antd"
+import zhCN from 'antd/es/locale/zh_CN';
 
-window._ = _;
 
 
 //热更新
-if( (module as any).hot) {
+if( (module as any).hot) { 
   (module as any).hot.accept()
 }
 
 ReactDOM.render(
   <Provider store={store} >
     <HashRouter>
-      <Index/>
+      <ConfigProvider  locale={zhCN}>
+        <Index/>
+      </ConfigProvider>
     </HashRouter>
   </Provider>
   ,

@@ -23,7 +23,7 @@ module.exports = {
     alias: {
       "@": resolve("src")
     },
-    extensions:[".js",".jsx", ".tsx", ".ts"],
+    extensions:[".js", ".tsx", ".ts"],
   },
   
   plugins: [

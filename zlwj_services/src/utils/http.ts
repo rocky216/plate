@@ -1,5 +1,6 @@
 import axios from "axios"
-
+import qs from "qs"
+import {getToken} from "./index"
 
 const instance = axios.create({
   baseURL: "",
@@ -8,7 +9,18 @@ const instance = axios.create({
   }
 })
 
-instance.interceptors.request.use(function(config){
+instance.interceptors.request.use( async function(config){
+  let token = await getToken();
+  let opt = {
+    ...config.data,
+    token: token
+  }
+  if(config.method == "get"){
+    config.params = opt
+  }else if(config.method == "post"){
+    config.data = qs.stringify(opt)
+  }
+
   
   return config;
 }, function(){

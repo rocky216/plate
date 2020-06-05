@@ -18,6 +18,8 @@ const tailLayout = {
 };
 
 
+
+
 class LoginPage extends React.Component<IProps> {
   formRef = React.createRef<FormInstance>();
 
@@ -28,11 +30,14 @@ class LoginPage extends React.Component<IProps> {
   onFinish(values:any){
     this.props.actions.goLogin({
       ...values
+    }, (res:any)=>{
+      this.props.history.push("/")
     })
     
   }
 
   render(){
+    const {spinning } = this.props;
     
     return (
       <div className="loginpage">
@@ -64,7 +69,7 @@ class LoginPage extends React.Component<IProps> {
             </Form.Item>
 
             <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" loading={false} >登录</Button>
+              <Button type="primary" htmlType="submit" loading={spinning} >登录</Button>
             </Form.Item>
           </Form>
         </Card>
@@ -81,8 +86,9 @@ const mapDispatchToProps = (dispatch:any, ownProps: any) => {
 }
 
 const mapStateToProps = (state:any, ownProps:any) => {
+  
   return {
-    prop: state.prop
+    spinning: state.app.spinning
   }
 }
 

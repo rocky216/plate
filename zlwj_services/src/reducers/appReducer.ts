@@ -1,10 +1,18 @@
 import { START_LOADING_APP, END_LOADING_APP} from "@/types"
+import {
+  OpenNotification,
+  addIndex,
+} from "@/utils"
 
 let initialState = {
-  spinning: false
+  spinning: false,
+  utils: {
+    OpenNotification,
+    addIndex,
+  }
 }
 
-function reducer (state=initialState, action:any){
+function appReducer (state=initialState, action:any){
   
   switch (action.type){
     case START_LOADING_APP:
@@ -16,4 +24,4 @@ function reducer (state=initialState, action:any){
   }
 }
 
-export default reducer
+export default appReducer
