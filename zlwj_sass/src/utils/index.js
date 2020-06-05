@@ -4,7 +4,7 @@ import instance from "./http"
 import { notification } from 'antd';
 import store from "@/store"
 
-export function normFileMulti(e){
+export function normFileMulti(e){ 
   if (Array.isArray(e)) {
     return e;
   }

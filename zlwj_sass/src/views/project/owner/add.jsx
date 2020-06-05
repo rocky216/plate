@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Form, Input, InputNumber, Button, Icon, Modal, Tag, Select} from "antd";
-import {addOwner} from "@/actions/projectAction"
+import {addOwners} from "@/actions/projectAction"
 import "./index.less"
 
 const {Option} = Select
@@ -45,7 +45,7 @@ class AddOwner extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.actions.addOwner({
+        this.props.actions.addOwners({
           ...values,
         }, res=>{
           this.props.utils.OpenNotification("success")
@@ -121,7 +121,7 @@ class AddOwner extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({addOwner}, dispatch)
+    actions: bindActionCreators({addOwners}, dispatch)
   }
 }
 
