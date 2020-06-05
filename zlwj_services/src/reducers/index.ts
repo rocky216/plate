@@ -1,17 +1,8 @@
-let initialState = {
-  spinning: false
-}
+import {combineReducers} from "redux"
+import powerReducer from "./powerReducer"
 
-function reducer (state=initialState, action:any){
-  
-  switch (action.type){
-    case "START_LOADING_APP":
-      return  Object.assign({},state, action, {spinning: true})
-    case "END_LOADING_APP":
-        return  Object.assign({},state, action, {spinning: false})
-    default:
-      return state
-  }
-}
 
-export default reducer
+export default  combineReducers({
+  power: powerReducer
+})
+

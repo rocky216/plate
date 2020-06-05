@@ -4,6 +4,7 @@ import {Link } from "react-router-dom"
 import {connect} from "react-redux"
 import { Button } from "antd";
 
+
 class HomePage extends React.Component {
 
   state = {
@@ -25,7 +26,7 @@ class HomePage extends React.Component {
     return (
       <div>
         <Link to="/house">
-         <Button type="primary" onClick={()=>this.setState({aa: 1212})}>点击22</Button>
+         <Button type="primary" onClick={()=>this.setState({aa: 1212})}>点击1</Button>
         </Link>
       </div>
     );

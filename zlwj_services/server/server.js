@@ -10,7 +10,6 @@ const open = require("open");
 const config = require("../config")
 
 
-
 const app = express();
 
 const ENV = process.env.NODE_ENV
@@ -28,14 +27,9 @@ if(ENV == "development"){
   /* 加载webpack配置 */
   app.use( webpackDevMiddleware(compiler, {
     publicPath: webpackDevConfig.output.publicPath,
-    noInfo: true,
-    quiet: true,
-    compress: true,
-    progress:false,
-    overlay: true,
-    open:true,
+    logLevel: "error",
     stats: {
-      colors: true
+      context: process.cwd()
     }
   }))
 
@@ -48,10 +42,10 @@ if(ENV == "development"){
   console.log(proxyMiddleWare)
 
   /* 开发环境代理接口 */
-  app.use("/api",proxyMiddleWare({
+  app.use("/iot/power",proxyMiddleWare({
     target:config.baseUrl,
     changeOrigoin:true,
-    pathRewrite: {'^/api' : '/api'},
+    pathRewrite: {'^/iot/power' : '/iot/power'},
   }));
 
 }else{

@@ -1,5 +1,5 @@
 module.exports = {
-  baseUrl: "http://zlwj.jiajgou.com/",
+  baseUrl: "http://192.168.1.11",
 
   host: "localhost",
   port: 3003,

@@ -14,10 +14,7 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount(){
-    
-    
-  }
+  
   
 
   render(){

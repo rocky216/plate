@@ -12,8 +12,8 @@ var vendors= [
   "react-redux",
   "lodash",
   // "moment",
-  // "axios",
-  // "qs"
+  "axios",
+  "qs"
 ]
 
 
