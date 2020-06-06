@@ -9,8 +9,8 @@ export function editCompanyCallbackUrl(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/callback/"+params.id,
-        method: "put",
+        url: "/iot/pc/callback/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }
@@ -97,8 +97,8 @@ export function editCompanyDevice(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/device/"+params.id,
-        method: "put",
+        url: "/iot/pc/device/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }
@@ -186,8 +186,8 @@ export function editCompany(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/company/"+params.id,
-        method: "put",
+        url: "/iot/pc/company/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }

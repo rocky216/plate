@@ -11,8 +11,8 @@ export function editArguments(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/callback/param/"+params.id,
-        method: "put",
+        url: "/iot/pc/callback/param/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }
@@ -101,7 +101,7 @@ export function deleteAlign(params, next){
     try{
       const options = {
         url: "/iot/pc/queues/delete/"+params.id,
-        method: "put",
+        method: "post",
         data: {
           ...params
         }
@@ -130,8 +130,8 @@ export function editApi(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/request/api/"+params.id,
-        method: "put",
+        url: "/iot/pc/request/api/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }
@@ -219,7 +219,7 @@ export function deleteSwitch(params, next){
     try{
       const options = {
         url: "/iot/pc/exchanges/delete/"+params.id,
-        method: "put",
+        method: "post",
         data: {
           ...params
         }
@@ -247,8 +247,8 @@ export function editSwitch(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/exchanges/"+params.id,
-        method: "put",
+        url: "/iot/pc/exchanges/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }
@@ -396,8 +396,8 @@ export function editDictDevice(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/device/dict/"+params.id,
-        method: "put",
+        url: "/iot/pc/device/dict/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }
@@ -427,7 +427,7 @@ export function deleteDictDevice(params, next){
     try{
       const options = {
         url: "/iot/pc/device/dict/delete/"+params.id,
-        method: "put",
+        method: "post",
         data: {
           ...params
         }

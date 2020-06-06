@@ -9,8 +9,8 @@ export function editAlldevice(params, next){
     })
     try{
       const options = {
-        url: "/iot/pc/device/co/"+params.id,
-        method: "put",
+        url: "/iot/pc/device/co/update/"+params.id,
+        method: "post",
         data: {
           ...params
         }

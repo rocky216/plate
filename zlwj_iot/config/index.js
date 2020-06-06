@@ -1,5 +1,5 @@
 module.exports = {
-  baseUrl: "http://iot.jxhtservice.com",
-  // baseUrl: "http://118.25.196.194:8080",
-  host: "192.168.0.105"
+  // baseUrl: "http://iot.jxhtservice.com",
+  baseUrl: "http://192.168.1.11:80",
+  host: "192.168.1.6"
 }

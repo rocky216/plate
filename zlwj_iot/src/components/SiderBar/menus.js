@@ -22,16 +22,16 @@ export default [
     key: 3,
     icon: "icon iconfont icon-gongzuozhongxin",
     children: [
-      {
-        title: "交换机",
-        link: '/config/switch',
-        key: 301
-      },
-      {
-        title: "队列",
-        link: '/config/align',
-        key: 302
-      },
+      // {
+      //   title: "交换机",
+      //   link: '/config/switch',
+      //   key: 301
+      // },
+      // {
+      //   title: "队列",
+      //   link: '/config/align',
+      //   key: 302
+      // },
       {
         title: "接口管理",
         link: '/config/api',

@@ -1,6 +1,36 @@
 import { START_LOADING_POWER, END_LOADING_POWER } from "@/types"
 import {fetch } from "@/utils"
 
+export function addEstates(params:any, next: (arg0: any) => void){
+  return async function(dispatch:any, getState:any){
+    dispatch({
+      type: START_LOADING_POWER,
+    })
+    try{
+      const options = {
+        url: "/iot/power/item/",
+        method: "post",
+        data: {
+          ...params
+        }
+      }
+
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_POWER,
+      })
+    }catch(err){
+      console.log(err, `color: red`)
+      dispatch({
+        type: END_LOADING_POWER,
+      })
+    }
+
+  }
+}
+
+
 export function getEstates(params:any, next: (arg0: any) => void){
   return async function(dispatch:any, getState:any){
     dispatch({
