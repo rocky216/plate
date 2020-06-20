@@ -33,7 +33,6 @@ class Owner extends React.Component {
   }
 
   handlenSearch(values){
-    console.log(values)
     if(values===null){
       this.props.actions.ownersListPage({})
       params = {
@@ -51,7 +50,7 @@ class Owner extends React.Component {
   handlenUpload(info){
     const {file} = info
     if(file.status === "done" && file.response.data){
-      console.log(info, "asas")
+      
       const {check, result, excelKey} = file.response.data
       
       if(!check){

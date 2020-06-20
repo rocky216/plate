@@ -37,7 +37,8 @@ class AddOtherfee extends React.Component {
       operative: "",
       accountList: [],
       dataDetail: [],
-      initdata: {}
+      initdata: {},
+      previewImage: ""
     }
   }
 
@@ -124,14 +125,27 @@ class AddOtherfee extends React.Component {
     });
   }
 
+  handlePreview(file ){
+    this.setState({previewImage: file.url})
+  }
+
   render(){
     const {getFieldDecorator, getFieldValue} = this.props.form
     const {spinning, utils, visible, onCancel, detail, commonFiles} = this.props
-    const {addHouseVisible, hosue,shop,operative, addShopVisible, addOperativeVisible, initdata, dataDetail} = this.state
+    const {addHouseVisible, hosue,shop,operative, addShopVisible, addOperativeVisible, initdata, dataDetail, previewImage } = this.state
     console.log(initdata, "hosue")
 
     return (
-      <Modal
+      <div>
+        <Modal
+          visible={previewImage?true:false}
+          onCancel={()=>this.setState({previewImage: ""})}
+          footer={false}
+        >
+          <img  style={{ width: '100%' }} src={previewImage} />
+        </Modal>
+      
+        <Modal
         destroyOnClose
         width={800}
         okText="确定"
@@ -203,11 +217,13 @@ class AddOtherfee extends React.Component {
               ],
             })(
               <Upload 
+                onPreview={this.handlePreview.bind(this)}
+                listType="picture-card"
                 accept=".jpg,.png,.jpeg"
-                action={`${commonFiles?commonFiles.resourceServerAddress:""}/file/uploadFile`} 
+                action={`${commonFiles?commonFiles.resourceServerAddress:""}/file/uploadFile`}
                 name="file"
                 data={{fileType:"photo", fileSize: 1024*10}}>
-                <Button><Icon type="upload" /></Button>
+                <Icon type="upload" style={{fontSize:20}} />
               </Upload>
             )}
           </Form.Item>
@@ -224,6 +240,7 @@ class AddOtherfee extends React.Component {
           </Form.Item>
         </Form>
       </Modal>
+      </div>
     )
   }
 }

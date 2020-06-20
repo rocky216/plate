@@ -15,10 +15,9 @@ class SearchBox extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log(values, "Asas")
       _.assign(values, {
-        code:values.info.code?values.info.code:"",
-        codeType:values.info.codeType?values.info.codeType:"",
+        code:values.info?values.info.code:"",
+        codeType:values.info?values.info.codeType:"",
       })
       let newValues = _.omit(values, "info")
       this.props.handlenSearch(newValues)

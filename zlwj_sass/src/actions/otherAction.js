@@ -3,6 +3,210 @@ import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
 
+export function goUpdateOwner(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/workCenterAssets/updateOwner",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function checkUpdateOwner(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/workCenterAssets/checkUpdateOwner",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+
+export function removeOwnersLink(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/baseHeOwners/removeOwnersLink",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addOwnerAndLink(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/workCenterAssets/addOwnerAndLink",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function updateAssetsRemark(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/workCenterAssets/updateAssetsRemark",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function propertyfeeUpdateHouse(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/workCenterAssets/updateHouse",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function loadAssetsInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/workCenterAssets/loadAssetsInfo",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        assetinfo: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
 
 export function revokeBaseOrderException(params, next){
   return async function(dispatch, getState){

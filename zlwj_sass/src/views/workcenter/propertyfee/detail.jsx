@@ -135,7 +135,7 @@ class PropertyFeeDetail extends React.Component {
               <div className="table_title" >
                 <img src={detail.companyLogo} />
                 <div className="mgt10">
-                  <h2>{detail.order.heNameStr}服务部</h2>
+                  <h2>{detail.order.heNameStr}</h2>
                   <span >房间名称:{detail.order.houseUrlStr}</span>
                 </div>
                 <div style={{marginTop: 40}}>

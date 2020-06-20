@@ -12,6 +12,7 @@ import {propertyfeeColmuns} from "../colmuns"
 import {getPropertyOrderPage} from "@/actions/otherAction"
 import AddPropertyfee from "./add"
 import moment from "moment"
+import PropertyRelation from "./relation"
 
 const {TabPane} = Tabs
 const {Option} = Select
@@ -86,8 +87,8 @@ class PropertyFee extends React.Component {
     }])
   }
 
-  handlenSelectShop(data){
-    console.log(data)
+  async handlenSelectShop(data){
+    await this.setState({houseItem: ""})
     const {params} = this.state
     params.orderType = data.type
     params.linkTypeId = data.linkTypeId?data.linkTypeId:""
@@ -134,6 +135,8 @@ class PropertyFee extends React.Component {
             </Card>
           </div>
           <div style={{width: "100%"}}>
+            {houseItem?<PropertyRelation houseItem={houseItem} />:null}
+            
             <Card title={houseItem?houseItem.name:null} extra={houseId?<Button type="primary" 
             onClick={()=>this.setState({addVisible:true})}>
                 <Icon type="plus" />新增物业费订单</Button>:null} >

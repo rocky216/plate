@@ -94,7 +94,7 @@ class AllExpend extends React.Component {
         return (
           <div>
             {item.orderStatus=="1"?
-            <Link to={`/manage/allexpend/${item.id}/detail/1`}><Button size="small" type="danger"><Icon type="exception" />审核异常</Button></Link>
+            <Link to={`/manage/allexpend/${item.id}/detail/1`}><Button size="small" type="danger"><Icon type="exception" />审核</Button></Link>
             :<Link to={`/manage/allexpend/${item.id}/detail/2`}><Button size="small" type="primary" className="mgl10"><Icon type="eye" />查看</Button></Link>}
           </div>
         )

@@ -48,7 +48,7 @@ class Relation extends React.Component {
         
         this.props.actions.addOwnersLink({
           ...values,
-          ownerId: ownersId,
+          ownerId: this.props.match.params.id,
           linkId: id,
           assetType: type,
           startTime: moment( values.startTime ).format("YYYY-MM-DD")

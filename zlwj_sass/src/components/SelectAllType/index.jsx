@@ -45,7 +45,7 @@ class SelectAllType extends React.Component {
     if(!_.isArray(arr)) return []
 
     _.each(arr, (item, attr)=>{
-      if(item.type=="house" || item.type=="shops" || item.type=="floorArea" || item.type=="coOperative"  ){
+      if(item.type=="house" || item.type=="shops" || item.type=="parkingSpace" || item.type=="coOperative"  ){
         item.selectable=true
         item.isLeaf = true
       }else{

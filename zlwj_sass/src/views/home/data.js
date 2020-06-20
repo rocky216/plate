@@ -5,7 +5,7 @@ export const  options = {
       trigger: 'axis'
   },
   legend: {
-      data: ['住宅物业费订单', '非住宅物业费订单']
+      data: ['住宅物业费订单', '非住宅物业费订单', '缴费金额']
   },
   grid: {
       left: '3%',
@@ -20,16 +20,21 @@ export const  options = {
   },
   xAxis: {
       type: 'category',
-      boundaryGap: false,
+      boundaryGap: true,
       axisLabel: {  
         interval:0,  
         rotate:40  
       },
       data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
   },
-  yAxis: {
+  yAxis: [
+    {
       type: 'value'
-  },
+    },
+    {
+      type: 'value'
+    },
+  ],
   series: [
       {
         name: '住宅物业费订单',
@@ -56,6 +61,21 @@ export const  options = {
               color:'#ff4d4f',
           }  
         }, 
+        data: [220, 182, 191, 234, 290, 330, 310]
+      },
+      {
+        name: '缴费金额',
+        type: 'bar',
+        barWidth: "50%",
+        itemStyle : {  
+          normal : {  
+              lineStyle:{  
+                  color:'#ff9d48'  
+              },
+              color:'#ff9d48',
+          }  
+        }, 
+        yAxisIndex:1,
         data: [220, 182, 191, 234, 290, 330, 310]
       }
   ]

@@ -22,6 +22,8 @@ class Test extends React.Component {
     options.xAxis.data = this.handleData("fcHouseOrder",  "key")
     options.series[0].data = this.handleData("fcHouseOrder")
     options.series[1].data = this.handleData("fcNoHouseOrder")
+    options.series[2].data = this.handleData("fcOrderSum")
+    console.log(this.handleData("fcOrderSum"), 'this.handleData("fcOrderSum")')
     this.setState({option: options})
   }
 

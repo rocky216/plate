@@ -11,6 +11,7 @@ import {propertyDetailColmuns} from "../colmuns"
 
 const { RangePicker } = DatePicker;
 const {Option } = Select
+const {TextArea} = Input;
 
 const formItemLayout = {
   labelCol: {
@@ -68,10 +69,11 @@ class AddPropertyfee extends React.Component {
       console.log(values)
       
       const {houseType, houseItem} = this.props
-      const {templeId, accountId, endTime} = values
+      const {templeId, accountId, endTime, remark} = values
       
       this.props.actions.addBasePropertyOrder({
         templateId:templeId, 
+        remark,
         accountId, 
         feeEndTime: moment(endTime).format("YYYY-MM-DD"),
         orderTypeCode: houseItem.type,
@@ -313,6 +315,10 @@ class AddPropertyfee extends React.Component {
           <div className="flexend">
             <span>总金额: {temDetail.orderTotalFee}</span>
           </div>
+          <Form.Item  label="备注"  labelCol={{span: 1}} >
+            {getFieldDecorator("remark", {
+            })(<TextArea />)}
+          </Form.Item>
         </Form>
       </Modal>
     )

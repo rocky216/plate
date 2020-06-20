@@ -2,6 +2,51 @@ import React from "react"
 import {Input, InputNumber, Icon, Button, Tag} from "antd"
 const {TextArea} = Input
 
+export const ownerLinkAssetsListColumns = [
+  {
+    title: "资产类型",
+    dataIndex: "assetsType",
+    render(item){
+      switch(item){
+        case "house":
+          return "住宅"
+        case "other":
+          return "非住宅"
+        case "parkingSpace":
+          return "停车位"
+      }
+    }
+  },
+  {
+    title: "资产编号",
+    dataIndex: "assetsCode"
+  },
+  {
+    title: "关联类型",
+    dataIndex: "linkType"
+  },
+  {
+    title: "建筑面积",
+    dataIndex: "houseArea",
+    render(item){
+    return <div>{item}m&sup2;</div>;
+    }
+  },
+  {
+    title: "交付时间",
+    dataIndex: "deliversTime",
+    render(item) {
+      return item?item.substring(0,10):""
+    }
+  },
+  {
+    title: "已缴物业费区间",
+    dataIndex: "payFristTime",
+    render(item, rows){
+      return item && rows.payLastTime? `${item}到${rows.payLastTime}`:"暂无"
+    }
+  },
+]
 
 export const repairColumns = [
   {
@@ -385,18 +430,20 @@ export const propertyfeeColmuns = [
   },
   {
     title: "创建信息",
-    dataIndex: "buildInfo"
+    dataIndex: "buildInfo",
+    width: 150,
   },
   {
     title: "打印信息",
     dataIndex: "printCount",
+    width: 200,
     render(item, rows){
       return (
         item!=0?
         <div>
           {rows.printUserName?<Tag>{rows.printUserName}</Tag>:null}
           <Tag>打印次数:{item}</Tag>
-          {rows.printTime?<Tag>打印时间:{rows.printTime}</Tag>:null}
+          {rows.printTime?<Tag>时间:{rows.printTime}</Tag>:null}
         </div>:<Tag>暂无打印</Tag>
       )
     }
@@ -547,7 +594,7 @@ export const shopPropertyfeeColmuns = [
   }
 ]
 
-export const exceptionColumns = [
+export const exceptionColumns = [ 
   {
     title: "序号",
     dataIndex: "key"
@@ -711,16 +758,18 @@ export const otherfeeColmuns = [
     dataIndex: "orderNo"
   },
   {
-    title: "创建信息",
-    dataIndex: "buildInfo"
-  },
-  {
     title: "缴费金额",
     dataIndex: "orderTrueFee"
   },
   {
+    title: "创建信息",
+    dataIndex: "buildInfo",
+    width: 160,
+  },
+  {
     title: "打印信息",
     dataIndex: "printCount",
+    width: 200,
     render(item, rows){
       return (
         item!=0?
@@ -788,7 +837,8 @@ export const expendfeeColmuns = [
   },
   {
     title: "创建信息",
-    dataIndex: "buildInfo"
+    dataIndex: "buildInfo",
+    width: 160
   },
   {
     title: "支出金额",

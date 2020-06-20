@@ -82,7 +82,8 @@ export const allOrderColumns = [
   },
   {
     title: "创建信息",
-    dataIndex: "buildInfo"
+    dataIndex: "buildInfo",
+    width: 160
   },
   {
     title: "缴费金额",
@@ -160,27 +161,72 @@ export const allExpendColumns = [
     dataIndex: "orderNo"
   },
   {
-    title: "创建信息",
-    dataIndex: "buildInfo"
-  },
-  {
     title: "支出金额",
     dataIndex: "orderTrueFee"
+  },
+  {
+    title: "创建信息",
+    dataIndex: "buildInfo",
+    width: 160
   }
 ]
 
-export const exceptionColumns = [
+export const exceptionColumns = [ 
   {
     title: "序号",
     dataIndex: "key"
   },
   {
-    title: "审批人",
-    dataIndex: "checkUserName"
-  },
-  {
     title: "异常说明",
     dataIndex: "exceptionInfo"
+  },
+  {
+    title: "状态",
+    dataIndex: "exceptionStatus",
+    render(item){
+      switch(parseInt(item)){
+        case 1:
+          return <span style={{color:"#60b2ef"}}>待审核</span>
+        case 2:
+          return <span style={{color:"#26ba17"}}>审核通过</span>
+        case 3:
+          return <span style={{color:"#faaa39"}}>审核不通过</span>
+        case 4:
+          return <span style={{color:"#ff6969"}}>关闭订单</span>
+        case 5:
+          return <span style={{color:"#60b2ef"}}>撤回异常</span>
+      }
+    }
+  },
+  {
+    title: "状态说明",
+    render(item){ 
+      if(item.exceptionStatus==2||item.exceptionStatus==3||item.exceptionStatus==4){
+        return (
+          <div>
+            <Tag>{item.checkInfo}</Tag>
+            <Tag>{item.checkUserName}</Tag>
+            <Tag>{item.checkTime}</Tag>
+            {item.updateFeeStatus=="0"?null:<Tag color="magenta">金额￥{item.updateFeeStatus=="2"?'-'+item.updateFee:item.updateFee}</Tag>}
+            
+          </div>
+        )
+      }else if(item.exceptionStatus==5){
+        return (
+          <div>
+            <Tag>{item.remark}</Tag>
+            <Tag>{item.updateUserName}</Tag>
+            <Tag>{item.updateTime}</Tag>
+          </div>
+        )
+      }else {
+        return ""
+      }
+    }
+  },
+  {
+    title: "创建人",
+    dataIndex: "exceptionUserName"
   },
   {
     title: "创建时间",
@@ -257,7 +303,8 @@ export const propertyfeeColmuns = [
   },
   {
     title: "创建信息",
-    dataIndex: "buildInfo"
+    dataIndex: "buildInfo",
+    width: 160
   },
   {
     title: "打印信息",
