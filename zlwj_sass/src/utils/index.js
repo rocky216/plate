@@ -4,6 +4,12 @@ import instance from "./http"
 import { notification } from 'antd';
 import store from "@/store"
 
+
+// 判断是否是时期格式
+export function isDate(date){
+  return isNaN(date)&&!isNaN(Date.parse(date))
+}
+
 export function normFileMulti(e){ 
   if (Array.isArray(e)) {
     return e;

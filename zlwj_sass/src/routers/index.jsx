@@ -38,6 +38,7 @@ import SystemLibrary from "@/views/system/library"
 import Propertytem from "@/views/finance/propertytem"
 import AddPropertytem from "@/views/finance/propertytem/add"
 import EditPropertytem from "@/views/finance/propertytem/edit"
+import Activity from "@/views/finance/activity"
 import Notice from "@/views/other/notice"
 import AddNotice from "@/views/other/notice/add"
 import EditNotice from "@/views/other/notice/edit"
@@ -160,6 +161,7 @@ class Routers extends React.Component{
         <AuthRoute exact path="/finance/propertytem" Component={Propertytem} name="物业费收费模板" auth="10-02" /> 
         <AuthRoute  path="/finance/propertytem/add" Component={AddPropertytem} name="新增物业费收费模板" />
         <AuthRoute  path="/finance/propertytem/:id/edit" Component={EditPropertytem} name="编辑物业费收费模板" />
+        <AuthRoute  path="/finance/activity" Component={Activity} auth="10-03" name="活动模板" />
 
         <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" auth="5-01" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />

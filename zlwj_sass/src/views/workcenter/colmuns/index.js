@@ -43,7 +43,7 @@ export const ownerLinkAssetsListColumns = [
     title: "已缴物业费区间",
     dataIndex: "payFristTime",
     render(item, rows){
-      return item && rows.payLastTime? `${item}到${rows.payLastTime}`:"暂无"
+      return item && rows.payLastTime? `${item.substring(0,10)}到${rows.payLastTime.substring(0,10)}`:"暂无"
     }
   },
 ]
@@ -460,18 +460,18 @@ export const propertyDetailColmuns = [
     dataIndex: "detailsName"
   },
   {
-    title: "房屋类型",
-    dataIndex: "houseType",
-    render(item){
-      switch(parseInt(item)){
-        case 0:
-          return "电梯和楼梯房"
-        case 1:
-          return "电梯房"
-        case 2:
-          return "楼梯房"
-      }
-    }
+    title: "类型",
+    dataIndex: "houseTypeStr",
+    // render(item){
+    //   switch(parseInt(item)){
+    //     case 0:
+    //       return "电梯和楼梯房"
+    //     case 1:
+    //       return "电梯房"
+    //     case 2:
+    //       return "楼梯房"
+    //   }
+    // }
   },
   {
     title: "房屋面积条件",
@@ -493,7 +493,7 @@ export const propertyDetailColmuns = [
     title: "房屋楼层条件",
     dataIndex: "floorStart",
     render(item, rows){
-      return `${item}-${rows.floorEnd}层`
+      return `${item}至${rows.floorEnd}层`
     }
   },
   {

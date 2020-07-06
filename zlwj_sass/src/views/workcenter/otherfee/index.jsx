@@ -10,10 +10,22 @@ import "./index.less"
 import "../propertyfee/index.less"
 import {otherfeeColmuns} from "../colmuns"
 import AddOtherFee from "./add"
+import moment from "moment";
 
 const {TabPane} = Tabs
 const {RangePicker} = DatePicker
 const {Option} = Select
+
+let params = {
+  current: 1,
+  orderType: "",
+  orderStatusStr: "",
+  selectStartBuildTime: "",
+  selectEndBuildTime: "",
+  orderNo: "",
+  linkTypeId: "",
+  linkId: ""
+}
 
 class Otherfee extends React.Component {
   constructor(props){
@@ -47,29 +59,18 @@ class Otherfee extends React.Component {
         },
       ],
       houseItem: "",
-      params: {
-        current: 1,
-        orderType: "",
-        orderStatusStr: "",
-        selectStartBuildTime: "",
-        selectEndBuildTime: "",
-        orderNo: "",
-        linkTypeId: "",
-        linkId: ""
-      },
+      
       addVisible: false
     } 
   }
 
   componentDidMount(){
-    this.props.actions.getOtherCostsOrderLists(this.state.params)
+    this.props.actions.getOtherCostsOrderLists(params)
   }
 
   handlenTab(key){
-    const {params} = this.state
     params.current = 1
     params.orderStatusStr = key
-    this.setState({params})
     this.props.actions.getOtherCostsOrderLists(params)
   }
 
@@ -90,7 +91,6 @@ class Otherfee extends React.Component {
   handleSearch(e){
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-        const {params} = this.state
         console.log(values, "values")
         params.selectStartBuildTime = values.time && values.time.length?
           moment(values.time[0]).format("YYYY-MM-DD"):""
@@ -98,27 +98,25 @@ class Otherfee extends React.Component {
               moment(values.time[1]).format("YYYY-MM-DD"):""
         params.orderNo = values.orderNo
         params.orderType = values.orderType
-        this.setState({params})
         
         this.props.actions.getOtherCostsOrderLists(params)
     })
   }
 
   handlenSelectShop(data){
-    const {params} = this.state
     const {linkTypeId, isLeaf, id, type} = data
 
     params.linkTypeId = linkTypeId?linkTypeId:""
     params.linkId = id
     params.orderType = type
-    this.setState({params, houseItem: data})
+    this.setState({houseItem: data})
     this.props.actions.getOtherCostsOrderLists(params)
   }
 
   render(){
     const {getFieldDecorator} = this.props.form
     const {spinning, utils, otherfeeorder} = this.props
-    const {tabs, houseItem, params, addVisible} = this.state
+    const {tabs, houseItem, addVisible} = this.state
     
     return (
       <JCard spinning={spinning}>
@@ -137,12 +135,16 @@ class Otherfee extends React.Component {
               <div className="flexend mgb10">
                 <Form layout="inline" onSubmit={this.handleSearch.bind(this)}>
                   <Form.Item label="订单号" >
-                    {getFieldDecorator('orderNo')(
+                    {getFieldDecorator('orderNo',{
+                      initialValue: params.orderNo
+                    })(
                       <Input  />,
                     )}
                   </Form.Item>
                   <Form.Item label="创建时间" >
                     {getFieldDecorator('time',{
+                      initialValue: params.selectStartBuildTime?[moment(params.selectStartBuildTime), 
+                        moment(params.selectEndBuildTime)]:null,
                       rules: [{type: 'array'}]
                     })(
                       <RangePicker />,
@@ -164,7 +166,13 @@ class Otherfee extends React.Component {
                   ))}
                 </Tabs>
                 
-                <Table columns={this.getCol()} dataSource={otherfeeorder?utils.addIndex(otherfeeorder.page.list):[]} />
+                <Table columns={this.getCol()} dataSource={otherfeeorder?utils.addIndex(otherfeeorder.page.list):[]} 
+                  pagination={otherfeeorder?utils.Pagination(otherfeeorder.page, page=>{
+                    params.current = page
+                    this.setState({params})
+                    this.props.actions.getOtherCostsOrderLists(params)
+                  }):false}
+                />
               </Card>
           </div>
         </div>

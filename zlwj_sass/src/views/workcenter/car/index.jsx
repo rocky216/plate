@@ -84,7 +84,7 @@ class CarList extends React.Component {
 
     const uploadProps = {
       visible: importVisible,
-      download: commonFiles?commonFiles.carImportMode:"",
+      download: commonFiles?commonFiles.carInfoMode:"",
       columns: importPlateColumns,
       name: "file",
       action: "/api/pc/carInfo/excelImportCheck",

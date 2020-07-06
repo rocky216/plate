@@ -8,6 +8,7 @@ import JCard from "@/components/JCard"
 import {detailInfo} from "./data"
 import ReactToPrint from 'react-to-print';
 import {exceptionColumns} from "../colmuns"
+import PropertySheet from "@/components/PropertySheet"
 
 
 const {TextArea} = Input
@@ -36,7 +37,7 @@ class PropertyFeeDetail extends React.Component {
     this.props.actions.getBasePropertyOrder({
       id: this.props.match.params.id
     }, res=>{
-      console.log(res)
+      
       this.setState({detail: res})
     })
   }
@@ -52,28 +53,7 @@ class PropertyFeeDetail extends React.Component {
     return val
   }
 
-  checkedDate(item){
-    switch(parseInt(item)){
-      case 0:
-        return "月"
-      case 1:
-        return "季度"
-      case 2:
-        return "年"
-    }
-  }
-  checkedType(item){
-    switch(parseInt(item)){
-      case 0:
-        return ""
-      case 1:
-        return "1平方(建筑面积)/"
-      case 2:
-        return "1平方(室内面积)/"
-      case 3:
-        return "1平方(公摊面积)/"
-    }
-  }
+  
 
   handlenSubmit(){
     this.props.form.validateFields((err, values) => {
@@ -131,56 +111,7 @@ class PropertyFeeDetail extends React.Component {
           </div>:null}  extra={<Link to="/workcenter/propertyfee"><Button><Icon type="rollback" />返回</Button></Link>} >
           
           <div className="PropertyFeeDetail" ref={el=>this.componentRef = el} >
-            {detail?<Card >
-              <div className="table_title" >
-                <img src={detail.companyLogo} />
-                <div className="mgt10">
-                  <h2>{detail.order.heNameStr}</h2>
-                  <span >房间名称:{detail.order.houseUrlStr}</span>
-                </div>
-                <div style={{marginTop: 40}}>
-                  <h3>{detail.order.orderNo}</h3>
-                </div>
-              </div>
-              <table className="Property_table">
-                <tr>
-                  <td>业主姓名：{detail.order.owners?detail.order.owners.name:"无"}</td>
-                  <td>业主电话：{detail.order.owners?detail.order.owners.phone:"无"}</td>
-                  <td>建筑面积：{detail.order.houseArea}平方</td>
-                </tr>
-                <tr>
-                  <td>房屋类型：{detail.order.houseElevatorHouse=="1"?"电梯房":"楼梯房"}</td>
-                  <td colspan="2">缴费时间：{detail.order.feeStartTime.substring(0,11)+"至 "+detail.order.feeEndTime.substring(0,11)}</td>
-                </tr>
-              </table>
-              <table className="Property_table mgt10">
-                <tr>
-                  <th>序号</th>
-                  <th>收费详情名称</th>
-                  <th>收费标准</th>
-                  <th>收费总额</th>
-                </tr>
-                {detail.order.detailsList.map((item, index)=>(
-                  <tr key={index}>
-                    <td>{index+1}</td>
-                    <td>{item.detailsName}</td>
-                    <td>{`${item.fee}￥【${this.checkedType(item.feeType)}${this.checkedDate(item.feeTime)}】`}</td>
-                    <td>{item.discountFee=="0"?item.trueFee+'￥':`${item.totalFee}-${item.discountFee}=${item.trueFee}￥`}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <td colspan="3">合计金额(大写): {detail.order.orderTrueFeeChinese}</td>
-                  <td>合计: {detail.order.orderTrueFee} ¥</td>
-                </tr>
-                {isRemark?<tr>
-                  <td colspan="4">备注: {detail.order.remark} </td>
-                </tr>:null}
-              </table>
-              <div className="footer mgt10">
-                {match.params.type=="2"?<div>打印时间:{detail.nowTime}</div>:<div>创建信息:{detail.order.buildInfo}</div>}
-                <div>【智联万家物业云】技术支持:江西高超网络</div>
-              </div>
-            </Card>:null}
+            {detail?<PropertySheet detail={detail} isRemark={isRemark} />:null}
           </div>
         
         </Card>
@@ -233,7 +164,7 @@ class PropertyFeeDetail extends React.Component {
                   rules: [{ required: true, message:"异常操作"}]
                 })(
                   <Radio.Group disabled >
-                    <Radio value="0">不做修改</Radio>
+                    <Radio value="0">关闭订单</Radio>
                     <Radio value="1">增加金额</Radio>
                     <Radio value="2">减少金额</Radio>
                   </Radio.Group>

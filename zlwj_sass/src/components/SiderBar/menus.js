@@ -147,6 +147,11 @@ export default [
         link: "/finance/propertytem",
         key: 1002
       },
+      {
+        title: "物业费活动模板",
+        link: "/finance/activity",
+        key: 1003
+      },
     ]
   },
   {

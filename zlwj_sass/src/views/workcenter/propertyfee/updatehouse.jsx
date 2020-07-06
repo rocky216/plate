@@ -1,10 +1,11 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Input, DatePicker} from "antd";
+import {Modal, Form, Input, DatePicker, Select } from "antd";
 import moment from "moment"
-import {propertyfeeUpdateHouse, loadAssetsInfo} from "@/actions/otherAction"
+import {propertyfeeUpdateHouse, loadAssetsInfo, propertyfeeUpdateAssets, propertyfeeUpdateOther} from "@/actions/otherAction"
 
+const {Option } = Select 
 const {TextArea } = Input;
 
 const formItemLayout = {
@@ -20,10 +21,22 @@ const formItemLayout = {
 
 class Updatehouse extends React.Component {
 
+  getRequestMethod(){
+    const {assetsType} = this.props.detail
+    switch(assetsType){
+      case "house":
+        return "propertyfeeUpdateHouse"
+      case "parkingSpace":
+        return "propertyfeeUpdateAssets"
+      default :
+        return "propertyfeeUpdateOther"
+    }
+  }
+
   handlenSubmit(){
     this.props.form.validateFieldsAndScroll((err, values)=>{
       if(!err){
-        this.props.actions.propertyfeeUpdateHouse({
+        this.props.actions[this.getRequestMethod()]({
           ...values,
           id: this.props.detail.assestId,
           deliversTime: values.deliversTime?moment(values.deliversTime).format("YYYY-MM-DD"):""
@@ -41,7 +54,7 @@ class Updatehouse extends React.Component {
 
   render(){
     const {getFieldDecorator} = this.props.form;
-    const {utils, spinning, visible, onCancel, detail } = this.props;
+    const {utils, spinning, visible, onCancel, detail, baseInfo} = this.props;
     console.log(detail)
     return (
       <Modal
@@ -54,14 +67,24 @@ class Updatehouse extends React.Component {
         onOk={this.handlenSubmit.bind(this)}
       >
         <Form {...formItemLayout}>
-          <Form.Item label="住宅/非住宅编号">
+        {detail.assetsType==="parkingSpace"?
+          <Form.Item label="编号">
+            {getFieldDecorator("assetsCode", {
+              initialValue: detail.assetsCode,
+              rules: [{ required: true, message: '编号' }],
+            })(
+              <Input disabled/>
+            )}
+          </Form.Item>:
+          <Form.Item label="编号">
             {getFieldDecorator("assetsName", {
               initialValue: detail.assetsName,
-              rules: [{ required: true, message: '住宅/非住宅编号' }],
+              rules: [{ required: true, message: '编号' }],
             })(
               <Input disabled/>
             )}
           </Form.Item>
+          }
           <Form.Item label="建筑面积">
             {getFieldDecorator("houseArea", {
               initialValue: detail.houseArea,
@@ -70,33 +93,49 @@ class Updatehouse extends React.Component {
               <Input/>
             )}
           </Form.Item>
-          <Form.Item label="室内面积">
-            {getFieldDecorator("indoorArea", {
-              initialValue: detail.indoorArea,
-              rules: [{ required: true, message: '室内面积' }],
-            })(
-              <Input/>
-            )}
-          </Form.Item>
-          <Form.Item label="公摊面积">
-            {getFieldDecorator("poolArea", {
-              initialValue: detail.poolArea,
-              rules: [{ required: true, message: '公摊面积' }],
-            })(
-              <Input/>
-            )}
-          </Form.Item>
+          {detail.assetsType==="parkingSpace"?
+            <Form.Item label="停车位类型">
+              {getFieldDecorator("parkingTypeId", {
+                initialValue: detail.parkingTypeId,
+                rules: [{ required: true, message: '停车位类型' }],
+              })(
+                <Select>
+                  {baseInfo?baseInfo.sysDict.car_parking_space.type_id.map(item=>(
+                    <Option key={item.id} value={item.id}>{item.dictLabel}</Option>
+                  )):null}
+                </Select>
+              )}
+            </Form.Item>
+            :
+            <>
+              <Form.Item label="室内面积">
+                {getFieldDecorator("indoorArea", {
+                  initialValue: detail.indoorArea,
+                  rules: [{ required: true, message: '室内面积' }],
+                })(
+                  <Input/>
+                )}
+              </Form.Item>
+              <Form.Item label="公摊面积">
+                {getFieldDecorator("poolArea", {
+                  initialValue: detail.poolArea,
+                  rules: [{ required: true, message: '公摊面积' }],
+                })(
+                  <Input/>
+                )}
+              </Form.Item>
+            </>}
           <Form.Item label="交房时间">
             {getFieldDecorator("deliversTime",{
               initialValue: detail.deliversTime?moment(detail.deliversTime):null,
               rules: [{ required: true, message: '交房时间' }],
             })(
-              <DatePicker disabled={detail.payFristTime && detail.payLastTime} style={{width: "100%"}}/>
+              <DatePicker disabled={detail.payFristTime && detail.payLastTime?true:false} style={{width: "100%"}}/>
             )}
           </Form.Item>
           <Form.Item label="已缴物业费区间">
             {getFieldDecorator("payFristTime", {
-              initialValue: detail.payFristTime && detail.payLastTime?`${detail.payFristTime}到${detail.payLastTime}`:"暂无"
+              initialValue: detail.payFristTime && detail.payLastTime?`${detail.payFristTime.substring(0,10)}到${detail.payLastTime.substring(0,10)}`:"暂无"
             })(
               <Input disabled/>
             )}
@@ -116,12 +155,13 @@ class Updatehouse extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({propertyfeeUpdateHouse, loadAssetsInfo}, dispatch)
+    actions: bindActionCreators({propertyfeeUpdateHouse, loadAssetsInfo, propertyfeeUpdateAssets, propertyfeeUpdateOther}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
+    baseInfo: state.app.baseInfo,
     utils: state.app.utils,
     spinning: state.other.spinning
   }

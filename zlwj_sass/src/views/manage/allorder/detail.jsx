@@ -7,6 +7,7 @@ import JCard from "@/components/JCard"
 import {getHousePropertyOrder, getShopsPropertyOrder, setCheckOrderException, checkOrderException, getBasePropertyOrderDetail} from "@/actions/manageAction"
 import "./index.less"
 import {exceptionColumns} from "../columns"
+import PropertySheet from "@/components/PropertySheet"
 
 
 const {TextArea} = Input
@@ -112,60 +113,12 @@ class AllOrderDetail extends React.Component {
     const {getFieldDecorator, getFieldValue } = this.props.form
     const {spinning, utils, match } = this.props
     const {detail} = this.state
-    console.log(detail, "detail")
+    
     return (
       <JCard spinning={spinning}>
         <Card extra={<Link to="/manage/allorder"><Button><Icon type="rollback" />返回</Button></Link>}>
           <div className="PropertyFeeDetail"  >
-            {detail?<Card >
-              <div className="table_title" >
-                <img src={detail.companyLogo} />
-                <div className="mgt10">
-                  <h2>{detail.order.heNameStr}</h2>
-                  <span >房间名称:{detail?detail.order.houseUrlStr:""}</span>
-                </div>
-                <div style={{marginTop: 40}}>
-                  <h3>{detail.order.orderNo}</h3>
-                </div>
-              </div>
-              <table className="Property_table">
-                <tr>
-                  <td>业主姓名：{detail.order.owners?detail.order.owners.name:"无"}</td>
-                  <td>业主电话：{detail.order.owners?detail.order.owners.phone:"无"}</td>
-                  <td>建筑面积：{detail.order.houseArea}平方</td>
-                </tr>
-                <tr>
-                  <td>房屋类型：{detail.order.houseElevatorHouse=="1"?"电梯房":"楼梯房"}</td>
-                  <td colspan="2">缴费时间：{detail.order.feeStartTime.substring(0,11)+"至 "+detail.order.feeEndTime.substring(0,11)}</td>
-                </tr>
-              </table>
-              <table className="Property_table mgt10">
-                <tr>
-                  <th>序号</th>
-                  <th>收费详情名称</th>
-                  <th>收费标准</th>
-                  <th>收费总额</th>
-                </tr>
-                {detail.order.detailsList.map((item, index)=>(
-                  <tr key={index}>
-                    <td>{index+1}</td>
-                    <td>{item.detailsName}</td>
-                    <td>{`${item.fee}￥【${this.checkedType(item.feeType)}${this.checkedDate(item.feeTime)}】`}</td>
-                    <td>{item.discountFee=="0"?item.trueFee+'￥':`${item.totalFee}-${item.discountFee}=${item.trueFee}￥`}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <td colspan="3">合计金额(大写): {detail.order.orderTrueFeeChinese}</td>
-                  <td>合计: {detail.order.orderTrueFee} ¥</td>
-                </tr>
-                <tr>
-                  <td colspan="4">备注: {detail.order.remark} </td>
-                </tr>
-              </table>
-              <div className="footer mgt10">
-                <div>创建信息:{detail.order.buildInfo}</div>
-              </div>
-            </Card>:null}
+            {detail?<PropertySheet detail={detail}  />:null}
           </div>
         </Card>
 

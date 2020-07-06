@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Form, Input, Select, Switch, Table, Popconfirm} from "antd";
 import JCard from "@/components/JCard"
-import {chargeColmuns} from "../colmuns"
+import {chargeColmuns, chargeColmunsPlate} from "../colmuns"
 import AddDetail from "./addDetial"
 import {getHeHousingEstate} from "@/actions/projectAction"
 import {addPropertyTemplate} from "@/actions/financeAction"
@@ -63,7 +63,7 @@ class AddPropertyTem extends React.Component {
   }
   getCol(){
     let _this = this
-    return chargeColmuns.concat([{
+    return ( this.props.form.getFieldValue("templateType")=="2"?chargeColmunsPlate:chargeColmuns).concat([{
       title: "操作",
       render(item){
         return <Popconfirm
@@ -80,10 +80,10 @@ class AddPropertyTem extends React.Component {
   }
 
   render(){
-    const {getFieldDecorator} = this.props.form
+    const {getFieldDecorator, getFieldValue} = this.props.form
     const {spinning, utils, projectitem} = this.props
     const {addVisible, detailArr} = this.state
-    console.log(detailArr, "detailArr")
+    
     return (
       <JCard spinning={spinning}>
         <Card title="添加物业费模板" extra={
@@ -91,8 +91,9 @@ class AddPropertyTem extends React.Component {
             <Button type="primary" className="mgr10" onClick={this.handlenSubmit.bind(this)} ><Icon type="save"/>保存</Button>
             <Link to="/finance/propertytem"><Button><Icon type="rollback" />返回</Button></Link>
           </div>} >
-          <AddDetail visible={addVisible} onCancel={()=>this.setState({addVisible: false})} 
-                    onSubmit={this.onSubmit.bind(this)} />
+            {addVisible?
+          <AddDetail templateType={getFieldValue("templateType")}  visible={addVisible} onCancel={()=>this.setState({addVisible: false})} 
+                    onSubmit={this.onSubmit.bind(this)} />:null}
           <Form {...formItemLayout}  >
             <Form.Item label="模板名称" hasFeedback>
               {getFieldDecorator('templateName', {
@@ -120,18 +121,20 @@ class AddPropertyTem extends React.Component {
                 </Select>
               )}
             </Form.Item>
-            <Form.Item label="房屋类型" hasFeedback>
+            <Form.Item label="模板类型" hasFeedback>
               {getFieldDecorator('templateType', {
+                initialValue: "0",
                 rules: [
                   {
                     required: true,
-                    message: '选择房屋类型!',
+                    message: '选择模板类型!',
                   }
                 ],
               })(
-                <Select>
+                <Select disabled={detailArr && detailArr.length}>
                   <Option value="0">住宅</Option>
                   <Option value="1">非住宅</Option>
+                  <Option value="2">停车位</Option>
                 </Select>
               )}
             </Form.Item>

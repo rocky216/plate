@@ -1,6 +1,61 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const activityColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "活动名称",
+    dataIndex: "activeName"
+  },
+  {
+    title: "项目",
+    dataIndex: "heNameStr"
+  },
+  {
+    title: "条件类型",
+    dataIndex: "conditionsType",
+    render(item) {
+      return item==="money"?"金额条件":"时间条件"
+    }
+  },
+  {
+    title: "活动条件",
+    dataIndex: "conditions",
+    render(item, rows) {
+      return item+`${rows.conditionsType==="money"?'元':"月"}`
+    }
+  },
+  {
+    title: "奖励类型",
+    dataIndex: "activeType",
+    render:(item)=>item==="discount"?"折扣奖励":"时间奖励"
+  },
+  {
+    title: "奖励",
+    dataIndex: "reward",
+    render(item, rows) {
+      return item+`${rows.activeType==="discount"?'折':"月"}`
+    }
+  },
+  {
+    title: "重复奖励",
+    dataIndex: "isLoop",
+    render:(item)=>item==="Y"?"是":"否"
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    render:item=>item=="0"?"正常":"停用"
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  }
+]
+
 export const accountColmuns = [
   {
     title: "序号",
@@ -125,7 +180,14 @@ export const propertyTemColmuns = [
     title: "模板类型",
     dataIndex: "templateType",
     render(item){
-      return item=="0"?"住宅":"商铺"
+      switch(parseInt(item)){
+        case 0:
+          return "住宅"
+        case 1:
+          return "非住宅"
+        case 2:
+          return "停车位"
+      }
     }
   },
   {
@@ -140,7 +202,7 @@ export const chargeColmuns = [
     dataIndex: "key"
   },
   {
-    title: "模板名称",
+    title: "详情名称",
     dataIndex: "detailsName"
   },
   {
@@ -231,4 +293,65 @@ export const chargeColmuns = [
     title: "未装修减免",
     dataIndex: "notFixPercentage",
   },
+]
+
+export const chargeColmunsPlate = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "详情名称",
+    dataIndex: "detailsName"
+  },
+  {
+    title: "类型",
+    dataIndex: "houseTypeStr"
+  },
+  
+  {
+    title: "楼层",
+    render(rows){
+      if(!rows.floorStart || !rows.floorEnd){
+        return "无"
+      }else{
+        return rows.floorStart+'-'+rows.floorEnd+"层"
+      }
+    }
+  },
+  {
+    title: "收费类型",
+    dataIndex: "feeType",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "固定金额"
+        case 1:
+          return "建筑面积*金额"
+        case 2:
+          return "室内面积*金额"
+        case 3:
+          return "公摊面积*金额"
+      }
+    }
+  },
+  {
+    title: "收费金额(元)",
+    dataIndex: "fee",
+  },
+  {
+    title: "时间单位",
+    dataIndex: "feeTime",
+    render(item){
+      switch(parseInt(item)){
+        case 0:
+          return "一月"
+        case 1:
+          return "一季度"
+        case 2:
+          return "一年"
+      }
+    }
+  },
+  
 ]

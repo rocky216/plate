@@ -1,6 +1,26 @@
 import React from "react"
 import {Tag} from "antd"
 
+
+export const importNothhouseColumns = [
+  {
+    title: "编号",
+    dataIndex: "code"
+  },
+  {
+    title: "类型",
+    dataIndex: "houseType"
+  },
+  {
+    title: "楼层",
+    dataIndex: "floor"
+  },
+  {
+    title: "错误信息",
+    dataIndex: "errorRemark"
+  },
+]
+
 export const relationColumns = [
   {
     title: "状态",
@@ -62,6 +82,10 @@ export const nothouseColumns = [
     render(item, rows){
       return item?rows.ownerName+rows.ownerPhone:"暂无"
     }
+  },
+  {
+    title: "项目名称",
+    dataIndex: "heNameStr"
   },
   {
     title: "楼层",

@@ -3,11 +3,12 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Tabs, Card, Table, Button, Icon, Popconfirm, Form, Input, Select} from "antd";
 import JCard from "@/components/JCard"
-import {otherAssetList, getHeShops, deleteNothouse } from "@/actions/projectAction"
-import {nothouseColumns} from "../colmuns"
+import {otherAssetList, getHeShops, deleteNothouse, comfirExcelImport} from "@/actions/projectAction"
+import {nothouseColumns, importNothhouseColumns} from "../colmuns"
 import AddNothouse from "./add"
 import EditNothouse from "./edit"
 import HeList from "@/components/HeList"
+import ImportUpload from "@/components/ImportUpload"  
 
 const { TabPane } = Tabs;
 const {Option} = Select
@@ -16,6 +17,8 @@ class ProjectNothouse extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      importHeId: "",
+      importVisible: false,
       addVisible: false,
       editVisible: false,
       detail: "",
@@ -102,10 +105,31 @@ class ProjectNothouse extends React.Component {
     this.props.actions.getHeShops(obj)
   }
 
-  render(){
+  render(){ 
+    let _this = this;
     const {getFieldDecorator} = this.props.form
-    const {utils, spinning, nothouse} = this.props
-    const {otherasset , params, addVisible, editVisible, detail} = this.state
+    const {utils, spinning, nothouse, commonFiles} = this.props
+    const {otherasset , params, addVisible, editVisible, detail, importVisible, importHeId} = this.state
+
+    const uploadProps = {
+      visible: importVisible,
+      download: commonFiles?commonFiles.otherHouseMode:"",
+      columns: importNothhouseColumns,
+      name: "file",
+      action: "/api/pc/heShops/excelImportCheck",
+      insertExcel: this.props.actions.comfirExcelImport,
+      callback(){
+        _this.props.actions.otherAssetList({});
+        _this.setState({importVisible: false})
+      },
+      onCancel(){
+        _this.setState({importVisible: false})
+      },
+      data: {
+        token: utils.getCookie("token"),
+        heId: importHeId
+      },
+    }
 
     return (
       <JCard spinning={spinning}  >
@@ -113,10 +137,19 @@ class ProjectNothouse extends React.Component {
         <AddNothouse params={params} visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />:null}
         {editVisible?
         <EditNothouse visible={editVisible}  params={params} detail={detail} onCancel={()=>this.setState({editVisible: false, detail:""})} />:null}
+        
+        {importVisible?<ImportUpload {...uploadProps} check={importHeId?false:true} >
+          <HeList style={{width: 120}} value={importHeId} onChange={(val)=>this.setState({importHeId:val})} />
+        </ImportUpload>:null}
         <Card >
           <Tabs 
             type="card"
-            tabBarExtraContent={<Button type="primary" ghost  onClick={()=>this.setState({addVisible: true})}><Icon type="plus"/>新增非住宅房屋</Button>}
+            tabBarExtraContent={(
+              <div>
+                <Button type="danger"  ghost className="mgr10" onClick={()=>this.setState({importVisible: true})}><Icon type="export" />批量导入</Button>
+                <Button type="primary" ghost  onClick={()=>this.setState({addVisible: true})}><Icon type="plus"/>新增非住宅房屋</Button>
+              </div>
+            )}
             onChange={this.handleTabs.bind(this)}>
             {otherasset?otherasset.map(item=>(
               <TabPane tab={item.dictLabel} key={item.id} />
@@ -173,12 +206,13 @@ class ProjectNothouse extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({otherAssetList, getHeShops, deleteNothouse}, dispatch)
+    actions: bindActionCreators({otherAssetList, getHeShops, deleteNothouse, comfirExcelImport}, dispatch)
   }
 }
 
 function mapStateProps(state){
   return {
+    commonFiles:state.app.commonFiles,
     nothouse: state.project.nothouse,
     spinning: state.project.spinning,
     utils: state.app.utils

@@ -1,5 +1,6 @@
 import {START_LOADING_APP, END_LOADING_APP} from "@/types"
-import {OpenNotification, setCookie, getCookie, removeCookie, addIndex, Pagination, normFileSingle, normFileMulti, submitFiles} from "@/utils"
+import {OpenNotification, setCookie, getCookie, removeCookie, addIndex, Pagination, 
+  normFileSingle, normFileMulti, submitFiles, isDate} from "@/utils"
 
 let initialState = {
   spinning: false,
@@ -13,7 +14,8 @@ let initialState = {
     getCookie, 
     removeCookie,
     addIndex,
-    Pagination
+    Pagination,
+    isDate
   },
   keeptabs: []
 }

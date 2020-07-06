@@ -187,7 +187,7 @@ class ShopFeeDetail extends React.Component {
                   rules: [{ required: true, message:"选择更新订单！"}]
                 })(
                   <Radio.Group >
-                    <Radio value="0">不做修改</Radio>
+                    <Radio value="0">关闭订单</Radio>
                     <Radio value="1">增加金额</Radio>
                     <Radio value="2">减少金额</Radio>
                   </Radio.Group>
@@ -218,7 +218,7 @@ class ShopFeeDetail extends React.Component {
                   rules: [{ required: true, message:"选择更新订单！"}]
                 })(
                   <Radio.Group disabled >
-                    <Radio value="0">不做修改</Radio>
+                    <Radio value="0">关闭订单</Radio>
                     <Radio value="1">增加金额</Radio>
                     <Radio value="2">减少金额</Radio>
                   </Radio.Group>

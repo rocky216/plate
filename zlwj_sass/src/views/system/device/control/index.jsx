@@ -14,11 +14,14 @@ class ControlDevice extends React.Component {
     super(props)
     this.state = {
       editVisible: false,
-      detail: ""
+      detail: "",
+      params: {
+        current: 1
+      }
     }
   }
   componentDidMount(){
-    this.props.actions.getControlPage({})
+    this.props.actions.getControlPage(this.state.params)
   }
 
   initData(){
@@ -45,7 +48,7 @@ class ControlDevice extends React.Component {
   }
   render(){
     const {utils, controldevice} = this.props
-    const {editVisible, detail} = this.state
+    const {editVisible, detail, params} = this.state
 
     return (
       <div>
@@ -55,7 +58,12 @@ class ControlDevice extends React.Component {
         <div className="mgb10" >
           <Button type="primary" onClick={this.initData.bind(this)}><Icon type="redo" />初始化</Button>
         </div>
-        <Table columns={this.getCol()} dataSource={controldevice?utils.addIndex(controldevice.list):[]} />
+        <Table columns={this.getCol()} dataSource={controldevice?utils.addIndex(controldevice.list):[]} 
+          pagination={utils.Pagination(controldevice, page=>{
+            params.current = page
+            this.setState({params})
+            this.props.actions.getControlPage(params)
+          })}/>
       </div>
     )
   }

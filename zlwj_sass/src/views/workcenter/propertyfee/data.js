@@ -1,3 +1,31 @@
+export const plateInfo = [
+  {
+    title: "编号", 
+    key: "parkingSpaceCode"
+  },
+  {
+    title: "楼层区域",
+    key: "floorName"
+  },
+  {
+    title: "车位类型",
+    key: "typeName"
+  },
+  {
+    title: "建筑面积",
+    key: "buildingArea"
+  },
+  {
+    title: "交房时间",
+    key: "deliversTime"
+  },
+  {
+    title: "已缴纳物业费区间",
+    key: ["payFristTime", "payLastTime"],
+    span: 8
+  },
+]
+
 export const ownersInfo = [
   {
     title: "业主姓名", 

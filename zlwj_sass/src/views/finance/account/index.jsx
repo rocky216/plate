@@ -55,6 +55,8 @@ class FinanceAccount extends React.Component {
         <Card  title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus"/>新增资金账户</Button>}>
           <AddAccount visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
           <EditAccount visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail: ''})} />
+          
+          
           <Table
             columns={this.getCol()}
             dataSource={account?utils.addIndex(account.list):[]}
@@ -84,4 +86,4 @@ function mapStateProps(state){
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(FinanceAccount)
+export default connect(mapStateProps, mapDispatchProps)( FinanceAccount )

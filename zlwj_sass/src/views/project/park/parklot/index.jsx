@@ -11,7 +11,7 @@ import AddParkBox from "./addPark"
 import EditParkBox from "./editPark"
 import {parkPlateLotColumns, importPlateColumns} from "../../colmuns"
 import ParkLotSearch from "./ParkLotSearch"
-import ImportUpload from "@/components/ImportUpload"
+import ImportUpload from "@/components/ImportUpload"  
 
 const {TabPane } = Tabs
 
@@ -114,7 +114,7 @@ class ParkLot extends React.Component {
 
     const uploadProps = {
       visible: importVisible,
-      download: commonFiles?commonFiles.parkingImportMode:"",
+      download: commonFiles?commonFiles.parkingSpaceMode:"",
       columns: importPlateColumns,
       name: "file",
       action: "/api/pc/parkingSpace/excelImportCheck",

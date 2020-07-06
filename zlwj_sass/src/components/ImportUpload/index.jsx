@@ -2,6 +2,7 @@ import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import {Modal, Upload, Button, Icon, Table} from "antd";
+import JCard from "@/components/JCard"
 
 
 class ImportUpload extends React.Component {
@@ -9,15 +10,21 @@ class ImportUpload extends React.Component {
     super(props)
     this.state = {
       tipVisible: false,
-      errInfo: []
+      errInfo: [],
+      spinning: false
     }
   }
 
   handlenUpload(info){
     const {file} = info
-    if(file.status === "done" && file.response.data){
+    this.setState({spinning: true})
+    if(file.status === "done"){
+      if(file.response.code==1 && !file.response.data){
+        this.props.utils.OpenNotification("error", file.response.msg)
+        return 
+      }
       const {check, result, excelKey} = file.response.data
-      
+      this.setState({spinning: false})
       if(!check){
         this.setState({tipVisible: true, errInfo: result})
       }else{
@@ -42,8 +49,8 @@ class ImportUpload extends React.Component {
   }
 
   render(){
-    const {utils, download, data, action, visible, onCancel, columns} = this.props
-    const {tipVisible, errInfo} = this.state
+    const {utils, download, data, action, visible, onCancel, columns, check} = this.props
+    const {tipVisible, errInfo, spinning} = this.state
     console.log(errInfo,"result")
     const uploadProps = {
       name: "file",
@@ -52,9 +59,9 @@ class ImportUpload extends React.Component {
       onChange: this.handlenUpload.bind(this),
       data: data
     }
-
+    console.log(check)
     return (
-      <div>
+      <div >
         <Modal
           title="异常反馈"
           width="80%"
@@ -62,7 +69,8 @@ class ImportUpload extends React.Component {
           visible={tipVisible}
           onCancel={()=>this.setState({tipVisible: false})}
         >
-          <Table columns={columns} dataSource={utils.addIndex(errInfo)} pagination={false} />
+          {columns?<Table columns={columns} dataSource={utils.addIndex(errInfo)} pagination={false} />:null}
+          
         </Modal>
         <Modal
           title="批量导入"
@@ -70,13 +78,15 @@ class ImportUpload extends React.Component {
           visible={visible}
           onCancel={onCancel}
         >
-          {this.props.children}
-          <Upload className="mgl10" {...uploadProps}>
-              <Button  type="primary" ><Icon type="import" />批量导入</Button>
-          </Upload>
-          {download?
-          <a href={download.url+'?fileName='+download.fileName} 
-              download={download.fileName} ><Button type="link">下载模板</Button></a>:null}
+          <JCard spinning={spinning}>
+            {this.props.children}
+            <Upload className="mgl10" {...uploadProps} disabled={check} >
+                <Button  type="primary" disabled={check} ><Icon type="import"  />批量导入</Button>
+            </Upload>
+            {download?
+            <a href={download.url+'?fileName='+download.fileName} 
+                download={download.fileName} ><Button type="link">下载模板</Button></a>:null}
+          </JCard>
         </Modal>
       </div>
     )
