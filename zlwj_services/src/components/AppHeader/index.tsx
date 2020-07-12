@@ -4,6 +4,7 @@ import {bindActionCreators } from "redux"
 import {Layout, Dropdown, Button, Menu} from "antd"
 import {IProps} from "@/interface/app"
 import {getAllCompany } from "@/actions/appAction"
+import "./index.less"
 
 const { Header } = Layout;
 
@@ -14,7 +15,7 @@ interface Props extends IProps {
 class AppHeader extends React.Component<Props> {
 
   componentDidMount(){
-    this.props.actions.getAllCompany()
+    // this.props.actions.getAllCompany()
   }
 
   render() {
@@ -29,8 +30,8 @@ class AppHeader extends React.Component<Props> {
     );
 
     return (
-      <Header>
-        <div>
+      <Header className="appheader" >
+        <div className="box">
           <Dropdown overlay={menu} placement="bottomLeft">
             <Button>bottomLeft</Button>
           </Dropdown>

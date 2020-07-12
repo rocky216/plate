@@ -16,7 +16,7 @@ instance.interceptors.request.use( async function(config){
     token: token
   }
   if(config.method == "get"){
-    config.params = opt
+    config.params = {...config.params, token}
   }else if(config.method == "post"){
     config.data = qs.stringify(opt)
   }

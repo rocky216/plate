@@ -42,10 +42,16 @@ if(ENV == "development"){
   console.log(proxyMiddleWare)
 
   /* 开发环境代理接口 */
-  app.use("/iot/power",proxyMiddleWare({
+  // app.use("/iot/power",proxyMiddleWare({
+  //   target:config.baseUrl,
+  //   changeOrigoin:true,
+  //   pathRewrite: {'^/iot/power' : '/iot/power'},
+  // }));
+
+  app.use("/api/sell",proxyMiddleWare({
     target:config.baseUrl,
     changeOrigoin:true,
-    pathRewrite: {'^/iot/power' : '/iot/power'},
+    pathRewrite: {'^/api/sell' : '/api/sell'},
   }));
 
 }else{
@@ -55,6 +61,9 @@ if(ENV == "development"){
 }
 
 app.get("/power", (req, res)=>{
+  res.render("index.html",{mytype: req.url})
+});
+app.get("/sell", (req, res)=>{
   res.render("index.html",{mytype: req.url})
 });
 

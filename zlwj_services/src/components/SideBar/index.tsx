@@ -1,7 +1,9 @@
 import React from "react"
-import {withRouter, Link} from "react-router-dom"
+import {connect } from "react-redux"
+import {withRouter, Link, Route} from "react-router-dom"
 import {Menu } from "antd"
 import menus from "./menus"
+import _ from "lodash"
 
 
 const { SubMenu } = Menu;
@@ -10,6 +12,7 @@ const { SubMenu } = Menu;
 
 interface IProps {
   history: any;
+  mytype: string
 }
 
 interface IState {
@@ -31,15 +34,15 @@ class SideBar extends React.Component<IProps, IState> {
   }
 
   render(){
-    const {history } = this.props;
-    
+    const {history, mytype} = this.props;
+
     return (
       <>
         <Menu 
-          openKeys={[(window as any).mytype]}
+          openKeys={[mytype]}
           theme="dark" 
           mode="inline">
-          {menus.map(item=>(
+          {_.filter(menus, o=>o.key===mytype).map(item=>(
             item.children && item.children.length?
             (
               <SubMenu 
@@ -67,4 +70,10 @@ class SideBar extends React.Component<IProps, IState> {
   }
 }
 
-export default withRouter(SideBar as any);
+const mapStateToProps = (state: any) => {
+  return {
+    mytype: state.app.mytype
+  }
+}
+
+export default withRouter( connect(mapStateToProps)(SideBar) as any);

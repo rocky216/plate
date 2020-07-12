@@ -20,7 +20,6 @@ const AddCompany: React.FC<Props> = ({
 })=>{
   const [form] = Form.useForm();
   
-  
   return (
     <Modal
       destroyOnClose

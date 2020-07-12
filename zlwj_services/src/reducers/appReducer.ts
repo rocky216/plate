@@ -2,13 +2,22 @@ import { START_LOADING_APP, END_LOADING_APP} from "@/types"
 import {
   OpenNotification,
   addIndex,
+  normFileSingle,
+  normFileMulti,
+  submitFiles,
+  Pagination
 } from "@/utils"
 
 let initialState = {
   spinning: false,
+  mytype: (window as any).mytype,
   utils: {
     OpenNotification,
     addIndex,
+    normFileSingle,
+    normFileMulti,
+    submitFiles,
+    Pagination
   }
 }
 

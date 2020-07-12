@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Layout, Menu, } from "antd"
-import Routers from "../../routers"
+import {Layout } from "antd"
+import Routers from "@/routers"
 import SideBar from "@/components/SideBar"
 import AppHeader from "@/components/AppHeader"
 
@@ -14,13 +14,15 @@ class App extends React.Component {
     }
   }
 
-  
-  
 
   render(){
+    
     return  (
       <Layout>
         <Sider style={{height: "100vh"}}>
+          <div style={{padding: "20px 10px 10px"}}>
+            <img src="/images/logo.png" style={{width: "90%"}} />
+          </div>
           <SideBar/>
         </Sider>
         <Layout>

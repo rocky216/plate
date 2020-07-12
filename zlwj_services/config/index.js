@@ -1,9 +1,9 @@
 module.exports = {
-  baseUrl: "http://192.168.1.11",
+  baseUrl: "http://localhost",
 
-  host: "localhost",
+  host: "192.168.1.6",
   port: 3003,
-  type: "power",
+  type: "sell",
 
 
   iotypes: {
