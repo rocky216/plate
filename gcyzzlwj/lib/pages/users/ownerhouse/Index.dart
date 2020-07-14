@@ -37,10 +37,14 @@ class _OwnerHousePageState extends State<OwnerHousePage> {
       body: Container(
         child: ListView.separated(
           itemBuilder: (context, index){
-            return ListTile(
-              leading: Icon(IconData(0xe618, fontFamily: 'AntdIcons'), color: Color(0xFF777777), size: 30.0,),
-              title: Text(houses[index]["houseName"]),
-            );
+            return GestureDetector(
+              child: ListTile(
+                leading: Icon(IconData(0xe618, fontFamily: 'AntdIcons'), color: Color(0xFF777777), size: 30.0,),
+                title: Text(houses[index]["houseName"]),
+              ),
+              onTap: (){
+                Navigator.of(context).pushNamed("/user/family" , arguments: houses[index]);
+              },);
           }, 
           separatorBuilder: (context, index){
             return Container(height: 1.0, color: Color(0xFFeeeeee));

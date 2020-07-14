@@ -37,7 +37,7 @@ dependencies:
   barcode_scan: ^2.0.1
   image_picker: ^0.6.5
   dio: ^2.1.2
-  fluwx: ^2.1.0
+  fluwx: ^2.2.0
   package_info: ^0.4.0+2
   flutter_downloader: ^1.4.3
   path_provider: ^1.6.7

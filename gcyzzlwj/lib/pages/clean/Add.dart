@@ -5,6 +5,7 @@ import '../../components/MyScrollView.dart';
 import '../../components/MyUpload.dart';
 import '../http.dart';
 
+
 class AddCleanPage extends StatefulWidget {
   AddCleanPage({Key key}) : super(key: key);
 
@@ -69,7 +70,8 @@ class _AddCleanPageState extends State<AddCleanPage> {
   }
 
   handlenSubmit() async {
-    var data = await NetHttp.post("/api/app/he/repair/addHeRepair", context: context, params: {
+    try{
+      var data = await NetHttp.post("/api/app/he/repair/addHeRepair", context: context, params: {
       "name": name,
       "type": type,
       "info": info,
@@ -79,6 +81,7 @@ class _AddCleanPageState extends State<AddCleanPage> {
       showToast("保存成功！");
       Navigator.of(context).pop();
     }
+    }catch(e){}
   }
 
   @override

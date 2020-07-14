@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             ),
             home: Scaffold(
               backgroundColor: Colors.white,
-              body: LaunchPage(), 
+              body: LaunchPage(),
             ),
             
             onGenerateRoute: onGenerateRoute

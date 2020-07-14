@@ -42,7 +42,7 @@ class _MyScanState extends State<MyScan> {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() => this.barcode = barcode);
-      print(barcode);
+      // Navigator.of(context).pushNamed("/pay");
 
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {  //没有相机权限

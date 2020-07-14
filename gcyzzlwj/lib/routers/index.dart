@@ -23,6 +23,9 @@ import '../pages/pile/Index.dart';
 import '../pages/clean/Detail.dart';
 import '../pages/clean/Add.dart';
 import '../pages/contact/Index.dart';
+import '../pages/users/family/index.dart';
+import '../pages/users/family/addFamily.dart';
+import '../components/MyPay.dart';
 
 
 
@@ -40,6 +43,8 @@ final routes={
       '/control': (context)=>ControlPage(),
       '/user/passcard': (context)=>PassCardPage(),
       '/user/ownerhouse': (context)=>OwnerHousePage(),
+      '/user/family': (context, {arguments})=>UserFamilly(arguments:arguments),
+      '/user/family/add': (context, {arguments})=>AddFamily(arguments:arguments),
       '/user/updatepassword': (context)=>UpdatePasswordPage(),
       '/user/userinfo': (context, {arguments})=>UserInfoPage(arguments:arguments),
       '/user/carpass': (context)=>CarPassPage(),
@@ -51,6 +56,7 @@ final routes={
       '/clean/detail': (context, {arguments})=>CleanDetailPage(arguments:arguments),
       '/clean/add': (context)=>AddCleanPage(),
       '/contact': (context)=>ContactPage(),
+      '/pay': (context, {arguments})=>MyWxPay(arguments:arguments),
       // '/form':(context)=>FormPage(),'/search':(context,{arguments})=>SearchPage(arguments:arguments),
 };
 

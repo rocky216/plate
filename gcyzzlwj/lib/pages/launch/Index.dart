@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluwx/fluwx.dart';
 import 'package:package_info/package_info.dart';
 import '../users/Login.dart';
 import '../Index.dart';
@@ -29,17 +30,28 @@ class _LaunchPageState extends State<LaunchPage> {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     
     this.initial();
+    // this._initFluwx();
+  }
+
+  _initFluwx() async {
+    await registerWxApi(
+      /* 支付APPID */
+        appId: "wx7e527bffc978694d",
+        doOnAndroid: true,
+        doOnIOS: true,
+        universalLink: "https://your.univerallink.com/link/");
+    var result = await isWeChatInstalled;
+    print("微信注册成功-- $result");
   }
 
 
   initial()  async {
-    
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     
     var data = await NetHttp.getRequest("/api/app/owner/common/app/version", context: context, params: {});
     
-    
     if(data != null){
+       
       if(packageInfo.version==data["versionNo"]){
         if(data["flag"] == false){
           Navigator.pushAndRemoveUntil(
@@ -55,6 +67,7 @@ class _LaunchPageState extends State<LaunchPage> {
           );
         }
       }else{
+       
         confirm(context, msg: "发现新版本是否下载？", 
           ok: ()async{
             if (await canLaunch(data["appResourceUrl"])) {
