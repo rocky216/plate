@@ -9,11 +9,12 @@ class PartTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       margin: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
       padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 5.0),
       decoration: BoxDecoration(
-        color: Colors.white, 
+        color: Theme.of(context).brightness == Brightness.dark? Theme.of(context).primaryColor : Colors.white, 
         boxShadow: [
           BoxShadow(
             color: Color(0xFFdddddd),

@@ -2,6 +2,74 @@ import {START_LOADING_FINANCE, END_LOADING_FINANCE} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function loadAccount(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_FINANCE,
+    })
+    try{
+      const options = {
+        url: "/api/pc/accountLog/initaccount",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_FINANCE,
+        myaccount: data
+      })
+      return data;
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_FINANCE,
+      })
+    }
+
+  }
+}
+
+export function bookExportinfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_FINANCE,
+    })
+    try{
+      const options = {
+        url: "/api/pc/accountLog/exportinfo",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      if(data){
+        _.each(data.allList, item=>{
+          item.child = item.children
+          item.children = null
+        })
+      }
+      
+      dispatch({
+        type: END_LOADING_FINANCE,
+        book: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_FINANCE,
+      })
+    }
+
+  }
+}
+
 export function deleteCostActive(params, next){
   return async function(dispatch, getState){
     dispatch({

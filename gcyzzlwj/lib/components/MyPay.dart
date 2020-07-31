@@ -23,6 +23,8 @@ class _MyWxPayState extends State<MyWxPay> {
     this._initFluwx();
     
     fluwx.weChatResponseEventHandler.listen((res) {
+      print(res.errStr);
+      print(res.errCode);
       if (res is fluwx.WeChatPaymentResponse) {
         print("成功了！------");
         print("pay :${res.isSuccessful}");

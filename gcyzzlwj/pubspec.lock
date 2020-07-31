@@ -420,6 +420,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.11"
+  theme_provider:
+    dependency: "direct main"
+    description:
+      name: theme_provider
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.3"
   toast:
     dependency: "direct main"
     description:

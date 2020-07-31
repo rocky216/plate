@@ -11,7 +11,7 @@ class DisHallPage extends StatefulWidget {
   _DisHallPageState createState() => _DisHallPageState();
 }
 
-class _DisHallPageState extends State<DisHallPage> {
+class _DisHallPageState extends State<DisHallPage> { 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

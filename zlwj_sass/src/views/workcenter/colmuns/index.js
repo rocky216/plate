@@ -2,6 +2,122 @@ import React from "react"
 import {Input, InputNumber, Icon, Button, Tag} from "antd"
 const {TextArea} = Input
 
+
+export const deductColumns = [
+  {
+    title: "创建人",
+    dataIndex: "buildUserName"
+  },
+  {
+    title: "时间",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "标题",
+    dataIndex: "tearNo"
+  },
+  {
+    title: "备注",
+    dataIndex: "tearInfo"
+  },
+  {
+    title: "金额",
+    dataIndex: "tearMoney"
+  },
+]
+
+export const depositColumns = [
+  {
+    title: "编号",
+    dataIndex: "depositNo"
+  },
+  {
+    title: "时间",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "说明",
+    dataIndex: "depositInfo"
+  },
+  {
+    title: "金额",
+    dataIndex: "depositMoney"
+  },
+  {
+    title: "打印信息",
+    dataIndex: "printCount"
+  },
+]
+
+export const inspectionColumns = [
+  {
+    title: "巡查人",
+    dataIndex: "checkUserid"
+  },
+  {
+    title: "巡查时间",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "巡查说明",
+    dataIndex: "planInfo"
+  },
+  {
+    title: "巡查图片",
+    dataIndex: "sysAttachmentList",
+    render(item) {
+      return item.map(elem=>(
+        <img key={elem.id} src={elem.dowloadHttpUrl} style={{width: 60}} alt=""/>
+      ));
+    }
+  },
+]
+
+export const trimColumns = [
+  {
+    title: "状态",
+    dataIndex: "fixStatus",
+    render(item) {
+      switch (item){
+        case "progressing":
+          return <div style={{color: "#60b2ef", textAlign:"center"}}><i className="icon iconfont icon-xingzhuang" /><div>进行中</div></div>
+        case "done":
+          return <div style={{color: "#26ba17", textAlign:"center"}}><i className="icon iconfont icon-zhengchang" /><div>已完成</div></div>
+      }
+    }
+  },
+  {
+    title: "计划编号",
+    dataIndex: "fixPlanNo"
+  },
+  {
+    title: "关联信息",
+    dataIndex: "linkName",
+    render(item, rows) {
+      return `${item}：${rows.linkPhone}`
+    }
+  },
+  {
+    title: "装修时间",
+    dataIndex: "fixStartTime",
+    render(h,r) {
+      return `${h?h.substring(0,10):h}${r.fixEndTime?r.fixEndTime.substring(0,10):""}`
+    },
+  },
+  {
+    title: "押金",
+    dataIndex: "sumDepositMoney"
+  },
+  {
+    title: "计划扣费项",
+    dataIndex: "sumTearMoney"
+  },
+  {
+    title: "应退押金",
+    dataIndex: "outMoney"
+  },
+]
+
 export const ownerLinkAssetsListColumns = [
   {
     title: "资产类型",

@@ -1,9 +1,11 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Input} from "antd"
+import {Modal, Form, Input, Select, Cascader} from "antd"
 import {IProps} from "@/interface/app"
-import {addSellUsers, editSellUsers, getSellUsers} from "@/actions/sellAction"
+import {addSellUsers, editSellUsers, getSellUsers,permissionList, distributeCompanyItem} from "@/actions/sellAction"
+
+const {Option} = Select;
 
 const layout = {
   labelCol: { span: 4 },
@@ -16,6 +18,8 @@ interface Props extends IProps {
   visible: boolean;
   detail: any;
   onCancel:()=>void;
+  permiss:any[];
+  distcompany:any[];
 }
 
 const AddSellUser: React.FC<Props> = ({
@@ -25,9 +29,23 @@ const AddSellUser: React.FC<Props> = ({
   visible,
   detail,
   onCancel,
-  actions
+  actions,
+  permiss,
+  distcompany
 })=>{
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if(detail){
+      actions.permissionList({
+        userId:detail.id
+      })
+      actions.distributeCompanyItem({
+        userId:detail.id
+      })
+    }
+    
+  }, [detail.id])
 
   /* 新增 */
   const addSubmit = (values:any)=>{
@@ -40,6 +58,7 @@ const AddSellUser: React.FC<Props> = ({
 
   /* 编辑 */
   const editSubmit = (values:any)=>{
+
     actions.editSellUsers({
       ...values,
       id: detail.id
@@ -91,6 +110,35 @@ const AddSellUser: React.FC<Props> = ({
           >
           <Input/>
         </Form.Item>
+        {detail?(
+          <>
+            <Form.Item 
+              label="分配公司" 
+              name="permId1" 
+              // initialValue={detail.permId?detail.permId:""}
+              rules={[{required: true, message: "分配公司!"}]}
+              >
+              {/* <Cascader 
+                options={distcompany}
+                fieldNames={{ label: 'manageName', value: 'id' }}
+              />  */}
+            </Form.Item>
+            <Form.Item 
+              label="角色" 
+              name="permId" 
+              initialValue={detail.permId?detail.permId:""}
+              rules={[{required: true, message: "角色!"}]}
+              >
+              <Select>
+                {permiss?permiss.map(item=>(
+                  <Option key={item.id} value={item.id}>{item.name}</Option>
+                )):null}
+                
+              </Select>
+            </Form.Item>
+          </>
+        )
+        :null}
       </Form>
     </Modal>
   )
@@ -98,12 +146,14 @@ const AddSellUser: React.FC<Props> = ({
 
 const mapDispatchToProps = (dispatch:any) => {
   return {
-    actions: bindActionCreators({addSellUsers, editSellUsers, getSellUsers}, dispatch)
+    actions: bindActionCreators({addSellUsers, editSellUsers, getSellUsers, permissionList, distributeCompanyItem}, dispatch)
   }
 }
 
 const mapStateToProps = (state:any) => {
   return {
+    distcompany: state.sell.distcompany,
+    permiss: state.sell.permiss,
     utils: state.app.utils,
     spinning: state.sell.spinning
   }

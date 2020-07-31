@@ -18,7 +18,8 @@ class SelectAllType extends React.Component {
   }
 
   componentDidMount(){
-    this.props.actions.getAssetMenu({isLoadCoOperative: this.props.isLoadCoOperative?"yes":""}, res=>{
+    this.props.actions.getAssetMenu({isLoadCoOperative: this.props.isLoadCoOperative?"yes":"",
+    isLoadPark: this.props.isNotLoadPark?"no":"yes",}, res=>{
       let newTreeData = this.handlenTopData(res)
       this.setState({treeData: newTreeData})
     })
@@ -122,7 +123,10 @@ class SelectAllType extends React.Component {
     
     if(keyCode===13){
       console.log(target.value)
-      this.props.actions.selectHeAssetListByKey({key: target.value, isLoadCoOperative:this.props.isLoadCoOperative?"yes":""}, res=>{
+      this.props.actions.selectHeAssetListByKey({key: target.value, 
+          isLoadCoOperative:this.props.isLoadCoOperative?"yes":"",
+          isLoadPark: this.props.isNotLoadPark?"no":"yes",
+        }, res=>{
         if(res && res.length){
           let newData = this.handlenData(res)
           this.setState({searchData: newData})

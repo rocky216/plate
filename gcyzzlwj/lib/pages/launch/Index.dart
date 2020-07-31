@@ -7,9 +7,9 @@ import '../users/Login.dart';
 import '../Index.dart';
 import '../utils.dart';
 import '../http.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import '../../components/MyDownLoad.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 
 class LaunchPage extends StatefulWidget {
@@ -56,13 +56,13 @@ class _LaunchPageState extends State<LaunchPage> {
         if(data["flag"] == false){
           Navigator.pushAndRemoveUntil(
             context,
-            new MaterialPageRoute(builder: (context) => new LoginPage()),
+            new MaterialPageRoute(builder: (context) =>  ThemeConsumer(child: new LoginPage()) ),
             (route) => route == null,
           );
         }else{
           Navigator.pushAndRemoveUntil(
             context,
-            new MaterialPageRoute(builder: (context) => new IndexPage()),
+            new MaterialPageRoute(builder: (context) => ThemeConsumer(child: new IndexPage(),) ),
             (route) => route == null,
           );
         }

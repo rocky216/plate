@@ -83,6 +83,9 @@ import RepairManage from "@/views/workcenter/repair"
 import ApkSystem from "@/views/system/apk"
 import ProjectNothouse from "@/views/project/nothouse"
 import BaseCompany from "@/views/base/company"
+import PropertyTrim from "@/views/workcenter/trim"
+import PropertyTrimDetail from "@/views/workcenter/trim/detail"
+import FinanceBook from "@/views/finance/book"
 
 
 
@@ -113,6 +116,8 @@ class Routers extends React.Component{
         <AuthRoute path="/workcenter/solution/:id/log" Component={SolutionLog} name="一卡通日志"  /> 
         <AuthRoute path="/workcenter/record" Component={Record} name="日志管理" auth="2-07"  /> 
         <AuthRoute path="/workcenter/repair" Component={RepairManage} name="报修管理" auth="2-08"  /> 
+        <AuthRoute exact path="/workcenter/trim" Component={PropertyTrim} name="装修计划管理" auth="2-09"  /> 
+        <AuthRoute path="/workcenter/trim/:id/detail/:type" Component={PropertyTrimDetail} name="装修计划详情" auth="2-09"  /> 
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" auth="9-01" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" auth="9-02" />
@@ -162,6 +167,7 @@ class Routers extends React.Component{
         <AuthRoute  path="/finance/propertytem/add" Component={AddPropertytem} name="新增物业费收费模板" />
         <AuthRoute  path="/finance/propertytem/:id/edit" Component={EditPropertytem} name="编辑物业费收费模板" />
         <AuthRoute  path="/finance/activity" Component={Activity} auth="10-03" name="活动模板" />
+        <AuthRoute  path="/finance/book" Component={FinanceBook} auth="10-04" name="台账" />
 
         <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" auth="5-01" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />

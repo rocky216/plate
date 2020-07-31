@@ -1,6 +1,50 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const bookColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "订单标题",
+    dataIndex: "orderTitle"
+  },
+  {
+    title: "收支类型",
+    dataIndex: "logType"
+  },
+  {
+    title: "记录类型",
+    dataIndex: "linkTypeStr"
+  },
+  {
+    title: "收支时间",
+    dataIndex: "linkTime"
+  },
+  {
+    title: "单号",
+    dataIndex: "orderNo"
+  },
+  {
+    title: "收支总额",
+    dataIndex: "linkMoeny"
+  },
+  
+  {
+    title: "关联人",
+    dataIndex: "relatedPerson"
+  },
+  {
+    title: "关联信息",
+    dataIndex: "information"
+  },
+  {
+    title: "资产面积",
+    dataIndex: "assetArea"
+  },
+]
+
 export const activityColumns = [
   {
     title: "序号",

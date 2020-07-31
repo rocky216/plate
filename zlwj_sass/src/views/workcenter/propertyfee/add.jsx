@@ -286,7 +286,7 @@ class AddPropertyfee extends React.Component {
     
     return (
       <Modal
-      title={showName}
+        title={showName}
         destroyOnClose
         okText="确定"
         cancelText="取消"

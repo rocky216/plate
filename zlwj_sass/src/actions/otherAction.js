@@ -3,6 +3,385 @@ import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
 
+export function uploadPlanSingle(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanAccessory/uploadPlanSingle",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function DepositCountPrint(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanDeposit/countPrint",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function settleDeposit(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlan/settleDeposit",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function accomplishPlan(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlan/accomplishPlan",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addPlanTear(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanTear/add",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+
+export function addFixPlanDeposit(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanDeposit/add",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function selectUserList(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanCheck/selectUserList",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        selstaff: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function deleteAttaCheck(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanCheck/delete",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function editAttaCheck(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanCheck/updateAttaList",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addAttaCheck(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlanCheck/addAttaList",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function getPlanInfo(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlan/planInfo",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function addInsertFix(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlan/insertFix",
+        method: "post",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
+
+export function propertyPlanPage(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_OTHER,
+    })
+    try{
+      const options = {
+        url: "/api/pc/Assets/propertyPlanPage",
+        method: "get",
+        data: {
+          ...params,
+        }
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_OTHER,
+        trim: data
+      })
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_OTHER,
+      })
+    }
+
+  }
+}
 
 export function goUpdateOwner(params, next){
   return async function(dispatch, getState){
@@ -1809,6 +2188,7 @@ export function getAccount(params, next){
       if(next)next(data)
       dispatch({
         type: END_LOADING_OTHER,
+        accounts: data
       })
     }catch(err){
       console.log(err, `color: ${log_color}`)

@@ -64,8 +64,9 @@ class SellUser extends React.Component<Props> {
 
     return (
       <JCard spinning={spinning}>
+        {visible?
         <AddSellUser visible={visible} detail={detail} params={params} 
-          onCancel={()=>this.setState({visible: false, detail:""})} />
+          onCancel={()=>this.setState({visible: false, detail:""})} />:null}
 
         <Card size="small" title={(
           <Button type="primary" icon={<PlusOutlined/>} 

@@ -1,54 +1,31 @@
 import 'package:flutter/material.dart';
-import '../../components/MyCard.dart';
-import '../../components/MyEmpty.dart';
-import '../../redux/exports.dart';
+import 'package:gcyzzlwj/components/MyCard.dart';
+import 'package:gcyzzlwj/components/MyEmpty.dart';
 
-class HomeRepair extends StatelessWidget {
+class HomeInspect extends StatefulWidget {
   final List dataList;
-  const HomeRepair({Key key, this.dataList}) : super(key: key);
-
-  handlenStatus(str){
-    Color color = Colors.red;
-    String text = "";
-    if(str.toString()=="0"){
-      color=Colors.red;
-      text="待处理";
-    }else if(str.toString()=="1"){
-      color=Colors.orange;
-      text="待处中";
-    }else {
-      color=Colors.blue;
-      text="已处理";
-    }
-    return Container(
-      padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
-      margin: EdgeInsets.only(right: 10.0),
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.all( Radius.circular(3.0) )),
-      child: Text(text, style: TextStyle(color: Colors.white),),
-    );
-  }
-
- 
+  HomeInspect({Key key, this.dataList}) : super(key: key);
 
   @override
+  _HomeInspectState createState() => _HomeInspectState();
+}
+
+class _HomeInspectState extends State<HomeInspect> {
+  @override
   Widget build(BuildContext context) {
-    return StoreConnector<IndexState, Map>(
-      converter: (store)=>store.state.app.home,
-      builder: (context, home){
-        return Container(
-          margin: EdgeInsets.only(top: 5.0),
-          child: MyCard(
-            title: Text("维修记录"), 
-            // extra: Text("更多"),
-            child: this.dataList.isNotEmpty ? 
-            Column(
+    
+    return Container(
+      margin: EdgeInsets.only(top: 5.0),
+       child: MyCard(
+         title: Text("空置房巡查"),
+         child: widget.dataList.isNotEmpty ? Column(
             crossAxisAlignment: CrossAxisAlignment.start, 
             
-            children: this.dataList.map((f){
+            children:  widget.dataList.map((f){
               
               return GestureDetector(
                 onTap: (){
-                  Navigator.pushNamed(context, "/clean/detail", arguments: f);
+                  Navigator.of(context).pushNamed("/inspect/detail", arguments: f);
                 },
                 child: Container(
                   padding: EdgeInsets.only(bottom: 8.0),
@@ -60,8 +37,8 @@ class HomeRepair extends StatelessWidget {
                         decoration: BoxDecoration(color: Color(0xFFeeeeee)),
                         alignment: Alignment.center,
                         width: 80.0, height: 80.0, 
-                        child: f["sysAttachmentList"].isNotEmpty?
-                            Image.network(  f["sysAttachmentList"][0]["dowloadHttpUrl"],
+                        child: f["imgUrl"].isNotEmpty?
+                            Image.network(  f["imgUrl"],
                                 width: 80.0, height: 80.0, fit: BoxFit.fill):Text("暂无图"),
                       ),
                       
@@ -74,14 +51,14 @@ class HomeRepair extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                        Container( 
+                        Container(
                           margin: EdgeInsets.only(bottom: 5.0),
-                          child: Text(f["repairName"], maxLines: 1, overflow: TextOverflow.ellipsis, 
-                          style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700),)
+                          child: Text(f["assetsName"], maxLines: 1, overflow: TextOverflow.ellipsis, 
+                                style: TextStyle(color: Color(0xFF666666))),
                         ),
                         Container(
                           margin: EdgeInsets.only(bottom: 5.0),
-                          child: Text(f["repairInfo"], maxLines: 1, overflow: TextOverflow.ellipsis, 
+                          child: Text(f["checkInfo"], maxLines: 1, overflow: TextOverflow.ellipsis, 
                                 style: TextStyle(color: Color(0xFF666666))),
                         ),
                         Row(
@@ -90,23 +67,20 @@ class HomeRepair extends StatelessWidget {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                this.handlenStatus(f["processingState"]),
-                                Text(f["processingUserName"]),
+                                Text(f["checkUserName"]),
                               ],
                             ),
-                            Text(f["buildTime"]!=null?f["buildTime"].substring(0,11):"", style: TextStyle(color: Color(0xFF999999)),),
+                            Text(f["checkTime"]!=null?f["checkTime"].substring(0,10):"", style: TextStyle(color: Color(0xFF999999)),),
                           ],
                         )
                       ],),
                     )
                   ],),
                 ),
-              );
-            }).toList() 
-            ): MyEmpty()
-          ),
-        );
-      },
+                );
+            }).toList()
+          ):MyEmpty(),
+       ),
     );
   }
 }

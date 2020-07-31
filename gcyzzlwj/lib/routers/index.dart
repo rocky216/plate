@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 import '../pages/index.dart';
 import '../pages/users/Login.dart';
 import '../pages/govern/Index.dart';
@@ -26,37 +27,39 @@ import '../pages/contact/Index.dart';
 import '../pages/users/family/index.dart';
 import '../pages/users/family/addFamily.dart';
 import '../components/MyPay.dart';
+import '../pages/inspect/detail.dart';
 
 
 
 final routes={
-      '/home':(context)=>IndexPage(),
-      '/login':(context)=>LoginPage(),
-      '/register':(context)=>RegisterPage(),
-      '/statement':(context)=>StatementPage(),
-      '/govern':(context)=>GovernPage(),
-      '/govern/detial':(context,{arguments})=>GovernDetailPage(arguments:arguments),
-      '/dishall':(context)=>DisHallPage(),
-      '/dishall/detial':(context,{arguments})=>DisHallDetailPage(arguments:arguments),
-      '/owner': (context)=>OwnerPage(),
-      '/vistor': (context)=>VistorPage(),
-      '/control': (context)=>ControlPage(),
-      '/user/passcard': (context)=>PassCardPage(),
-      '/user/ownerhouse': (context)=>OwnerHousePage(),
-      '/user/family': (context, {arguments})=>UserFamilly(arguments:arguments),
-      '/user/family/add': (context, {arguments})=>AddFamily(arguments:arguments),
-      '/user/updatepassword': (context)=>UpdatePasswordPage(),
-      '/user/userinfo': (context, {arguments})=>UserInfoPage(arguments:arguments),
-      '/user/carpass': (context)=>CarPassPage(),
-      '/user/controlpass': (context)=>ControlPassPage(),
-      '/clean': (context)=>CleanPage(),
-      '/user/clean': (context)=>UserCleanPage(),
-      '/plate': (context)=>PlatePage(),
-      '/pile': (context)=>PilePage(),
-      '/clean/detail': (context, {arguments})=>CleanDetailPage(arguments:arguments),
-      '/clean/add': (context)=>AddCleanPage(),
-      '/contact': (context)=>ContactPage(),
-      '/pay': (context, {arguments})=>MyWxPay(arguments:arguments),
+      '/home':(context)=> ThemeConsumer(child: IndexPage(),) ,
+      '/login':(context)=> ThemeConsumer(child: LoginPage(),) ,
+      '/register':(context)=> ThemeConsumer(child: RegisterPage(),) ,
+      '/statement':(context)=>ThemeConsumer(child: StatementPage(),),
+      '/govern':(context)=> ThemeConsumer(child: GovernPage(),),
+      '/govern/detial':(context,{arguments})=> ThemeConsumer(child: GovernDetailPage(arguments:arguments),) ,
+      '/dishall':(context)=> ThemeConsumer(child: DisHallPage(),),
+      '/dishall/detial':(context,{arguments})=>ThemeConsumer(child: DisHallDetailPage(arguments:arguments),),
+      '/owner': (context)=>ThemeConsumer(child: OwnerPage(),),
+      '/vistor': (context)=> ThemeConsumer(child: VistorPage()) ,
+      '/control': (context)=>ThemeConsumer(child: ControlPage(),),
+      '/user/passcard': (context)=>ThemeConsumer(child: PassCardPage(),),
+      '/user/ownerhouse': (context)=>ThemeConsumer(child: OwnerHousePage(),),
+      '/user/family': (context, {arguments})=>ThemeConsumer(child: UserFamilly(arguments:arguments),),
+      '/user/family/add': (context, {arguments})=>ThemeConsumer(child: AddFamily(arguments:arguments),),
+      '/user/updatepassword': (context)=>ThemeConsumer(child: UpdatePasswordPage(),),
+      '/user/userinfo': (context, {arguments})=>ThemeConsumer(child: UserInfoPage(arguments:arguments),),
+      '/user/carpass': (context)=>ThemeConsumer(child: CarPassPage(),),
+      '/user/controlpass': (context)=>ThemeConsumer(child: ControlPassPage(),),
+      '/clean': (context)=>ThemeConsumer(child: CleanPage(),),
+      '/user/clean': (context)=>ThemeConsumer(child: UserCleanPage(),),
+      '/plate': (context)=>ThemeConsumer(child: PlatePage(),),
+      '/pile': (context)=>ThemeConsumer(child: PilePage(),),
+      '/clean/detail': (context, {arguments})=>ThemeConsumer(child: CleanDetailPage(arguments:arguments),),
+      '/clean/add': (context)=>ThemeConsumer(child: AddCleanPage(),),
+      '/contact': (context)=>ThemeConsumer(child: ContactPage(),),
+      '/pay': (context, {arguments})=>ThemeConsumer(child: MyWxPay(arguments:arguments),),
+      '/inspect/detail': (context, {arguments})=>ThemeConsumer(child: InspectDetail(arguments:arguments),),
       // '/form':(context)=>FormPage(),'/search':(context,{arguments})=>SearchPage(arguments:arguments),
 };
 

@@ -3,6 +3,66 @@ import {fetch } from "@/utils"
 import _ from "lodash"
 
 
+export function distributeCompanyItem(params:any, next: (arg0: any) => void){
+  return async function(dispatch:any, getState:any){
+    dispatch({
+      type: START_LOADING_SELL,
+    })
+    try{
+      const options = {
+        url: "/api/sell/sys/user/distributeCompanyItem",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SELL,
+        distcompany: data
+      })
+    }catch(err){
+      console.log(err, `color: red`)
+      dispatch({
+        type: END_LOADING_SELL,
+      })
+    }
+
+  }
+}
+
+export function permissionList(params:any, next: (arg0: any) => void){
+  return async function(dispatch:any, getState:any){
+    dispatch({
+      type: START_LOADING_SELL,
+    })
+    try{
+      const options = {
+        url: "/api/sell/sys/user/permissionList",
+        method: "get",
+        data: {
+          ...params
+        }
+      }
+
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SELL,
+        permiss: data
+      })
+    }catch(err){
+      console.log(err, `color: red`)
+      dispatch({
+        type: END_LOADING_SELL,
+      })
+    }
+
+  }
+}
+
 export function getAuthPermMenu(params:any, next: (arg0: any) => void){
   return async function(dispatch:any, getState:any){
     dispatch({

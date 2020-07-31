@@ -45,6 +45,7 @@ dependencies:
   progress_dialog: ^1.2.2
   toast: ^0.1.5
   flutter_native_image: ^0.0.5+2
+  theme_provider: ^0.3.3
   
 dev_dependencies:
   flutter_test:

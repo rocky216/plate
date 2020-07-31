@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcyzzlwj/pages/home/HomeInspect.dart';
 import '../utils.dart';
 import './HomeSwiper.dart';
 import '../../components/MyScrollView.dart';
@@ -81,7 +82,8 @@ class _HomePageState extends State<HomePage> {
                 // this.notices.isNotEmpty?HomeNotice(notices: this.notices):Text(""),
                 AddService(),
                 HomeRepair(dataList: state.home!=null?state.home["repair"]:[],),
-                HomePassRecord(dataList: state.home!=null?state.home["record"]:[],)
+                HomePassRecord(dataList: state.home!=null?state.home["record"]:[],),
+                HomeInspect(dataList: state.home!=null?state.home["assetsCheckRecord"]:[],)
               ],
             ),
           ),

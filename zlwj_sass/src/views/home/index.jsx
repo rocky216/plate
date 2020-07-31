@@ -92,14 +92,14 @@ class Home extends React.Component {
           </Row>
           <Card size="small" className="mgt10" title="月订单">
             <div style={{display: "flex"}}>
-              <div style={{width: "200px", marginTop: 20}}>
+              <div style={{width: "20%", marginTop: 20}}>
                 {homeHeOrderbase && homeHeOrderbase.otherOrder ?homeHeOrderbase.otherOrder.map((item, index)=>(
                   <div className="basecard" key={index}>{item.title}
                     <span className="number">{item.number}</span>
                   {item.unit}</div>
                 )):null}
               </div>
-              <div style={{width:"100%"}}>
+              <div style={{width:"80%"}}>
                 {homeHeOrderbase && homeHeOrderbase.otherOrder?<Chart data={homeHeOrderbase} />:null}
               </div>
             </div>

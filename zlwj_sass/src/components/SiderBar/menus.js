@@ -31,6 +31,11 @@ export default [
         key: 204
       },
       {
+        title: "装修计划管理",
+        link: '/workcenter/trim',
+        key: 209
+      },
+      {
         title: "车辆管理",
         link: '/workcenter/car',
         key: 205
@@ -151,6 +156,11 @@ export default [
         title: "物业费活动模板",
         link: "/finance/activity",
         key: 1003
+      },
+      {
+        title: "台账",
+        link: "/finance/book",
+        key: 1004
       },
     ]
   },

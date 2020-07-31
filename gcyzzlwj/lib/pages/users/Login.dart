@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 import '../http.dart';
 import '../utils.dart';
 import '../Index.dart';
@@ -199,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                               setUserInfo(data);
                               Navigator.pushAndRemoveUntil(
                                 context,
-                                new MaterialPageRoute(builder: (context) => new IndexPage()),
+                                new MaterialPageRoute(builder: (context) => ThemeConsumer(child: new IndexPage(),)),
                                 (route) => route == null,
                               );
                             }
