@@ -18,12 +18,13 @@ export const PrintSettle = ({
           <td>电话：{detail.ownerPhone}</td>
         </tr>
         <tr>
-          <td>装修类型：{detail.fixPlan.fixType=="company"?"公司":"个人"}</td>
-          <td>装修负责人：{detail.fixPlan.director}</td>
-          <td>装修联系人：{detail.fixPlan.linkName}</td>
+          <td>装修类型：{detail.fixPlan.fixType=="company"?detail.fixPlan.fixType=="person"?"个人":"公司":"暂无"}</td>
+          <td>装修负责人：{detail.fixPlan.director || "暂无"}</td>
+          <td>装修联系人：{detail.fixPlan.linkName || "暂无" }</td>
         </tr>
         <tr>
-          <td colSpan={3} style={{textAlign: "center"}}>装修时间：{detail.fixPlan.fixStartTime.substring(0,10)}至{detail.fixPlan.fixEndTime?detail.fixPlan.fixEndTime.substring(0,10):""}</td>
+          <td colSpan={3} style={{textAlign: "center"}}>装修时间：
+          {detail.fixPlan.fixStartTime?detail.fixPlan.fixStartTime.substring(0,10)+'至':"暂无"}{detail.fixPlan.fixEndTime?detail.fixPlan.fixEndTime.substring(0,10):""}</td>
         </tr>
         </tbody>
       </table>
@@ -53,11 +54,11 @@ export const PrintSettle = ({
         {detail.fixPlan.outMoney?(
           <>
             <tr>
-              <td colSpan={4} style={{textAlign: "right"}}>合计：{detail.fixPlan.outMoney}元</td>
+              <td colSpan={4} style={{textAlign: "right"}}>合计：{detail.fixPlan.sumTearMoney}元</td>
             </tr>
             <tr>
               <td colSpan={4} style={{textAlign: "right"}}>
-                {`${detail.fixPlan.sumDepositMoney}(履约金) - ${detail.fixPlan.outMoney}(违规扣款) = ${detail.fixPlan.sumTearMoney}元`}
+                {`${detail.fixPlan.sumDepositMoney}(履约金) - ${detail.fixPlan.sumTearMoney}(违规扣款) = ${detail.fixPlan.outMoney}元`}
               </td>
             </tr>
           </>
@@ -93,7 +94,7 @@ export const DepositSettle = ({
       <div style={{display: "flex", justifyContent: "space-between"}}>
         <img src={detail.companyLogo} />
         <span style={{ fontSize: 20, paddingTop:20}}>装修履约金</span>
-        <span style={{paddingTop: 25}}>单号：ZXRC2020011201-1</span>
+        <span style={{paddingTop: 25}}>单号：{item.depositNo}</span>
       </div>
       <table  border="1" >
         <tbody>
@@ -101,17 +102,17 @@ export const DepositSettle = ({
             <td>住宅：{detail.aaetsName}</td>
             <td>业主：{detail.ownerName}</td>
             <td>电话：{detail.ownerPhone}</td>
-            <td>{detail.ownerPhone}</td>
+            <td>{item.depositNo}</td>
           </tr>
           <tr>
             <td>装修类型：{detail.fixPlan.fixType=="company"?"公司":"个人"}</td>
-            <td>装修负责人：{detail.fixPlan.director}</td>
-            <td>装修联系人：{detail.fixPlan.linkName}</td>
-            <td>装修联系电话：{detail.fixPlan.linkName}</td>
+            <td>装修负责人：{detail.fixPlan.director || "暂无"}</td>
+            <td>装修联系人：{detail.fixPlan.linkName || "暂无"}</td>
+            <td>装修联系电话：{detail.fixPlan.linkPhone || "暂无"}</td>
           </tr>
           <tr>
-            <td colSpan={2}>开始装修时间：{detail.fixPlan.fixType=="company"?"公司":"个人"}</td>
-            <td colSpan={2}>履约金支付时间：{detail.fixPlan.director}</td>
+            <td colSpan={2}>开始装修时间：{detail.fixPlan.fixStartTime?detail.fixPlan.fixStartTime.substring(0,10):"暂无"}</td>
+            <td colSpan={2}>履约金支付时间：{item.buildTime}</td>
           </tr>
         </tbody>
       </table>

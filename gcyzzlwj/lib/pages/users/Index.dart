@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcyzzlwj/pages/users/PartFour.dart';
 import '../http.dart';
 import '../../components/MyHeader.dart';
 import '../../components/MyScrollView.dart';
@@ -82,7 +83,8 @@ class _UserPageState extends State<UserPage> {
               children: <Widget>[
                 UserHeader(avatarUrl: user!=null?user["avatarUrl"]:"", userinfo: user!=null?user:null),
                 PartTwo(balance: this.balance, allScore: this.allScore,),
-                PartThree()
+                PartThree(),
+                PartFour()
               ],
             ),
           ),

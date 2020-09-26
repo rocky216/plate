@@ -47,13 +47,14 @@ android {
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    
     //打包apk
     signingConfigs {
         release{
             keyAlias 'key'
             keyPassword '123456'
             storeFile file('D://key.jks') 
-            storePassword '123456'
+            storePassword '123456' 
         }
     }
 

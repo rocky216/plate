@@ -6,6 +6,7 @@ import {Row, Col, Form, Button, Icon, Input, Select, TreeSelect, Card} from "ant
 import {editStaffTreeMenu, editStaff, getStaffList, getHeList, getDeptList, getSelectJobList, getSelectRoleList, getStaffDetail, getUserTreeMenuList} from "@/actions/baseAction"
 import JCard from "@/components/JCard"
 import RoleMenu from "@/components/RoleMenu"
+import StaffAppPower from "./appower"
 
 const {Option} = Select
 const {TreeNode} = TreeSelect
@@ -233,6 +234,7 @@ class EditStaff extends React.Component {
               </Form.Item>
             </Form>
             </Card>
+            <StaffAppPower/>
           </Col>
           <Col span={12}>
             <Card title="权限信息"  extra={<Button onClick={this.submitLimit.bind(this)} type="primary"><Icon type="save" />保存</Button>} > 

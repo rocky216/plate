@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Card, Table, Button, Icon, Popconfirm} from "antd";
+import {Card, Table, Button, Icon, Popconfirm, Alert} from "antd";
 import JCard from "@/components/JCard"
 import {getAppApk, deleteAppApk} from "@/actions/systemAction"
 import {appApkColumns} from "../colmuns"
@@ -57,7 +57,19 @@ class ApkSystem extends React.Component {
       <JCard spinning={spinning}>
         <AddApkSystem visible={addVisible} onCancel={()=>this.setState({addVisible: false})} />
 
-        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />新增版本</Button>}>
+        <Card title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />新增版本</Button>}
+          extra={(
+            <div>
+              <a href="/api/pc/androidResource/owner/jlwj">
+                <Button type="primary" ghost>业主APP下载</Button>
+              </a>
+              <a className="mgl10" href="/api/pc/androidResource/manage/jlwj">
+                <Button type="primary" ghost>物业APP下载</Button>
+              </a>
+            </div>
+          )}
+        >
+          
           <Table columns={this.getCol()} dataSource={apk?utils.addIndex(apk):[]} />
         </Card>
       </JCard>

@@ -2,6 +2,64 @@ import {START_LOADING_MANAGE, END_LOADING_MANAGE} from "@/types"
 import {fetch } from "@/utils"
 import {log_color} from "@/utils/config"
 
+export function heAssetsUpdateLog(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/HeAssetsUpdateLog/LogPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+        assetlog: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
+export function allTrimPlanPage(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_MANAGE
+    })
+    try{
+      const options = {
+        url: "/api/pc/FixPlan/allPlanPage",
+        method: "get",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_MANAGE,
+        alltrim: data
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_MANAGE
+      })
+    }
+
+  }
+}
+
 export function checkOrderBaseOtherExpendOrder(params, next){
   return async function(dispatch, getState){
     dispatch({

@@ -3,6 +3,63 @@ import {Input, InputNumber, Icon, Button, Tag} from "antd"
 const {TextArea} = Input
 
 
+export const arrearsColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "资产编号",
+    dataIndex: "code",
+  },
+  {
+    title: "建筑面积",
+    dataIndex: "builtupArea"
+  },
+  {
+    title: "业主信息",
+    dataIndex: "ownesInfo"
+  },
+  {
+    title: "交房日期",
+    dataIndex: "deliversTime",
+    render:item=>item?item.substring(0,10):""
+  },
+  {
+    title: "已缴区间",
+    dataIndex: "paidRange",
+  },
+]
+
+export const inspectRecordColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "巡查时间",
+    dataIndex: "checkTime",
+    render:item=>item?item.substring(0,10):""
+  },
+  {
+    title: "巡查人",
+    dataIndex: "checkUserName"
+  },
+  {
+    title: "巡查说明",
+    dataIndex: "checkInfo"
+  },
+  {
+    title: "图片",
+    dataIndex: "sysAttachmentList",
+    render(h) {
+      return h.map(item=>(
+        <img key={item.id} src={item.dowloadHttpUrl} style={{width:60}} />
+      ))
+    },
+  },
+]
+
 export const deductColumns = [
   {
     title: "创建人",
@@ -45,14 +102,23 @@ export const depositColumns = [
   },
   {
     title: "打印信息",
-    dataIndex: "printCount"
+    dataIndex: "printCount",
+    render(item, rows) {
+      return !item?"暂无":(
+        <div>
+          <Tag>{rows.printUserName}</Tag>
+          <Tag>打印次数:{item}</Tag>
+          <Tag>时间:{rows.printTime}</Tag>
+        </div>
+      )
+    }
   },
 ]
 
 export const inspectionColumns = [
   {
     title: "巡查人",
-    dataIndex: "checkUserid"
+    dataIndex: "buildUserName"
   },
   {
     title: "巡查时间",
@@ -92,16 +158,16 @@ export const trimColumns = [
   },
   {
     title: "关联信息",
-    dataIndex: "linkName",
-    render(item, rows) {
-      return `${item}：${rows.linkPhone}`
+    dataIndex: "fixPlanVo",
+    render(item) {
+      return `${item.houserNumber} ${item.ownerName} ${item.ownerPhone}`
     }
   },
   {
     title: "装修时间",
     dataIndex: "fixStartTime",
     render(h,r) {
-      return `${h?h.substring(0,10):h}${r.fixEndTime?r.fixEndTime.substring(0,10):""}`
+      return h?`${h?h.substring(0,10):h} 到 ${r.fixEndTime?r.fixEndTime.substring(0,10):""}`:"未开始装修"
     },
   },
   {

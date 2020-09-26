@@ -1,14 +1,55 @@
 import React from "react"
 import {Tag} from "antd"
 
+
+export const transferColumns = [
+  {
+    title: "转账单号",
+    dataIndex: "orderNo",
+  },
+  {
+    title: "转账时间",
+    dataIndex: "voucherTime",
+  },
+  {
+    title: "转出资金账户信息",
+    dataIndex: "outAccountInfo",
+  },
+  {
+    title: "转入资金账户信息",
+    dataIndex: "inAccountInfo",
+  },
+  {
+    title: "转入金额",
+    dataIndex: "handleAmount",
+  },
+  {
+    title: "转账说明",
+    dataIndex: "voucherInfo",
+  },
+  {
+    title: "附件",
+    dataIndex: "imgList",
+    render(item) {
+      return item.map((elem, index)=>(
+        <img key={index} src={elem} style={{width: 60}} />
+      ));
+    }
+  },
+  {
+    title: "转账人",
+    dataIndex: "operator",
+  },
+  {
+    title: "创建时间",
+    dataIndex: "buildTime",
+  },
+]
+
 export const bookColumns = [
   {
     title: "序号",
     dataIndex: "key"
-  },
-  {
-    title: "订单标题",
-    dataIndex: "orderTitle"
   },
   {
     title: "收支类型",
@@ -39,10 +80,8 @@ export const bookColumns = [
     title: "关联信息",
     dataIndex: "information"
   },
-  {
-    title: "资产面积",
-    dataIndex: "assetArea"
-  },
+  
+  
 ]
 
 export const activityColumns = [

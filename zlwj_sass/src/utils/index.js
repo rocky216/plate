@@ -73,10 +73,14 @@ export function Pagination(pageInfo, next){
   }
 } 
 
-export function addIndex(arr){
+export function addIndex(arr, type){
   if(!_.isArray(arr)) return []
   _.each(arr, (item, index)=>{
-    item.key = index+1
+    if(type){
+      item.key = item[type]
+    }else{
+      item.key = index+1
+    }
   })
   return arr
 }

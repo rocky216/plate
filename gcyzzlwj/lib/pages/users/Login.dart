@@ -163,10 +163,10 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.only(left: 40.0),
                       child: Row(
                         children: <Widget>[
-                          Text("登录即代表您已同意我们的", style: TextStyle(color: Color(0xFF999999), fontSize: 12.0),),
+                          Text("登录即代表您已同意", style: TextStyle(color: Color(0xFF999999), fontSize: 12.0),),
                           Container(
-                            width: 130.0,
-                            child: GestureDetector(child: Text("《用户协议声明》", 
+                            width: 160.0,
+                            child: GestureDetector(child: Text("《隐私权限与用户协议》", 
                                 style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12.0)),
                               onTap: (){
                                 Navigator.pushNamed(context, "/statement");

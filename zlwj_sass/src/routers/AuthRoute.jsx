@@ -22,6 +22,7 @@ class AuthRoute extends React.Component{
 
   handlenRoute(){
     const {Component, path, exact, name, auth, baseInfo} = this.props
+    
     if(baseInfo && auth && _.findIndex(baseInfo.userMenuList, o=>o.key==auth)==-1){
       return <Redirect to="/error" />
     }else {

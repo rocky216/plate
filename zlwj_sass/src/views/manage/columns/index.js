@@ -1,6 +1,42 @@
 import React from "react"
 import {Tag} from "antd"
 
+export const assetsLogColumns = [
+  {
+    title: "序号",
+    dataIndex: "key"
+  },
+  {
+    title: "资产变更时间",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "更新人",
+    dataIndex: "buildUserName"
+  },
+  {
+    title: "项目",
+    dataIndex: "heNameStr"
+  },
+  {
+    title: "关联信息",
+    dataIndex: "assetsType"
+  },
+  {
+    title: "业主信息",
+    dataIndex: "assetsInfo"
+  },
+  {
+    title: "资产变更说明",
+    dataIndex: "remark"
+  },
+  {
+    title: "资产变更信息",
+    dataIndex: "updateInfo"
+  },
+]
+
+
 export const operativeColumns = [
   {
     title: "序号",

@@ -4,8 +4,9 @@ import {Tag, Icon} from "antd"
 
 export const appApkColumns = [
   {
-    title: "序号",
-    dataIndex: "key"
+    title: "类型",
+    dataIndex: "status",
+    render: item=>item=="0"?<Tag color="blue">业主</Tag>:<Tag color="red">物业</Tag>
   },
   {
     title: "名称",

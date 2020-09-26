@@ -36,6 +36,16 @@ export default [
         key: 209
       },
       {
+        title: "资产欠缴统计",
+        link: '/workcenter/arrears',
+        key: 211
+      },
+      {
+        title: "巡查记录",
+        link: '/workcenter/inspectrecord',
+        key: 210
+      },
+      {
         title: "车辆管理",
         link: '/workcenter/car',
         key: 205
@@ -57,18 +67,28 @@ export default [
       },
     ]
   },
-  // {
-  //   title: "流程中心",
-  //   key: 3,
-  //   icon: "icon iconfont icon-liuchengzhongxin",
-  //   children: [
-  //     {
-  //       title: "我的流程",
-  //       link: "/",
-  //       key: 301
-  //     }
-  //   ]
-  // },
+  {
+    title: "日常管理",
+    key: 3,
+    icon: "icon iconfont icon-liuchengzhongxin",
+    children: [
+      {
+        title: "巡更管理",
+        link: "/daily/patrol",
+        key: 301
+      },
+      {
+        title: "报修管理",
+        link: "/daily/repair",
+        key: 302
+      },
+      {
+        title: "考勤管理",
+        link: "/daily/attend",
+        key: 303
+      },
+    ]
+  },
   {
     title: "管理中心",
     key: 4,
@@ -88,6 +108,16 @@ export default [
         title: "全部其他支出订单",
         link: "/manage/allexpend",
         key: 404
+      }, 
+      {
+        title: "全部装修计划管理",
+        link: "/manage/trim",
+        key: 405
+      }, 
+      {
+        title: "资产变更记录",
+        link: "/manage/assetchange",
+        key: 406
       }, 
       {
         title: "合作商",
@@ -161,6 +191,11 @@ export default [
         title: "台账",
         link: "/finance/book",
         key: 1004
+      },
+      {
+        title: "转账记录",
+        link: "/finance/transfer",
+        key: 1005
       },
     ]
   },

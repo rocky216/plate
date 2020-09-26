@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         child: FlutterEasyLoading(
           child: StoreProvider<IndexState>(
             store: store,
-            child: MaterialApp(
+            child: MaterialApp( 
               title: '智联万家',
               theme: ThemeData(
                 primarySwatch: Colors.blue,

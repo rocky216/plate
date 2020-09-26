@@ -8,6 +8,7 @@ import {editParkData, getParkData} from "@/actions/projectAction"
 import moment from "moment"
 import Chargrules from "./chargrules"
 import Configrules from "./configrules"
+import TemCar from "./temcar"
 import JCard from "@/components/JCard"
 
 const {Option} = Select
@@ -260,6 +261,11 @@ class EditPark extends React.Component {
           </Col>
           <Col span={12}>
             <Configrules/>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <TemCar/>
           </Col>
         </Row>
       </JCard>

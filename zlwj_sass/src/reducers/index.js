@@ -6,6 +6,7 @@ import projectReducer from "./projectReducer"
 import financeReducer from "./financeReducer"
 import otherReducer from "./otherReducer"
 import manageReducer from "./manageReducer"
+import dailyReducer from "./dailyReducer"
 
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
   project: projectReducer,
   finance: financeReducer,
   other: otherReducer,
-  manage: manageReducer
+  manage: manageReducer,
+  daily: dailyReducer,
 })

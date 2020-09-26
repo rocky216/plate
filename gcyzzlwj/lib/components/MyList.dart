@@ -12,7 +12,7 @@ class MyList extends StatefulWidget {
 }
 
 class _MyListState extends State<MyList> {
-  ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController(); 
   int _current = 1;
   bool bBtn = true;
   List dataList = [];

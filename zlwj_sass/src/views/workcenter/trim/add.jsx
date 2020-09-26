@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import {bindActionCreators} from "redux"
 import {Card, Button, Icon, Form, Input, Divider, Row, Col, Modal, DatePicker, Select, Table, Switch} from "antd";
 import JCard from "@/components/JCard"
-import {initBasePropertyOrder,initLoadOrderMoney,addInsertFix,getPropertyOrderPage, propertyPlanPage} from "@/actions/otherAction"
+import {initBasePropertyOrder,initLoadOrderMoney,addInsertFix, propertyPlanPage} from "@/actions/otherAction"
 import {ownersInfo, houseInfo, shopInfo, plateInfo} from "../propertyfee/data"
 import moment from "moment"
 import {propertyDetailColmuns} from "../colmuns"
@@ -38,7 +38,7 @@ class AddTrim extends React.Component {
   }
   componentDidMount(){
     const {houseItem} = this.props
-    console.log(houseItem, "houseItem")
+    
     this.props.actions.initBasePropertyOrder({
       linkId: this.props.houseItem.id,
       orderType: this.props.houseItem.type,
@@ -74,7 +74,9 @@ class AddTrim extends React.Component {
         }, res=>{
           this.props.utils.OpenNotification("success")
           this.props.onCancel()
-          this.props.actions.propertyPlanPage(params)
+          setTimeout(()=>{
+            this.props.actions.propertyPlanPage(params)
+          }, 100)
         })
       }
       
@@ -268,6 +270,7 @@ class AddTrim extends React.Component {
               </Form.Item>
             </Col>
           </Row>
+          <p style={{color: "red"}}>ps：如暂时没有装修需求可不填相应信息~</p>
         </Form>
       </Modal>
     )
@@ -276,7 +279,7 @@ class AddTrim extends React.Component {
 
 function mapDispatchProps(dispatch){
   return {
-    actions: bindActionCreators({initBasePropertyOrder, initLoadOrderMoney,addInsertFix, getPropertyOrderPage,propertyPlanPage}, dispatch)
+    actions: bindActionCreators({initBasePropertyOrder, initLoadOrderMoney,addInsertFix,propertyPlanPage}, dispatch)
   }
 }
 

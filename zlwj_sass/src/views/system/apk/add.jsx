@@ -2,10 +2,11 @@ import React from "react"
 import {connect} from "react-redux"
 import { withRouter } from "react-router-dom"
 import {bindActionCreators} from "redux"
-import {Modal, Form, Button, Input, InputNumber, Upload, Icon  } from "antd";
+import {Modal, Form, Button, Input, InputNumber, Upload, Icon, Select} from "antd";
 import {addAppApk, getAppApk} from "@/actions/systemAction"
 
 const {TextArea} = Input
+const {Option} = Select
 
 const formItemLayout = {
   labelCol: {
@@ -59,6 +60,21 @@ class AddApkSystem extends React.Component {
                 }
               ],
             })(<Input style={{width: "100%"}} />)}
+          </Form.Item>
+          <Form.Item label="类型" hasFeedback>
+            {getFieldDecorator('status', {
+              rules: [
+                {
+                  required: true,
+                  message: '类型!',
+                }
+              ],
+            })(
+              <Select>
+                <Option value="0">业主</Option>
+                <Option  value="1">物业</Option>
+              </Select>
+            )}
           </Form.Item>
           <Form.Item label="版本号" hasFeedback>
             {getFieldDecorator('versionNo', {

@@ -72,6 +72,18 @@ void showToast(msg){
   );
 }
 
+
+void setAgreement() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("agreem", "1");
+}
+getAgreemnet() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var agreem = prefs.getString("agreem");
+  
+  return agreem;
+}
+
 void setUserInfo(value) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if(value is Map || value!="null"){

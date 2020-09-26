@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcyzzlwj/components/MyHeader.dart';
 import '../../components/MyScrollView.dart';
 
 class StatementPage extends StatelessWidget {
@@ -7,8 +8,8 @@ class StatementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("用户隐私及协议"),
+      appBar: MyHeader(
+        title: Text("隐私权限与用户协议"),
       ),
       body: MyScrollView(
         child: Container(
@@ -18,7 +19,7 @@ class StatementPage extends StatelessWidget {
             children: <Widget>[
             Container(
               width: double.infinity,
-              child: Text("《用户协议及隐私声明》", textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
+              child: Text("隐私权限与用户协议", textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),
             ),
             Container(
               width: double.infinity,

@@ -38,7 +38,7 @@ class _MyUplaodState extends State<MyUplaod> {
       File compressedFile = await FlutterNativeImage.compressImage(path, quality: 80, 
       targetWidth: 600, targetHeight: (properties.height * 600 / properties.width).round());
 
-      FormData formData = new FormData.from({
+      FormData formData = new FormData.from({ 
         "fileSize": 1024*10,
         "fileType": "photo",
         "file": new UploadFileInfo(compressedFile, name) //Image.file(image) new File(path)
@@ -83,7 +83,7 @@ class _MyUplaodState extends State<MyUplaod> {
                   SimpleDialogOption(
                     child: Text("拍照"),
                     onPressed: (){
-                      this.uploadImg("camera");
+                      this.uploadImg("camera"); 
                       Navigator.of(context).pop();
                     },
                   ),

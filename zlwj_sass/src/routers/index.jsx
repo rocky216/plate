@@ -86,6 +86,16 @@ import BaseCompany from "@/views/base/company"
 import PropertyTrim from "@/views/workcenter/trim"
 import PropertyTrimDetail from "@/views/workcenter/trim/detail"
 import FinanceBook from "@/views/finance/book"
+import ManageTrim from "@/views/manage/trim"
+import ManageTrimDetail from "@/views/manage/trim/detail"
+import Inspectrecord from "@/views/workcenter/inspectrecord"
+import Assetchange from "@/views/manage/assetchange"
+import WorkcenterArrears from "@/views/workcenter/arrears"
+import FinanceTransfer from "@/views/finance/transfer"
+import DailyPatrol from "@/views/daily/patrol"
+import DailyRepair from "@/views/daily/repair"
+import DailyAttend from "@/views/daily/attend"
+import AttendDetail from "@/views/daily/attend/detail"
 
 
 
@@ -95,9 +105,11 @@ class Routers extends React.Component{
     
     return (
       <Switch>
-
+        
         <AuthRoute exact path="/" Component={Home} name="首页" auth="1" />
         <Route path="/error" component={Error}/>
+        
+        
 
         <AuthRoute exact path="/workcenter/propertyfee" Component={PropertyFee} name="物业费订单" auth="2-01" /> 
         <AuthRoute exact path="/workcenter/propertyfee/:id/detail/:type" Component={PropertyFeeDetail} name="查看物业费订单"  /> 
@@ -118,6 +130,14 @@ class Routers extends React.Component{
         <AuthRoute path="/workcenter/repair" Component={RepairManage} name="报修管理" auth="2-08"  /> 
         <AuthRoute exact path="/workcenter/trim" Component={PropertyTrim} name="装修计划管理" auth="2-09"  /> 
         <AuthRoute path="/workcenter/trim/:id/detail/:type" Component={PropertyTrimDetail} name="装修计划详情" auth="2-09"  /> 
+        <AuthRoute exact path="/workcenter/inspectrecord" Component={Inspectrecord} name="巡查记录" auth="2-10"  /> 
+        <AuthRoute exact path="/workcenter/arrears" Component={WorkcenterArrears} name="资产欠缴统计" auth="2-11"  /> 
+
+
+        <AuthRoute path="/daily/patrol" Component={DailyPatrol} name="巡更管理" auth="3-01" />
+        <AuthRoute path="/daily/repair" Component={DailyRepair} name="报修管理" auth="3-02" />
+        <AuthRoute exact path="/daily/attend" Component={DailyAttend} name="考勤管理" auth="3-03" />
+        <AuthRoute path="/daily/attend/:id/detail" Component={AttendDetail} name="考勤详情"  />
 
         <AuthRoute  path="/system/treemenu" Component={TreeMenu} name="权限菜单" auth="9-01" />
         <AuthRoute  path="/system/library" Component={SystemLibrary} name="系统数据字典" auth="9-02" />
@@ -168,6 +188,7 @@ class Routers extends React.Component{
         <AuthRoute  path="/finance/propertytem/:id/edit" Component={EditPropertytem} name="编辑物业费收费模板" />
         <AuthRoute  path="/finance/activity" Component={Activity} auth="10-03" name="活动模板" />
         <AuthRoute  path="/finance/book" Component={FinanceBook} auth="10-04" name="台账" />
+        <AuthRoute  path="/finance/transfer" Component={FinanceTransfer} auth="10-05" name="转账记录" />
 
         <AuthRoute exact path="/other/discussion" Component={Discussion} name="议事主题" auth="5-01" />
         <AuthRoute  path="/other/discussion/add" Component={AddDiscussion} name="新增议事主题" />
@@ -180,7 +201,7 @@ class Routers extends React.Component{
         <AuthRoute  path="/other/govern/add" Component={AddGovern} name="新增政务" />
         <AuthRoute  path="/other/govern/:id/edit" Component={EditGovern} name="编辑政务" />
         <AuthRoute  path="/other/message" Component={SendMessage} name="短信发送" auth="11-01" /> 
-
+        
         <AuthRoute  path="/manage/operative" Component={ManageOperative} name="合作商" auth="4-01" />
         <AuthRoute exact path="/manage/allorder" Component={AllOrder} name="全部物业费订单" auth="4-02" />
         <AuthRoute  path="/manage/allorder/:id/detail/:order/:type" Component={AllOrderDetail} name="查看物业费订单" />
@@ -188,6 +209,9 @@ class Routers extends React.Component{
         <AuthRoute exact path="/manage/otherorder/:id/detail/:type" Component={OtherOrderDetail} name="查看其他缴费订单" auth="4-03" />
         <AuthRoute exact path="/manage/allexpend" Component={AllExpend} name="全部其他支出订单" auth="4-04" />
         <AuthRoute exact path="/manage/allexpend/:id/detail/:type" Component={AllExpendDetail} name="查看其他支出订单" auth="4-04" />
+        <AuthRoute exact path="/manage/trim" Component={ManageTrim} name="装修计划管理" auth="4-05" />
+        <AuthRoute  path="/manage/trim/:id/detail" Component={ManageTrimDetail} name="装修计划管理详情" />
+        <AuthRoute  path="/manage/assetchange" Component={Assetchange} name="资产变更记录" auth="4-06" />
         
       </Switch>
       

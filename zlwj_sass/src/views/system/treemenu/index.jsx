@@ -1,11 +1,12 @@
 import React from "react"
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
-import {Card, Tree, Icon, Button, Popconfirm} from "antd";
+import {Card, Tree, Icon, Button, Popconfirm, Row, Col} from "antd";
 import {getTreeMenuList, deleteTreeMenu} from "@/actions/systemAction"
 import JCard from "@/components/JCard"
 import AddMenu from "./add"
 import EditMenu from "./edit"
+import AppTreeMenu from "./appmenu"
 
 const { TreeNode } = Tree
 
@@ -68,18 +69,25 @@ class TreeMenu extends React.Component {
         <div>
           <AddMenu visible={addVisible} detail={detail} onCancel={()=>this.setState({addVisible: false, detail: ''})} />
           <EditMenu visible={editVisible} detail={detail} onCancel={()=>this.setState({editVisible: false, detail: ''})} />
-          <Card
-            title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />新增菜单</Button>}
-          >
-            {treemenu && treemenu.length?<Tree
-              // checkable
-              showLine 
-              defaultExpandAll
-              blockNode
+          <Row>
+            <Col span={12}>
+              <Card
+              title={<Button type="primary" onClick={()=>this.setState({addVisible: true})} ><Icon type="plus" />新增菜单</Button>}
             >
-              {this.createNode(treemenu)}
-            </Tree>:null}
-          </Card>
+              {treemenu && treemenu.length?<Tree
+                // checkable
+                showLine 
+                defaultExpandAll
+                blockNode
+              >
+                {this.createNode(treemenu)}
+              </Tree>:null}
+            </Card>
+            </Col>
+            <Col span={12}>
+                <AppTreeMenu/>
+            </Col>
+          </Row>
         </div>
       </JCard>
     )
