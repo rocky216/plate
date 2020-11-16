@@ -36,6 +36,7 @@ class SellRole extends React.Component<Props> {
       render(item:any) {
         return (
           <div>
+            
             <Button size="small" type="link" onClick={()=>_this.setState({visible: true, detail: item})} >编辑</Button>
             <Link to={`/sell/role/${item.id}/auth`}>
               <Button size="small" type="link" >权限</Button>

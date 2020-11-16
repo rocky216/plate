@@ -604,9 +604,9 @@ export function getControlPage(params, next){
     })
     try{
       const options = {
-        url: "/api/pc/admin/device/controller/listPage",
+        url: "/api/pc/admin/devicePower/monitor",
         method: "get",
-        data: {...params}
+        data: {...params, type: "access"}
       }
 
       let data = await fetch(options)
@@ -635,6 +635,34 @@ export function autoControlInit(params, next){
       const options = {
         url: "/api/pc/admin/device/controller/init",
         method: "post",
+        data: {...params}
+      }
+
+      let data = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: END_LOADING_SYSTEM,
+      })
+
+    }catch(err){
+      console.log(err, `color: ${log_color}`)
+      dispatch({
+        type: END_LOADING_SYSTEM
+      })
+    }
+
+  }
+}
+
+export function getAllPowerStatisOrder(params, next){
+  return async function(dispatch, getState){
+    dispatch({
+      type: START_LOADING_SYSTEM
+    })
+    try{
+      const options = {
+        url: "/api/pc/admin/devicePower/monitor",
+        method: "get",
         data: {...params}
       }
 
@@ -775,9 +803,9 @@ export function getPlateDevice(params, next){
     })
     try{
       const options = {
-        url: "/api/pc/admin/device/plate/listPage",
+        url: "/api/pc/admin/devicePower/monitor",
         method: "get",
-        data: {...params}
+        data: {...params, type: "car"}
       }
 
       let data = await fetch(options)
@@ -888,9 +916,9 @@ export function getPileDevice(params, next){
     })
     try{
       const options = {
-        url: "/api/pc/admin/devicePower/listPage",
+        url: "/api/pc/admin/devicePower/monitor",
         method: "get",
-        data: {...params}
+        data: {...params, type: "pile"}
       }
 
       let data = await fetch(options)

@@ -32,9 +32,9 @@ class _ControlPageState extends State<ControlPage> {
   }
   openDoor(item) async {
     item["times"] = 10;
-    setState(() {
-      this.doorlist=doorlist;
-    });
+    // setState(() {
+    //   this.doorlist=doorlist;
+    // });
     item["timer"] = Timer.periodic(Duration(seconds: 1), (t){
       item["times"]--;
       if(item["times"]==0){

@@ -2,6 +2,45 @@ import React from "react"
 import {Input, InputNumber, Icon, Button, Tag} from "antd"
 const {TextArea} = Input
 
+export const controlPassColumns = [
+  {
+    title: "通行时间",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "通行设备",
+    dataIndex: "passDoorName"
+  },
+  {
+    title: "控制器类型",
+    dataIndex: "deviceType",
+    render: item=>item==1?"控制器":item==2?"梯控":""
+  },
+  {
+    title: "通行类型",
+    dataIndex: "passType",
+    render(item) {
+      switch(parseInt(item)){
+        case 1:
+          return "卡通行"
+        case 2:
+          return "二维码"
+        case 3:
+          return "密码"
+        case 4:
+          return "手动开门"
+      }
+    }
+  },
+  {
+    title: "开门信息(卡号)",
+    dataIndex: "passContent"
+  },
+  {
+    title: "业主信息",
+    dataIndex: "ownerInfo"
+  },
+]
 
 export const arrearsColumns = [
   {
@@ -33,8 +72,8 @@ export const arrearsColumns = [
 
 export const inspectRecordColumns = [
   {
-    title: "序号",
-    dataIndex: "key"
+    title: "资产编号",
+    dataIndex: "assetsName"
   },
   {
     title: "巡查时间",

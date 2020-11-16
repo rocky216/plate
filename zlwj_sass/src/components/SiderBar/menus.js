@@ -60,11 +60,6 @@ export default [
         link: '/workcenter/record',
         key: 207
       },
-      {
-        title: "报修管理",
-        link: '/workcenter/repair',
-        key: 208
-      },
     ]
   },
   {
@@ -123,6 +118,23 @@ export default [
         title: "合作商",
         link: "/manage/operative",
         key: 401
+      },
+    ]
+  },
+  {
+    title: "智联中心",
+    key: 12,
+    icon: "icon iconfont icon-ranqibaoxiuguanli",
+    children: [
+      {
+        title: "设备监控",
+        link: "/center/devicemonitor",
+        key: 1201
+      },
+      {
+        title: "订单统计",
+        link: "/center/orderstatis",
+        key: 1202
       },
     ]
   },
@@ -304,7 +316,7 @@ export default [
         key: 906
       },
       {
-        title: "日志管理",
+        title: "订单统计",
         link: "/system/record",
         key: 907
       },

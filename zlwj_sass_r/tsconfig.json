@@ -1,0 +1,69 @@
+{
+  "compilerOptions": {
+    "declaration": false, //生成相应的 .d.ts文件。
+    "noImplicitAny": true, // 不允许隐式的 any 类型
+    "noImplicitThis": true, // 不允许 this 有隐式的 any 类型
+    // "downlevelIteration": true,  //迭代器
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "module": "esnext",  // "ES2015"
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "sourceMap": true,
+    // "noEmit": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@public/*": ["src/public/*"],
+      "@admin/*": ["src/admin/*"]
+    }
+  },
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
+
+
+
+// {
+//   "compilerOptions": {
+//     "jsx": "react",
+//     "lib": ["es6", "dom"],
+//     "rootDir": "src",
+//     "module": "commonjs",
+//     "target": "es5",
+//     "sourceMap": true,
+//     "moduleResolution": "node",
+//     "noImplicitReturns": true,
+//     "noImplicitThis": true,
+//     "noImplicitAny": true,
+//     "allowSyntheticDefaultImports": true,  //恢复导入方式
+//     "strictNullChecks": true,
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": [
+//         "src/*"
+//       ]
+//     }
+//   },
+//   "include": [
+//     "./src"
+//   ],
+//   "exclude": [
+//     "node_modules",
+//     "build"
+//   ]
+// }

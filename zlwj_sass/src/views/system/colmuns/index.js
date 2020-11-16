@@ -118,8 +118,12 @@ export const controlDeviceColumns = [
     dataIndex: "deviceSerial"
   },
   {
-    title: "KEY",
-    dataIndex: "deviceKey"
+    title: "24小时掉线次数",
+    dataIndex: "offCount"
+  },
+  {
+    title: "30天掉线次数",
+    dataIndex: "offNearlyCount"
   },
   {
     title: "关联信息",
@@ -140,12 +144,27 @@ export const controlDeviceColumns = [
 
 export const plateRecordColumns = [
   {
-    title: "通行时间",
-    dataIndex: "updateTime"
-  },
-  {
     title: "车牌号码",
     dataIndex: "license"
+  },
+  {
+    title: "项目",
+    dataIndex: "heNameStr",
+    render(item, rows) {
+      return (
+        <div>
+          {rows.companyName}-{item}
+        </div>
+      );
+    }
+  },
+  {
+    title: "停车场",
+    dataIndex: "parkName"
+  },
+  {
+    title: "联系人",
+    dataIndex: "linkName"
   },
   {
     title: "入口信息",
@@ -170,6 +189,10 @@ export const plateRecordColumns = [
         </div>
       )
     }
+  },
+  {
+    title: "停车时长",
+    dataIndex: "sumTime"
   },
   {
     title: "收费金额",
@@ -198,32 +221,32 @@ export const plateRecordColumns = [
 export const powerOrderColumns = [
   {
     title: "充电状态",
-    dataIndex: "orderStatus",
-    render(item){
-      switch(parseInt(item)){
-        case 0:
-          return <div style={{color: "rgb(135, 208, 104)", textAlign:"center"}}>
-                  <Icon type="exclamation-circle"  />
-                  <p>待充电</p>
-                </div>
-        case 1:
-          return <div style={{color: "rgb(45, 183, 245)", textAlign:"center"}}>
-                  <Icon type="clock-circle"  />
-                  <p>充电中</p>
-                </div>
+    dataIndex: "orderStatusStr",
+    // render(item){
+    //   switch(parseInt(item)){
+    //     case 0:
+    //       return <div style={{color: "rgb(135, 208, 104)", textAlign:"center"}}>
+    //               <Icon type="exclamation-circle"  />
+    //               <p>待充电</p>
+    //             </div>
+    //     case 1:
+    //       return <div style={{color: "rgb(45, 183, 245)", textAlign:"center"}}>
+    //               <Icon type="clock-circle"  />
+    //               <p>充电中</p>
+    //             </div>
               
-        case 2:
-          return <div style={{color: "rgb(16, 142, 233)", textAlign:"center"}}>
-                  <Icon  type="check-circle" />
-                  <p>充电完成</p>
-                </div>
-        case 3:
-          return <div style={{color: "rgb(255, 85, 0)", textAlign:"center"}}>
-                  <Icon  type="close-circle" />
-                  <p>待充失败</p>
-                </div>
-      }
-    }
+    //     case 2:
+    //       return <div style={{color: "rgb(16, 142, 233)", textAlign:"center"}}>
+    //               <Icon  type="check-circle" />
+    //               <p>充电完成</p>
+    //             </div>
+    //     case 3:
+    //       return <div style={{color: "rgb(255, 85, 0)", textAlign:"center"}}>
+    //               <Icon  type="close-circle" />
+    //               <p>待充失败</p>
+    //             </div>
+    //   }
+    // }
   },
   {
     title: "结束状态",
@@ -269,6 +292,10 @@ export const powerOrderColumns = [
     }
   },
   {
+    title: "序列号",
+    dataIndex: "deviceSerial",
+  },
+  {
     title: "收费信息",
     dataIndex: "unitFee",
     render(item, rows){
@@ -308,8 +335,9 @@ export const powerOrderColumns = [
   },
   {
     title: "订单金额",
+    dataIndex: "truePayFee",
     render(item){
-      return (item.payFee-item.returnFee)+"元"
+      return item+"元"
     }
   },
 ]
@@ -333,12 +361,16 @@ export const plateDeviceColumns = [
     dataIndex: "deviceSerial"
   },
   {
-    title: "KEY",
-    dataIndex: "deviceKey"
+    title: "24小时掉线次数",
+    dataIndex: "offCount"
+  },
+  {
+    title: "30天掉线次数",
+    dataIndex: "offNearlyCount"
   },
   {
     title: "关联信息",
-    dataIndex: "companyName",
+    dataIndex: "companyNameStr",
     render(item, rows){
       return item?item+"/"+rows.heNameStr:"无"
     }
@@ -372,12 +404,16 @@ export const pileDeviceColumns = [
     dataIndex: "deviceSerial"
   },
   {
-    title: "KEY",
-    dataIndex: "deviceKey"
+    title: "24小时掉线次数",
+    dataIndex: "offCount"
+  },
+  {
+    title: "30天掉线次数",
+    dataIndex: "offNearlyCount"
   },
   {
     title: "关联信息",
-    dataIndex: "companyName",
+    dataIndex: "companyNameStr",
     render(item, rows){
       return item?item+"/"+rows.heNameStr:"无"
     }

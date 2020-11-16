@@ -79,7 +79,6 @@ import ControlDevicePass from "@/views/system/device/control/editpass"
 import Resources from "@/views/system/resources"
 import EditResources from "@/views/system/resources/edit"
 import ItemContact from "@/views/project/item/contact"
-import RepairManage from "@/views/workcenter/repair"
 import ApkSystem from "@/views/system/apk"
 import ProjectNothouse from "@/views/project/nothouse"
 import BaseCompany from "@/views/base/company"
@@ -96,6 +95,8 @@ import DailyPatrol from "@/views/daily/patrol"
 import DailyRepair from "@/views/daily/repair"
 import DailyAttend from "@/views/daily/attend"
 import AttendDetail from "@/views/daily/attend/detail"
+import DeviceMonitor from "@/views/center/devicemonitor"
+import CenterOrderStatis from "@/views/center/orderstatis"
 
 
 
@@ -127,7 +128,6 @@ class Routers extends React.Component{
         <AuthRoute exact path="/workcenter/solution" Component={Solution} name="一卡通管理" auth="2-06"  /> 
         <AuthRoute path="/workcenter/solution/:id/log" Component={SolutionLog} name="一卡通日志"  /> 
         <AuthRoute path="/workcenter/record" Component={Record} name="日志管理" auth="2-07"  /> 
-        <AuthRoute path="/workcenter/repair" Component={RepairManage} name="报修管理" auth="2-08"  /> 
         <AuthRoute exact path="/workcenter/trim" Component={PropertyTrim} name="装修计划管理" auth="2-09"  /> 
         <AuthRoute path="/workcenter/trim/:id/detail/:type" Component={PropertyTrimDetail} name="装修计划详情" auth="2-09"  /> 
         <AuthRoute exact path="/workcenter/inspectrecord" Component={Inspectrecord} name="巡查记录" auth="2-10"  /> 
@@ -212,6 +212,11 @@ class Routers extends React.Component{
         <AuthRoute exact path="/manage/trim" Component={ManageTrim} name="装修计划管理" auth="4-05" />
         <AuthRoute  path="/manage/trim/:id/detail" Component={ManageTrimDetail} name="装修计划管理详情" />
         <AuthRoute  path="/manage/assetchange" Component={Assetchange} name="资产变更记录" auth="4-06" />
+
+        <AuthRoute  path="/center/devicemonitor" Component={DeviceMonitor} name="设备监控" auth="12-01" />
+        <AuthRoute  path="/center/orderstatis" Component={CenterOrderStatis} name="订单统计" auth="12-02"  />
+
+        
         
       </Switch>
       

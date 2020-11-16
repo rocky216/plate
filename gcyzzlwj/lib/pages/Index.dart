@@ -121,7 +121,7 @@ class _IndexPageState extends State<IndexPage> {
       floatingActionButton: Container(
         width: 45.0,
         height: 45.0,
-        child: MyScan(
+        child: MyScan( 
           child: Container(
             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(23.0)),
               boxShadow: [

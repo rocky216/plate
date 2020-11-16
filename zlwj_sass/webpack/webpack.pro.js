@@ -47,7 +47,9 @@ module.exports = webpackMerge(webpackBase, {
     rules: [
       {
         test: /\.(less|css)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', {
+        use: [
+          MiniCssExtractPlugin.loader, 
+          'css-loader', {
           loader: 'less-loader',
           options: {
             modifyVars: themeColor,

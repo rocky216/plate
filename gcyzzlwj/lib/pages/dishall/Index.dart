@@ -16,7 +16,7 @@ class _DisHallPageState extends State<DisHallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyHeader(
-        title: Text("议事堂"),
+        title: Text("议事堂"), 
       ),
       body: MyList(
         url: "/api/app/owner/theme/blobs/",

@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "esModuleInterop": true,
+    /* 在表达式和声明上有隐含的 any类型时报错. */
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    /* 启用实验性的ES装饰器。在ES6中使用的了ES7不会报错 */
+    "experimentalDecorators": true,
+    /* 解析非相对模块名的基准目录 */
+    "baseUrl": ".",
+    "rootDir": ".",
+    /* 打印出编译后生成文件的名字。 */
+    "listEmittedFiles": false,
+    /* 编译过程中打印文件名 */
+    "listFiles": false,
+    /* 若有未使用的局部变量则抛错。 */
+    "noUnusedLocals": false,
+    /* 若有未使用的参数则抛错。 */
+    "noUnusedParameters": true,
+    /* 保留 const和 enum声明 */
+    "preserveConstEnums": true,
+    /* 忽略 库的默认声明文件的类型检查。 */
+    "skipDefaultLibCheck": false,
+    /* 忽略所有的声明文件（ *.d.ts）的类型检查。 */
+    "skipLibCheck": false,
+    /* 在严格的 null检查模式下， null和 undefined值不包含在任何类型里，只允许用它们自己和 any来赋值 */
+    "strictNullChecks": false,
+    /* 生成模块解析日志信息 */
+    "traceResolution":false,
+    /* 生成相应的 .map文件。 */
+    "sourceMap": true,
+    "typeRoots": [
+      "node_modules/@types", 
+      "global.d.ts" 
+    ],
+    "paths": {
+      "@/*": ["src/*"],
+      "@common/*": ["src/common/*"],
+      "@sass/*": ["src/sass/*"],
+      "@admin/*": ["src/admin/*"],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "compileOnSave": false,
+}

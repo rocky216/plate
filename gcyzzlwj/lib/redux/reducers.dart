@@ -9,7 +9,7 @@ IndexState reducers(IndexState state, action){
   return IndexState(
     appReducer(state.app, action),
     userReducer(state.user, action)
-  );
+  ); 
 }
 
 

@@ -61,10 +61,10 @@ class AttendDetail extends React.Component {
                     </Col>
                     <Col span={7}>
                       
-                    {clockStatus(elem.clockStatus) && !elem.startClockTime?clockStatus(elem.clockStatus):elem.startClockTime.substring(11)}
+                    {clockStatus(elem.clockStatus) && !elem.startClockTime?clockStatus(elem.clockStatus):elem.startClockTime.substring(11,16)}
                   </Col>
                     <Col span={7}>
-                    {clockStatus(elem.clockStatus) && !elem.endClockTime?clockStatus(elem.clockStatus):elem.endClockTime.substring(11)}
+                    {clockStatus(elem.clockStatus) && !elem.endClockTime?clockStatus(elem.clockStatus):elem.endClockTime.substring(11,16)}
                   </Col>
                   <Col span={9}>
                     {clockStatus(elem.clockStatus)?null:<Text disabled>{elem.sumStr}</Text>}  

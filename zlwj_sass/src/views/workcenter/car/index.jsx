@@ -9,6 +9,7 @@ import {carColumns, importPlateColumns} from "../colmuns"
 import CarSearch from "./CarSearch"
 import _default from "antd/lib/date-picker";
 import ImportUpload from "@/components/ImportUpload"
+import Renewal from "./renewal"
 
 let params = {
   current: 1,
@@ -22,7 +23,8 @@ class CarList extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      importVisible: false
+      importVisible: false,
+      renewalVisible: false,
     }
   }
 
@@ -80,7 +82,7 @@ class CarList extends React.Component {
   render(){
     let _this = this
     const {utils, spinning, car, commonFiles } = this.props
-    const {importVisible} = this.state
+    const {importVisible, renewalVisible} = this.state
 
     const uploadProps = {
       visible: importVisible,
@@ -104,11 +106,14 @@ class CarList extends React.Component {
     return (
       <JCard spinning={spinning}>
         {importVisible?<ImportUpload {...uploadProps}  />:null}
+        {renewalVisible?
+        <Renewal visible={renewalVisible} onCancel={()=>this.setState({renewalVisible: false})} />:null}
         <Card title={(
           <div>
             <Link to="/workcenter/car/add">
               <Button type="primary"><Icon type="plus" />新增车牌</Button>
             </Link>
+            <Button type="primary" ghost className="mgl10"  onClick={()=>this.setState({renewalVisible: true})}>批量续约</Button>
             <Button type="danger" ghost className="mgl10" onClick={()=>this.setState({importVisible: true})}><Icon type="export" />批量导入</Button>
           </div>
         )}>

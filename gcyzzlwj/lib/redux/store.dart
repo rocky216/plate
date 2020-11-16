@@ -11,4 +11,4 @@ Store<IndexState> createStore(){
       thunkMiddleware
     ]
   );
-}
+} 

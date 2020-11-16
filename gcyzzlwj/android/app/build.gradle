@@ -54,8 +54,8 @@ android {
             keyAlias 'key'
             keyPassword '123456'
             storeFile file('D://key.jks') 
-            storePassword '123456' 
-        }
+            storePassword '123456'
+        } 
     }
 
     buildTypes {

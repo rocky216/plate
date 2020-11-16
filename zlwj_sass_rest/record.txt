@@ -1,0 +1,10 @@
+1、压缩gzip
+  compression-webpack-plugin
+
+2、TS 结合 Antd 使用时，部分组件的样式（例如 RangePick）出现问题
+  将 tsconfig.json 中的 module属性修改为：es2015。"module": "es2015"
+
+3、代码分割
+  You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+
+4、 webpack DllReferencePlugin需要倒叙

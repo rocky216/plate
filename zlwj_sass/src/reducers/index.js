@@ -7,6 +7,7 @@ import financeReducer from "./financeReducer"
 import otherReducer from "./otherReducer"
 import manageReducer from "./manageReducer"
 import dailyReducer from "./dailyReducer"
+import centerReducer from "./centerReducer"
 
 
 export default combineReducers({
@@ -18,4 +19,5 @@ export default combineReducers({
   other: otherReducer,
   manage: manageReducer,
   daily: dailyReducer,
+  center: centerReducer,
 })
