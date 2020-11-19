@@ -1,14 +1,15 @@
 import React from "react"
 import Routers from "@admin/routers"
-import {Route, Switch} from "react-router-dom"
+import {withRouter} from "react-router-dom"
 import App from "@admin/views/app"
 
 
-class Index extends React.Component {
+class Index extends React.Component<any> {
   constructor(props:any){
     super(props);
     (window as any)._navigation = props.history;
   }
+  
 
   render() {
     return (
@@ -17,4 +18,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index
+export default withRouter(Index)

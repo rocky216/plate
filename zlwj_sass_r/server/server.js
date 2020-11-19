@@ -21,6 +21,12 @@ app.use(express.static( path.resolve(__dirname, "../dist") ));
 app.set('view engine','ejs');
 app.engine("html", ejs.__express);
 
+app.use("/zlwj/api",proxyMiddleWare({
+  target:config.baseUrl,
+  changeOrigoin:true,
+  pathRewrite: {'^/zlwj/api' : '/zlwj/api'},
+}));
+
 if(ENV == "development"){
   app.set('views', __dirname+'/views');
   /* 加载webpack配置 */
@@ -49,11 +55,7 @@ if(ENV == "development"){
   //   pathRewrite: {'^/iot/power' : '/iot/power'},
   // }));
 
-  app.use("/zlwj/api",proxyMiddleWare({
-    target:config.baseUrl,
-    changeOrigoin:true,
-    pathRewrite: {'^/zlwj/api' : '/zlwj/api'},
-  }));
+  
 
   app.get("/", (req, res)=>{
     res.render(`${project}.html`)
@@ -62,7 +64,7 @@ if(ENV == "development"){
 }else{
   app.set('views', path.resolve(__dirname, "../dist"));
   app.get(`/${project}`, (req, res)=>{
-    res.render(`${project}/${project}.html`)
+    res.render(`${project}.html`)
   })
   
 }

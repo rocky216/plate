@@ -4,6 +4,7 @@ import {Layout} from "antd"
 import SideBar from "@admin/components/SideBar"
 import "./index.less"
 import Routers from "@admin/routers"
+import { connect } from "react-redux"
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -29,5 +30,11 @@ class App extends React.Component {
     );
   }
 }
+const mapStateToProps = (state:any) => {
+  console.log(state)
+  return {
+    
+  }
+}
 
-export default App
+export default connect(mapStateToProps)(App)

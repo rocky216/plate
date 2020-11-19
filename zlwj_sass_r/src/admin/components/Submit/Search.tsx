@@ -8,14 +8,15 @@
 import React, { ReactElement, ReactNode, useEffect } from "react"
 import {Button, Form, Input, Select, Card, Row, Col} from "antd"
 import {SearchOutlined, RetweetOutlined } from "@ant-design/icons"
-import {useHistory} from "react-router-dom"
 
+const {Option} = Select
 
 interface ItemType {
   label?: string,
   name: string,
   type: ReactNode,
-  
+  selectList?: any[];
+  initialValue?:any;
 }
 
 interface Props {
@@ -30,11 +31,13 @@ const Search:React.FC<Props> = ({
   before,
   data,
   handleSearch,
-  initialValues
+  initialValues,
+  
 })=>{
   const [form] = Form.useForm();
   
   const onFinish = (values:any) => {
+    console.log(values)
     handleSearch(values)
   };
 
@@ -44,16 +47,20 @@ const Search:React.FC<Props> = ({
   }
 
 
-  const getNode = ( type:ReactNode )=>{
+  const getNode = ( item:any )=>{
 
-    if(type == Input){
+    if(item.type == Input){
       return <Input/>
-    }else if(type == Select){
+    }else if(item.type == Select){
       return (
-        <Select></Select>
+        <Select>
+          {item.selectList.map((elem:any)=>(
+            <Option key={elem.id} value={elem.id}>{elem.label}</Option>
+          ))}
+        </Select>
       )
     }else{
-      return <Input/>
+      return item.type
     }
   }
 
@@ -77,21 +84,22 @@ const Search:React.FC<Props> = ({
             onFinish={onFinish}
             initialValues={initialValues}
           >
-            <Row>
+            <Row >
               {data.map((item, index)=>{
                 return (
-                  <Col style={{marginBottom: 5}} key={index}  xs={20} sm={16} md={12} lg={8}>
+                  <Col style={{marginBottom: 5}} key={index}   >
                     <Form.Item
                       label={item.label||""}
                       name={item.name}
+                      initialValue={item.initialValue}
                     >
-                      {getNode(item.type)}
+                      {getNode(item)}
                     </Form.Item>
                   </Col>
                 )
               })}
-              <Col>
-                <Form.Item  >
+              <Col  >
+                <Form.Item >
                   <Button type="primary" ghost htmlType="submit" icon={<SearchOutlined />}>搜索</Button>
                   <Button className="mgl10" onClick={handleReset} icon={<RetweetOutlined />}>重置</Button>
                 </Form.Item>

@@ -13,7 +13,7 @@ function resolve(str){
 module.exports = {
   
   entry: [
-    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true',
     resolve(`src/${project}/index`)
   ], 
   output: { //出口

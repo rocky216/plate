@@ -23,7 +23,7 @@ module.exports = webpackMerge(webpackBaseConfig, {
   entry: resolve(`src/${project}/index`), 
   output: { //出口
     filename: `${project}.[hash].js`,
-    path: resolve(`dist/${project}`),
+    path: resolve(`dist`),
     publicPath: `/`
   },
   plugins: [
