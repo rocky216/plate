@@ -43,7 +43,7 @@
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "http-proxy-middleware": "^0.20.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "qs": "^6.9.1",
     "react": "^16.11.0",
