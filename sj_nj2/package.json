@@ -42,7 +42,7 @@
     "echarts": "^4.6.0",
     "echarts-for-react": "^2.0.15-beta.1",
     "ejs": "^3.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "http-proxy-middleware": "^0.20.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
